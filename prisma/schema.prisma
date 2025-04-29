@@ -1,0 +1,106 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model nail_polish_color {
+  nail_polish_id String      @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  created_at     DateTime    @default(now()) @db.Timestamptz(6)
+  color_id       String      @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  updated_at     DateTime    @db.Timestamptz(6)
+  color          colors      @relation(fields: [color_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  nail_polish    nail_polish @relation(fields: [nail_polish_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([nail_polish_id, color_id])
+  @@map("nail_polish_colors")
+}
+
+model nail_polish_finish {
+  nail_polish_id String      @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  created_at     DateTime    @default(now()) @db.Timestamptz(6)
+  finish_id      String      @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  updated_at     DateTime    @db.Timestamptz(6)
+  finish         finishes    @relation(fields: [finish_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  nail_polish    nail_polish @relation(fields: [nail_polish_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([nail_polish_id, finish_id])
+  @@map("nail_polish_finishes")
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model brands {
+  id          String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name        String        @unique
+  created_at  DateTime      @default(now()) @db.Timestamptz(6)
+  updated_at  DateTime      @db.Timestamptz(6)
+  nail_polish nail_polish[]
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model colors {
+  id          String              @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name        String              @unique
+  created_at  DateTime            @default(now()) @db.Timestamptz(6)
+  updated_at  DateTime            @db.Timestamptz(6)
+  nail_polish nail_polish_color[]
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model finishes {
+  id          String               @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name        String               @unique
+  created_at  DateTime             @default(now()) @db.Timestamptz(6)
+  updated_at  DateTime             @db.Timestamptz(6)
+  nail_polish nail_polish_finish[]
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model nail_polish {
+  id            String               @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  image_url     String?
+  brand_id      String               @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name          String
+  link          String?
+  coats         Int?                 @db.SmallInt
+  notes         String?
+  purchase_year Int?
+  created_at    DateTime             @default(now()) @db.Timestamptz(6)
+  updated_at    DateTime             @db.Timestamptz(6)
+  rating        Rating?
+  empty_bottles Int                  @default(0) @db.SmallInt
+  last_used     DateTime?            @db.Timestamptz(6)
+  status        PolishStatus         @default(ACTIVE)
+  total_bottles Int                  @default(1) @db.SmallInt
+  brands        brands               @relation(fields: [brand_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  colors        nail_polish_color[]
+  finishes      nail_polish_finish[]
+
+  @@unique([brand_id, name])
+  @@map("nail_polish")
+}
+
+enum Rating {
+  A_PLUS
+  A
+  A_MINUS
+  B_PLUS
+  B
+  B_MINUS
+  C_PLUS
+  C
+  C_MINUS
+  D_PLUS
+  D
+  D_MINUS
+  F
+}
+
+enum PolishStatus {
+  ACTIVE
+  EMPTY
+  DISCONTINUED
+}

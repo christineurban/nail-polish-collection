@@ -1,0 +1,92 @@
+'use client';
+
+import { usePathname } from 'next/navigation';
+import Link from 'next/link';
+import styled from 'styled-components';
+
+const StyledNav = styled.nav`
+  background: ${({ theme }) => theme.colors.background.gradient};
+  padding: 1rem 0;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  box-shadow: ${({ theme }) => theme.shadows.md};
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid ${({ theme }) => `${theme.colors.primary[400]}30`};
+`;
+
+const StyledContainer = styled.div`
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+`;
+
+const StyledLogo = styled(Link)`
+  color: ${({ theme }) => theme.colors.text.inverse};
+  text-decoration: none;
+  font-weight: ${({ theme }) => theme.typography.fontWeights.bold};
+  font-size: ${({ theme }) => theme.typography.fontSize.xl};
+  margin-right: auto;
+  transition: all ${({ theme }) => theme.transitions.base};
+  position: relative;
+  padding: 0.5rem 0;
+
+  &:hover {
+    transform: translateY(-1px);
+    text-shadow: 0 0 20px ${({ theme }) => `${theme.colors.primary[400]}50`};
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: ${({ theme }) => theme.colors.text.inverse};
+    transition: width ${({ theme }) => theme.transitions.base};
+  }
+
+  &:hover::after {
+    width: 100%;
+  }
+`;
+
+const StyledLink = styled(Link)<{ $isActive: boolean }>`
+  color: ${({ theme, $isActive }) =>
+    $isActive ? theme.colors.text.inverse : `${theme.colors.text.inverse}80`};
+  text-decoration: none;
+  font-weight: ${({ theme }) => theme.typography.fontWeights.medium};
+  padding: 0.5rem 1rem;
+  border-radius: ${({ theme }) => theme.borderRadius.md};
+  background: ${({ theme, $isActive }) =>
+    $isActive ? 'rgba(255, 255, 255, 0.1)' : 'transparent'};
+  transition: all ${({ theme }) => theme.transitions.base};
+  backdrop-filter: ${({ $isActive }) => ($isActive ? 'blur(4px)' : 'none')};
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.text.inverse};
+    transform: translateY(-1px);
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(4px);
+    text-shadow: 0 0 20px ${({ theme }) => `${theme.colors.primary[400]}50`};
+  }
+`;
+
+export function Nav() {
+  const pathname = usePathname();
+
+  return (
+    <StyledNav>
+      <StyledContainer>
+        <StyledLogo href="/">My Nail Polish Collection</StyledLogo>
+        <StyledLink href="/select-images" $isActive={pathname === '/select-images'}>
+          Select Missing Images
+        </StyledLink>
+      </StyledContainer>
+    </StyledNav>
+  );
+}

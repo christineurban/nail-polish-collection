@@ -1,0 +1,18 @@
+import styled from 'styled-components';
+import { theme } from '@/lib/theme';
+
+export const StyledContainer = styled.div`
+  max-width: 800px;
+  margin: 0 auto;
+  padding: ${theme.spacing.xl};
+`;
+
+export const StyledHeader = styled.header`
+  margin-bottom: ${theme.spacing.xl};
+
+  h1 {
+    font-size: ${theme.fontSizes.xxl};
+    font-weight: ${theme.fontWeights.bold};
+    color: ${theme.colors.text};
+  }
+`;

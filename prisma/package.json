@@ -1,0 +1,12 @@
+{
+  "name": "nail-polish-collection",
+  "version": "1.0.0",
+  "description": "Nail Polish Collection Management",
+  "main": "index.js",
+  "scripts": {
+    "migrate-nail-polishes": "npx prisma db push && npx prisma generate && npx tsx migrate-nail-polishes.ts"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.10.2"
+  }
+}
