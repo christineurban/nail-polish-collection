@@ -29,7 +29,12 @@ export const StyledImageContainer = styled.div`
 export const StyledImageActions = styled.div`
   margin-top: 1rem;
   display: flex;
+  flex-direction: column;
   gap: 0.5rem;
+
+  button {
+    width: 100%;
+  }
 `;
 
 export const StyledButton = styled.button<{ $variant?: 'danger' }>`

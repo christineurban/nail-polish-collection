@@ -47,13 +47,14 @@ export const NailPolishCard: FC<NailPolishCardProps> = ({
 }) => {
   const router = useRouter();
 
-  const handleClick = () => {
+  const handleContentClick = () => {
     router.push(`/polish/${id}`);
   };
 
-  const handleChooseImage = (e: React.MouseEvent | React.KeyboardEvent) => {
-    e.stopPropagation();
-    if (onChooseImage) {
+  const handleImageAreaClick = () => {
+    if (imageUrl) {
+      router.push(`/polish/${id}`);
+    } else if (onChooseImage) {
       onChooseImage(id);
     }
   };
@@ -61,45 +62,48 @@ export const NailPolishCard: FC<NailPolishCardProps> = ({
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
-      handleClick();
+      handleContentClick();
     }
   };
 
   return (
     <StyledCard
-      onClick={handleClick}
       onKeyDown={handleKeyDown}
       tabIndex={0}
       role="button"
       aria-label={`View details for ${brand} ${name}`}
     >
-      <StyledImageContainer>
+      <StyledImageContainer
+        onClick={(e) => {
+          e.stopPropagation();
+          handleImageAreaClick();
+        }}
+        style={{ cursor: 'pointer' }}
+      >
         {imageUrl ? (
           <StyledImage
             src={imageUrl}
             alt={`${brand} ${name}`}
             width={200}
             height={200}
-            onClick={(e) => e.stopPropagation()}
           />
         ) : (
           <StyledChooseImageButton
-            onClick={handleChooseImage}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                handleChooseImage(e);
-              }
-            }}
-            aria-label="Choose image for nail polish"
             type="button"
+            aria-label="Choose image for nail polish"
           >
             Choose Image
           </StyledChooseImageButton>
         )}
       </StyledImageContainer>
 
-      <StyledContent>
+      <StyledContent
+        onClick={(e) => {
+          e.stopPropagation();
+          handleContentClick();
+        }}
+        style={{ cursor: 'pointer' }}
+      >
         <StyledMetadata>
           <StyledBrand>{brand}</StyledBrand>
           <StyledTitle>{name}</StyledTitle>

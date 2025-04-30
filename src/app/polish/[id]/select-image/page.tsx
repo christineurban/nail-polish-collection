@@ -17,6 +17,48 @@ const StyledError = styled.div`
   padding: 2rem;
 `;
 
+const StyledHeader = styled.div`
+  margin-bottom: 2rem;
+
+  h1 {
+    margin: 0;
+    margin-top: 1rem;
+  }
+
+  p {
+    margin: 0;
+    margin-top: 1rem;
+  }
+`;
+
+const StyledBackButton = styled.button`
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: none;
+  border: none;
+  color: ${({ theme }) => theme.colors.primary[600]};
+  font-size: ${({ theme }) => theme.typography.fontSize.base};
+  font-weight: ${({ theme }) => theme.typography.fontWeights.medium};
+  padding: 0;
+  cursor: pointer;
+  transition: color ${({ theme }) => theme.transitions.base};
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.primary[700]};
+  }
+
+  &:focus {
+    outline: none;
+    color: ${({ theme }) => theme.colors.primary[700]};
+  }
+
+  &::before {
+    content: '←';
+    font-size: 1.2em;
+  }
+`;
+
 interface Polish {
   id: string;
   name: string;
@@ -93,8 +135,16 @@ export default function SelectImagePage({ params }: PageProps) {
 
   return (
     <StyledContainer>
-      <h1>Select Image</h1>
-      <p>Click on an image to select it, then click "Save" to update the database.</p>
+      <StyledBackButton
+        onClick={() => router.push(`/polish/${params.id}`)}
+        aria-label="Back to polish details"
+      >
+        Back to Details
+      </StyledBackButton>
+      <StyledHeader>
+        <h1>Select Image</h1>
+        <p>Click on an image to select it, then click "Save" to update the database.</p>
+      </StyledHeader>
       <ImageSelector
         polish={polish}
         onImageSaved={handleImageSaved}
