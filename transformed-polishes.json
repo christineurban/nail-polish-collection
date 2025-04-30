@@ -1,0 +1,4919 @@
+[
+  {
+    "brand": "Arcane Lacquer",
+    "name": "Engage Within",
+    "colors": [
+      "Blue"
+    ],
+    "finishes": [
+      "Shimmer",
+      "Duochrome"
+    ],
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Barry M",
+    "name": "Mediterranean",
+    "colors": [
+      "Multi"
+    ],
+    "finishes": [
+      "Duochrome",
+      "Metallic"
+    ],
+    "link": "https://rainbowifyme.blogspot.com/2015/02/barry-m-pacific-and-mediterranean.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Barry M",
+    "name": "Socialite",
+    "colors": [
+      "Pink"
+    ],
+    "finishes": [
+      "Iridescent Glitter",
+      "Shimmer",
+      "Shifty"
+    ],
+    "link": "https://nail-lacquer.co.uk/barry-m-glitterati/",
+    "coats": 2,
+    "rating": "B_PLUS",
+    "notes": "thinned this out but could use more thinner, is probably an A",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Barry M",
+    "name": "Vintage Violet",
+    "colors": [
+      "Purple"
+    ],
+    "finishes": [
+      "Creme"
+    ],
+    "link": "http://www.thevegantaff.com/2015/03/manicure-monday-barry-m-vintage-violet.html",
+    "coats": 2,
+    "rating": "A",
+    "notes": "great formula, skinny brush tho",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Barry M Gelly Hi-Shine",
+    "name": "Almond",
+    "colors": [
+      "Gray"
+    ],
+    "finishes": [
+      "Creme"
+    ],
+    "link": "http://www.britnails.co.uk/2014/05/barry-m-gelly-nail-paint-summer-2014.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Barry M Gelly Hi-Shine",
+    "name": "Cardamom",
+    "colors": [
+      "Green"
+    ],
+    "finishes": [
+      "Creme"
+    ],
+    "link": "https://www.britnails.co.uk/2014/08/barry-m-autumnwinter-2014-gelly-nail.html#more",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Barry M Gelly Hi-Shine",
+    "name": "Green Berry",
+    "colors": [
+      "Teal"
+    ],
+    "finishes": [
+      "Creme"
+    ],
+    "link": "https://primerandtheprincess.blogspot.com/2013/02/new-barry-m-gelly-hi-shine-nail-polish_7916.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Barry M Gelly Hi-Shine",
+    "name": "Olive",
+    "colors": [
+      "Beige"
+    ],
+    "finishes": [
+      "Creme"
+    ],
+    "link": "http://www.britnails.co.uk/2014/05/barry-m-gelly-nail-paint-summer-2014.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Barry M Speedy Quick Dry",
+    "name": "Lap of Honour",
+    "colors": [
+      "Purple"
+    ],
+    "finishes": [
+      "Creme"
+    ],
+    "link": "https://www.britnails.co.uk/2015/02/barry-m-speedy-quick-dry-collection.html?showComment=1423267483764",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Believe Beauty",
+    "name": "I Came To Dance",
+    "colors": [
+      "Teal"
+    ],
+    "finishes": [
+      "Creme"
+    ],
+    "link": "https://www.believebeautycosmetics.com/nail-shop/jetsetter-mani-nail-polish",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Believe Beauty",
+    "name": "Lover Boy",
+    "colors": [
+      "Green"
+    ],
+    "finishes": [
+      "Metallic",
+      "Shimmer"
+    ],
+    "link": "https://www.believebeautycosmetics.com/nail-shop/just-jewel-nail-polish",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Believe Beauty",
+    "name": "Party Purple",
+    "colors": [
+      "Purple"
+    ],
+    "finishes": [
+      "Shimmer",
+      "Crelly"
+    ],
+    "link": "https://www.believebeautycosmetics.com/nail-shop/just-jewel-nail-polish",
+    "coats": 2,
+    "rating": "B",
+    "notes": "a little sheer and patchy but not bad",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Believe Beauty",
+    "name": "Perfect Pitch",
+    "colors": [
+      "Blue"
+    ],
+    "finishes": [
+      "Matte",
+      "Creme"
+    ],
+    "link": "https://www.believebeautycosmetics.com/nail-shop/matte-about-it-nail-polish",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Bow Nail Polish",
+    "name": "Miles Away",
+    "colors": [
+      "Multi"
+    ],
+    "finishes": [
+      "Reflective Glitter",
+      "Shimmer",
+      "Textured"
+    ],
+    "link": "https://lollipolish.com/products/miles-away-reflective",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Calvin Klein",
+    "name": "Indigo Blue",
+    "colors": [
+      "Blue"
+    ],
+    "finishes": [
+      "Shimmer"
+    ],
+    "link": "http://www.fashionpolish.com/2011/01/calvin-klein-htf-nail-polishes.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Cherimoya",
+    "name": "Teal Tale",
+    "colors": [
+      "Teal"
+    ],
+    "finishes": [
+      "Frost"
+    ],
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Cherimoya",
+    "name": "Elektra Doll",
+    "colors": [
+      "Pink"
+    ],
+    "finishes": [
+      "Chunky Glitter",
+      "Glitter",
+      "Jelly"
+    ],
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "China Glaze",
+    "name": "Fairy Dust",
+    "colors": [
+      "Silver"
+    ],
+    "finishes": [
+      "Scattered Holo",
+      "Topper"
+    ],
+    "link": "http://themanicuredmanatee.blogspot.com/2010/10/my-notd.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "China Glaze",
+    "name": "Ghoulish Glow",
+    "colors": [
+      "Clear"
+    ],
+    "finishes": [
+      "Topper",
+      "Glow in the Dark"
+    ],
+    "link": "http://www.fashionpolish.com/2013/10/china-glaze-monsters-ball-collection.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "China Glaze",
+    "name": "This One's For You",
+    "colors": [
+      "Multi"
+    ],
+    "finishes": [
+      "Shimmer",
+      "Iridescent Glitter",
+      "Chunky Glitter",
+      "Topper"
+    ],
+    "link": "http://www.lackycorner.com/2013/10/united-in-pink-china-glaze-this-ones.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "China Glaze",
+    "name": "Winter Holly",
+    "colors": [
+      "Green"
+    ],
+    "finishes": [
+      "Micro Holo Glitter"
+    ],
+    "link": "http://jroxy13.blogspot.com/2013/04/china-glaze-in-winter-holly-comparison.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Ciaté",
+    "name": "All Aglow",
+    "colors": [
+      "Gold"
+    ],
+    "finishes": [
+      "Glitter"
+    ],
+    "link": "http://myrainydaynails.blogspot.com/2013/12/ciate-tree-trinkets-swatches.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Ciaté",
+    "name": "Candy Cane",
+    "colors": [
+      "Multi"
+    ],
+    "finishes": [
+      "Glitter"
+    ],
+    "link": "http://myrainydaynails.blogspot.com/2013/12/ciate-tree-trinkets-swatches.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Ciaté",
+    "name": "Humbug",
+    "colors": [
+      "Multi"
+    ],
+    "finishes": [
+      "Glitter"
+    ],
+    "link": "http://myrainydaynails.blogspot.com/2013/12/ciate-tree-trinkets-swatches.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Ciaté",
+    "name": "Pecan Pie",
+    "colors": [
+      "Brown"
+    ],
+    "finishes": [
+      "Shimmer"
+    ],
+    "link": "https://curbappealnails.blogspot.com/2014/12/ciate-pecan-pie-swatches.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Ciaté",
+    "name": "Tinsel Town",
+    "colors": [
+      "Gold"
+    ],
+    "finishes": [
+      "Glitter"
+    ],
+    "link": "http://myrainydaynails.blogspot.com/2013/12/ciate-tree-trinkets-swatches.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Ciaté",
+    "name": "Wrap Star!",
+    "colors": [
+      "Multi"
+    ],
+    "finishes": [
+      "Glitter"
+    ],
+    "link": "http://myrainydaynails.blogspot.com/2013/12/ciate-tree-trinkets-swatches.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Ciaté",
+    "name": "Yule Rules",
+    "colors": [
+      "Teal"
+    ],
+    "finishes": [
+      "Glitter"
+    ],
+    "link": "http://myrainydaynails.blogspot.com/2013/12/ciate-tree-trinkets-swatches.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Cirque Colors",
+    "name": "Cloud Nine",
+    "colors": [
+      "Purple"
+    ],
+    "finishes": [
+      "Shimmer",
+      "Scattered Holo"
+    ],
+    "link": "https://www.cirquecolors.com/cloud-nine/",
+    "coats": 3,
+    "rating": "B_MINUS",
+    "notes": "needs a lot of coats, looked ok over another color",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Cirque Colors",
+    "name": "Earthen",
+    "colors": [
+      "Brown"
+    ],
+    "finishes": [
+      "Shimmer",
+      "Scattered Holo"
+    ],
+    "link": "https://www.cirquecolors.com/earthen/",
+    "coats": 3,
+    "rating": "C_PLUS",
+    "notes": "needs a lot of coats and the holo is barely visible, color is a little drab but maybe because I was wearing it in summer",
+    "empty_bottles": 0,
+    "total_bottles": 2
+  },
+  {
+    "brand": "Cirque Colors",
+    "name": "Electric Daisy",
+    "colors": [
+      "Yellow"
+    ],
+    "finishes": [
+      "Neon"
+    ],
+    "link": "https://www.cirquecolors.com/electric-daisy/",
+    "coats": 3,
+    "rating": "B_PLUS",
+    "notes": "a little patchy, easily see imperfections cuz so bright, long lasting",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Cirque Colors",
+    "name": "Fizzy Lifting Drink",
+    "colors": [
+      "Purple"
+    ],
+    "finishes": [
+      "Magnetic"
+    ],
+    "link": "https://www.cirquecolors.com/fizzy-lifting-drink/",
+    "empty_bottles": 0,
+    "total_bottles": 2
+  },
+  {
+    "brand": "Cirque Colors",
+    "name": "Helter Seltzer",
+    "colors": [
+      "Gray"
+    ],
+    "finishes": [
+      "Magnetic"
+    ],
+    "link": "https://www.cirquecolors.com/helter-seltzer/",
+    "empty_bottles": 0,
+    "total_bottles": 2
+  },
+  {
+    "brand": "Cirque Colors",
+    "name": "Pyro",
+    "colors": [
+      "Orange"
+    ],
+    "finishes": [
+      "Neon"
+    ],
+    "link": "https://www.cirquecolors.com/pyro/",
+    "coats": 2,
+    "rating": "A",
+    "notes": "almost 1 coat! super easy to apply, but may be difficult on toes",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Cirque Colors",
+    "name": "Socialite",
+    "colors": [
+      "Purple"
+    ],
+    "finishes": [
+      "Neon"
+    ],
+    "link": "https://www.cirquecolors.com/socialite/",
+    "coats": 2,
+    "rating": "A",
+    "notes": "great formula, super long lasting, so many compliments ",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Cirque Colors",
+    "name": "Velvetine",
+    "colors": [
+      "Blue"
+    ],
+    "finishes": [
+      "Shimmer",
+      "Micro Holo Glitter",
+      "Shifty"
+    ],
+    "link": "https://www.cirquecolors.com/velvetine/",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Color Club",
+    "name": "All That Razz",
+    "colors": [
+      "Pink"
+    ],
+    "finishes": [
+      "Neon"
+    ],
+    "link": "https://colorclub.com/products/all-that-razz",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Color Club",
+    "name": "Cosmic Fate",
+    "colors": [
+      "Beige"
+    ],
+    "finishes": [
+      "Linear Holo"
+    ],
+    "link": "https://colorclub.com/products/cosmic-fate",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Color Club",
+    "name": "Disco Dress",
+    "colors": [
+      "Purple"
+    ],
+    "finishes": [
+      "Neon"
+    ],
+    "link": "https://www.paperblog.fr/5159427/color-club-disco-dress/",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Color Club",
+    "name": "The Uptown",
+    "colors": [
+      "Multi"
+    ],
+    "finishes": [
+      "Multichrome",
+      "Flakie"
+    ],
+    "link": "https://mynailpolishobsession.blogspot.com/2014/12/my-personal-top-10-mainstream-polishes.html",
+    "coats": 1,
+    "rating": "A_PLUS",
+    "notes": "BEAUTIFUL and flakies lay and spread so evenly",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Color Club",
+    "name": "Warhol",
+    "colors": [
+      "Pink"
+    ],
+    "finishes": [
+      "Neon"
+    ],
+    "link": "https://colorclub.com/products/warhol",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Color Club",
+    "name": "Williamsburg",
+    "colors": [
+      "Blue"
+    ],
+    "finishes": [
+      "Shimmer"
+    ],
+    "link": "http://www.lucysstash.com/2014/02/color-club-williamsburg-over-opi-incognito-in-sausalito.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Color Club",
+    "name": "You Rock!",
+    "colors": [
+      "Multi"
+    ],
+    "finishes": [],
+    "link": "https://www.nicehands.dk/shop/you-rock-color-1887p.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Color Club",
+    "name": "Youthquake",
+    "colors": [
+      "Pink"
+    ],
+    "finishes": [
+      "Neon"
+    ],
+    "link": "https://colorclub.com/products/youthquake",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Color Club",
+    "name": "Top Coat",
+    "colors": [
+      "Clear"
+    ],
+    "finishes": [],
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Color Club",
+    "name": "zzz *unmarked*",
+    "colors": [
+      "Green"
+    ],
+    "finishes": [
+      "Creme"
+    ],
+    "empty_bottles": 0,
+    "total_bottles": 4
+  },
+  {
+    "brand": "Colores de Carol",
+    "name": "Blue Moon Milk",
+    "colors": [
+      "Multi"
+    ],
+    "finishes": [
+      "Thermal",
+      "Flakie"
+    ],
+    "link": "https://rainbow-connection.co.uk/collections/colores-de-carol/products/blue-moon-milk-ships-mid-oct",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Colores de Carol",
+    "name": "Unicorn Horn",
+    "colors": [
+      "Purple"
+    ],
+    "finishes": [
+      "Jelly"
+    ],
+    "link": "https://www.coloresdecarol.com/product/unicorn-horn",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Colors By Llarowe",
+    "name": "My Own Private Paradise",
+    "colors": [
+      "Purple"
+    ],
+    "finishes": [
+      "Linear Holo"
+    ],
+    "link": "https://mariasnailpolishblog.blogspot.com/2014/11/colors-by-llarowe-cbl-my-own-private.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "CoverGirl Outlast",
+    "name": "Bahama Mama - Glosstini",
+    "colors": [
+      "Red"
+    ],
+    "finishes": [
+      "Shimmer"
+    ],
+    "link": "http://abeautymoment.blogspot.com/2014/08/covergirl-outlast-stay-brilliant.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "CoverGirl Outlast",
+    "name": "Grapevine",
+    "colors": [
+      "Purple"
+    ],
+    "finishes": [
+      "Duochrome",
+      "Shimmer"
+    ],
+    "link": "https://curbappealnails.blogspot.com/2014/07/comparison-swatches-essie-lace-is-on.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "CoverGirl Outlast",
+    "name": "Vio-Last",
+    "colors": [
+      "Purple"
+    ],
+    "finishes": [
+      "Creme"
+    ],
+    "link": "http://www.alllacqueredup.com/2013/03/fave-covergirl-outlast-nail-polish-shades-spring-2013.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "CoverGirl Outlast",
+    "name": "Wine Stain",
+    "colors": [
+      "Purple"
+    ],
+    "finishes": [
+      "Creme"
+    ],
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Crowstoes",
+    "name": "Maia",
+    "colors": [
+      "Purple"
+    ],
+    "finishes": [
+      "Duochrome",
+      "Glass Fleck"
+    ],
+    "link": "http://nazsnails.blogspot.com/2013/06/crowstoes-maia.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Cupcake Polish",
+    "name": "Keratoconus Awareness",
+    "colors": [
+      "Red"
+    ],
+    "finishes": [
+      "Shifty",
+      "Shimmer",
+      "Iridescent"
+    ],
+    "link": "https://www.ohbiteit.com/2021/12/cupcake-polish.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Cupcake Polish",
+    "name": "Mr. Mint",
+    "colors": [
+      "Pink"
+    ],
+    "finishes": [
+      "Neon",
+      "Jelly",
+      "Holo Glitter",
+      "Glitter"
+    ],
+    "link": "https://www.cupcakepolish.com/products/mr-mint",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Cupcake Polish",
+    "name": "Shimmering Sunburst",
+    "colors": [
+      "Orange"
+    ],
+    "finishes": [
+      "Iridescent",
+      "Holo Glitter",
+      "Shimmer"
+    ],
+    "link": "https://www.cupcakepolish.com/products/shimmering-sunburst",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Dance Legend",
+    "name": "Termo Shine 179",
+    "colors": [
+      "Red"
+    ],
+    "finishes": [
+      "Chunky Glitter",
+      "Thermal"
+    ],
+    "link": "https://curbappealnails.blogspot.com/2015/01/valentines-day-stamping-part-2-dance-legend-termo-shine-179.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Dance Legend",
+    "name": "Termo Shine 180",
+    "colors": [
+      "Black"
+    ],
+    "finishes": [
+      "Chunky Glitter",
+      "Glitter",
+      "Thermal"
+    ],
+    "link": "https://realpolishfanatic.com/2016/01/23/dance-legend-termo-shine-180/",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Deborah Lippmann",
+    "name": "Happy Birthday",
+    "colors": [
+      "Multi"
+    ],
+    "finishes": [
+      "Chunky Glitter",
+      "Glitter"
+    ],
+    "link": "http://www.nailescapades.com/2013/07/deborah-lippmann-happy-birthday.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Del Sol",
+    "name": "Now You See It",
+    "colors": [
+      "Multi"
+    ],
+    "finishes": [
+      "UV",
+      "Creme"
+    ],
+    "link": "https://nevertoomuchglitter.wordpress.com/2016/06/30/del-sol-swatches-and-finally-on-instagram/",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Del Sol",
+    "name": "VIP",
+    "colors": [
+      "Multi"
+    ],
+    "finishes": [
+      "Holo Glitter",
+      "Glitter",
+      "UV"
+    ],
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Emily de Molly",
+    "name": "Hardware",
+    "colors": [
+      "Gold"
+    ],
+    "finishes": [
+      "Chunky Glitter",
+      "Holo Glitter",
+      "Glitter"
+    ],
+    "link": "https://itsallaboutthepolish.blogspot.com/2013/11/hardware-by-emily-de-molly.html?m=1",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Esmaltes da Kelly",
+    "name": "Phoenix",
+    "colors": [
+      "Purple"
+    ],
+    "finishes": [
+      "Glitter"
+    ],
+    "link": "http://www.plumpandpolished.com/2013/09/EsmaltesDaKelly.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Essie",
+    "name": "Angora Cardi",
+    "colors": [
+      "Pink"
+    ],
+    "finishes": [
+      "Creme"
+    ],
+    "link": "https://www.essie.com/nail-polish/enamel/nudes/angora-cardi",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Essie",
+    "name": "Armed and Ready",
+    "colors": [
+      "Green"
+    ],
+    "finishes": [
+      "Shimmer"
+    ],
+    "link": "http://ommorphiabeautybar.com/essie-armed-and-ready-spring-2012-swatches-comparisons-review/",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Essie",
+    "name": "Beat of the Moment",
+    "colors": [
+      "Pink"
+    ],
+    "finishes": [
+      "Glitter",
+      "Textured"
+    ],
+    "link": "https://www.thepolishedhippy.com/2019/01/essie-concrete-glitters-collection.html",
+    "rating": "D",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Essie",
+    "name": "Butler Please",
+    "colors": [
+      "Blue"
+    ],
+    "finishes": [
+      "Creme"
+    ],
+    "link": "http://ommorphiabeautybar.com/tag/essie-butler-please-swatch/",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Essie",
+    "name": "Downtown Brown",
+    "colors": [
+      "Red"
+    ],
+    "finishes": [
+      "Creme"
+    ],
+    "link": "https://concreteandnailpolish.blogspot.com/2010/05/essie-downtown-brown-konad.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Essie",
+    "name": "Gallery Gal",
+    "colors": [
+      "Pink"
+    ],
+    "finishes": [
+      "Neon"
+    ],
+    "link": "https://www.nailderella.com/2017/07/essie-off-wall-neon-2017.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Essie",
+    "name": "Hiking Heels",
+    "colors": [
+      "Red"
+    ],
+    "finishes": [
+      "Creme"
+    ],
+    "link": "https://imabeautygeek.com/2016/04/19/essie-summer-2016-collection-swatches-review-comparisons/",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Essie",
+    "name": "In The Lobby",
+    "colors": [
+      "Purple"
+    ],
+    "finishes": [
+      "Creme"
+    ],
+    "link": "http://thelacquerchronicles.blogspot.com/2015/09/essie-in-lobby.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Essie",
+    "name": "Mochacino",
+    "colors": [
+      "Gray"
+    ],
+    "finishes": [
+      "Shimmer"
+    ],
+    "link": "https://lacquerslackerliz.blogspot.com/2014/03/essie-mochacino.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Essie",
+    "name": "No More Film",
+    "colors": [
+      "Purple"
+    ],
+    "finishes": [
+      "Creme"
+    ],
+    "link": "https://www.essie.com/nail-polish/enamel/blues/no-more-film",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Essie",
+    "name": "Off The Wall",
+    "colors": [
+      "Pink"
+    ],
+    "finishes": [
+      "Neon"
+    ],
+    "link": "https://www.nailderella.com/2017/07/essie-off-wall-neon-2017.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Essie",
+    "name": "Peach Daiquiri",
+    "colors": [
+      "Pink"
+    ],
+    "finishes": [
+      "Creme"
+    ],
+    "link": "https://www.essie.com/nail-polish/enamel/corals/peach-daiquiri",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Essie",
+    "name": "Sable Collar",
+    "colors": [
+      "Purple"
+    ],
+    "finishes": [
+      "Shimmer"
+    ],
+    "link": "http://addictedtopolish.blogspot.com/2014/12/essie-sable-collar.html?m=1",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Essie",
+    "name": "Size Matters",
+    "colors": [
+      "Red"
+    ],
+    "finishes": [
+      "Creme"
+    ],
+    "link": "https://curbappealnails.blogspot.com/search?q=size+matters",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Essie",
+    "name": "Tart Deco",
+    "colors": [
+      "Orange"
+    ],
+    "finishes": [
+      "Creme"
+    ],
+    "link": "https://www.cindyscutecorner.com/essie-tart-deco-swatch/",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Essie",
+    "name": "The Girls Are Out",
+    "colors": [
+      "Pink"
+    ],
+    "finishes": [
+      "Crelly",
+      "Shimmer"
+    ],
+    "link": "http://www.imperfectlypainted.com/2013/07/essie-girls-are-out.html",
+    "coats": 2,
+    "rating": "A",
+    "notes": "actually really like the skinny brush for pedicure application, applies so easily",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Essie",
+    "name": "The Lace Is On",
+    "colors": [
+      "Purple"
+    ],
+    "finishes": [
+      "Duochrome",
+      "Shimmer"
+    ],
+    "link": "https://curbappealnails.blogspot.com/2014/07/essie-lace-is-on.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Essie",
+    "name": "Toggle to the Top",
+    "colors": [
+      "Red"
+    ],
+    "finishes": [
+      "Glitter"
+    ],
+    "link": "http://ommorphiabeautybar.com/tag/essie-toggle-to-the-top/",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Essie",
+    "name": "Wicked",
+    "colors": [
+      "Red"
+    ],
+    "finishes": [
+      "Jelly"
+    ],
+    "link": "https://nazsnails.blogspot.com/2012/12/essie-wicked.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Essie Gel Couture",
+    "name": "Twill Seeker",
+    "colors": [
+      "Purple"
+    ],
+    "finishes": [
+      "Shimmer"
+    ],
+    "link": "http://nailtastic.blogspot.com/2016/06/essie-twill-seeker.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Essie Luxeffects",
+    "name": "A Cut Above",
+    "colors": [
+      "Pink"
+    ],
+    "finishes": [
+      "Chunky Glitter",
+      "Topper"
+    ],
+    "link": "https://thelacquerlounge.blogspot.com/2011/12/essie-cut-above-luxeffects-collection.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Essie Luxeffects",
+    "name": "Rock at the Top",
+    "colors": [
+      "Gold"
+    ],
+    "finishes": [
+      "Chunky Glitter"
+    ],
+    "link": "http://mylifeinturquoise.blogspot.com/2014/10/essie-luxeffects-2014-rock-at-top.html?m=1",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Essie Luxeffects",
+    "name": "Set in Stones",
+    "colors": [
+      "Silver"
+    ],
+    "finishes": [
+      "Chunky Glitter",
+      "Topper"
+    ],
+    "link": "https://kakinenailart.blogspot.com/2014/02/essie-set-in-stones-luxeffects-2013.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Essie Luxeffects",
+    "name": "Summit of Style",
+    "colors": [
+      "Gold"
+    ],
+    "finishes": [
+      "Chunky Glitter"
+    ],
+    "link": "http://nailsalwayspolished.blogspot.com/2014/11/essie-summit-of-style.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Expressie",
+    "name": "Notifications On",
+    "colors": [
+      "Red"
+    ],
+    "finishes": [
+      "Creme"
+    ],
+    "link": "https://www.essie.com/nail-polish/quick-dry/reds/notifications-on",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Fancy Gloss",
+    "name": "Silver Lotus",
+    "colors": [
+      "Multi"
+    ],
+    "finishes": [
+      "Thermal",
+      "Linear Holo"
+    ],
+    "link": "https://curbappealnails.blogspot.com/2015/04/chevron-nails-fancy-gloss-silver-lotus-a-england-dorian-gray.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Forever 21",
+    "name": "Grey/Multi",
+    "colors": [
+      "Gray"
+    ],
+    "finishes": [
+      "Glitter"
+    ],
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Forever 21",
+    "name": "Light Blue/Black",
+    "colors": [
+      "Blue"
+    ],
+    "finishes": [
+      "Glitter"
+    ],
+    "link": "https://nailsmydreams.blogspot.com/2015/04/forever-21-speckled-nail-polishes-light.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Formula X",
+    "name": "Base Coat",
+    "colors": [
+      "Clear"
+    ],
+    "finishes": [],
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Formula X",
+    "name": "A+",
+    "colors": [
+      "Pink"
+    ],
+    "finishes": [
+      "Creme"
+    ],
+    "link": "https://www.temptalia.com/product/formula-x-nail-lacquer/a/",
+    "empty_bottles": 0,
+    "total_bottles": 2
+  },
+  {
+    "brand": "Formula X",
+    "name": "Astronomical",
+    "colors": [
+      "Beige"
+    ],
+    "finishes": [
+      "Creme"
+    ],
+    "link": "http://www.thehappysloths.com/2014/10/formula-x-paint-town-22-piece-mini-nail-polish-set-review-swatches.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Formula X",
+    "name": "Dramatic",
+    "colors": [
+      "Purple"
+    ],
+    "finishes": [
+      "Creme"
+    ],
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Formula X",
+    "name": "Fathom",
+    "colors": [
+      "Blue"
+    ],
+    "finishes": [
+      "Creme"
+    ],
+    "link": "http://www.thehappysloths.com/2014/10/formula-x-paint-town-22-piece-mini-nail-polish-set-review-swatches.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Formula X",
+    "name": "Galaxy",
+    "colors": [
+      "Blue"
+    ],
+    "finishes": [
+      "Glitter",
+      "Flakie"
+    ],
+    "link": "https://www.vampyvarnish.com/2013/12/formula-x-sephora-effects-nail-color-swatches-review/",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Formula X",
+    "name": "Gemini",
+    "colors": [
+      "Pink"
+    ],
+    "finishes": [
+      "Creme"
+    ],
+    "link": "https://www.doseoflola.com/2014/03/formula-x-for-sephora-gemini-harmonics.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Formula X",
+    "name": "Ignite",
+    "colors": [
+      "Red"
+    ],
+    "finishes": [
+      "Creme"
+    ],
+    "link": "http://www.thehappysloths.com/2014/10/formula-x-paint-town-22-piece-mini-nail-polish-set-review-swatches.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Formula X",
+    "name": "Illusionary",
+    "colors": [
+      "White"
+    ],
+    "finishes": [
+      "Frost"
+    ],
+    "link": "http://www.thehappysloths.com/2014/10/formula-x-paint-town-22-piece-mini-nail-polish-set-review-swatches.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Formula X",
+    "name": "Mischevious",
+    "colors": [
+      "Multi"
+    ],
+    "finishes": [
+      "Glitter",
+      "Duochrome",
+      "Shimmer"
+    ],
+    "link": "https://serendipitypot.com/formula-x/",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Formula X",
+    "name": "Monumental",
+    "colors": [
+      "Beige"
+    ],
+    "finishes": [
+      "Creme"
+    ],
+    "link": "http://www.thehappysloths.com/2014/10/formula-x-paint-town-22-piece-mini-nail-polish-set-review-swatches.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Formula X",
+    "name": "Perfection",
+    "colors": [
+      "Gray"
+    ],
+    "finishes": [
+      "Creme"
+    ],
+    "link": "https://www.temptalia.com/formula-x-sephora-nail-lacquer-review-photos-swatches/",
+    "empty_bottles": 0,
+    "total_bottles": 3
+  },
+  {
+    "brand": "Formula X",
+    "name": "Pyrotechnic",
+    "colors": [
+      "Red"
+    ],
+    "finishes": [
+      "Creme"
+    ],
+    "link": "http://www.thehappysloths.com/2014/10/formula-x-paint-town-22-piece-mini-nail-polish-set-review-swatches.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Formula X",
+    "name": "Singularity",
+    "colors": [
+      "Gray"
+    ],
+    "finishes": [
+      "Shimmer",
+      "Matte"
+    ],
+    "link": "https://imabeautygeek.com/2014/07/22/formula-x-brushed-metallics-fall-2014/",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Formula X",
+    "name": "Starlight",
+    "colors": [
+      "Gold"
+    ],
+    "finishes": [
+      "Glitter"
+    ],
+    "link": "http://www.thehappysloths.com/2014/10/formula-x-paint-town-22-piece-mini-nail-polish-set-review-swatches.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Formula X",
+    "name": "Umph",
+    "colors": [
+      "Gray"
+    ],
+    "finishes": [
+      "Metallic"
+    ],
+    "link": "http://www.thehappysloths.com/2014/10/formula-x-paint-town-22-piece-mini-nail-polish-set-review-swatches.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Formula X",
+    "name": "UR Square",
+    "colors": [
+      "Beige"
+    ],
+    "finishes": [
+      "Shimmer",
+      "Glitter",
+      "Textured"
+    ],
+    "link": "https://www.manicuremanifesto.com/2019/12/brand-challenge-sephora-formula-x.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Formula X",
+    "name": "White Matter",
+    "colors": [
+      "White"
+    ],
+    "finishes": [
+      "Creme"
+    ],
+    "link": "http://www.thehappysloths.com/2014/10/formula-x-paint-town-22-piece-mini-nail-polish-set-review-swatches.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Formula X",
+    "name": "Wunderkind",
+    "colors": [
+      "Blue"
+    ],
+    "finishes": [
+      "Shimmer"
+    ],
+    "link": "https://thebeautylookbook.com/2014/06/sephora-formula-x-wunderkind.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Gabriel",
+    "name": "Tahitian Orchid",
+    "colors": [
+      "Purple"
+    ],
+    "finishes": [
+      "Metallic"
+    ],
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Glisten & Glow",
+    "name": "HK Girl",
+    "colors": [
+      "Clear"
+    ],
+    "finishes": [],
+    "link": "https://www.glistenandglow.com/product/glisten-glow-top-coat",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Glisten & Glow",
+    "name": "Glitter Grabber",
+    "colors": [
+      "Clear"
+    ],
+    "finishes": [],
+    "link": "https://www.glistenandglow.com/product/glisten-glow-glitter-grabber",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Glisten & Glow",
+    "name": "I Do! Crew",
+    "colors": [
+      "White"
+    ],
+    "finishes": [
+      "Crelly",
+      "Flakie"
+    ],
+    "link": "https://www.glistenandglow.com/product/glisten-glow-i-do-crew",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Glisten & Glow",
+    "name": "Stalagmites & Stalactites at Skyline",
+    "colors": [
+      "Purple"
+    ],
+    "finishes": [
+      "Shimmer",
+      "Shifty"
+    ],
+    "link": "https://www.glistenandglow.com/product/glisten-glow-stalagmites-stalactites-at-skyline",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Glisten & Glow",
+    "name": "Top Coat",
+    "colors": [
+      "Clear"
+    ],
+    "finishes": [],
+    "link": "https://www.glistenandglow.com/product/glisten-glow-top-coat",
+    "coats": 1,
+    "rating": "A_PLUS",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Glisten & Glow",
+    "name": "Tropic like it's HOT!",
+    "colors": [
+      "Pink"
+    ],
+    "finishes": [
+      "Neon",
+      "Creme"
+    ],
+    "link": "https://www.glistenandglow.com/product/glisten-glow-tropic-like-it-s-hot",
+    "coats": 2,
+    "rating": "A",
+    "notes": "easy creme application ",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Hit the Bottle",
+    "name": "Snowed In",
+    "colors": [
+      "White"
+    ],
+    "finishes": [
+      "Creme"
+    ],
+    "link": "https://hitthebottlepolishes.com.au/collections/nail-polish-stamping-polish/products/snowed-in-stamping-polish",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Hits",
+    "name": "Hefesto",
+    "colors": [
+      "Silver"
+    ],
+    "finishes": [
+      "Linear Holo"
+    ],
+    "link": "https://belasgarras.blogspot.com/2012/01/hefesto-hits.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Hits",
+    "name": "So Unique - Mari Moon",
+    "colors": [
+      "Purple"
+    ],
+    "finishes": [
+      "Duochrome",
+      "Scattered Holo"
+    ],
+    "link": "https://curbappealnails.blogspot.com/2015/07/hits-mari-moon-so-unique-bps-zebra-nail-vinyls.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Holo Taco",
+    "name": "Cosmic Unicorn Skin",
+    "colors": [
+      "Multi"
+    ],
+    "finishes": [
+      "Iridescent Flakie",
+      "Topper"
+    ],
+    "link": "https://www.holotaco.com/products/cosmic-unicorn-skin",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Holo Taco",
+    "name": "Everything Taco",
+    "colors": [
+      "Multi"
+    ],
+    "finishes": [
+      "Iridescent Flakie",
+      "Topper",
+      "Scattered Holo",
+      "Linear Holo",
+      "Flakie Holo"
+    ],
+    "link": "https://www.holotaco.com/products/everything-taco",
+    "coats": 1,
+    "rating": "B",
+    "notes": "I didn't like it that much over a dusty purple but I should try it again over another color",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Holo Taco",
+    "name": "Flakie Holo Taco",
+    "colors": [
+      "Multi"
+    ],
+    "finishes": [
+      "Flakie Holo",
+      "Topper"
+    ],
+    "link": "https://www.holotaco.com/products/flakie-holo-taco",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Holo Taco",
+    "name": "Magenta Jelly",
+    "colors": [
+      "Pink"
+    ],
+    "finishes": [
+      "Linear Holo",
+      "Jelly"
+    ],
+    "link": "https://www.holotaco.com/products/magenta-jelly",
+    "coats": 2,
+    "rating": "A_MINUS",
+    "notes": "a little hard to apply with the thin brush and it dries quick but the end result is 💯",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Holo Taco",
+    "name": "Menchie The Cat",
+    "colors": [
+      "Pink"
+    ],
+    "finishes": [
+      "Holo Glitter"
+    ],
+    "link": "https://www.holotaco.com/products/menchie-the-cat",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Holo Taco",
+    "name": "Midnight Spark",
+    "colors": [
+      "Purple"
+    ],
+    "finishes": [
+      "Holo Glitter",
+      "Jelly"
+    ],
+    "link": "https://www.holotaco.com/products/midnight-spark",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Holo Taco",
+    "name": "Play Rosé",
+    "colors": [
+      "Gold"
+    ],
+    "finishes": [
+      "Jelly",
+      "Holo Glitter"
+    ],
+    "link": "https://www.holotaco.com/products/play-rose",
+    "coats": 2,
+    "rating": "A",
+    "notes": "Needed tons of top coat and glitter grabber to get smooth but even though it was thick it stayed on SO GOOD",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Holo Taco",
+    "name": "Plumb Luck",
+    "colors": [
+      "Purple"
+    ],
+    "finishes": [
+      "Jelly",
+      "Holo Glitter"
+    ],
+    "link": "https://www.holotaco.com/products/plumb-luck",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Holo Taco",
+    "name": "Reflective Taco",
+    "colors": [
+      "Clear"
+    ],
+    "finishes": [
+      "Reflective Glitter",
+      "Topper"
+    ],
+    "link": "https://www.holotaco.com/products/reflective-taco",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Holo Taco",
+    "name": "Scattered Holo Taco",
+    "colors": [
+      "Silver"
+    ],
+    "finishes": [
+      "Scattered Holo",
+      "Topper"
+    ],
+    "link": "https://www.holotaco.com/products/scattered-holo-taco",
+    "coats": 1,
+    "rating": "A",
+    "notes": "nice spread of holo, gentle, doesn't cover color",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Holo Taco",
+    "name": "Super Glossy Taco",
+    "colors": [
+      "Clear"
+    ],
+    "finishes": [],
+    "link": "https://www.holotaco.com/products/super-glossy-taco",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Holo Taco",
+    "name": "Work Bestie",
+    "colors": [
+      "Purple"
+    ],
+    "finishes": [
+      "Creme"
+    ],
+    "link": "https://www.holotaco.com/products/work-bestie",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "ILNP",
+    "name": "Black Orchid",
+    "colors": [
+      "Purple"
+    ],
+    "finishes": [],
+    "link": "https://www.ilnp.com/holographics-and-ultra-holos/black-orchid/",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "ILNP",
+    "name": "Brownstone",
+    "colors": [
+      "Brown"
+    ],
+    "finishes": [],
+    "link": "https://www.ilnp.com/nail-polish/brownstone/",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "ILNP",
+    "name": "Dash of Cocoa",
+    "colors": [
+      "Brown"
+    ],
+    "finishes": [],
+    "link": "https://www.ilnp.com/nail-polish/dash-of-cocoa/",
+    "coats": 3,
+    "rating": "B_PLUS",
+    "notes": "Color is ok but holo is beautiful",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "ILNP",
+    "name": "Eclipse (H)",
+    "colors": [
+      "Multi"
+    ],
+    "finishes": [
+      "Duochrome"
+    ],
+    "link": "https://www.ilnp.com/nail-polish/eclipse-h/",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "ILNP",
+    "name": "Hush (H)",
+    "colors": [
+      "Teal"
+    ],
+    "finishes": [
+      "Duochrome"
+    ],
+    "link": "https://www.ilnp.com/nail-polish/hush-h/",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "ILNP",
+    "name": "Juliette",
+    "colors": [
+      "Gold"
+    ],
+    "finishes": [
+      "Glitter",
+      "Holo Glitter"
+    ],
+    "link": "http://www.thepolishedperspective.com/2016/01/ilnp-juliette.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "ILNP",
+    "name": "Prancer",
+    "colors": [
+      "Beige"
+    ],
+    "finishes": [],
+    "link": "https://www.ilnp.com/nail-polish/prancer/",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "ILNP",
+    "name": "Revival",
+    "colors": [
+      "Multi"
+    ],
+    "finishes": [],
+    "link": "https://www.ilnp.com/holographics-and-ultra-holos/revival/",
+    "coats": 2,
+    "rating": "A_PLUS",
+    "notes": "gorgeous ",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "ILNP",
+    "name": "Rock Bottom",
+    "colors": [
+      "Brown"
+    ],
+    "finishes": [],
+    "link": "https://www.ilnp.com/holographics-and-ultra-holos/rock-bottom/",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Jade Diamond",
+    "name": "Velvet",
+    "colors": [
+      "Purple"
+    ],
+    "finishes": [
+      "Duochrome",
+      "Glass Fleck"
+    ],
+    "link": "http://www.fashionpolish.com/2012/11/jade-diamond-collection-review.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Joss",
+    "name": "Desert Sunset",
+    "colors": [
+      "Orange"
+    ],
+    "finishes": [
+      "Scattered Holo",
+      "Glass Fleck"
+    ],
+    "link": "http://www.plumpandpolished.com/2014/03/joss-desert-sunset.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "KBShimmer",
+    "name": "Bahama Drama",
+    "colors": [
+      "Orange"
+    ],
+    "finishes": [
+      "Neon"
+    ],
+    "link": "https://curbappealnails.blogspot.com/2015/07/kbshimmer-bahama-drama-mdu-gold-floral-stamping.html",
+    "coats": 3,
+    "rating": "C",
+    "notes": "patchy on toes, but may just need some thinner",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "KBShimmer",
+    "name": "Berry Chill",
+    "colors": [
+      "Purple"
+    ],
+    "finishes": [
+      "Shimmer"
+    ],
+    "link": "https://www.kbshimmer.com/berry-chill-nail-polish/",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "KBShimmer",
+    "name": "Dawn To Earth",
+    "colors": [
+      "Purple"
+    ],
+    "finishes": [
+      "Shimmer",
+      "Jelly",
+      "Shifty"
+    ],
+    "link": "https://www.kbshimmer.com/dawn-to-earth-nail-polish/",
+    "coats": 2,
+    "rating": "A",
+    "notes": "gorgeous shifts, easy application, long lasting",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "KBShimmer",
+    "name": "Drawn To You (R)",
+    "colors": [
+      "Blue"
+    ],
+    "finishes": [
+      "Shimmer",
+      "Shifty",
+      "Reflective Glitter"
+    ],
+    "link": "https://www.kbshimmer.com/drawn-to-you-reflective-nail-polish/",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "KBShimmer",
+    "name": "Lilac Dreams",
+    "colors": [
+      "Purple"
+    ],
+    "finishes": [
+      "Glitter",
+      "Shimmer",
+      "Duochrome"
+    ],
+    "link": "https://curbappealnails.blogspot.com/2014/08/chevron-nail-art-with-zoya-valerie-and.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "KBShimmer",
+    "name": "Love You Brunches (R)",
+    "colors": [
+      "Purple"
+    ],
+    "finishes": [
+      "Shimmer",
+      "Shifty",
+      "Reflective Glitter"
+    ],
+    "link": "https://www.kbshimmer.com/love-you-brunches-reflective-nail-polish/",
+    "coats": 2,
+    "rating": "A",
+    "notes": "needs 2-3 top coats",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "KBShimmer",
+    "name": "Novel Idea (R)",
+    "colors": [
+      "Purple"
+    ],
+    "finishes": [
+      "Shimmer",
+      "Shifty",
+      "Reflective Glitter"
+    ],
+    "link": "https://www.kbshimmer.com/novel-idea-reflective-nail-polish/",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "KBShimmer",
+    "name": "Of Quartz (R)",
+    "colors": [
+      "Pink"
+    ],
+    "finishes": [
+      "Shimmer",
+      "Shifty",
+      "Reflective Glitter"
+    ],
+    "link": "https://www.kbshimmer.com/of-quartz-reflective-nail-polish/",
+    "coats": 2,
+    "rating": "A",
+    "notes": "needs 2-3 layers of top coat",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "KBShimmer",
+    "name": "Peak My Interest",
+    "colors": [
+      "Pink"
+    ],
+    "finishes": [
+      "Chunky Glitter",
+      "Crelly"
+    ],
+    "link": "https://curbappealnails.blogspot.com/2015/08/kbshimmer-peak-my-interest-swatches.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "KBShimmer",
+    "name": "Pink-a Colada",
+    "colors": [
+      "Pink"
+    ],
+    "finishes": [
+      "Chunky Glitter",
+      "Holo Glitter",
+      "Crelly"
+    ],
+    "link": "https://curbappealnails.blogspot.com/search?q=Pink-a+Colada",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "KBShimmer",
+    "name": "Shell Shock",
+    "colors": [
+      "Beige"
+    ],
+    "finishes": [
+      "Chunky Glitter",
+      "Holo Glitter",
+      "Crelly"
+    ],
+    "link": "http://www.manicurator.com/2015/05/kbshimmer-summer-2015-collection-part-2.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "KBShimmer",
+    "name": "Such A Vlad-Ass",
+    "colors": [
+      "Red"
+    ],
+    "finishes": [
+      "Creme"
+    ],
+    "link": "https://www.instagram.com/p/9R2wnwB1mY/",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "KBShimmer",
+    "name": "Take Back CTRL",
+    "colors": [
+      "Pink"
+    ],
+    "finishes": [
+      "Creme"
+    ],
+    "link": "https://www.kbshimmer.com/take-back-ctrl-nail-polish/",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "KBShimmer",
+    "name": "Tapped Out (R)",
+    "colors": [
+      "Blue"
+    ],
+    "finishes": [
+      "Reflective Glitter",
+      "Shimmer",
+      "Creme"
+    ],
+    "link": "https://www.kbshimmer.com/tapped-out-reflective-nail-polish/",
+    "coats": 2,
+    "rating": "B",
+    "notes": "Thick and chunky, but beautiful. Might be better with some thinner.",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "KBShimmer",
+    "name": "Teal Another Tail",
+    "colors": [
+      "Teal"
+    ],
+    "finishes": [
+      "Holo Glitter",
+      "Shimmer"
+    ],
+    "link": "https://curbappealnails.blogspot.com/2014/09/kbshimmer-teal-another-tail.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "KBShimmer",
+    "name": "Vitamin Sea",
+    "colors": [
+      "Teal"
+    ],
+    "finishes": [
+      "Chunky Glitter",
+      "Micro Holo Glitter",
+      "Jelly"
+    ],
+    "link": "https://curbappealnails.blogspot.com/2015/06/kbshimmer-vitamin-sea-swatches.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Kleancolor",
+    "name": "Mocha",
+    "colors": [
+      "Pink"
+    ],
+    "finishes": [
+      "Creme"
+    ],
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Kleancolor",
+    "name": "Pearl Beige",
+    "colors": [
+      "Pink"
+    ],
+    "finishes": [
+      "Shimmer",
+      "Glass Fleck"
+    ],
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Konad",
+    "name": "zzz *unmarked*",
+    "colors": [
+      "Black"
+    ],
+    "finishes": [
+      "Creme"
+    ],
+    "empty_bottles": 0,
+    "total_bottles": 2
+  },
+  {
+    "brand": "L.A. Colors Art Deco",
+    "name": "zzz *unmarked*",
+    "colors": [
+      "Black"
+    ],
+    "finishes": [
+      "Creme"
+    ],
+    "empty_bottles": 0,
+    "total_bottles": 2
+  },
+  {
+    "brand": "L.A. Colors Art Deco",
+    "name": "Gold Glitter",
+    "colors": [
+      "Gold"
+    ],
+    "finishes": [
+      "Glitter"
+    ],
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "L.A. Colors Art Deco",
+    "name": "Purple Blue Glitter",
+    "colors": [
+      "Multi"
+    ],
+    "finishes": [
+      "Glitter"
+    ],
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "L.A. Colors Art Deco",
+    "name": "Hot Pink",
+    "colors": [
+      "Pink"
+    ],
+    "finishes": [
+      "Creme"
+    ],
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "L.A. Colors Art Deco",
+    "name": "Intense Pink",
+    "colors": [
+      "Pink"
+    ],
+    "finishes": [
+      "Creme"
+    ],
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "L.A. Colors Art Deco",
+    "name": "Silver",
+    "colors": [
+      "Silver"
+    ],
+    "finishes": [
+      "Metallic"
+    ],
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "L.A. Colors Art Deco",
+    "name": "Silver Glitter",
+    "colors": [
+      "Silver"
+    ],
+    "finishes": [
+      "Glitter"
+    ],
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "L.A. Colors Art Deco",
+    "name": "White",
+    "colors": [
+      "White"
+    ],
+    "finishes": [
+      "Creme"
+    ],
+    "empty_bottles": 0,
+    "total_bottles": 2
+  },
+  {
+    "brand": "L.A. Colors Color Craze",
+    "name": "Broken Hearted",
+    "colors": [
+      "Red"
+    ],
+    "finishes": [
+      "Iridescent Glitter",
+      "Iridescent Flakie",
+      "Jelly",
+      "Topper"
+    ],
+    "link": "https://www.princesslypolished.com/2012/11/new-la-colors-candy-sprinkles-flurry.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "L.A. Colors Color Craze",
+    "name": "Cocktail",
+    "colors": [
+      "Pink"
+    ],
+    "finishes": [
+      "Holo Glitter",
+      "Glitter"
+    ],
+    "link": "http://www.iwetto.com/2013/03/delicatessen.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "L.A. Colors Color Craze",
+    "name": "Confetti",
+    "colors": [
+      "Multi"
+    ],
+    "finishes": [
+      "Chunky Glitter"
+    ],
+    "link": "https://lovinnailz.blogspot.com/2012/12/la-colors-color-craze-confetti-swatches.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Lancome Vernis In Love",
+    "name": "147M Rouge Valentine",
+    "colors": [
+      "Red"
+    ],
+    "finishes": [
+      "Creme"
+    ],
+    "link": "https://curbappealnails.blogspot.com/2014/10/wet-n-wild-wet-cement-freehand-hearts.html",
+    "coats": 3,
+    "rating": "A_MINUS",
+    "notes": "3 thin coats, almost a crelly, nice formula ",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Lancome Vernis In Love",
+    "name": "350M Rose Thé",
+    "colors": [
+      "Pink"
+    ],
+    "finishes": [
+      "Creme"
+    ],
+    "link": "https://curbappealnails.blogspot.com/2014/11/lancome-vernis-in-love-350m-rose-the.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Lancome Vernis In Love",
+    "name": "522 Bubbly Gold",
+    "colors": [
+      "Gold"
+    ],
+    "finishes": [
+      "Metallic"
+    ],
+    "link": "https://makeupandbeautyblog.com/product-reviews/well-always-have-paris-the-sparkling-lancome-petit-tresor-holiday-collection/",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Lancome Vernis In Love",
+    "name": "575 Flirty Red",
+    "colors": [
+      "Red"
+    ],
+    "finishes": [
+      "Shimmer"
+    ],
+    "link": "https://catdoccannon.blogspot.com/2013/09/lancome-in-love-575-flirty-red.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Loreal",
+    "name": "B. Strong - Bijou Gems",
+    "colors": [
+      "Green"
+    ],
+    "finishes": [
+      "Shimmer"
+    ],
+    "link": "https://polishedclawsup.blogspot.com/2011/12/old-and-new-loreal-bijou-gems-b-strong.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Loreal",
+    "name": "Sequin Explosion",
+    "colors": [
+      "Multi"
+    ],
+    "finishes": [
+      "Chunky Glitter",
+      "Glitter"
+    ],
+    "link": "https://www.britnails.co.uk/2013/08/loreal-sequin-explosion.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Maybelline",
+    "name": "Magic Merlot",
+    "colors": [
+      "Red"
+    ],
+    "finishes": [
+      "Creme"
+    ],
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Milani Color Statement",
+    "name": "Peri-Wink",
+    "colors": [
+      "Blue"
+    ],
+    "finishes": [
+      "Creme",
+      "Shimmer"
+    ],
+    "link": "https://curbappealnails.blogspot.com/2015/08/milani-color-statement-peri-wink-bps-lace-sticker-decals.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Models Own",
+    "name": "Indian Ocean",
+    "colors": [
+      "Teal"
+    ],
+    "finishes": [
+      "Glass Fleck",
+      "Duochrome",
+      "Topper"
+    ],
+    "link": "https://www.sparklyvernis.com/2012/05/models-own-indian-ocean-new-kind-of-duo.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Models Own",
+    "name": "Peacock Green",
+    "colors": [
+      "Green"
+    ],
+    "finishes": [
+      "Shimmer"
+    ],
+    "link": "http://canvasnails.blogspot.com/2012/08/models-own-peacock-green.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Models Own",
+    "name": "Pink Cocktail",
+    "colors": [
+      "Pink"
+    ],
+    "finishes": [
+      "Shifty",
+      "Jelly",
+      "Shimmer",
+      "Iridescent"
+    ],
+    "link": "http://www.thecolourcarousel.co.uk/2012/11/nail-of-day-models-own-pink-cocktail.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Mooncat",
+    "name": "A Very Merry Unbirthday",
+    "colors": [
+      "Purple"
+    ],
+    "finishes": [],
+    "link": "https://www.mooncat.com/products/a-very-merry-unbirthday",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Mooncat",
+    "name": "Kelp Kingdom",
+    "colors": [
+      "Green"
+    ],
+    "finishes": [
+      "Magnetic"
+    ],
+    "link": "https://www.mooncat.com/products/kelp-kingdom",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Mooncat",
+    "name": "Mad Hatter",
+    "colors": [
+      "Multi"
+    ],
+    "finishes": [
+      "Magnetic",
+      "Holo Glitter"
+    ],
+    "link": "https://www.mooncat.com/products/mad-hatter",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Mooncat",
+    "name": "Mood Ring",
+    "colors": [
+      "Purple"
+    ],
+    "finishes": [
+      "Jelly",
+      "Iridescent Flakie"
+    ],
+    "link": "https://www.mooncat.com/products/mood-ring",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Mooncat",
+    "name": "Velociraptor",
+    "colors": [
+      "Teal"
+    ],
+    "finishes": [
+      "Matte",
+      "Iridescent Flakie",
+      "Reflective Glitter"
+    ],
+    "link": "w.mooncat.com/products/velociraptor",
+    "coats": 3,
+    "rating": "A",
+    "notes": "even though I felt like I needed 3 coats and 2 top coats, this polish helped up super well and is gorgeous. It's matte but I prefer glossy",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Mooncat",
+    "name": "Weeping Willow",
+    "colors": [
+      "Green"
+    ],
+    "finishes": [
+      "Magnetic",
+      "Reflective Glitter"
+    ],
+    "link": "https://www.mooncat.com/products/weeping-willow",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Morgan Taylor",
+    "name": "Fame Game",
+    "colors": [
+      "Silver"
+    ],
+    "finishes": [
+      "Holo Glitter"
+    ],
+    "link": "https://curbappealnails.blogspot.com/2014/07/morgan-taylor-fame-game.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Morgan Taylor",
+    "name": "Well Spent",
+    "colors": [
+      "Purple"
+    ],
+    "finishes": [
+      "Creme"
+    ],
+    "link": "https://mariasnailpolishblog.blogspot.com/2015/02/morgan-taylor-well-spent-swatches.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Mundo de Unas",
+    "name": "Bones",
+    "colors": [
+      "Beige"
+    ],
+    "finishes": [
+      "Creme"
+    ],
+    "link": "http://phdnails.blogspot.com/2015/07/mundo-de-unas-stamping-polish-review.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Mundo de Unas",
+    "name": "Black",
+    "colors": [
+      "Black"
+    ],
+    "finishes": [
+      "Creme"
+    ],
+    "link": "http://phdnails.blogspot.com/2015/07/mundo-de-unas-stamping-polish-review.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Mundo de Unas",
+    "name": "Blue Navy",
+    "colors": [
+      "Blue"
+    ],
+    "finishes": [
+      "Creme"
+    ],
+    "link": "http://phdnails.blogspot.com/2015/07/mundo-de-unas-stamping-polish-review.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Mundo de Unas",
+    "name": "Sky Blue",
+    "colors": [
+      "Blue"
+    ],
+    "finishes": [
+      "Creme"
+    ],
+    "link": "http://phdnails.blogspot.com/2015/07/mundo-de-unas-stamping-polish-review.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Mundo de Unas",
+    "name": "Copper",
+    "colors": [
+      "Gold"
+    ],
+    "finishes": [
+      "Metallic"
+    ],
+    "link": "http://phdnails.blogspot.com/2015/07/mundo-de-unas-stamping-polish-review.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Mundo de Unas",
+    "name": "Gold",
+    "colors": [
+      "Gold"
+    ],
+    "finishes": [
+      "Metallic"
+    ],
+    "link": "http://phdnails.blogspot.com/2015/07/mundo-de-unas-stamping-polish-review.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Mundo de Unas",
+    "name": "Spring Green",
+    "colors": [
+      "Green"
+    ],
+    "finishes": [
+      "Creme"
+    ],
+    "link": "http://phdnails.blogspot.com/2015/07/mundo-de-unas-stamping-polish-review.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Mundo de Unas",
+    "name": "Nabu",
+    "colors": [
+      "Orange"
+    ],
+    "finishes": [
+      "Creme"
+    ],
+    "link": "http://phdnails.blogspot.com/2015/07/mundo-de-unas-stamping-polish-review.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Mundo de Unas",
+    "name": "Orchid",
+    "colors": [
+      "Pink"
+    ],
+    "finishes": [
+      "Creme"
+    ],
+    "link": "http://phdnails.blogspot.com/2015/07/mundo-de-unas-stamping-polish-review.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Mundo de Unas",
+    "name": "Purple",
+    "colors": [
+      "Purple"
+    ],
+    "finishes": [
+      "Creme"
+    ],
+    "link": "http://phdnails.blogspot.com/2015/07/mundo-de-unas-stamping-polish-review.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Mundo de Unas",
+    "name": "Reddish",
+    "colors": [
+      "Red"
+    ],
+    "finishes": [
+      "Creme"
+    ],
+    "link": "http://phdnails.blogspot.com/2015/07/mundo-de-unas-stamping-polish-review.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Mundo de Unas",
+    "name": "Tulip",
+    "colors": [
+      "Red"
+    ],
+    "finishes": [
+      "Creme"
+    ],
+    "link": "http://phdnails.blogspot.com/2015/07/mundo-de-unas-stamping-polish-review.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Mundo de Unas",
+    "name": "Silver",
+    "colors": [
+      "Silver"
+    ],
+    "finishes": [
+      "Metallic"
+    ],
+    "link": "http://phdnails.blogspot.com/2015/07/mundo-de-unas-stamping-polish-review.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Mundo de Unas",
+    "name": "White",
+    "colors": [
+      "White"
+    ],
+    "finishes": [
+      "Creme"
+    ],
+    "link": "http://phdnails.blogspot.com/2015/07/mundo-de-unas-stamping-polish-review.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Mundo de Unas",
+    "name": "Mustard",
+    "colors": [
+      "Yellow"
+    ],
+    "finishes": [
+      "Creme"
+    ],
+    "link": "http://phdnails.blogspot.com/2015/07/mundo-de-unas-stamping-polish-review.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Mundo de Unas",
+    "name": "Neon Yellow",
+    "colors": [
+      "Yellow"
+    ],
+    "finishes": [
+      "Creme"
+    ],
+    "link": "http://phdnails.blogspot.com/2015/07/mundo-de-unas-stamping-polish-review.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Nfu Oh",
+    "name": "Aqua Base",
+    "colors": [
+      "Clear"
+    ],
+    "finishes": [],
+    "link": "http://www.alllacqueredup.com/2010/08/holo-nfu-61-minx-hologram-nails.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Nicole By OPI",
+    "name": "Enchantress",
+    "colors": [
+      "Pink"
+    ],
+    "finishes": [
+      "Sheer",
+      "Iridescent"
+    ],
+    "link": "http://wecameasasians.blogspot.com/2011/07/nicole-by-opi-enchantress.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Nicole By OPI",
+    "name": "Hit The Lights - Selena Gomez",
+    "colors": [
+      "Yellow"
+    ],
+    "finishes": [
+      "Creme"
+    ],
+    "link": "http://www.oliviafrescura.com/2013/06/06/notd-hit-the-lights-by-nicole-by-opi-selena-gomez-collection/",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Nicole By OPI",
+    "name": "Pretty in Plum - Selena Gomez",
+    "colors": [
+      "Purple"
+    ],
+    "finishes": [
+      "Duochrome"
+    ],
+    "link": "https://curbappealnails.blogspot.com/2014/07/comparison-swatches-essie-lace-is-on.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Nicole By OPI",
+    "name": "Purple Yourself Together",
+    "colors": [
+      "Purple"
+    ],
+    "finishes": [
+      "Shimmer"
+    ],
+    "link": "https://curbappealnails.blogspot.com/2015/02/valentines-day-stamping-part-3-nicole-opi-purple-yourself-together.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Nicole By OPI",
+    "name": "Shell Me The Truth",
+    "colors": [
+      "Pink"
+    ],
+    "finishes": [
+      "Shimmer",
+      "Sheer"
+    ],
+    "link": "https://perkypolish.blogspot.com/2011/05/nicole-by-opi-shell-me-truth.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Nicole By OPI",
+    "name": "The Next CEO",
+    "colors": [
+      "Gold"
+    ],
+    "finishes": [
+      "Metallic"
+    ],
+    "link": "http://wackylaki.blogspot.com/2011/09/day-8-metallic-nicole-by-opi-next-ceo.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "No7",
+    "name": "In The Stars",
+    "colors": [
+      "Clear"
+    ],
+    "finishes": [
+      "Duochrome",
+      "Shimmer"
+    ],
+    "link": "https://curbappealnails.blogspot.com/2014/12/galaxy-nails-no-7-in-the-stars-orly-goth.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "No7",
+    "name": "Moonlit Shadow",
+    "colors": [
+      "Beige"
+    ],
+    "finishes": [
+      "Metallic"
+    ],
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "NYC",
+    "name": "Lexington Yellow - In a Minute",
+    "colors": [
+      "Yellow"
+    ],
+    "finishes": [
+      "Creme"
+    ],
+    "link": "http://52shadesofnailpolish.blogspot.com/2013/08/new-york-color-in-lexington-yellow.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "NYC",
+    "name": "Skyline Blue",
+    "colors": [
+      "Blue"
+    ],
+    "finishes": [
+      "Shimmer"
+    ],
+    "link": "http://www.nailslikelace.com/2013/02/nail-polish-comparison-duplicate.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "NYC",
+    "name": "White Lights Glitter",
+    "colors": [
+      "Clear"
+    ],
+    "finishes": [
+      "Iridescent Glitter",
+      "Topper"
+    ],
+    "link": "https://www.makeupalley.com/product/showreview.asp/ItemId=109803/Long-Wearing-Nail-Enamel---White-Lights-Glitter-101A/NYC-New-York-Color/Polishes",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "NYC",
+    "name": "105A",
+    "colors": [
+      "Silver"
+    ],
+    "finishes": [],
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "OPI",
+    "name": "Ridge Filler",
+    "colors": [
+      "Beige"
+    ],
+    "finishes": [],
+    "link": "https://www.opi.com/shop-products/nail-care/top-base-coats/ridge-filler",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "OPI",
+    "name": "Matte Top Coat",
+    "colors": [
+      "Clear"
+    ],
+    "finishes": [
+      "Matte"
+    ],
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "OPI",
+    "name": "Natural Nail Base Coat",
+    "colors": [
+      "Clear"
+    ],
+    "finishes": [],
+    "empty_bottles": 0,
+    "total_bottles": 2
+  },
+  {
+    "brand": "OPI",
+    "name": "Top Coat",
+    "colors": [
+      "Clear"
+    ],
+    "finishes": [],
+    "empty_bottles": 0,
+    "total_bottles": 2
+  },
+  {
+    "brand": "OPI",
+    "name": "A Butterfly Moment",
+    "colors": [
+      "Pink"
+    ],
+    "finishes": [
+      "Shimmer"
+    ],
+    "link": "http://www.muxe.net/blog/2013/09/opi-a-butterfly-moment/",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "OPI",
+    "name": "Alpine Snow",
+    "colors": [
+      "White"
+    ],
+    "finishes": [
+      "Creme"
+    ],
+    "link": "https://elainenails.blogspot.com/2014/07/opi-alpine-snow.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "OPI",
+    "name": "Barefoot In Barcelona",
+    "colors": [
+      "Pink"
+    ],
+    "finishes": [
+      "Creme"
+    ],
+    "link": "https://www.opi.com/shop-products/nail-polish-powders/nail-lacquer/barefoot-in-barcelona",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "OPI",
+    "name": "Cozu-Melted In The Sun",
+    "colors": [
+      "Orange"
+    ],
+    "finishes": [
+      "Shimmer"
+    ],
+    "link": "https://www.opi.com/shop-products/nail-polish-powders/nail-lacquer/cozu-melted-in-the-sun",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "OPI",
+    "name": "Give Me The Moon!",
+    "colors": [
+      "Blue"
+    ],
+    "finishes": [
+      "Shimmer",
+      "Sheer"
+    ],
+    "link": "https://nailjuice.blogspot.com/2014/07/opi-give-me-moon.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "OPI",
+    "name": "Glints of Glinda",
+    "colors": [
+      "Beige"
+    ],
+    "finishes": [
+      "Sheer"
+    ],
+    "link": "http://ommorphiabeautybar.com/tag/opi-i-theodora-you-swatch/",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "OPI",
+    "name": "I Don't Do Dishes",
+    "colors": [
+      "Red"
+    ],
+    "finishes": [
+      "Shimmer"
+    ],
+    "link": "https://www.the-crumpet.co.uk/2012/01/opi-i-dont-do-dishes.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "OPI",
+    "name": "I Theodora You",
+    "colors": [
+      "Pink"
+    ],
+    "finishes": [
+      "Sheer"
+    ],
+    "link": "http://ommorphiabeautybar.com/tag/opi-i-theodora-you-swatch/",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "OPI",
+    "name": "Jinx - Liquid Sand",
+    "colors": [
+      "Red"
+    ],
+    "finishes": [
+      "Shimmer",
+      "Textured"
+    ],
+    "link": "https://www.chalkboardnails.com/2013/04/opi-bond-girls-liquid-sand-collection.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "OPI",
+    "name": "Less is Norse",
+    "colors": [
+      "Blue"
+    ],
+    "finishes": [
+      "Creme"
+    ],
+    "link": "https://www.cosmeticsanctuary.com/opi-iceland-fall-2017-collection/",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "OPI",
+    "name": "Miami Beet",
+    "colors": [
+      "Pink"
+    ],
+    "finishes": [
+      "Creme"
+    ],
+    "link": "https://www.opi.com/shop-products/nail-polish-powders/nail-lacquer/miami-beet",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "OPI",
+    "name": "Not Like The Movies",
+    "colors": [
+      "Silver"
+    ],
+    "finishes": [
+      "Duochrome",
+      "Shimmer"
+    ],
+    "link": "http://ommorphiabeautybar.com/opi-peace-love-opi-with-comparisons/",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "OPI",
+    "name": "O Suzi Mio",
+    "colors": [
+      "Purple"
+    ],
+    "finishes": [
+      "Creme"
+    ],
+    "link": "http://www.kelliegonzo.com/2015/09/opi-fall-2015-venice-collection.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "OPI",
+    "name": "One Heckla of a Color!",
+    "colors": [
+      "Purple"
+    ],
+    "finishes": [
+      "Creme"
+    ],
+    "link": "https://www.opi.com/shop-products/nail-polish-powders/nail-lacquer/one-heckla-of-a-color",
+    "coats": 2,
+    "rating": "A",
+    "notes": "nice formula and brush",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "OPI",
+    "name": "OPI With a Nice Finnish",
+    "colors": [
+      "Gold"
+    ],
+    "finishes": [
+      "Frost"
+    ],
+    "link": "http://simplyintomynails.blogspot.com/2014/09/mini-manicures-opi-with-great-finnish.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "OPI",
+    "name": "OPI... Eurso Euro",
+    "colors": [
+      "Blue"
+    ],
+    "finishes": [
+      "Creme"
+    ],
+    "link": "https://copycatclaws.blogspot.com/2013/11/opi-eurso-euro-max-factor-fantasy-fire.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "OPI",
+    "name": "Peace & Love & OPI",
+    "colors": [
+      "Silver"
+    ],
+    "finishes": [
+      "Duochrome",
+      "Metallic"
+    ],
+    "link": "http://www.polishinsomniac.net/2013/07/opi-san-francisco-shimmers-swatches-and.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "OPI",
+    "name": "Rent",
+    "colors": [
+      "Purple"
+    ],
+    "finishes": [
+      "Duochrome",
+      "Shimmer",
+      "Glass Fleck"
+    ],
+    "link": "https://www.prettygirlscience.com/2013/12/opi-rent.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "OPI",
+    "name": "Solitaire - Liquid Sand",
+    "colors": [
+      "White"
+    ],
+    "finishes": [
+      "Glitter",
+      "Frost",
+      "Textured"
+    ],
+    "link": "https://missintensitynails.blogspot.com/2014/01/swatch-opi-solitaire.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "OPI",
+    "name": "Super Bass Shatter",
+    "colors": [
+      "Purple"
+    ],
+    "finishes": [
+      "Shimmer",
+      "Crackle"
+    ],
+    "link": "http://kiwiwithcrazynails.blogspot.com/2012/01/opi-super-bass-shatter.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "OPI",
+    "name": "The Impossible - Liquid Sand",
+    "colors": [
+      "Red"
+    ],
+    "finishes": [
+      "Chunky Glitter",
+      "Glitter",
+      "Textured"
+    ],
+    "link": "http://stephanie-nguyen.blogspot.com/2012/12/opi-liquid-sand-impossible.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Orly",
+    "name": "zzz *unmarked*",
+    "colors": [
+      "Beige"
+    ],
+    "finishes": [
+      "Metallic"
+    ],
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Orly",
+    "name": "Crossroad",
+    "colors": [
+      "Gray"
+    ],
+    "finishes": [
+      "Shimmer"
+    ],
+    "link": "https://curbappealnails.blogspot.com/2014/10/orly-crossroad-with-glitter-cross-design.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Orly",
+    "name": "Cut The Cake",
+    "colors": [
+      "Beige"
+    ],
+    "finishes": [
+      "Shimmer",
+      "Sheer"
+    ],
+    "link": "https://guiltypleasurecolors.blogspot.com/2013/08/cut-cake.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Orly",
+    "name": "Fantasea",
+    "colors": [
+      "Purple"
+    ],
+    "finishes": [
+      "Shimmer",
+      "Sheer"
+    ],
+    "link": "http://www.letthemhavepolish.com/2011/01/orly-fantasea.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Orly",
+    "name": "Goth",
+    "colors": [
+      "Black"
+    ],
+    "finishes": [
+      "Glitter"
+    ],
+    "link": "https://curbappealnails.blogspot.com/2015/06/black-gold-striped-nails-lancome-bubbly-gold-522-orly-goth.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Orly",
+    "name": "Hottie",
+    "colors": [
+      "Pink"
+    ],
+    "finishes": [
+      "Neon"
+    ],
+    "link": "https://just-nice-things.co.uk/orly-hottie/",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Orly",
+    "name": "Mirrorball",
+    "colors": [
+      "Silver"
+    ],
+    "finishes": [
+      "Holo Glitter",
+      "Linear Holo"
+    ],
+    "link": "https://curbappealnails.blogspot.com/2015/08/orly-mirrorball-swatches.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Orly",
+    "name": "Royal Velvet",
+    "colors": [
+      "Purple"
+    ],
+    "finishes": [
+      "Duochrome",
+      "Shimmer"
+    ],
+    "link": "http://www.letthemhavepolish.com/2011/03/orly-royal-velvet.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Orly",
+    "name": "Velvet Rope",
+    "colors": [
+      "Purple"
+    ],
+    "finishes": [
+      "Micro Glitter",
+      "Creme"
+    ],
+    "link": "https://curbappealnails.blogspot.com/2014/12/orly-velvet-rope-swatches.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Penelope Luz",
+    "name": "Five Stars, Please",
+    "colors": [
+      "Gold"
+    ],
+    "finishes": [
+      "Reflective Glitter"
+    ],
+    "link": "https://www.color4nails.com/product/penelope-luz-five-stars-please-pre-order/",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Penelope Luz",
+    "name": "I Prefer the Beach",
+    "colors": [
+      "Blue"
+    ],
+    "finishes": [
+      "Jelly",
+      "Reflective Glitter",
+      "Flakie"
+    ],
+    "link": "https://www.color4nails.com/product/penelope-luz-i-prefer-the-beach-pre-order/",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Penelope Luz",
+    "name": "Satyyagraha",
+    "colors": [
+      "Multi"
+    ],
+    "finishes": [
+      "Multichrome"
+    ],
+    "link": "https://www.lanternandwren.com/satyyagraha-penelope-luz-premium-5-free-nail-polish/",
+    "coats": 2,
+    "rating": "A_PLUS",
+    "notes": "smooth application, gorgeous, might not have needed 3 coats but was painting in kitchen at night so hard to tell",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Penelope Luz",
+    "name": "Taj Mahal",
+    "colors": [
+      "Pink"
+    ],
+    "finishes": [
+      "Holo Glitter"
+    ],
+    "link": "https://www.lanternandwren.com/taj-mahal-penelope-luz-premium-5-free-nail-polish/",
+    "rating": "A_PLUS",
+    "notes": "gorgeous",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Penelope Luz",
+    "name": "Travel Souvenir",
+    "colors": [
+      "Pink"
+    ],
+    "finishes": [
+      "Shimmer",
+      "Jelly",
+      "Reflective Glitter"
+    ],
+    "link": "https://www.color4nails.com/product/penelope-luz-travel-souvenir-pre-order/",
+    "coats": 2,
+    "rating": "A",
+    "notes": "patchy on first coat, dries matte and textured, but damn this is so beautiful even on short nails",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Penelope Luz",
+    "name": "Wisdom (Sabedoria)",
+    "colors": [
+      "Multi"
+    ],
+    "finishes": [
+      "Flakie"
+    ],
+    "link": "https://www.lanternandwren.com/wisdom-sabedoria-penelope-luz-premium-5-free-nail-polish/",
+    "coats": 3,
+    "rating": "A_MINUS",
+    "notes": "beautiful, slightly difficult application because the brush is wonky and polish is chunky, but the final finish is smooth",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Phoenix",
+    "name": "Floating (Upside Down Collection)",
+    "colors": [
+      "Blue"
+    ],
+    "finishes": [
+      "Reflective Glitter",
+      "Shimmer",
+      "Jelly"
+    ],
+    "link": "https://www.color4nails.com/product/phoenix-indie-floating/",
+    "coats": 2,
+    "rating": "A_MINUS",
+    "notes": "Easy formula but dries down a bit textured so I took off some points for lots of top coat",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Phoenix",
+    "name": "Life is Short (Reflective Glitter) (Slice of Life)",
+    "colors": [
+      "Teal"
+    ],
+    "finishes": [
+      "Shimmer",
+      "Reflective Glitter",
+      "Iridescent Flakie"
+    ],
+    "link": "https://www.color4nails.com/product/phoenix-life-is-short-reflective-pre-order/",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Phoenix",
+    "name": "Shadowdale (Upside Down Collection)",
+    "colors": [
+      "Multi"
+    ],
+    "finishes": [
+      "Magnetic",
+      "Multichrome",
+      "Shimmer",
+      "Reflective Glitter"
+    ],
+    "link": "https://www.color4nails.com/product/phoenix-indie-shadowdale/",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Phoenix",
+    "name": "Stupid Boys (Upside Down Collection)",
+    "colors": [
+      "Multi"
+    ],
+    "finishes": [
+      "Jelly",
+      "Shimmer",
+      "Shifty",
+      "Flakie"
+    ],
+    "link": "https://www.color4nails.com/product/phoenix-indie-stupid-boys/",
+    "coats": 2,
+    "rating": "B_PLUS",
+    "notes": "great formula, pretty but just not sure the color is my favorite to wear",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Phoenix",
+    "name": "The Babysitter (Upside Down Collection)",
+    "colors": [
+      "Purple"
+    ],
+    "finishes": [
+      "Multichrome",
+      "Reflective Glitter"
+    ],
+    "link": "https://www.color4nails.com/product/phoenix-indie-the-babysitter/",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Phoenix",
+    "name": "The Wise (Upside Down Collection)",
+    "colors": [
+      "Multi"
+    ],
+    "finishes": [
+      "Shimmer",
+      "Reflective Glitter"
+    ],
+    "link": "https://www.color4nails.com/product/phoenix-indie-the-wise/",
+    "notes": "tried on toes, didn't like, should try on hands though!",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Polish Me Silly",
+    "name": "Bombshell",
+    "colors": [
+      "Multi"
+    ],
+    "finishes": [
+      "Chunky Holo Glitter",
+      "Multichrome",
+      "Topper"
+    ],
+    "link": "https://www.polishmesilly.com/store/p121/Bombshell_-_Multichrome_Topper_-_Multi_Color_Changing_Nail_Polish.html#/",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Polish Me Silly",
+    "name": "Chicks Rule",
+    "colors": [
+      "Multi"
+    ],
+    "finishes": [
+      "Chunky Glitter",
+      "Topper"
+    ],
+    "link": "https://curbappealnails.blogspot.com/2014/08/polish-me-silly-chicks-rule-over-opi.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Polish Me Silly",
+    "name": "Cosmic Kisses",
+    "colors": [
+      "Purple"
+    ],
+    "finishes": [
+      "Multichrome",
+      "Holo Glitter",
+      "Shifty"
+    ],
+    "link": "https://curbappealnails.blogspot.com/2014/11/polish-me-silly-cosmic-kisses-multichrome.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Polish Me Silly",
+    "name": "Lovestruck",
+    "colors": [
+      "Multi"
+    ],
+    "finishes": [
+      "Chunky Holo Glitter",
+      "Multichrome",
+      "Topper"
+    ],
+    "link": "https://www.polishmesilly.com/store/p100/_LOVESTRUCK-_Multichrome_Topper_-Glitter_Nail_Polish.html#/",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Polish Me Silly",
+    "name": "Mind Blowing",
+    "colors": [
+      "Multi"
+    ],
+    "finishes": [
+      "Chunky Holo Glitter",
+      "Multichrome",
+      "Topper"
+    ],
+    "link": "https://www.polishmesilly.com/store/p76/_MIND_BLOWING_-Multichrome_Topper_-_Color_Changing_Polish.html#/",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Polish Me Silly",
+    "name": "Peach Me A Lesson",
+    "colors": [
+      "Pink"
+    ],
+    "finishes": [
+      "Thermal",
+      "Chunky Glitter"
+    ],
+    "link": "https://curbappealnails.blogspot.com/2015/07/polish-me-silly-peach-me-lesson-thermal-swatches.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Polish Me Silly",
+    "name": "Pinky Swear Your A ⭐",
+    "colors": [
+      "Pink"
+    ],
+    "finishes": [
+      "Thermal",
+      "Chunky Glitter"
+    ],
+    "link": "https://thenailpolishchallenge.blogspot.com/2014/01/polish-me-silly-thermal-swatches.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Polish Me Silly",
+    "name": "Scandalous",
+    "colors": [
+      "Multi"
+    ],
+    "finishes": [
+      "Chunky Holo Glitter",
+      "Multichrome",
+      "Topper"
+    ],
+    "link": "https://www.polishmesilly.com/store/p120/_SCANDALOUS-_Multichrome_Topper_-_Multi_Color_Changing_Nail_Polish.html#/",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Polish Me Silly",
+    "name": "Stardust",
+    "colors": [
+      "Multi"
+    ],
+    "finishes": [
+      "Chunky Holo Glitter",
+      "Multichrome",
+      "Topper"
+    ],
+    "link": "https://www.polishmesilly.com/store/p114/STARDUST-_Multichrome_Topper-_Color_Shifting_Polish_Glitter_Nail_Polish_.html#/",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Poshe",
+    "name": "Top Coat",
+    "colors": [
+      "Clear"
+    ],
+    "finishes": [],
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Revlon",
+    "name": "Cotton Candy",
+    "colors": [
+      "Pink"
+    ],
+    "finishes": [
+      "Scented",
+      "Shimmer",
+      "Sheer"
+    ],
+    "link": "https://passthepolishplease.blogspot.com/2011/01/revlon-cotton-candy-scented-polish.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Revlon",
+    "name": "Enchanting",
+    "colors": [
+      "Purple"
+    ],
+    "finishes": [
+      "Shimmer"
+    ],
+    "link": "https://nouveaucheap.blogspot.com/2013/03/review-revlon-nail-enamel-in-enchanting.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Revlon",
+    "name": "Tangerine",
+    "colors": [
+      "Orange"
+    ],
+    "finishes": [
+      "Shimmer"
+    ],
+    "link": "http://sovisnailjournal.blogspot.com/2013/04/revlon-fuchsia-fever-and-revlon.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Revlon Colorstay",
+    "name": "Wild Strawberry",
+    "colors": [
+      "Pink"
+    ],
+    "finishes": [
+      "Shimmer"
+    ],
+    "link": "https://lipstickandlacquer.blogspot.com/2013/04/chanel-tentation-nail-polish-dupe.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Revlon Top Speed",
+    "name": "Electric",
+    "colors": [
+      "Yellow"
+    ],
+    "finishes": [
+      "Shimmer"
+    ],
+    "link": "https://ratukutek.wordpress.com/2014/07/02/review-revlon-top-speed-nail-polish/",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Revlon Top Speed",
+    "name": "Essence",
+    "colors": [
+      "Teal"
+    ],
+    "finishes": [
+      "Creme"
+    ],
+    "link": "http://prettycleverblog.blogspot.com/",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Sally Hansen Diamond Strength",
+    "name": "Platinum",
+    "colors": [
+      "Pink"
+    ],
+    "finishes": [
+      "Sheer",
+      "Frost"
+    ],
+    "link": "http://junonails.blogspot.com/2012/04/sally-hansen-diamond-strength-platinum.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Sally Hansen Diamond Strength",
+    "name": "Rose Amore",
+    "colors": [
+      "Pink"
+    ],
+    "finishes": [
+      "Glass Fleck",
+      "Shimmer"
+    ],
+    "link": "https://missverniz.blogspot.com/2014/07/sally-hansen-diamond-strength-numero-44.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Sally Hansen Diamond Strength",
+    "name": "Royal Romance",
+    "colors": [
+      "Purple"
+    ],
+    "finishes": [
+      "Shimmer"
+    ],
+    "link": "http://akabailey.blogspot.com/2014/01/radiant-orchid-nail-polish-sally-hansen_31.html",
+    "coats": 2,
+    "rating": "C",
+    "notes": "streaky, patchy",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Sally Hansen Diamond Strength",
+    "name": "Save The Date",
+    "colors": [
+      "Purple"
+    ],
+    "finishes": [
+      "Shimmer"
+    ],
+    "link": "http://missphibes.blogspot.com/2015/10/sally-hansen-mermaids-tale-y-save-date.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Sally Hansen I ❤️ Nail Art",
+    "name": "Red Rouge",
+    "colors": [
+      "Red"
+    ],
+    "finishes": [
+      "Creme"
+    ],
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Sally Hansen Insta-Dri",
+    "name": "Flashy Fuschia",
+    "colors": [
+      "Pink"
+    ],
+    "finishes": [
+      "Shimmer",
+      "Iridescent"
+    ],
+    "link": "https://thepolishwell.blogspot.com/2011/10/sally-hansen-insta-dri-flashy-fuchsia.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Sally Hansen Insta-Dri",
+    "name": "Go For Gold",
+    "colors": [
+      "Gold"
+    ],
+    "finishes": [
+      "Metallic"
+    ],
+    "link": "https://thefemininefiles.com/2014/07/14/sally-hansen-insta-dry-swatches-2/",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Sally Hansen Insta-Dri",
+    "name": "Grease Lightning",
+    "colors": [
+      "Gray"
+    ],
+    "finishes": [
+      "Creme"
+    ],
+    "link": "https://makeupandbeauty.com/sally-hansen-insta-dri-show-steel-er-slick-slate-grease-lightning-nail-color-review/",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Sally Hansen Insta-Dri",
+    "name": "Slick Slate",
+    "colors": [
+      "Gray"
+    ],
+    "finishes": [
+      "Creme"
+    ],
+    "link": "http://lacquerorleaveher.blogspot.com/2018/01/new-sally-hansen-insta-dris-part-2.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Sally Hansen Nailgrowth Miracle",
+    "name": "Misty Rose",
+    "colors": [
+      "Beige"
+    ],
+    "finishes": [
+      "Shimmer",
+      "Sheer"
+    ],
+    "link": "http://apolishaddiction.blogspot.com/2013/04/sally-hansen-misty-rose-swatch-born.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Sally Hansen Xtreme Wear",
+    "name": "Giant Peach",
+    "colors": [
+      "Pink"
+    ],
+    "finishes": [
+      "Creme"
+    ],
+    "link": "http://covetedbyclaudia.blogspot.com/2015/07/sally-hansen-hard-as-nails-x-treme-wear.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Sally Hansen Xtreme Wear",
+    "name": "Lacey Lilac",
+    "colors": [
+      "Purple"
+    ],
+    "finishes": [
+      "Creme"
+    ],
+    "link": "http://www.imperfectlypainted.com/2011/05/sally-hansen-xtreme-wear-lacey-lilac.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Sally Hansen Xtreme Wear",
+    "name": "Mauve Over",
+    "colors": [
+      "Pink"
+    ],
+    "finishes": [
+      "Creme"
+    ],
+    "link": "https://nouveaucheap.blogspot.com/2015/02/new-sally-hansen-xtreme-wear-in-mauve.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Sally Hansen Xtreme Wear",
+    "name": "Mint Sorbet",
+    "colors": [
+      "Green"
+    ],
+    "finishes": [
+      "Creme"
+    ],
+    "link": "http://wackylaki.blogspot.com/2011/06/sally-hansen-xtreme-wear-mint-sorbet.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Sally Hansen Xtreme Wear",
+    "name": "Pep-Plum",
+    "colors": [
+      "Purple"
+    ],
+    "finishes": [
+      "Creme"
+    ],
+    "link": "https://curbappealnails.blogspot.com/2015/10/sparkly-purple-nails-with-cute-bow-charm.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Sally Hansen Xtreme Wear",
+    "name": "Strobe Flash",
+    "colors": [
+      "Multi"
+    ],
+    "finishes": [
+      "Chunky Glitter",
+      "Topper"
+    ],
+    "link": "https://www.prettygirlscience.com/2013/09/my-picks-from-sally-hansen-xtreme-wear.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Sally Hansen Xtreme Wear",
+    "name": "The Real Teal",
+    "colors": [
+      "Teal"
+    ],
+    "finishes": [
+      "Shimmer"
+    ],
+    "link": "https://alisnailnews.blogspot.com/2011/07/new-sally-hansen-xtreme-wear-teal-y.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Sally Hansen Xtreme Wear",
+    "name": "Twisted Pink",
+    "colors": [
+      "Pink"
+    ],
+    "finishes": [
+      "Creme",
+      "Glass Fleck"
+    ],
+    "link": "http://www.imperfectlypainted.com/2011/04/pink-wednesday-sally-hansen-xtreme-wear.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Seche",
+    "name": "Collected Moments",
+    "colors": [
+      "Gold"
+    ],
+    "finishes": [
+      "Metallic"
+    ],
+    "link": "https://pearlyswirl.blogspot.com/2014/02/seiche-collected-moments.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Seche",
+    "name": "Lumiere",
+    "colors": [
+      "Orange"
+    ],
+    "finishes": [
+      "Frost"
+    ],
+    "link": "https://www.amazon.com/seche-veloce-polish-lacquer-lumiere/dp/b00a2mjfsy",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Sephora by OPI",
+    "name": "Base Coat",
+    "colors": [
+      "Clear"
+    ],
+    "finishes": [],
+    "empty_bottles": 0,
+    "total_bottles": 2
+  },
+  {
+    "brand": "Sephora by OPI",
+    "name": "A Color That Can't Be Tamed",
+    "colors": [
+      "Green"
+    ],
+    "finishes": [
+      "Shimmer",
+      "Sheer"
+    ],
+    "link": "https://moriesnailart.weebly.com/blog/untried-17sephora-by-opi-a-color-that-cant-be-tamed",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Sephora by OPI",
+    "name": "Beam Me Up Hottie!",
+    "colors": [
+      "Silver"
+    ],
+    "finishes": [
+      "Chunky Holo Glitter",
+      "Topper"
+    ],
+    "link": "http://oxnailsbyadriennexo.blogspot.com/2014/01/sephora-by-opi-polishes-for-just-180.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Sephora by OPI",
+    "name": "G-listen To Your Heart",
+    "colors": [
+      "Pink"
+    ],
+    "finishes": [
+      "Chunky Glitter",
+      "Glitter"
+    ],
+    "link": "https://polishplatformsperfume.blogspot.com/2012/01/sephora-by-opi-jewelry-top-coats.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Sephora by OPI",
+    "name": "I Found a Pot of Gold!",
+    "colors": [
+      "Gold"
+    ],
+    "finishes": [
+      "Chunky Holo Glitter",
+      "Glitter"
+    ],
+    "link": "https://polishplatformsperfume.blogspot.com/2012/01/sephora-by-opi-jewelry-top-coats.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Sephora by OPI",
+    "name": "Indi-go With the Flow",
+    "colors": [
+      "Blue"
+    ],
+    "finishes": [
+      "Chunky Glitter",
+      "Topper"
+    ],
+    "link": "https://curbappealnails.blogspot.com/2015/03/sephora-by-opi-indi-go-with-flow-essie-armed-and-ready.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Sephora by OPI",
+    "name": "Looks Like Rain, Dear",
+    "colors": [
+      "Gold"
+    ],
+    "finishes": [
+      "Glitter",
+      "Holo Glitter"
+    ],
+    "link": "http://www.alllacqueredup.com/2010/12/sephora-opi-rain-dear-midnight-mambo.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Sephora by OPI",
+    "name": "S-age is Just a Number",
+    "colors": [
+      "Green"
+    ],
+    "finishes": [
+      "Duochrome"
+    ],
+    "link": "http://nailbourhood.blogspot.com/2013/07/sephora-by-opi-s-age-is-just-number.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Sephora by OPI",
+    "name": "What's a Tire Jack?",
+    "colors": [
+      "Black"
+    ],
+    "finishes": [
+      "Matte"
+    ],
+    "link": "https://misshollyberries.com/2012/09/19/sephora-by-opi-whats-a-tire-jack-matte/",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Sephora Collection",
+    "name": "Berlin Underground",
+    "colors": [
+      "Blue"
+    ],
+    "finishes": [
+      "Creme"
+    ],
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Sephora Collection",
+    "name": "Game Over",
+    "colors": [
+      "Gray"
+    ],
+    "finishes": [
+      "Creme"
+    ],
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Sephora Collection",
+    "name": "Cross The Line",
+    "colors": [
+      "Pink"
+    ],
+    "finishes": [
+      "Creme"
+    ],
+    "link": "https://sephora.nnnow.com/sephora-collection-women-color-hit-nail-polish---l47-cross-the-line-KHU5825YC6K",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Sephora Collection",
+    "name": "Psychedelic",
+    "colors": [
+      "Purple"
+    ],
+    "finishes": [
+      "Creme"
+    ],
+    "link": "http://www.mynailpolishonline.com/2015/07/sephora/sephora-psychedelic/",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Sephora Collection",
+    "name": "Dangerous",
+    "colors": [
+      "Red"
+    ],
+    "finishes": [
+      "Shimmer"
+    ],
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Serum No. 5",
+    "name": "Light Speed",
+    "colors": [
+      "Blue"
+    ],
+    "finishes": [
+      "Shimmer",
+      "Glow in the Dark"
+    ],
+    "link": "https://curbappealnails.blogspot.com/2014/11/serum-no-5-light-speed-glow-skull-crossbones.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Serum No. 5",
+    "name": "Work Hard Play Hard",
+    "colors": [
+      "Pink"
+    ],
+    "finishes": [
+      "Chunky Glitter",
+      "Crelly"
+    ],
+    "link": "https://curbappealnails.blogspot.com/2014/11/serum-no-5-fw14-work-hard-play-hard.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Shaka",
+    "name": "Metalgold Ref. 3",
+    "colors": [
+      "Multi"
+    ],
+    "finishes": [
+      "Shifty",
+      "Shimmer",
+      "Sheer",
+      "Topper"
+    ],
+    "link": "https://curbappealnails.blogspot.com/2015/05/shaka-metalgold-stamped-with-mundo-de-unas-purple.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Sinful Colors",
+    "name": "Rain Song",
+    "colors": [
+      "Multi"
+    ],
+    "finishes": [
+      "Duochrome",
+      "Sheer"
+    ],
+    "link": "https://www.prettygirlscience.com/2013/07/my-picks-from-sinful-colors-country.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Sinful Colors",
+    "name": "Rose Dust",
+    "colors": [
+      "Purple"
+    ],
+    "finishes": [
+      "Shimmer"
+    ],
+    "link": "http://abeautymoment.blogspot.com/2015/05/sinful-colors-nail-color-in-rose-dust.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Sinful Colors",
+    "name": "Shine Divine",
+    "colors": [
+      "Teal"
+    ],
+    "finishes": [
+      "Creme"
+    ],
+    "link": "https://www.prettygirlscience.com/2013/09/my-picks-from-sinfulshine-hot-for-shine.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Sonia Kashuk",
+    "name": "Dime a Dozen",
+    "colors": [
+      "Gray"
+    ],
+    "finishes": [
+      "Shimmer",
+      "Metallic"
+    ],
+    "link": "https://www.vampyvarnish.com/2012/08/sonia-kashuk-nail-colour-fall-2012-swatches-review/",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Sparitual",
+    "name": "Lithophonic",
+    "colors": [
+      "Green"
+    ],
+    "finishes": [
+      "Shimmer"
+    ],
+    "link": "https://www.temptalia.com/sparitual-lithophonic-nail-lacquer-review-photos-swatches/",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Sparitual",
+    "name": "Slate",
+    "colors": [
+      "Gray"
+    ],
+    "finishes": [
+      "Shimmer",
+      "Metallic"
+    ],
+    "link": "http://www.lucysstash.com/2012/09/gradient-tape-manicure-with-sparitual.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Up Colors",
+    "name": "Camuflagem",
+    "colors": [
+      "Purple"
+    ],
+    "finishes": [
+      "Shimmer",
+      "Jelly"
+    ],
+    "link": "http://www.esmaltesdakelly.com/2012/02/up-colors-multicores-colecao.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Urban Outfitters",
+    "name": "Luster",
+    "colors": [
+      "Black"
+    ],
+    "finishes": [
+      "Jelly"
+    ],
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Urban Outfitters",
+    "name": "Sea Dust",
+    "colors": [
+      "Teal"
+    ],
+    "finishes": [
+      "Glitter",
+      "Shimmer"
+    ],
+    "link": "https://curbappealnails.blogspot.com/2015/03/revlon-essence-urban-outfitters-sea-dust-pressed-flowers.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Urban Outfitters",
+    "name": "Tutu",
+    "colors": [
+      "Gold"
+    ],
+    "finishes": [
+      "Chunky Glitter",
+      "Glitter",
+      "Topper"
+    ],
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Wet n Wild",
+    "name": "Black Creme - Wild Shine",
+    "colors": [
+      "Black"
+    ],
+    "finishes": [
+      "Creme"
+    ],
+    "link": "http://wackylaki.blogspot.com/2011/10/wet-n-wild-black-creme.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Wet n Wild",
+    "name": "Gray's Anatomy",
+    "colors": [
+      "Gray"
+    ],
+    "finishes": [
+      "Sheer",
+      "Duochrome"
+    ],
+    "link": "http://www.scrangie.com/2011/01/wet-n-wild-grays-anatomy-versus-deborah.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Wet n Wild",
+    "name": "Havasu Blue - Fergie",
+    "colors": [
+      "Blue"
+    ],
+    "finishes": [
+      "Creme"
+    ],
+    "link": "https://curbappealnails.blogspot.com/2015/05/wet-n-wild-havasu-blue-swatches.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "What's Up Nails",
+    "name": "Earthlike",
+    "colors": [
+      "Brown"
+    ],
+    "finishes": [
+      "Textured",
+      "Matte"
+    ],
+    "link": "https://whatsupbeauty.com/products/earthlike-brown-base-color-shifting-duochrome-shimmer-green-purple-geodes-collection-whats-up-nails-nail-polish",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "What's Up Nails",
+    "name": "Horsehead Nebula",
+    "colors": [
+      "Purple"
+    ],
+    "finishes": [
+      "Magnetic",
+      "Duochrome",
+      "Iridescent Shimmer"
+    ],
+    "link": "https://whatsupbeauty.com/products/horsehead-nebula-magnetic-purple-duochrome-iridescent-shimmer-shorter-days-collection-whats-up-nails-nail-polish",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "What's Up Nails",
+    "name": "Plumingo Party",
+    "colors": [
+      "Purple"
+    ],
+    "finishes": [
+      "Reflective Glitter",
+      "Iridescent Shimmer"
+    ],
+    "link": "https://whatsupbeauty.com/products/plumingo-party-flash-reflective-maroon-base-color-shifting-iridescent-duochrome-shimmer-pink-orange-glitter-purple-gust-of-wind-collection-whats-up-nails-nail-polish",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Wing Dust",
+    "name": "Imagine Me n' You",
+    "colors": [
+      "Blue"
+    ],
+    "finishes": [
+      "Chunky Glitter",
+      "Glitter",
+      "Shimmer"
+    ],
+    "link": "https://curbappealnails.blogspot.com/2015/04/wing-dust-imagine-me-n-you-swatches-review.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Wing Dust",
+    "name": "Orchid You Not!",
+    "colors": [
+      "Purple"
+    ],
+    "finishes": [
+      "Chunky Glitter",
+      "Crelly",
+      "Holo Glitter",
+      "Shimmer"
+    ],
+    "link": "https://curbappealnails.blogspot.com/2015/04/wing-dust-orchid-you-not-stamped-qgirl-022.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "YSL",
+    "name": "Khaki Arty",
+    "colors": [
+      "Brown"
+    ],
+    "finishes": [
+      "Creme"
+    ],
+    "link": "http://www.fashionpolish.com/2012/09/ysl-contemporary-amazon-collection-for.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Zoya",
+    "name": "Anais",
+    "colors": [
+      "Black"
+    ],
+    "finishes": [
+      "Shimmer"
+    ],
+    "link": "http://www.kelliegonzo.com/2015/03/zoya-mystery-trio-swatches-review.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Zoya",
+    "name": "Aurora",
+    "colors": [
+      "Purple"
+    ],
+    "finishes": [
+      "Micro Holo Glitter",
+      "Micro Glitter",
+      "Jelly"
+    ],
+    "link": "https://curbappealnails.blogspot.com/2015/03/zoya-aurora-swatches.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Zoya",
+    "name": "Blaze",
+    "colors": [
+      "Red"
+    ],
+    "finishes": [
+      "Micro Holo Glitter",
+      "Jelly"
+    ],
+    "link": "https://curbappealnails.blogspot.com/2014/08/tribal-nail-vinyls-over-zoya-blaze.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Zoya",
+    "name": "Charity",
+    "colors": [
+      "Purple"
+    ],
+    "finishes": [
+      "Shimmer"
+    ],
+    "link": "https://curbappealnails.blogspot.com/2015/03/zoya-charity-loreal-sequin-explosion-gradient-glitter.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Zoya",
+    "name": "Charlotte",
+    "colors": [
+      "Beige"
+    ],
+    "finishes": [
+      "Creme"
+    ],
+    "link": "http://www.kelliegonzo.com/2015/03/zoya-mystery-trio-swatches-review.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Zoya",
+    "name": "Cynthia",
+    "colors": [
+      "Blue"
+    ],
+    "finishes": [
+      "Creme"
+    ],
+    "link": "http://www.refinedandpolished.com/zoya-cynthia-with-batik-print/",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Zoya",
+    "name": "Gilda",
+    "colors": [
+      "Pink"
+    ],
+    "finishes": [
+      "Glass Fleck",
+      "Jelly",
+      "Iridescent"
+    ],
+    "link": "https://lacquerslackerliz.blogspot.com/2014/03/zoya-gilda.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Zoya",
+    "name": "Hudson",
+    "colors": [
+      "Purple"
+    ],
+    "finishes": [
+      "Shimmer",
+      "Metallic"
+    ],
+    "link": "https://curbappealnails.blogspot.com/2015/05/kawaii-stamping-with-zoya-hudson-mdu-orchid.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Zoya",
+    "name": "Imogen - PixieDust",
+    "colors": [
+      "Black"
+    ],
+    "finishes": [
+      "Chunky Holo Glitter",
+      "Textured"
+    ],
+    "link": "http://addictedtopolish.blogspot.com/2014/12/zoya-wishes-collection-for.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Zoya",
+    "name": "Indigo",
+    "colors": [
+      "Blue"
+    ],
+    "finishes": [
+      "Shimmer",
+      "Glitter"
+    ],
+    "link": "http://vivapolish.blogspot.com/2010/04/zoya-indigo.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Zoya",
+    "name": "Kiki",
+    "colors": [
+      "Pink"
+    ],
+    "finishes": [
+      "Neon",
+      "Glass Fleck",
+      "Jelly"
+    ],
+    "link": "https://curbappealnails.blogspot.com/2015/02/valentines-day-stamping-part-5-zoya-kiki.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Zoya",
+    "name": "Kimber",
+    "colors": [
+      "Pink"
+    ],
+    "finishes": [
+      "Shimmer"
+    ],
+    "link": "https://lacquerslackerliz.blogspot.com/2015/02/zoya-kimber.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Zoya",
+    "name": "Kissy",
+    "colors": [
+      "Red"
+    ],
+    "finishes": [
+      "Bar Glitter",
+      "Holo Glitter",
+      "Topper"
+    ],
+    "link": "http://justmakeitup3.blogspot.com/2012/06/zoya-kissy.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Zoya",
+    "name": "Lillith",
+    "colors": [
+      "Pink"
+    ],
+    "finishes": [
+      "Iridescent",
+      "Shimmer"
+    ],
+    "link": "http://www.sparklecrackcentral.com/such/obsessive/addictions/zoyas_lillith",
+    "coats": 2,
+    "rating": "A",
+    "notes": "nice formula again after thinning, thin brush good for toes",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Zoya",
+    "name": "Mosheen",
+    "colors": [
+      "Blue"
+    ],
+    "finishes": [
+      "Bar Glitter",
+      "Iridescent Glitter",
+      "Topper"
+    ],
+    "link": "https://www.temptalia.com/zoya-dream-mosheen-payton-nail-lacquers-reviews-photos-swatches/",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Zoya",
+    "name": "Rina",
+    "colors": [
+      "Green"
+    ],
+    "finishes": [
+      "Bar Glitter",
+      "Holo Glitter",
+      "Topper"
+    ],
+    "link": "https://wackylaki.blogspot.com/2012/01/zoya-holly-rina.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Zoya",
+    "name": "Severine",
+    "colors": [
+      "Gold"
+    ],
+    "finishes": [
+      "Metallic"
+    ],
+    "link": "http://www.kelliegonzo.com/2015/03/zoya-mystery-trio-swatches-review.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Zoya",
+    "name": "Valerie",
+    "colors": [
+      "Purple"
+    ],
+    "finishes": [
+      "Shimmer",
+      "Duochrome"
+    ],
+    "link": "https://curbappealnails.blogspot.com/2014/08/chevron-nail-art-with-zoya-valerie-and.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "Zoya",
+    "name": "Zuza",
+    "colors": [
+      "Teal"
+    ],
+    "finishes": [
+      "Shimmer"
+    ],
+    "link": "http://www.lacquerreverie.com/2013/08/summer-2012-zoya-odyssey-zuza-and-kimber.html",
+    "empty_bottles": 0,
+    "total_bottles": 1
+  },
+  {
+    "brand": "N/A",
+    "name": "zzz *unmarked*",
+    "colors": [
+      "Beige"
+    ],
+    "finishes": [
+      "Metallic"
+    ],
+    "empty_bottles": 0,
+    "total_bottles": 3
+  }
+]
