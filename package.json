@@ -10,7 +10,8 @@
     "lint": "next lint",
     "prisma:seed": "node --import tsx prisma/seed.ts",
     "prisma:migrate-nail-polishes": "node --import tsx prisma/migrate-nail-polishes.ts",
-    "ts": "node --import tsx"
+    "ts": "node --import tsx",
+    "seed:from-csv": "node --import tsx scripts/seed-from-csv.ts"
   },
   "prisma": {
     "seed": "node --import tsx prisma/seed.ts",

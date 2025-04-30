@@ -1,12 +1,9 @@
 'use client';
 
-import { Nav } from '@/components/Nav';
 import styled from 'styled-components';
 
 const StyledContainer = styled.div`
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 2rem;
+  width: 100%;
 `;
 
 const StyledHeader = styled.div`
@@ -35,17 +32,14 @@ const StyledGrid = styled.div`
 
 export default function ImageGallery() {
   return (
-    <>
-      <Nav />
-      <StyledContainer>
-        <StyledHeader>
-          <h1>Image Gallery</h1>
-          <p>Browse and select images for your nail polish collection</p>
-        </StyledHeader>
-        <StyledGrid>
-          {/* Image selection content will go here */}
-        </StyledGrid>
-      </StyledContainer>
-    </>
+    <StyledContainer>
+      <StyledHeader>
+        <h1>Image Gallery</h1>
+        <p>Browse and select images for your nail polish collection</p>
+      </StyledHeader>
+      <StyledGrid>
+        {/* Image selection content will go here */}
+      </StyledGrid>
+    </StyledContainer>
   );
 }

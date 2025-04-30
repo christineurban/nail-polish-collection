@@ -8,33 +8,53 @@ import { getColorMapping, getTextColor } from '@/utils/colors';
 import { SingleSelect } from '@/components/fields/SingleSelect';
 import { MultiSelect } from '@/components/fields/MultiSelect';
 
+const StyledFiltersContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+  margin: 0 auto;
+
+  @media (min-width: 768px) {
+    gap: 2rem;
+  }
+`;
+
 const StyledContainer = styled.div`
-  margin: 2rem auto;
-  padding: 2rem;
+  margin: 0;
+  padding: 1.5rem;
   background: linear-gradient(to bottom right, #ffffff, #f8fafc);
   border-radius: 16px;
   box-shadow:
     0 4px 6px -1px rgba(0, 0, 0, 0.1),
     0 2px 4px -1px rgba(0, 0, 0, 0.06),
     inset 0 2px 4px rgba(255, 255, 255, 0.9);
-  max-width: 1200px;
+  width: 100%;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
   border: 1px solid rgba(226, 232, 240, 0.8);
+
+  @media (min-width: 768px) {
+    padding: 2rem;
+    gap: 2rem;
+  }
 `;
 
 const StyledFilterGroup = styled.div`
   display: grid;
   grid-template-rows: auto 1fr;
   gap: 0.5rem;
+  min-width: 0; /* Prevent overflow in flex/grid containers */
 `;
 
 const StyledFilterHeader = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 20px;
+  min-height: 24px;
+  flex-wrap: wrap;
+  gap: 0.5rem;
 `;
 
 const StyledLabel = styled.label`
@@ -42,6 +62,7 @@ const StyledLabel = styled.label`
   font-weight: 600;
   color: #2D3748;
   letter-spacing: 0.025em;
+  padding: 0.25rem 0;
 `;
 
 const StyledInput = styled.input`
@@ -53,6 +74,7 @@ const StyledInput = styled.input`
   color: ${({ theme }) => theme.colors.text.primary};
   font-size: ${({ theme }) => theme.typography.fontSize.base};
   transition: all ${({ theme }) => theme.transitions.base};
+  -webkit-appearance: none; /* Better styling on iOS */
 
   &:hover {
     border-color: ${({ theme }) => theme.colors.border.medium};
@@ -70,25 +92,36 @@ const StyledInput = styled.input`
 `;
 
 const StyledColorChip = styled.div<{ color: string }>`
-  width: 20px;
-  height: 20px;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
   margin-right: 4px;
   border: 1px solid #E2E8F0;
+  flex-shrink: 0;
   ${({ color }) => {
     const colorMapping = getColorMapping(color);
     return colorMapping.isGradient
       ? `background: ${colorMapping.background};`
       : `background-color: ${colorMapping.background};`;
   }}
+
+  @media (min-width: 768px) {
+    width: 20px;
+    height: 20px;
+  }
 `;
 
 const StyledColorPreview = styled.div`
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  max-width: 100px;
-  gap: 2px;
+  max-width: 120px;
+  gap: 4px;
+
+  @media (min-width: 768px) {
+    max-width: 100px;
+    gap: 2px;
+  }
 `;
 
 const StyledColorOption = styled.label<{ $colorName: string }>`
@@ -102,12 +135,14 @@ const StyledColorOption = styled.label<{ $colorName: string }>`
     const colorMapping = getColorMapping($colorName);
     return getTextColor(colorMapping.background);
   }};
-  border-radius: 6px;
+  border-radius: 8px;
   margin: 0.25rem;
-  padding: 0.75rem 1rem;
+  padding: 0.875rem 1rem;
   transition: all 0.2s ease;
   display: flex;
   align-items: center;
+  min-height: 44px; /* Minimum touch target size */
+  user-select: none;
 
   &:hover {
     opacity: 0.9;
@@ -115,19 +150,21 @@ const StyledColorOption = styled.label<{ $colorName: string }>`
 
   input {
     margin-right: 0.75rem;
-    width: 16px;
-    height: 16px;
+    width: 20px;
+    height: 20px;
     cursor: pointer;
   }
-`;
 
-const StyledFiltersContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
+  @media (min-width: 768px) {
+    border-radius: 6px;
+    padding: 0.75rem 1rem;
+    min-height: 40px;
+
+    input {
+      width: 16px;
+      height: 16px;
+    }
+  }
 `;
 
 const StyledClearButton = styled.button`
@@ -135,14 +172,15 @@ const StyledClearButton = styled.button`
   border: none;
   color: #E53E3E;
   font-size: 0.75rem;
-  padding: 0;
+  padding: 0.25rem;
   cursor: pointer;
   display: flex;
   align-items: center;
   gap: 0.25rem;
   transition: all 0.2s ease;
   font-weight: 500;
-  height: 20px;
+  min-height: 24px;
+  min-width: 24px; /* Minimum touch target size */
 
   &:hover {
     color: #C53030;
@@ -165,7 +203,7 @@ const StyledClearAllButton = styled.button`
   background: linear-gradient(to right, #FFF5F5, #FED7D7);
   color: #C53030;
   border: none;
-  border-radius: 10px;
+  border-radius: 12px;
   font-size: 0.875rem;
   font-weight: 600;
   cursor: pointer;
@@ -179,6 +217,7 @@ const StyledClearAllButton = styled.button`
     0 2px 4px -1px rgba(0, 0, 0, 0.06);
   text-transform: uppercase;
   letter-spacing: 0.05em;
+  min-height: 48px; /* Minimum touch target size */
 
   &:hover {
     transform: translateY(-1px);
@@ -201,16 +240,23 @@ const StyledClearAllButton = styled.button`
     line-height: 1;
     font-weight: 700;
   }
+
+  @media (min-width: 768px) {
+    border-radius: 10px;
+    min-height: 44px;
+  }
 `;
 
 const StyledOption = styled.label`
   display: flex;
   align-items: center;
-  padding: 0.75rem 1rem;
+  padding: 0.875rem 1rem;
   cursor: pointer;
   transition: all 0.2s ease;
-  border-radius: 6px;
+  border-radius: 8px;
   margin: 0.25rem;
+  min-height: 44px; /* Minimum touch target size */
+  user-select: none;
 
   &:hover {
     background-color: ${({ theme }) => theme.colors.primary[50]};
@@ -218,10 +264,21 @@ const StyledOption = styled.label`
 
   input {
     margin-right: 0.75rem;
-    width: 16px;
-    height: 16px;
+    width: 20px;
+    height: 20px;
     cursor: pointer;
     accent-color: ${({ theme }) => theme.colors.primary[500]};
+  }
+
+  @media (min-width: 768px) {
+    padding: 0.75rem 1rem;
+    border-radius: 6px;
+    min-height: 40px;
+
+    input {
+      width: 16px;
+      height: 16px;
+    }
   }
 `;
 

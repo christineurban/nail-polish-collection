@@ -114,19 +114,16 @@ export const transformSheetRow = (row: SheetRow, duplicateCounts: Map<string, nu
 };
 
 export const transformSheetData = (rows: SheetRow[]): TransformedPolish[] => {
-  // Skip the header row
-  const dataRows = rows.slice(1);
-
   // Count duplicates using brand + polish name as key
   const duplicateCounts = new Map<string, number>();
-  dataRows.forEach(row => {
+  rows.forEach(row => {
     const polishKey = `${row.Brand}|||${row.Polish}`;
     duplicateCounts.set(polishKey, (duplicateCounts.get(polishKey) || 0) + 1);
   });
 
   // Get unique polishes and transform them
   const uniquePolishes = new Map<string, SheetRow>();
-  dataRows.forEach(row => {
+  rows.forEach(row => {
     const polishKey = `${row.Brand}|||${row.Polish}`;
     if (!uniquePolishes.has(polishKey)) {
       uniquePolishes.set(polishKey, row);

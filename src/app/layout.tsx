@@ -4,6 +4,7 @@ import { Onest } from "next/font/google";
 import StyledComponentsRegistry from '../lib/registry';
 import { ThemeProvider } from '../theme';
 import { Nav } from '@/components/Nav';
+import { MainContainer } from '@/components/MainContainer';
 
 const onest = Onest({
   subsets: ["latin"],
@@ -27,7 +28,9 @@ export default function RootLayout({
         <StyledComponentsRegistry>
           <ThemeProvider>
             <Nav />
-            {children}
+            <MainContainer>
+              {children}
+            </MainContainer>
           </ThemeProvider>
         </StyledComponentsRegistry>
       </body>

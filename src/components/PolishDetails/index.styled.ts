@@ -75,9 +75,7 @@ export const StyledButton = styled.button<{ $variant?: 'danger' }>`
 `;
 
 export const StyledContainer = styled.div`
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem;
+  width: 100%;
 `;
 
 export const StyledHeader = styled.div`
