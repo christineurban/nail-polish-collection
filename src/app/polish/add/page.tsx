@@ -7,7 +7,7 @@ import { PageHeader } from '@/components/PageHeader';
 import styled from 'styled-components';
 
 const StyledFormContainer = styled.div`
-  max-width: 800px;
+  width: 100%;
   margin: 0 auto;
 `;
 

@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import { motion } from 'framer-motion';
 
 export const StyledContainer = styled.div`
-  font-family: Arial, sans-serif;
   width: 100%;
 `;
 

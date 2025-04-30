@@ -1,9 +1,6 @@
 import styled from 'styled-components';
 
 export const StyledContainer = styled.div`
-  padding: 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
   width: 100%;
 `;
 
@@ -82,8 +79,7 @@ export const StyledButton = styled.button<{ $variant?: 'danger' }>`
 `;
 
 export const StyledFormContainer = styled.div`
-  max-width: 800px;
-  margin: 0 auto;
+  width: 100%;
 `;
 
 export const StyledHeader = styled.div`
@@ -170,8 +166,7 @@ export const StyledDetails = styled.div`
 `;
 
 export const StyledEditForm = styled.div`
-  max-width: 800px;
-  margin: 0 auto;
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 2rem;

@@ -2,10 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { MainContainer } from '@/components/MainContainer';
 import { PageHeader } from '@/components/PageHeader';
 import { PolishCollection } from '@/components/PolishCollection';
-import { FilterSort } from '@/components/FilterSort';
 import { Rating } from '@prisma/client';
 
 interface Polish {
@@ -70,25 +68,21 @@ export default function Home() {
 
   if (isLoading) {
     return (
-      <MainContainer>
         <PageHeader title="Loading..." />
-      </MainContainer>
     );
   }
 
   if (error) {
     return (
-      <MainContainer>
         <PageHeader
           title="Error"
           description={error}
         />
-      </MainContainer>
     );
   }
 
   return (
-    <MainContainer>
+    <>
       <PageHeader
         title="Nail Polish Collection"
         description="Browse and manage your nail polish collection"
@@ -100,6 +94,6 @@ export default function Home() {
         finishes={finishes}
         currentFilters={currentFilters}
       />
-    </MainContainer>
+    </>
   );
 }

@@ -2,7 +2,6 @@
 
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
-import { MainContainer } from '@/components/MainContainer';
 import { ImageSelector } from '@/components/ImageSelector';
 import { PageHeader } from '@/components/PageHeader';
 
@@ -45,36 +44,30 @@ export default function SelectImagesPage() {
 
   if (isLoading) {
     return (
-      <MainContainer>
-        <PageHeader title="Loading..." />
-      </MainContainer>
+      <PageHeader title="Loading..." />
     );
   }
 
   if (error) {
     return (
-      <MainContainer>
-        <PageHeader
-          title="Error"
-          description={error}
-        />
-      </MainContainer>
+      <PageHeader
+        title="Error"
+        description={error}
+      />
     );
   }
 
   if (polishes.length === 0) {
     return (
-      <MainContainer>
-        <PageHeader
-          title="No Polishes Need Images"
-          description="All polishes in your collection have images."
-        />
-      </MainContainer>
+      <PageHeader
+        title="No Polishes Need Images"
+        description="All polishes in your collection have images."
+      />
     );
   }
 
   return (
-    <MainContainer>
+    <>
       <PageHeader
         title="Select Images"
         description='Click on an image to select it, then click "Save" to update the database.'
@@ -86,6 +79,6 @@ export default function SelectImagesPage() {
           onImageSaved={() => handleImageSaved(polish.id)}
         />
       ))}
-    </MainContainer>
+    </>
   );
 }

@@ -15,7 +15,7 @@ export const StyledButton = styled.button<{ $isOpen: boolean }>`
   border-radius: ${({ theme }) => theme.borderRadius.lg};
   background: ${({ theme }) => theme.colors.background.primary};
   color: ${({ theme }) => theme.colors.text.primary};
-  font-size: ${({ theme }) => theme.typography.fontSize.md};
+  font-size: ${({ theme }) => theme.typography.fontSize.base};
   text-align: left;
   cursor: pointer;
   transition: all ${({ theme }) => theme.transitions.base};

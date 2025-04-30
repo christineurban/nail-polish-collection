@@ -15,8 +15,5 @@ export const StyledHeader = styled.header`
 `;
 
 export const StyledContainer = styled.main`
-  padding: 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
   width: 100%;
 `;

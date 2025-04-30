@@ -2,7 +2,6 @@
 
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
-import { MainContainer } from '@/components/MainContainer';
 import { ImageSelector } from '@/components/ImageSelector';
 import { PageHeader } from '@/components/PageHeader';
 
@@ -44,25 +43,20 @@ export default function SelectImagePage({ params }: { params: { id: string } }) 
 
   if (isLoading) {
     return (
-      <MainContainer>
-        <PageHeader title="Loading..." />
-      </MainContainer>
+      <PageHeader title="Loading..." />
     );
   }
 
   if (error || !polish) {
     return (
-      <MainContainer>
-        <PageHeader
-          title="Error"
-          description={error || 'Polish not found'}
-        />
-      </MainContainer>
+      <PageHeader
+        title="Error"
+        description={error || 'Polish not found'}
+      />
     );
   }
 
   return (
-    <MainContainer>
       <PageHeader
         title={`Select Image for ${polish.brand} ${polish.name}`}
         description='Click on an image to select it, then click "Save" to update the database.'
@@ -71,6 +65,5 @@ export default function SelectImagePage({ params }: { params: { id: string } }) 
         polish={polish}
         onImageSaved={handleImageSaved}
       />
-    </MainContainer>
   );
 }
