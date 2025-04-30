@@ -83,13 +83,25 @@ const StyledLink = styled(Link)<{ $isActive: boolean }>`
 export function Nav() {
   const pathname = usePathname();
 
+  const routes = [
+    { path: '/polish/add', label: 'Add New Polish' },
+    { path: '/image-selection', label: 'Select Missing Images' },
+  ];
+
   return (
     <StyledNav>
       <StyledContainer>
         <StyledLogo href="/">My Nail Polish Collection</StyledLogo>
-        <StyledLink href="/select-images" $isActive={pathname === '/select-images'}>
-          Select Missing Images
-        </StyledLink>
+        {routes.map(({ path, label }) => (
+          <StyledLink
+            key={path}
+            href={path}
+            $isActive={pathname === path}
+            aria-current={pathname === path ? 'page' : undefined}
+          >
+            {label}
+          </StyledLink>
+        ))}
       </StyledContainer>
     </StyledNav>
   );
