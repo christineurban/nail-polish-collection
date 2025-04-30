@@ -1,6 +1,6 @@
 import { prisma } from '@/lib/prisma';
 import { Prisma, nail_polish, Rating as PrismaRating } from '@prisma/client';
-import PageClient from '@/components/PageClient';
+import { PolishCollection } from '@/components/PolishCollection';
 
 interface PageProps {
   searchParams: {
@@ -14,16 +14,14 @@ interface PageProps {
   };
 }
 
-type Rating = 'A_PLUS' | 'A' | 'A_MINUS' | 'B_PLUS' | 'B' | 'B_MINUS' | 'C_PLUS' | 'C' | 'C_MINUS' | 'D_PLUS' | 'D' | 'D_MINUS' | 'F';
-
 interface Polish {
   id: string;
   brand: string;
   name: string;
-  imageUrl: string;
+  imageUrl: string | null;
   colors: string[];
   finishes: string[];
-  rating: string;
+  rating: PrismaRating | null;
   link: string;
 }
 
@@ -71,8 +69,14 @@ export default async function Home({ searchParams }: PageProps) {
 
   // Rating filter (multi-select)
   if (searchParams.rating) {
-    const ratings = searchParams.rating.split(',') as PrismaRating[];
-    where.rating = { in: ratings };
+    const ratings = searchParams.rating.split(',');
+    // Validate that each rating string is a valid PrismaRating enum value
+    const validRatings = ratings.filter((rating): rating is PrismaRating =>
+      Object.values(PrismaRating).includes(rating as PrismaRating)
+    );
+    if (validRatings.length > 0) {
+      where.rating = { in: validRatings };
+    }
   }
 
   // Image presence filter
@@ -156,10 +160,10 @@ export default async function Home({ searchParams }: PageProps) {
     id: polish.id,
     brand: polish.brands.name,
     name: polish.name,
-    imageUrl: polish.image_url || '',
+    imageUrl: polish.image_url,
     colors: polish.colors.map(c => c.color.name),
     finishes: polish.finishes.map(f => f.finish.name),
-    rating: polish.rating?.toString() || '',
+    rating: polish.rating,
     link: polish.link || ''
   }));
 
@@ -174,7 +178,7 @@ export default async function Home({ searchParams }: PageProps) {
   };
 
   return (
-    <PageClient
+    <PolishCollection
       polishes={transformedPolishes}
       brands={brands.map((b: any) => b.name)}
       finishes={finishes.map((f: any) => f.name)}

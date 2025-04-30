@@ -3,9 +3,10 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { Rating } from '@prisma/client';
 import { getColorMapping, getTextColor } from '@/utils/colors';
-import { SingleSelect } from '@/components/SingleSelect';
-import { MultiSelect } from '@/components/MultiSelect';
+import { SingleSelect } from '@/components/fields/SingleSelect';
+import { MultiSelect } from '@/components/fields/MultiSelect';
 
 const StyledContainer = styled.div`
   margin: 2rem auto;
@@ -245,20 +246,14 @@ export const FilterSort = ({ brands, finishes, colors, currentFilters }: FilterS
   const [filters, setFilters] = useState(currentFilters);
 
   const ratings = [
-    'A+', 'A', 'A-',
-    'B+', 'B', 'B-',
-    'C+', 'C', 'C-',
-    'D+', 'D', 'D-',
+    'A_PLUS', 'A', 'A_MINUS',
+    'B_PLUS', 'B', 'B_MINUS',
+    'C_PLUS', 'C', 'C_MINUS',
+    'D_PLUS', 'D', 'D_MINUS',
     'F'
   ];
 
-  // Convert display rating to enum format
-  const formatRatingForQuery = (rating: string) => {
-    return rating.replace('+', '_PLUS').replace('-', '_MINUS');
-  };
-
-  // Convert enum rating to display format
-  const formatRatingForDisplay = (rating: string) => {
+  const formatRatingForDisplay = (rating: string): string => {
     return rating.replace('_PLUS', '+').replace('_MINUS', '-');
   };
 
@@ -471,12 +466,11 @@ export const FilterSort = ({ brands, finishes, colors, currentFilters }: FilterS
               <StyledOption key={rating}>
                 <input
                   type="checkbox"
-                  checked={filters.rating.includes(formatRatingForQuery(rating))}
+                  checked={filters.rating.includes(rating)}
                   onChange={() => {
-                    const formattedRating = formatRatingForQuery(rating);
-                    const newValues = filters.rating.includes(formattedRating)
-                      ? filters.rating.filter(r => r !== formattedRating)
-                      : [...filters.rating, formattedRating];
+                    const newValues = filters.rating.includes(rating)
+                      ? filters.rating.filter(r => r !== rating)
+                      : [...filters.rating, rating];
                     const newFilters = {
                       ...filters,
                       rating: newValues
@@ -485,7 +479,7 @@ export const FilterSort = ({ brands, finishes, colors, currentFilters }: FilterS
                     updateUrl(newFilters);
                   }}
                 />
-                {rating}
+                {formatRatingForDisplay(rating)}
               </StyledOption>
             )}
             onChange={(values) => {

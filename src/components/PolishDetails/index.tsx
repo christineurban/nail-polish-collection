@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useState, useEffect, useRef } from 'react';
 import { Rating } from '@prisma/client';
-import { SingleSelect } from '@/components/SingleSelect';
+import { SingleSelect } from '@/components/fields/SingleSelect';
 import {
   StyledContainer,
   StyledHeader,
