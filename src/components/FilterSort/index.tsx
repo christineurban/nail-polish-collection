@@ -366,7 +366,6 @@ interface FilterSortProps {
     color: string[];
     search: string;
     sort: string;
-    purchaseYear: string;
     rating: string[];
     hasImage: string;
   };
@@ -398,12 +397,6 @@ export const FilterSort = ({ brands, finishes, colors, currentFilters }: FilterS
   const formatRatingForDisplay = (rating: string) => {
     return rating.replace('_PLUS', '+').replace('_MINUS', '-');
   };
-
-  // Generate array of years from 2010 to current year
-  const years = Array.from(
-    { length: new Date().getFullYear() - 2009 },
-    (_, i) => (2010 + i).toString()
-  ).reverse();
 
   const updateUrl = (newFilters: typeof filters) => {
     const params = new URLSearchParams();
@@ -498,7 +491,6 @@ export const FilterSort = ({ brands, finishes, colors, currentFilters }: FilterS
       color: [],
       search: '',
       sort: '',
-      purchaseYear: '',
       rating: [],
       hasImage: ''
     };
@@ -712,23 +704,6 @@ export const FilterSort = ({ brands, finishes, colors, currentFilters }: FilterS
 
         <StyledFilterGroup>
           <StyledFilterHeader>
-            <StyledLabel>Purchase Year</StyledLabel>
-            {filters.purchaseYear && (
-              <StyledClearButton onClick={() => clearFilter('purchaseYear')}>
-                Clear
-              </StyledClearButton>
-            )}
-          </StyledFilterHeader>
-          <StyledInput
-            type="number"
-            placeholder="Enter year..."
-            value={filters.purchaseYear}
-            onChange={(e) => handleChange('purchaseYear')(e)}
-          />
-        </StyledFilterGroup>
-
-        <StyledFilterGroup>
-          <StyledFilterHeader>
             <StyledLabel>Has Image</StyledLabel>
             {filters.hasImage && (
               <StyledClearButton onClick={() => clearFilter('hasImage')}>
@@ -747,8 +722,8 @@ export const FilterSort = ({ brands, finishes, colors, currentFilters }: FilterS
         </StyledFilterGroup>
 
         {(filters.brand.length > 0 || filters.finish.length > 0 || filters.color.length > 0 ||
-          filters.search || filters.rating.length > 0 || filters.hasImage || filters.purchaseYear) && (
-          <StyledFilterGroup style={{ gridColumn: '1 / -1' }}>
+          filters.search || filters.rating.length > 0 || filters.hasImage) && (
+          <StyledFilterGroup className="clear-all">
             <StyledClearAllButton onClick={clearAllFilters}>
               Clear All Filters
             </StyledClearAllButton>

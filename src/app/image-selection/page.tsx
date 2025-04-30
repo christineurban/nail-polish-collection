@@ -1,5 +1,5 @@
 import { prisma } from '@/lib/prisma';
-import ImageSelectionClient from './ImageSelectionClient';
+import { ImageSelector } from '@/components/ImageSelector';
 
 export default async function ImageSelectionPage() {
   // Get all nail polishes with links
@@ -13,6 +13,7 @@ export default async function ImageSelectionPage() {
       id: true,
       name: true,
       link: true,
+      image_url: true,
       brands: {
         select: {
           name: true
@@ -21,5 +22,5 @@ export default async function ImageSelectionPage() {
     }
   });
 
-  return <ImageSelectionClient polishes={nailPolishes} />;
+  return <ImageSelector polishes={nailPolishes} />;
 }

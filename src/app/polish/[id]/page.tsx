@@ -1,11 +1,30 @@
 import { prisma } from '@/lib/prisma';
 import { notFound } from 'next/navigation';
-import { PolishDetails } from './PolishDetails';
+import { PolishDetails } from '@/components/PolishDetails';
+import { Prisma, nail_polish } from '@prisma/client';
 
 interface PageProps {
   params: {
     id: string;
   };
+}
+
+interface NailPolishWithRelations extends nail_polish {
+  brands: { id: string; name: string; created_at: Date; updated_at: Date };
+  colors: {
+    color: { id: string; name: string; created_at: Date; updated_at: Date };
+    created_at: Date;
+    updated_at: Date;
+    nail_polish_id: string;
+    color_id: string;
+  }[];
+  finishes: {
+    finish: { id: string; name: string; created_at: Date; updated_at: Date };
+    created_at: Date;
+    updated_at: Date;
+    nail_polish_id: string;
+    finish_id: string;
+  }[];
 }
 
 export default async function PolishPage({ params }: PageProps) {
@@ -24,7 +43,7 @@ export default async function PolishPage({ params }: PageProps) {
         }
       }
     }
-  });
+  }) as NailPolishWithRelations | null;
 
   if (!polish) {
     notFound();
@@ -41,11 +60,11 @@ export default async function PolishPage({ params }: PageProps) {
     link: polish.link,
     coats: polish.coats,
     notes: polish.notes,
-    purchaseYear: polish.purchase_year,
     lastUsed: polish.last_used,
     totalBottles: polish.total_bottles,
     emptyBottles: polish.empty_bottles,
-    status: polish.status
+    status: polish.status,
+    isOld: polish.is_old
   };
 
   return <PolishDetails polish={transformedPolish} />;

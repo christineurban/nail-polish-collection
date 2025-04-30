@@ -31,7 +31,7 @@ interface Polish {
   link: string | null;
   coats: number | null;
   notes: string | null;
-  purchaseYear: number | null;
+  isOld: boolean | null;
   lastUsed: Date | null;
   totalBottles: number | null;
   emptyBottles: number | null;
@@ -179,8 +179,8 @@ export const PolishDetails = ({ polish }: PolishDetailsProps) => {
         <label>Purchase Year:</label>
         <StyledInput
           type="number"
-          value={editedPolish.purchaseYear || ''}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInputChange('purchaseYear', e.target.value ? parseInt(e.target.value) : null)}
+          value={editedPolish.isOld ? 'Yes' : 'No'}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInputChange('isOld', e.target.value === 'Yes')}
           min="2000"
           max={new Date().getFullYear()}
         />
@@ -278,14 +278,14 @@ export const PolishDetails = ({ polish }: PolishDetailsProps) => {
         )}
         {polish.coats && <p><strong>Coats Needed</strong>{polish.coats}</p>}
         {polish.status && <p><strong>Status</strong>{polish.status}</p>}
-        {polish.totalBottles > 0 && (
+        {polish.totalBottles || 0 > 0 && (
           <p><strong>Total Bottles</strong>{polish.totalBottles}</p>
         )}
-        {polish.emptyBottles > 0 && (
+        {polish.emptyBottles || 0 > 0 && (
           <p><strong>Empty Bottles</strong>{polish.emptyBottles}</p>
         )}
-        {polish.purchaseYear && (
-          <p><strong>Purchase Year</strong>{polish.purchaseYear}</p>
+        {polish.isOld && (
+          <p><strong>Is Old</strong>{polish.isOld ? 'Yes' : 'No'}</p>
         )}
         {polish.lastUsed && (
           <p>

@@ -9,7 +9,6 @@ interface PageProps {
     color?: string;
     search?: string;
     sort?: string;
-    purchaseYear?: string;
     rating?: string;
     hasImage?: string;
   };
@@ -81,11 +80,6 @@ export default async function Home({ searchParams }: PageProps) {
     where.image_url = { not: null };
   } else if (searchParams.hasImage === 'false') {
     where.image_url = null;
-  }
-
-  // Purchase year filter
-  if (searchParams.purchaseYear) {
-    where.purchase_year = parseInt(searchParams.purchaseYear, 10);
   }
 
   // Search filter
@@ -176,7 +170,6 @@ export default async function Home({ searchParams }: PageProps) {
     rating: typeof searchParams.rating === 'string' ? searchParams.rating.split(',') : [],
     search: typeof searchParams.search === 'string' ? searchParams.search : '',
     sort: typeof searchParams.sort === 'string' ? searchParams.sort : '',
-    purchaseYear: typeof searchParams.purchaseYear === 'string' ? searchParams.purchaseYear : '',
     hasImage: typeof searchParams.hasImage === 'string' ? searchParams.hasImage : '',
   };
 

@@ -66,7 +66,6 @@ interface PageClientProps {
     color: string[];
     search: string;
     sort: string;
-    purchaseYear: string;
     rating: string[];
     hasImage: string;
   };
@@ -85,7 +84,6 @@ export const PageClient = ({
     color: currentFilters.color || [],
     search: currentFilters.search || '',
     sort: currentFilters.sort || '',
-    purchaseYear: currentFilters.purchaseYear || '',
     rating: currentFilters.rating || [],
     hasImage: currentFilters.hasImage || ''
   });
