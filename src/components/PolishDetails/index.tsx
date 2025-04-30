@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useState, useEffect, useRef } from 'react';
 import { Rating } from '@prisma/client';
+import { SingleSelect } from '@/components/SingleSelect';
 import {
   StyledContainer,
   StyledHeader,
@@ -59,13 +60,13 @@ export const PolishDetails = ({ polish, brands, availableColors, availableFinish
   const [isLoading, setIsLoading] = useState(false);
   const [isColorDropdownOpen, setIsColorDropdownOpen] = useState(false);
   const [isFinishDropdownOpen, setIsFinishDropdownOpen] = useState(false);
-  const [isBrandDropdownOpen, setIsBrandDropdownOpen] = useState(false);
   const [isRatingDropdownOpen, setIsRatingDropdownOpen] = useState(false);
+  const [isOldDropdownOpen, setIsOldDropdownOpen] = useState(false);
 
   const colorDropdownRef = useRef<HTMLDivElement>(null);
   const finishDropdownRef = useRef<HTMLDivElement>(null);
-  const brandDropdownRef = useRef<HTMLDivElement>(null);
   const ratingDropdownRef = useRef<HTMLDivElement>(null);
+  const isOldDropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -82,16 +83,16 @@ export const PolishDetails = ({ polish, brands, availableColors, availableFinish
         setIsFinishDropdownOpen(false);
       }
       if (
-        brandDropdownRef.current &&
-        !brandDropdownRef.current.contains(event.target as Node)
-      ) {
-        setIsBrandDropdownOpen(false);
-      }
-      if (
         ratingDropdownRef.current &&
         !ratingDropdownRef.current.contains(event.target as Node)
       ) {
         setIsRatingDropdownOpen(false);
+      }
+      if (
+        isOldDropdownRef.current &&
+        !isOldDropdownRef.current.contains(event.target as Node)
+      ) {
+        setIsOldDropdownOpen(false);
       }
     };
 
@@ -186,28 +187,12 @@ export const PolishDetails = ({ polish, brands, availableColors, availableFinish
         <StyledFormRow>
           <StyledFormGroup>
             <label>Brand</label>
-            <StyledSingleSelectContainer ref={brandDropdownRef}>
-              <StyledSingleSelectButton
-                type="button"
-                onClick={() => setIsBrandDropdownOpen(!isBrandDropdownOpen)}
-              >
-                {editedPolish.brand || 'Select brand'}
-              </StyledSingleSelectButton>
-              <StyledSingleDropdown $isOpen={isBrandDropdownOpen}>
-                {brands.map(brand => (
-                  <StyledSingleOption
-                    key={brand}
-                    $isSelected={editedPolish.brand === brand}
-                    onClick={() => {
-                      handleInputChange('brand', brand);
-                      setIsBrandDropdownOpen(false);
-                    }}
-                  >
-                    {brand}
-                  </StyledSingleOption>
-                ))}
-              </StyledSingleDropdown>
-            </StyledSingleSelectContainer>
+            <SingleSelect
+              value={editedPolish.brand}
+              options={brands}
+              placeholder="Select brand"
+              onChange={(value) => handleInputChange('brand', value)}
+            />
           </StyledFormGroup>
           <StyledFormGroup>
             <label>Name</label>
@@ -366,12 +351,35 @@ export const PolishDetails = ({ polish, brands, availableColors, availableFinish
             />
           </StyledFormGroup>
           <StyledFormGroup>
-            <label>Is Old</label>
-            <StyledInput
-              type="checkbox"
-              checked={editedPolish.isOld || false}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInputChange('isOld', e.target.checked)}
-            />
+            <label>Is older polish?</label>
+            <StyledSingleSelectContainer ref={isOldDropdownRef}>
+              <StyledSingleSelectButton
+                type="button"
+                onClick={() => setIsOldDropdownOpen(!isOldDropdownOpen)}
+              >
+                {editedPolish.isOld === null ? 'Select answer' : editedPolish.isOld ? 'Yes' : 'No'}
+              </StyledSingleSelectButton>
+              <StyledSingleDropdown $isOpen={isOldDropdownOpen}>
+                <StyledSingleOption
+                  $isSelected={editedPolish.isOld === true}
+                  onClick={() => {
+                    handleInputChange('isOld', true);
+                    setIsOldDropdownOpen(false);
+                  }}
+                >
+                  Yes
+                </StyledSingleOption>
+                <StyledSingleOption
+                  $isSelected={editedPolish.isOld === false}
+                  onClick={() => {
+                    handleInputChange('isOld', false);
+                    setIsOldDropdownOpen(false);
+                  }}
+                >
+                  No
+                </StyledSingleOption>
+              </StyledSingleDropdown>
+            </StyledSingleSelectContainer>
           </StyledFormGroup>
         </StyledFormRow>
       </StyledFormSection>

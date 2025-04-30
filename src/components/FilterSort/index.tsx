@@ -1,9 +1,11 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { getColorMapping, getTextColor } from '@/utils/colors';
+import { SingleSelect } from '@/components/SingleSelect';
+import { MultiSelect } from '@/components/MultiSelect';
 
 const StyledContainer = styled.div`
   margin: 2rem auto;
@@ -22,160 +24,92 @@ const StyledContainer = styled.div`
 `;
 
 const StyledFilterGroup = styled.div`
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 0.5rem;
+`;
+
+const StyledFilterHeader = styled.div`
   display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  position: relative;
+  align-items: center;
+  justify-content: space-between;
+  height: 20px;
 `;
 
 const StyledLabel = styled.label`
   font-size: 0.875rem;
   font-weight: 600;
   color: #2D3748;
-  margin-bottom: 0.25rem;
   letter-spacing: 0.025em;
 `;
 
 const StyledInput = styled.input`
-  padding: 0.875rem 1rem;
-  border: 2px solid #E2E8F0;
-  border-radius: 10px;
   width: 100%;
-  font-size: 0.875rem;
-  transition: all 0.2s ease;
-  background-color: white;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  padding: 0.875rem 1rem;
+  border: 2px solid ${({ theme }) => theme.colors.border.default};
+  border-radius: ${({ theme }) => theme.borderRadius.lg};
+  background: ${({ theme }) => theme.colors.background.primary};
+  color: ${({ theme }) => theme.colors.text.primary};
+  font-size: ${({ theme }) => theme.typography.fontSize.base};
+  transition: all ${({ theme }) => theme.transitions.base};
 
   &:hover {
-    border-color: #CBD5E0;
+    border-color: ${({ theme }) => theme.colors.border.medium};
   }
 
   &:focus {
     outline: none;
-    border-color: #4299E1;
-    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.15);
+    border-color: ${({ theme }) => theme.colors.primary[500]};
+    box-shadow: ${({ theme }) => theme.shadows.focus};
   }
 
   &::placeholder {
-    color: #A0AEC0;
+    color: ${({ theme }) => theme.colors.text.muted};
   }
 `;
 
-const StyledSelect = styled.select`
-  padding: 0.875rem 1rem;
-  border: 2px solid #E2E8F0;
-  border-radius: 10px;
-  width: 100%;
-  font-size: 0.875rem;
-  background-color: white;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  appearance: none;
-  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234A5568' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-  background-repeat: no-repeat;
-  background-position: right 1rem center;
-  background-size: 1em;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-
-  &:hover {
-    border-color: #CBD5E0;
-  }
-
-  &:focus {
-    outline: none;
-    border-color: #4299E1;
-    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.15);
-  }
-`;
-
-const StyledMultiSelect = styled.div`
-  position: relative;
-  width: 100%;
-`;
-
-const StyledMultiSelectButton = styled.button`
-  width: 100%;
-  padding: 0.875rem 1rem;
-  border: 2px solid #E2E8F0;
-  border-radius: 10px;
-  background-color: white;
-  text-align: left;
-  cursor: pointer;
-  font-size: 0.875rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  transition: all 0.2s ease;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-
-  &:hover {
-    border-color: #CBD5E0;
-  }
-
-  &:focus {
-    outline: none;
-    border-color: #4299E1;
-    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.15);
-  }
-
-  &:after {
-    content: '';
-    width: 1em;
-    height: 1em;
-    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234A5568' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: contain;
-    transition: transform 0.2s ease;
-  }
-`;
-
-const StyledDropdown = styled.div<{ $isOpen: boolean }>`
-  display: ${props => props.$isOpen ? 'block' : 'none'};
-  position: absolute;
-  top: calc(100% + 0.5rem);
-  left: 0;
-  right: 0;
-  background: white;
+const StyledColorChip = styled.div<{ color: string }>`
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  margin-right: 4px;
   border: 1px solid #E2E8F0;
-  border-radius: 10px;
-  max-height: 250px;
-  overflow-y: auto;
-  z-index: 1000;
-  box-shadow:
-    0 10px 15px -3px rgba(0, 0, 0, 0.1),
-    0 4px 6px -2px rgba(0, 0, 0, 0.05);
-
-  &::-webkit-scrollbar {
-    width: 8px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background: #F7FAFC;
-    border-radius: 8px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: #CBD5E0;
-    border-radius: 8px;
-
-    &:hover {
-      background: #A0AEC0;
-    }
-  }
+  ${({ color }) => {
+    const colorMapping = getColorMapping(color);
+    return colorMapping.isGradient
+      ? `background: ${colorMapping.background};`
+      : `background-color: ${colorMapping.background};`;
+  }}
 `;
 
-const StyledOption = styled.label`
+const StyledColorPreview = styled.div`
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  padding: 0.75rem 1rem;
-  cursor: pointer;
-  transition: all 0.2s ease;
+  max-width: 100px;
+  gap: 2px;
+`;
+
+const StyledColorOption = styled.label<{ $colorName: string }>`
+  ${({ $colorName }) => {
+    const colorMapping = getColorMapping($colorName);
+    return colorMapping.isGradient
+      ? `background: ${colorMapping.background};`
+      : `background-color: ${colorMapping.background};`;
+  }}
+  color: ${({ $colorName }) => {
+    const colorMapping = getColorMapping($colorName);
+    return getTextColor(colorMapping.background);
+  }};
   border-radius: 6px;
   margin: 0.25rem;
+  padding: 0.75rem 1rem;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
 
   &:hover {
-    background-color: #EBF8FF;
+    opacity: 0.9;
   }
 
   input {
@@ -183,19 +117,16 @@ const StyledOption = styled.label`
     width: 16px;
     height: 16px;
     cursor: pointer;
-    accent-color: #4299E1;
   }
 `;
 
-const StyledSelectedCount = styled.span`
-  background-color: #EBF8FF;
-  color: #2B6CB0;
-  padding: 0.25rem 0.75rem;
-  border-radius: 9999px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  margin-left: 0.5rem;
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+const StyledFiltersContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
 `;
 
 const StyledClearButton = styled.button`
@@ -203,22 +134,21 @@ const StyledClearButton = styled.button`
   border: none;
   color: #E53E3E;
   font-size: 0.75rem;
-  padding: 0.25rem 0.75rem;
+  padding: 0;
   cursor: pointer;
   display: flex;
   align-items: center;
   gap: 0.25rem;
-  border-radius: 6px;
   transition: all 0.2s ease;
   font-weight: 500;
+  height: 20px;
 
   &:hover {
-    background-color: #FED7D7;
+    color: #C53030;
   }
 
   &:focus {
     outline: none;
-    box-shadow: 0 0 0 3px rgba(229, 62, 62, 0.1);
   }
 
   &::before {
@@ -272,87 +202,25 @@ const StyledClearAllButton = styled.button`
   }
 `;
 
-const StyledFilterHeader = styled.div`
+const StyledOption = styled.label`
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  margin-bottom: 0.25rem;
-`;
-
-const StyledFiltersContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-`;
-
-const StyledFilterActions = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  padding: 1rem 2rem;
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-  margin-bottom: 1rem;
-`;
-
-const StyledColorChip = styled.div<{ color: string }>`
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  margin-right: 4px;
-  border: 1px solid #E2E8F0;
-  ${({ color }) => {
-    const colorMapping = getColorMapping(color);
-    return colorMapping.isGradient
-      ? `background: ${colorMapping.background};`
-      : `background-color: ${colorMapping.background};`;
-  }}
-`;
-
-const StyledColorPreview = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  max-width: 100px;
-  gap: 2px;
-`;
-
-const StyledColorOption = styled(StyledOption)<{ $colorName: string }>`
-  ${({ $colorName }) => {
-    const colorMapping = getColorMapping($colorName);
-    return colorMapping.isGradient
-      ? `background: ${colorMapping.background};`
-      : `background-color: ${colorMapping.background};`;
-  }}
-  color: ${({ $colorName }) => {
-    const colorMapping = getColorMapping($colorName);
-    return getTextColor(colorMapping.background);
-  }};
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
   border-radius: 6px;
   margin: 0.25rem;
-  padding: 0.75rem 1rem;
-  transition: all 0.2s ease;
 
   &:hover {
-    opacity: 0.9;
-    ${({ $colorName }) => {
-      const colorMapping = getColorMapping($colorName);
-      return colorMapping.isGradient
-        ? `background: ${colorMapping.background};`
-        : `background-color: ${colorMapping.background};`;
-    }}
+    background-color: ${({ theme }) => theme.colors.primary[50]};
   }
 
   input {
-    border-color: currentColor;
-    &:checked {
-      background-color: currentColor;
-      border-color: currentColor;
-    }
+    margin-right: 0.75rem;
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    accent-color: ${({ theme }) => theme.colors.primary[500]};
   }
 `;
 
@@ -375,10 +243,6 @@ export const FilterSort = ({ brands, finishes, colors, currentFilters }: FilterS
   const router = useRouter();
   const searchParams = useSearchParams();
   const [filters, setFilters] = useState(currentFilters);
-  const [isBrandOpen, setIsBrandOpen] = useState(false);
-  const [isFinishOpen, setIsFinishOpen] = useState(false);
-  const [isColorOpen, setIsColorOpen] = useState(false);
-  const [isRatingOpen, setIsRatingOpen] = useState(false);
 
   const ratings = [
     'A+', 'A', 'A-',
@@ -427,52 +291,13 @@ export const FilterSort = ({ brands, finishes, colors, currentFilters }: FilterS
     updateUrl(newFilters);
   };
 
-  const handleMultiSelectChange = (key: 'brand' | 'finish' | 'color' | 'rating') => (value: string) => {
-    const currentValues = filters[key] as string[];
-    const newValues = currentValues.includes(value)
-      ? currentValues.filter(v => v !== value)
-      : [...currentValues, value];
-
+  const handleBrandChange = (value: string) => {
     const newFilters = {
       ...filters,
-      [key]: newValues
+      brand: value ? [value] : []
     };
     setFilters(newFilters);
     updateUrl(newFilters);
-  };
-
-  // Close dropdowns when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      const target = event.target as HTMLElement;
-      const multiSelect = target.closest('.multi-select');
-      const isMultiSelectClick = multiSelect !== null;
-
-      if (!isMultiSelectClick) {
-        setIsBrandOpen(false);
-        setIsFinishOpen(false);
-        setIsColorOpen(false);
-        setIsRatingOpen(false);
-      }
-    };
-
-    document.addEventListener('click', handleClickOutside);
-    return () => document.removeEventListener('click', handleClickOutside);
-  }, []);
-
-  const handleDropdownClick = (
-    event: React.MouseEvent,
-    dropdownSetter: React.Dispatch<React.SetStateAction<boolean>>,
-    currentState: boolean
-  ) => {
-    event.stopPropagation();
-    // Close all other dropdowns
-    setIsBrandOpen(false);
-    setIsFinishOpen(false);
-    setIsColorOpen(false);
-    setIsRatingOpen(false);
-    // Toggle the clicked dropdown
-    dropdownSetter(!currentState);
   };
 
   const clearFilter = (key: keyof typeof filters) => {
@@ -497,6 +322,25 @@ export const FilterSort = ({ brands, finishes, colors, currentFilters }: FilterS
     setFilters(newFilters);
     updateUrl(newFilters);
   };
+
+  // Add these options at the component level
+  const sortOptions = [
+    { value: '', label: 'Default' },
+    { value: 'brand-asc', label: 'Brand (A-Z)' },
+    { value: 'brand-desc', label: 'Brand (Z-A)' },
+    { value: 'name-asc', label: 'Name (A-Z)' },
+    { value: 'name-desc', label: 'Name (Z-A)' },
+    { value: 'rating-desc', label: 'Rating (High-Low)' },
+    { value: 'rating-asc', label: 'Rating (Low-High)' },
+    { value: 'updated-desc', label: 'Recently Updated' },
+    { value: 'updated-asc', label: 'Oldest Updated' }
+  ];
+
+  const hasImageOptions = [
+    { value: '', label: 'All' },
+    { value: 'true', label: 'With Image' },
+    { value: 'false', label: 'Without Image' }
+  ];
 
   return (
     <StyledFiltersContainer>
@@ -527,33 +371,12 @@ export const FilterSort = ({ brands, finishes, colors, currentFilters }: FilterS
               </StyledClearButton>
             )}
           </StyledFilterHeader>
-          <StyledMultiSelect className="multi-select">
-            <StyledMultiSelectButton
-              type="button"
-              onClick={(e) => handleDropdownClick(e, setIsBrandOpen, isBrandOpen)}
-            >
-              {filters.brand.length > 0 ? (
-                <>
-                  {filters.brand.length} selected
-                  <StyledSelectedCount>{filters.brand.length}</StyledSelectedCount>
-                </>
-              ) : (
-                'Select brands'
-              )}
-            </StyledMultiSelectButton>
-            <StyledDropdown $isOpen={isBrandOpen}>
-              {brands.map(brand => (
-                <StyledOption key={brand}>
-                  <input
-                    type="checkbox"
-                    checked={filters.brand.includes(brand)}
-                    onChange={() => handleMultiSelectChange('brand')(brand)}
-                  />
-                  {brand}
-                </StyledOption>
-              ))}
-            </StyledDropdown>
-          </StyledMultiSelect>
+          <SingleSelect
+            value={filters.brand[0] || ''}
+            options={brands}
+            placeholder="Select brand"
+            onChange={handleBrandChange}
+          />
         </StyledFilterGroup>
 
         <StyledFilterGroup>
@@ -565,33 +388,19 @@ export const FilterSort = ({ brands, finishes, colors, currentFilters }: FilterS
               </StyledClearButton>
             )}
           </StyledFilterHeader>
-          <StyledMultiSelect className="multi-select">
-            <StyledMultiSelectButton
-              type="button"
-              onClick={(e) => handleDropdownClick(e, setIsFinishOpen, isFinishOpen)}
-            >
-              {filters.finish.length > 0 ? (
-                <>
-                  {filters.finish.length} selected
-                  <StyledSelectedCount>{filters.finish.length}</StyledSelectedCount>
-                </>
-              ) : (
-                'Select finishes'
-              )}
-            </StyledMultiSelectButton>
-            <StyledDropdown $isOpen={isFinishOpen}>
-              {finishes.map(finish => (
-                <StyledOption key={finish}>
-                  <input
-                    type="checkbox"
-                    checked={filters.finish.includes(finish)}
-                    onChange={() => handleMultiSelectChange('finish')(finish)}
-                  />
-                  {finish}
-                </StyledOption>
-              ))}
-            </StyledDropdown>
-          </StyledMultiSelect>
+          <MultiSelect
+            values={filters.finish}
+            options={finishes}
+            placeholder="Select finishes"
+            onChange={(values) => {
+              const newFilters = {
+                ...filters,
+                finish: values
+              };
+              setFilters(newFilters);
+              updateUrl(newFilters);
+            }}
+          />
         </StyledFilterGroup>
 
         <StyledFilterGroup>
@@ -603,40 +412,46 @@ export const FilterSort = ({ brands, finishes, colors, currentFilters }: FilterS
               </StyledClearButton>
             )}
           </StyledFilterHeader>
-          <StyledMultiSelect className="multi-select">
-            <StyledMultiSelectButton
-              type="button"
-              onClick={(e) => handleDropdownClick(e, setIsColorOpen, isColorOpen)}
-            >
-              {filters.color.length > 0 ? (
-                <>
-                  <StyledColorPreview>
-                    {filters.color.slice(0, 3).map(color => (
-                      <StyledColorChip key={color} color={color.toLowerCase()} />
-                    ))}
-                    {filters.color.length > 3 && (
-                      <span>+{filters.color.length - 3}</span>
-                    )}
-                  </StyledColorPreview>
-                  <StyledSelectedCount>{filters.color.length}</StyledSelectedCount>
-                </>
-              ) : (
-                'Select colors'
-              )}
-            </StyledMultiSelectButton>
-            <StyledDropdown $isOpen={isColorOpen}>
-              {colors.map(color => (
-                <StyledColorOption key={color} $colorName={color.toLowerCase()}>
-                  <input
-                    type="checkbox"
-                    checked={filters.color.includes(color)}
-                    onChange={() => handleMultiSelectChange('color')(color)}
-                  />
-                  {color}
-                </StyledColorOption>
-              ))}
-            </StyledDropdown>
-          </StyledMultiSelect>
+          <MultiSelect
+            values={filters.color}
+            options={colors}
+            placeholder="Select colors"
+            renderOption={(color) => (
+              <StyledColorOption key={color} $colorName={color.toLowerCase()}>
+                <input
+                  type="checkbox"
+                  checked={filters.color.includes(color)}
+                  onChange={() => {
+                    const newValues = filters.color.includes(color)
+                      ? filters.color.filter(c => c !== color)
+                      : [...filters.color, color];
+                    const newFilters = {
+                      ...filters,
+                      color: newValues
+                    };
+                    setFilters(newFilters);
+                    updateUrl(newFilters);
+                  }}
+                />
+                {color}
+              </StyledColorOption>
+            )}
+            renderSelectedPreview={(values) => (
+              <StyledColorPreview>
+                {values.map(color => (
+                  <StyledColorChip key={color} color={color.toLowerCase()} />
+                ))}
+              </StyledColorPreview>
+            )}
+            onChange={(values) => {
+              const newFilters = {
+                ...filters,
+                color: values
+              };
+              setFilters(newFilters);
+              updateUrl(newFilters);
+            }}
+          />
         </StyledFilterGroup>
 
         <StyledFilterGroup>
@@ -648,33 +463,40 @@ export const FilterSort = ({ brands, finishes, colors, currentFilters }: FilterS
               </StyledClearButton>
             )}
           </StyledFilterHeader>
-          <StyledMultiSelect className="multi-select">
-            <StyledMultiSelectButton
-              type="button"
-              onClick={(e) => handleDropdownClick(e, setIsRatingOpen, isRatingOpen)}
-            >
-              {filters.rating.length > 0 ? (
-                <>
-                  {filters.rating.length} selected
-                  <StyledSelectedCount>{filters.rating.length}</StyledSelectedCount>
-                </>
-              ) : (
-                'Select ratings'
-              )}
-            </StyledMultiSelectButton>
-            <StyledDropdown $isOpen={isRatingOpen}>
-              {ratings.map(rating => (
-                <StyledOption key={rating}>
-                  <input
-                    type="checkbox"
-                    checked={filters.rating.includes(formatRatingForQuery(rating))}
-                    onChange={() => handleMultiSelectChange('rating')(formatRatingForQuery(rating))}
-                  />
-                  {rating}
-                </StyledOption>
-              ))}
-            </StyledDropdown>
-          </StyledMultiSelect>
+          <MultiSelect
+            values={filters.rating}
+            options={ratings}
+            placeholder="Select ratings"
+            renderOption={(rating) => (
+              <StyledOption key={rating}>
+                <input
+                  type="checkbox"
+                  checked={filters.rating.includes(formatRatingForQuery(rating))}
+                  onChange={() => {
+                    const formattedRating = formatRatingForQuery(rating);
+                    const newValues = filters.rating.includes(formattedRating)
+                      ? filters.rating.filter(r => r !== formattedRating)
+                      : [...filters.rating, formattedRating];
+                    const newFilters = {
+                      ...filters,
+                      rating: newValues
+                    };
+                    setFilters(newFilters);
+                    updateUrl(newFilters);
+                  }}
+                />
+                {rating}
+              </StyledOption>
+            )}
+            onChange={(values) => {
+              const newFilters = {
+                ...filters,
+                rating: values
+              };
+              setFilters(newFilters);
+              updateUrl(newFilters);
+            }}
+          />
         </StyledFilterGroup>
 
         <StyledFilterGroup>
@@ -686,20 +508,15 @@ export const FilterSort = ({ brands, finishes, colors, currentFilters }: FilterS
               </StyledClearButton>
             )}
           </StyledFilterHeader>
-          <StyledSelect
-            value={filters.sort}
-            onChange={(e) => handleChange('sort')(e)}
-          >
-            <option value="">Default</option>
-            <option value="brand-asc">Brand (A-Z)</option>
-            <option value="brand-desc">Brand (Z-A)</option>
-            <option value="name-asc">Name (A-Z)</option>
-            <option value="name-desc">Name (Z-A)</option>
-            <option value="rating-desc">Rating (High-Low)</option>
-            <option value="rating-asc">Rating (Low-High)</option>
-            <option value="updated-desc">Recently Updated</option>
-            <option value="updated-asc">Oldest Updated</option>
-          </StyledSelect>
+          <SingleSelect
+            value={sortOptions.find(option => option.value === filters.sort)?.label || 'Default'}
+            options={sortOptions.map(option => option.label)}
+            placeholder="Select sort order"
+            onChange={(selectedLabel) => {
+              const selectedOption = sortOptions.find(option => option.label === selectedLabel);
+              handleChange('sort')(selectedOption?.value || '');
+            }}
+          />
         </StyledFilterGroup>
 
         <StyledFilterGroup>
@@ -711,14 +528,15 @@ export const FilterSort = ({ brands, finishes, colors, currentFilters }: FilterS
               </StyledClearButton>
             )}
           </StyledFilterHeader>
-          <StyledSelect
-            value={filters.hasImage}
-            onChange={(e) => handleChange('hasImage')(e)}
-          >
-            <option value="">All</option>
-            <option value="true">With Image</option>
-            <option value="false">Without Image</option>
-          </StyledSelect>
+          <SingleSelect
+            value={hasImageOptions.find(option => option.value === filters.hasImage)?.label || 'All'}
+            options={hasImageOptions.map(option => option.label)}
+            placeholder="Select image filter"
+            onChange={(selectedLabel) => {
+              const selectedOption = hasImageOptions.find(option => option.label === selectedLabel);
+              handleChange('hasImage')(selectedOption?.value || '');
+            }}
+          />
         </StyledFilterGroup>
 
         {(filters.brand.length > 0 || filters.finish.length > 0 || filters.color.length > 0 ||
