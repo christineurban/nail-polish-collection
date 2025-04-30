@@ -1,83 +1,90 @@
 'use client';
 
 import styled from 'styled-components';
-import { theme } from '@/lib/theme';
 
 export const StyledForm = styled.form`
+  max-width: 800px;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: ${theme.spacing.lg};
-  max-width: 600px;
-  margin: 0 auto;
+  gap: 2rem;
+  background: ${({ theme }) => theme.colors.background.primary};
+  padding: 3rem;
+  border-radius: ${({ theme }) => theme.borderRadius.xl};
+  box-shadow: ${({ theme }) => theme.shadows.lg};
+`;
+
+export const StyledFormSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+
+  h3 {
+    font-size: ${({ theme }) => theme.typography.fontSize.lg};
+    color: ${({ theme }) => theme.colors.text.primary};
+    font-weight: ${({ theme }) => theme.typography.fontWeights.semibold};
+    margin: 0;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid ${({ theme }) => theme.colors.border.medium};
+  }
+`;
+
+export const StyledFormRow = styled.div`
+  display: flex;
+  gap: 2rem;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
 `;
 
 export const StyledFormGroup = styled.div`
   display: flex;
   flex-direction: column;
-  gap: ${theme.spacing.xs};
-`;
+  gap: 0.5rem;
+  flex: 1;
 
-export const StyledLabel = styled.label`
-  font-size: ${theme.typography.fontSize.sm};
-  font-weight: ${theme.typography.fontWeight.medium};
-  color: ${theme.colors.text};
+  label {
+    font-size: ${({ theme }) => theme.typography.fontSize.sm};
+    font-weight: ${({ theme }) => theme.typography.fontWeights.medium};
+    color: ${({ theme }) => theme.colors.text.secondary};
+  }
 `;
 
 export const StyledTextarea = styled.textarea`
-  padding: ${theme.spacing.sm} ${theme.spacing.md};
-  border: 2px solid ${theme.colors.border};
-  border-radius: ${theme.borderRadius.md};
-  font-size: ${theme.typography.fontSize.md};
-  color: ${theme.colors.text};
-  background-color: ${theme.colors.background};
+  padding: 0.875rem 1rem;
+  border: 2px solid ${({ theme }) => theme.colors.border.default};
+  border-radius: ${({ theme }) => theme.borderRadius.lg};
+  font-size: ${({ theme }) => theme.typography.fontSize.base};
+  width: 100%;
+  transition: all ${({ theme }) => theme.transitions.base};
+  background: ${({ theme }) => theme.colors.background.primary};
+  color: ${({ theme }) => theme.colors.text.primary};
+  min-height: 120px;
   resize: vertical;
-  min-height: 100px;
-  transition: border-color 0.2s ease-in-out;
+  line-height: 1.5;
 
   &:hover {
-    border-color: #666666;
+    border-color: ${({ theme }) => theme.colors.border.medium};
   }
 
   &:focus {
     outline: none;
-    border-color: ${theme.colors.primary};
-    box-shadow: 0 0 0 2px ${theme.colors.primary}20;
-  }
-
-  &::placeholder {
-    color: ${theme.colors.border};
+    border-color: ${({ theme }) => theme.colors.primary[500]};
+    box-shadow: ${({ theme }) => theme.shadows.focus};
   }
 `;
 
 export const StyledButtonGroup = styled.div`
   display: flex;
-  gap: ${theme.spacing.md};
+  gap: 1rem;
   justify-content: flex-end;
-  margin-top: ${theme.spacing.lg};
-`;
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 2px solid ${({ theme }) => theme.colors.border.medium};
 
-export const StyledSelect = styled.select`
-  padding: ${theme.spacing.sm} ${theme.spacing.md};
-  border: 2px solid ${theme.colors.border};
-  border-radius: ${theme.borderRadius.md};
-  font-size: ${theme.typography.fontSize.md};
-  color: ${theme.colors.text};
-  background-color: ${theme.colors.background};
-  transition: border-color 0.2s ease-in-out;
-  appearance: none;
-  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-  background-repeat: no-repeat;
-  background-position: right ${theme.spacing.sm} center;
-  background-size: 1em;
-  padding-right: ${theme.spacing.xl};
-
-  &:focus {
-    outline: none;
-    border-color: ${theme.colors.primary};
-    box-shadow: 0 0 0 2px ${theme.colors.primary}20;
-  }
-
-  &::placeholder {
-    color: ${theme.colors.border};
+  button {
+    min-width: 120px;
   }
 `;

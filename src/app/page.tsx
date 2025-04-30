@@ -1,10 +1,10 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { StyledContainer } from './page.styled';
 import { PageHeader } from '@/components/PageHeader';
-import { NailPolishGrid } from '@/components/NailPolishGrid';
+import { PolishCollection } from '@/components/PolishCollection';
 import { FilterSort } from '@/components/FilterSort';
 import { Rating } from '@prisma/client';
 
@@ -20,9 +20,35 @@ interface Polish {
 
 export default function Home() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [polishes, setPolishes] = useState<Polish[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  // Extract unique values for filters
+  const brands = polishes
+    .map(polish => polish.brand)
+    .filter((brand, index, self) => self.indexOf(brand) === index)
+    .sort();
+  const colors = polishes
+    .flatMap(polish => polish.colors)
+    .filter((color, index, self) => self.indexOf(color) === index)
+    .sort();
+  const finishes = polishes
+    .flatMap(polish => polish.finishes)
+    .filter((finish, index, self) => self.indexOf(finish) === index)
+    .sort();
+
+  // Get current filters from URL
+  const currentFilters = {
+    brand: searchParams.getAll('brand'),
+    finish: searchParams.getAll('finish'),
+    color: searchParams.getAll('color'),
+    search: searchParams.get('search') || '',
+    sort: searchParams.get('sort') || '',
+    rating: searchParams.getAll('rating'),
+    hasImage: searchParams.get('hasImage') || '',
+  };
 
   useEffect(() => {
     const fetchPolishes = async () => {
@@ -64,11 +90,16 @@ export default function Home() {
   return (
     <StyledContainer>
       <PageHeader
-        title="My Nail Polish Collection"
+        title="Nail Polish Collection"
         description="Browse and manage your nail polish collection"
       />
-      <FilterSort polishes={polishes} />
-      <NailPolishGrid polishes={polishes} />
+      <PolishCollection
+        polishes={polishes}
+        brands={brands}
+        colors={colors}
+        finishes={finishes}
+        currentFilters={currentFilters}
+      />
     </StyledContainer>
   );
 }

@@ -1,20 +1,22 @@
 'use client';
 
 import styled from 'styled-components';
-import { theme } from '@/lib/theme';
 
 export const StyledContainer = styled.div`
-  max-width: 800px;
+  width: 100%;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: ${theme.spacing.lg};
+  padding: 2rem;
 `;
 
 export const StyledHeader = styled.header`
-  margin-bottom: ${theme.spacing.xl};
+  margin-bottom: 3rem;
 
   h1 {
-    font-size: ${theme.typography.fontSize.xxl};
-    font-weight: ${theme.typography.fontWeight.bold};
-    color: ${theme.colors.text};
+    font-size: ${({ theme }) => theme.typography.fontSize['2xl']};
+    color: ${({ theme }) => theme.colors.text.primary};
+    margin: 0;
+    line-height: 1.2;
+    font-weight: ${({ theme }) => theme.typography.fontWeights.bold};
   }
 `;

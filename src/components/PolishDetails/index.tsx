@@ -29,6 +29,7 @@ import {
   StyledSingleDropdown,
   StyledSingleOption,
   StyledImageActions,
+  StyledFormContainer,
 } from './index.styled';
 
 interface Polish {
@@ -210,242 +211,244 @@ export const PolishDetails = ({ polish, brands, availableColors, availableFinish
 
   const renderEditMode = () => (
     <StyledContainer>
-      <PageHeader
-        title={`Edit ${polish.brand} - ${polish.name}`}
-      />
-      <StyledEditForm>
-        <StyledFormSection>
-          <h3>Basic Information</h3>
-          <StyledFormRow>
-            <StyledFormGroup>
-              <label>Brand</label>
-              <SingleSelect
-                value={editedPolish.brand}
-                options={brands}
-                placeholder="Select brand"
-                onChange={(value) => handleInputChange('brand', value)}
-              />
-            </StyledFormGroup>
-            <StyledFormGroup>
-              <label>Name</label>
-              <StyledInput
-                type="text"
-                value={editedPolish.name}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInputChange('name', e.target.value)}
-              />
-            </StyledFormGroup>
-          </StyledFormRow>
-        </StyledFormSection>
+      <StyledFormContainer>
+        <PageHeader
+          title={`Edit ${polish.brand} - ${polish.name}`}
+        />
+        <StyledEditForm>
+          <StyledFormSection>
+            <h3>Basic Information</h3>
+            <StyledFormRow>
+              <StyledFormGroup>
+                <label>Brand</label>
+                <SingleSelect
+                  value={editedPolish.brand}
+                  options={brands}
+                  placeholder="Select brand"
+                  onChange={(value) => handleInputChange('brand', value)}
+                />
+              </StyledFormGroup>
+              <StyledFormGroup>
+                <label>Name</label>
+                <StyledInput
+                  type="text"
+                  value={editedPolish.name}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInputChange('name', e.target.value)}
+                />
+              </StyledFormGroup>
+            </StyledFormRow>
+          </StyledFormSection>
 
-        <StyledFormSection>
-          <h3>Appearance</h3>
-          <StyledFormRow>
-            <StyledFormGroup>
-              <label>Colors</label>
-              <StyledMultiSelectContainer ref={colorDropdownRef}>
-                <StyledMultiSelect onClick={() => setIsColorDropdownOpen(!isColorDropdownOpen)}>
-                  {editedPolish.colors.map(color => (
-                    <StyledTag key={color}>
-                      {color}
-                      <button onClick={(e) => {
-                        e.stopPropagation();
-                        handleRemoveColor(color);
-                      }}>&times;</button>
-                    </StyledTag>
-                  ))}
-                </StyledMultiSelect>
-                {isColorDropdownOpen && (
-                  <StyledDropdown>
-                    {availableColors
-                      .filter(color => !editedPolish.colors.includes(color))
-                      .map(color => (
-                        <StyledOption
-                          key={color}
-                          onClick={() => handleAddColor(color)}
-                        >
-                          {color}
-                        </StyledOption>
-                      ))}
-                  </StyledDropdown>
-                )}
-              </StyledMultiSelectContainer>
-            </StyledFormGroup>
-            <StyledFormGroup>
-              <label>Finishes</label>
-              <StyledMultiSelectContainer ref={finishDropdownRef}>
-                <StyledMultiSelect onClick={() => setIsFinishDropdownOpen(!isFinishDropdownOpen)}>
-                  {editedPolish.finishes.map(finish => (
-                    <StyledTag key={finish}>
-                      {finish}
-                      <button onClick={(e) => {
-                        e.stopPropagation();
-                        handleRemoveFinish(finish);
-                      }}>&times;</button>
-                    </StyledTag>
-                  ))}
-                </StyledMultiSelect>
-                {isFinishDropdownOpen && (
-                  <StyledDropdown>
-                    {availableFinishes
-                      .filter(finish => !editedPolish.finishes.includes(finish))
-                      .map(finish => (
-                        <StyledOption
-                          key={finish}
-                          onClick={() => handleAddFinish(finish)}
-                        >
-                          {finish}
-                        </StyledOption>
-                      ))}
-                  </StyledDropdown>
-                )}
-              </StyledMultiSelectContainer>
-            </StyledFormGroup>
-          </StyledFormRow>
-        </StyledFormSection>
+          <StyledFormSection>
+            <h3>Appearance</h3>
+            <StyledFormRow>
+              <StyledFormGroup>
+                <label>Colors</label>
+                <StyledMultiSelectContainer ref={colorDropdownRef}>
+                  <StyledMultiSelect onClick={() => setIsColorDropdownOpen(!isColorDropdownOpen)}>
+                    {editedPolish.colors.map(color => (
+                      <StyledTag key={color}>
+                        {color}
+                        <button onClick={(e) => {
+                          e.stopPropagation();
+                          handleRemoveColor(color);
+                        }}>&times;</button>
+                      </StyledTag>
+                    ))}
+                  </StyledMultiSelect>
+                  {isColorDropdownOpen && (
+                    <StyledDropdown>
+                      {availableColors
+                        .filter(color => !editedPolish.colors.includes(color))
+                        .map(color => (
+                          <StyledOption
+                            key={color}
+                            onClick={() => handleAddColor(color)}
+                          >
+                            {color}
+                          </StyledOption>
+                        ))}
+                    </StyledDropdown>
+                  )}
+                </StyledMultiSelectContainer>
+              </StyledFormGroup>
+              <StyledFormGroup>
+                <label>Finishes</label>
+                <StyledMultiSelectContainer ref={finishDropdownRef}>
+                  <StyledMultiSelect onClick={() => setIsFinishDropdownOpen(!isFinishDropdownOpen)}>
+                    {editedPolish.finishes.map(finish => (
+                      <StyledTag key={finish}>
+                        {finish}
+                        <button onClick={(e) => {
+                          e.stopPropagation();
+                          handleRemoveFinish(finish);
+                        }}>&times;</button>
+                      </StyledTag>
+                    ))}
+                  </StyledMultiSelect>
+                  {isFinishDropdownOpen && (
+                    <StyledDropdown>
+                      {availableFinishes
+                        .filter(finish => !editedPolish.finishes.includes(finish))
+                        .map(finish => (
+                          <StyledOption
+                            key={finish}
+                            onClick={() => handleAddFinish(finish)}
+                          >
+                            {finish}
+                          </StyledOption>
+                        ))}
+                    </StyledDropdown>
+                  )}
+                </StyledMultiSelectContainer>
+              </StyledFormGroup>
+            </StyledFormRow>
+          </StyledFormSection>
 
-        <StyledFormSection>
-          <h3>Details</h3>
-          <StyledFormRow>
-            <StyledFormGroup>
-              <label>Rating</label>
-              <StyledSingleSelectContainer ref={ratingDropdownRef}>
-                <StyledSingleSelectButton
-                  type="button"
-                  onClick={() => setIsRatingDropdownOpen(!isRatingDropdownOpen)}
-                >
-                  {editedPolish.rating ? formatRating(editedPolish.rating) : 'Not Rated'}
-                </StyledSingleSelectButton>
-                <StyledSingleDropdown $isOpen={isRatingDropdownOpen}>
-                  <StyledSingleOption
-                    $isSelected={!editedPolish.rating}
-                    onClick={() => {
-                      handleInputChange('rating', null);
-                      setIsRatingDropdownOpen(false);
-                    }}
+          <StyledFormSection>
+            <h3>Details</h3>
+            <StyledFormRow>
+              <StyledFormGroup>
+                <label>Rating</label>
+                <StyledSingleSelectContainer ref={ratingDropdownRef}>
+                  <StyledSingleSelectButton
+                    type="button"
+                    onClick={() => setIsRatingDropdownOpen(!isRatingDropdownOpen)}
                   >
-                    Not Rated
-                  </StyledSingleOption>
-                  {ratings.map(rating => (
+                    {editedPolish.rating ? formatRating(editedPolish.rating) : 'Not Rated'}
+                  </StyledSingleSelectButton>
+                  <StyledSingleDropdown $isOpen={isRatingDropdownOpen}>
                     <StyledSingleOption
-                      key={rating}
-                      $isSelected={editedPolish.rating === rating}
+                      $isSelected={!editedPolish.rating}
                       onClick={() => {
-                        handleInputChange('rating', rating);
+                        handleInputChange('rating', null);
                         setIsRatingDropdownOpen(false);
                       }}
                     >
-                      {formatRating(rating as Rating)}
+                      Not Rated
                     </StyledSingleOption>
-                  ))}
-                </StyledSingleDropdown>
-              </StyledSingleSelectContainer>
-            </StyledFormGroup>
-            <StyledFormGroup>
-              <label>Coats Needed</label>
-              <StyledInput
-                type="number"
-                value={editedPolish.coats || ''}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInputChange('coats', e.target.value ? parseInt(e.target.value) : null)}
-                min="1"
-                max="5"
-              />
-            </StyledFormGroup>
-          </StyledFormRow>
+                    {ratings.map(rating => (
+                      <StyledSingleOption
+                        key={rating}
+                        $isSelected={editedPolish.rating === rating}
+                        onClick={() => {
+                          handleInputChange('rating', rating);
+                          setIsRatingDropdownOpen(false);
+                        }}
+                      >
+                        {formatRating(rating as Rating)}
+                      </StyledSingleOption>
+                    ))}
+                  </StyledSingleDropdown>
+                </StyledSingleSelectContainer>
+              </StyledFormGroup>
+              <StyledFormGroup>
+                <label>Coats Needed</label>
+                <StyledInput
+                  type="number"
+                  value={editedPolish.coats || ''}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInputChange('coats', e.target.value ? parseInt(e.target.value) : null)}
+                  min="1"
+                  max="5"
+                />
+              </StyledFormGroup>
+            </StyledFormRow>
 
-          <StyledFormRow>
-            <StyledFormGroup>
-              <label>Total Bottles</label>
-              <StyledInput
-                type="number"
-                value={editedPolish.totalBottles || ''}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInputChange('totalBottles', e.target.value ? parseInt(e.target.value) : null)}
-                min="0"
-              />
-            </StyledFormGroup>
-            <StyledFormGroup>
-              <label>Empty Bottles</label>
-              <StyledInput
-                type="number"
-                value={editedPolish.emptyBottles || ''}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInputChange('emptyBottles', e.target.value ? parseInt(e.target.value) : null)}
-                min="0"
-              />
-            </StyledFormGroup>
-          </StyledFormRow>
+            <StyledFormRow>
+              <StyledFormGroup>
+                <label>Total Bottles</label>
+                <StyledInput
+                  type="number"
+                  value={editedPolish.totalBottles || ''}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInputChange('totalBottles', e.target.value ? parseInt(e.target.value) : null)}
+                  min="0"
+                />
+              </StyledFormGroup>
+              <StyledFormGroup>
+                <label>Empty Bottles</label>
+                <StyledInput
+                  type="number"
+                  value={editedPolish.emptyBottles || ''}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInputChange('emptyBottles', e.target.value ? parseInt(e.target.value) : null)}
+                  min="0"
+                />
+              </StyledFormGroup>
+            </StyledFormRow>
 
-          <StyledFormRow>
-            <StyledFormGroup>
-              <label>Last Used</label>
-              <StyledInput
-                type="date"
-                value={editedPolish.lastUsed ? new Date(editedPolish.lastUsed).toISOString().split('T')[0] : ''}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInputChange('lastUsed', e.target.value ? new Date(e.target.value) : null)}
-              />
-            </StyledFormGroup>
-            <StyledFormGroup>
-              <label>Is older polish?</label>
-              <StyledSingleSelectContainer ref={isOldDropdownRef}>
-                <StyledSingleSelectButton
-                  type="button"
-                  onClick={() => setIsOldDropdownOpen(!isOldDropdownOpen)}
-                >
-                  {editedPolish.isOld === null ? 'Select answer' : editedPolish.isOld ? 'Yes' : 'No'}
-                </StyledSingleSelectButton>
-                <StyledSingleDropdown $isOpen={isOldDropdownOpen}>
-                  <StyledSingleOption
-                    $isSelected={editedPolish.isOld === true}
-                    onClick={() => {
-                      handleInputChange('isOld', true);
-                      setIsOldDropdownOpen(false);
-                    }}
+            <StyledFormRow>
+              <StyledFormGroup>
+                <label>Last Used</label>
+                <StyledInput
+                  type="date"
+                  value={editedPolish.lastUsed ? new Date(editedPolish.lastUsed).toISOString().split('T')[0] : ''}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInputChange('lastUsed', e.target.value ? new Date(e.target.value) : null)}
+                />
+              </StyledFormGroup>
+              <StyledFormGroup>
+                <label>Is older polish?</label>
+                <StyledSingleSelectContainer ref={isOldDropdownRef}>
+                  <StyledSingleSelectButton
+                    type="button"
+                    onClick={() => setIsOldDropdownOpen(!isOldDropdownOpen)}
                   >
-                    Yes
-                  </StyledSingleOption>
-                  <StyledSingleOption
-                    $isSelected={editedPolish.isOld === false}
-                    onClick={() => {
-                      handleInputChange('isOld', false);
-                      setIsOldDropdownOpen(false);
-                    }}
-                  >
-                    No
-                  </StyledSingleOption>
-                </StyledSingleDropdown>
-              </StyledSingleSelectContainer>
+                    {editedPolish.isOld === null ? 'Select answer' : editedPolish.isOld ? 'Yes' : 'No'}
+                  </StyledSingleSelectButton>
+                  <StyledSingleDropdown $isOpen={isOldDropdownOpen}>
+                    <StyledSingleOption
+                      $isSelected={editedPolish.isOld === true}
+                      onClick={() => {
+                        handleInputChange('isOld', true);
+                        setIsOldDropdownOpen(false);
+                      }}
+                    >
+                      Yes
+                    </StyledSingleOption>
+                    <StyledSingleOption
+                      $isSelected={editedPolish.isOld === false}
+                      onClick={() => {
+                        handleInputChange('isOld', false);
+                        setIsOldDropdownOpen(false);
+                      }}
+                    >
+                      No
+                    </StyledSingleOption>
+                  </StyledSingleDropdown>
+                </StyledSingleSelectContainer>
+              </StyledFormGroup>
+            </StyledFormRow>
+          </StyledFormSection>
+
+          <StyledFormSection>
+            <h3>Additional Information</h3>
+            <StyledFormGroup>
+              <label>Link</label>
+              <StyledInput
+                type="url"
+                value={editedPolish.link || ''}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInputChange('link', e.target.value || null)}
+                placeholder="Product URL"
+              />
             </StyledFormGroup>
-          </StyledFormRow>
-        </StyledFormSection>
+            <StyledFormGroup>
+              <label>Notes</label>
+              <StyledTextarea
+                value={editedPolish.notes || ''}
+                onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => handleInputChange('notes', e.target.value || null)}
+                rows={4}
+              />
+            </StyledFormGroup>
+          </StyledFormSection>
 
-        <StyledFormSection>
-          <h3>Additional Information</h3>
-          <StyledFormGroup>
-            <label>Link</label>
-            <StyledInput
-              type="url"
-              value={editedPolish.link || ''}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInputChange('link', e.target.value || null)}
-              placeholder="Product URL"
-            />
-          </StyledFormGroup>
-          <StyledFormGroup>
-            <label>Notes</label>
-            <StyledTextarea
-              value={editedPolish.notes || ''}
-              onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => handleInputChange('notes', e.target.value || null)}
-              rows={4}
-            />
-          </StyledFormGroup>
-        </StyledFormSection>
-
-        <StyledButtonGroup>
-          <StyledButton onClick={() => setIsEditing(false)} disabled={isLoading}>
-            Cancel
-          </StyledButton>
-          <StyledButton onClick={handleSave} disabled={isLoading}>
-            {isLoading ? 'Saving...' : 'Save Changes'}
-          </StyledButton>
-        </StyledButtonGroup>
-      </StyledEditForm>
+          <StyledButtonGroup>
+            <StyledButton onClick={() => setIsEditing(false)} disabled={isLoading}>
+              Cancel
+            </StyledButton>
+            <StyledButton onClick={handleSave} disabled={isLoading}>
+              {isLoading ? 'Saving...' : 'Save Changes'}
+            </StyledButton>
+          </StyledButtonGroup>
+        </StyledEditForm>
+      </StyledFormContainer>
     </StyledContainer>
   );
 

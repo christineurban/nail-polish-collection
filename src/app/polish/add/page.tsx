@@ -4,6 +4,12 @@ import { useEffect, useState } from 'react';
 import NailPolishForm from '@/components/NailPolishForm';
 import { StyledContainer } from './page.styled';
 import { PageHeader } from '@/components/PageHeader';
+import styled from 'styled-components';
+
+const StyledFormContainer = styled.div`
+  max-width: 800px;
+  margin: 0 auto;
+`;
 
 interface Options {
   brands: string[];
@@ -34,14 +40,16 @@ export default function AddPolishPage() {
 
   return (
     <StyledContainer>
-      <PageHeader
-        title="Add New Nail Polish"
-      />
-      <NailPolishForm
-        brands={options.brands}
-        availableColors={options.colors}
-        availableFinishes={options.finishes}
-      />
+      <StyledFormContainer>
+        <PageHeader
+          title="Add New Nail Polish"
+        />
+        <NailPolishForm
+          brands={options.brands}
+          availableColors={options.colors}
+          availableFinishes={options.finishes}
+        />
+      </StyledFormContainer>
     </StyledContainer>
   );
 }

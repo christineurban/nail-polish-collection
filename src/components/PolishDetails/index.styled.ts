@@ -76,6 +76,14 @@ export const StyledButton = styled.button<{ $variant?: 'danger' }>`
 
 export const StyledContainer = styled.div`
   width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+`;
+
+export const StyledFormContainer = styled.div`
+  max-width: 800px;
+  margin: 0 auto;
 `;
 
 export const StyledHeader = styled.div`
@@ -95,6 +103,8 @@ export const StyledDetails = styled.div`
   grid-template-columns: 350px 1fr;
   gap: 4rem;
   align-items: flex-start;
+  max-width: 1200px;
+  margin: 0 auto;
 
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
