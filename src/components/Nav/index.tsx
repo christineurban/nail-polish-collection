@@ -91,7 +91,7 @@ export function Nav() {
   return (
     <StyledNav>
       <StyledContainer>
-        <StyledLogo href="/">My Nail Polish Collection</StyledLogo>
+        <StyledLogo href="/">My Nail Polish Collection 💅🏼</StyledLogo>
         {routes.map(({ path, label }) => (
           <StyledLink
             key={path}

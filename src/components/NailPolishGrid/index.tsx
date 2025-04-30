@@ -32,6 +32,7 @@ interface NailPolishGridProps {
     sort: string;
     rating: string[];
     hasImage: string;
+    isOld: string;
   };
 }
 

@@ -4,11 +4,16 @@ import { prisma } from '@/lib/prisma';
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const hasImage = searchParams.get('hasImage');
+  const search = searchParams.get('search');
 
   try {
     const polishes = await prisma.nail_polish.findMany({
       where: {
         image_url: hasImage === 'false' ? null : undefined,
+        OR: search ? [
+          { name: { contains: search, mode: 'insensitive' } },
+          { brands: { name: { contains: search, mode: 'insensitive' } } }
+        ] : undefined,
       },
       include: {
         brands: true,

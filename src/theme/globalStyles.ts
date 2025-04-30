@@ -8,6 +8,15 @@ export const GlobalStyles = createGlobalStyle<{ theme: Theme }>`
     padding: 0;
   }
 
+  *:focus {
+    outline: none !important;
+  }
+
+  *:focus-visible {
+    outline: none !important;
+    box-shadow: 0 0 0 2px rgba(203, 213, 225, 0.4) !important;
+  }
+
   html {
     font-size: 16px;
     -webkit-font-smoothing: antialiased;
@@ -130,7 +139,7 @@ export const GlobalStyles = createGlobalStyle<{ theme: Theme }>`
 
     &:focus {
       outline: none;
-      box-shadow: ${({ theme }) => theme.shadows.focus};
+      box-shadow: 0 0 0 1px rgba(203, 213, 225, 0.3);
     }
   }
 
@@ -146,8 +155,8 @@ export const GlobalStyles = createGlobalStyle<{ theme: Theme }>`
 
     &:focus {
       outline: none;
-      border-color: ${({ theme }) => theme.colors.primary[400]};
-      box-shadow: ${({ theme }) => theme.shadows.focus};
+      border-color: ${({ theme }) => theme.colors.border.medium};
+      box-shadow: 0 0 0 1px rgba(203, 213, 225, 0.3);
     }
 
     &::placeholder {

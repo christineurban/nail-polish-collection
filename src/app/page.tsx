@@ -46,12 +46,18 @@ export default function Home() {
     sort: searchParams.get('sort') || '',
     rating: searchParams.getAll('rating'),
     hasImage: searchParams.get('hasImage') || '',
+    isOld: searchParams.get('isOld') || '',
   };
 
   useEffect(() => {
     const fetchPolishes = async () => {
       try {
-        const response = await fetch('/api/polishes');
+        // Build the query string from currentFilters
+        const params = new URLSearchParams();
+        if (currentFilters.search) params.set('search', currentFilters.search);
+        if (currentFilters.hasImage) params.set('hasImage', currentFilters.hasImage);
+
+        const response = await fetch(`/api/polishes?${params.toString()}`);
         if (!response.ok) throw new Error('Failed to fetch polishes');
         const data = await response.json();
         setPolishes(data);
@@ -64,7 +70,7 @@ export default function Home() {
     };
 
     fetchPolishes();
-  }, []);
+  }, [searchParams]); // Add searchParams as a dependency
 
   if (isLoading) {
     return (
@@ -84,8 +90,8 @@ export default function Home() {
   return (
     <>
       <PageHeader
-        title="Nail Polish Collection"
-        description="Browse and manage your nail polish collection"
+        title="All Nail Polishes"
+        description="Browse, filter, and sort below ⬇"
       />
       <NailPolishGrid
         polishes={polishes}

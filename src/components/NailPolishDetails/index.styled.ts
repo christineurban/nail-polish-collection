@@ -230,8 +230,8 @@ export const StyledInput = styled.input`
 
   &:focus {
     outline: none;
-    border-color: ${({ theme }) => theme.colors.primary[500]};
-    box-shadow: ${({ theme }) => theme.shadows.focus};
+    border-color: ${({ theme }) => theme.colors.border.medium};
+    box-shadow: 0 0 0 1px rgba(203, 213, 225, 0.3);
   }
 
   &[type="checkbox"] {
@@ -264,8 +264,8 @@ export const StyledSelect = styled.select`
 
   &:focus {
     outline: none;
-    border-color: ${({ theme }) => theme.colors.primary[500]};
-    box-shadow: ${({ theme }) => theme.shadows.focus};
+    border-color: ${({ theme }) => theme.colors.border.medium};
+    box-shadow: 0 0 0 1px rgba(203, 213, 225, 0.3);
   }
 `;
 
@@ -311,8 +311,8 @@ export const StyledMultiSelect = styled.div`
   }
 
   &:focus-within {
-    border-color: ${({ theme }) => theme.colors.primary[500]};
-    box-shadow: ${({ theme }) => theme.shadows.focus};
+    border-color: ${({ theme }) => theme.colors.border.medium};
+    box-shadow: 0 0 0 1px rgba(203, 213, 225, 0.3);
   }
 
   &:empty::before {

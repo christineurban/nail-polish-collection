@@ -7,6 +7,8 @@ import { Rating } from '@prisma/client';
 import { getColorMapping, getTextColor } from '@/utils/colors';
 import { SingleSelect } from '@/components/fields/SingleSelect';
 import { MultiSelect } from '@/components/fields/MultiSelect';
+import { Button } from '@/components/Button';
+import { Input } from '@/components/fields/Input';
 
 const StyledFiltersContainer = styled.div`
   display: flex;
@@ -28,10 +30,37 @@ const StyledContainer = styled.div`
     inset 0 2px 4px rgba(255, 255, 255, 0.9);
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: 1fr;
   gap: 1.5rem;
   border: 1px solid rgba(226, 232, 240, 0.8);
   padding: 1.5rem;
+
+  .clear-all {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: flex-end;
+    width: 100%;
+  }
+
+  /* For 2 columns layout */
+  @media (min-width: 600px) and (max-width: 1199px) {
+    grid-template-columns: repeat(2, 1fr);
+
+    .clear-all {
+      grid-column: 1 / -1;
+    }
+  }
+
+  /* For 3 columns layout */
+  @media (min-width: 1200px) {
+    grid-template-columns: repeat(3, 1fr);
+
+    .clear-all {
+      grid-column: 3;
+      grid-row: 3;
+      align-self: flex-end;
+    }
+  }
 
   @media (min-width: 768px) {
     padding: 2rem;
@@ -44,6 +73,7 @@ const StyledFilterGroup = styled.div`
   grid-template-rows: auto 1fr;
   gap: 0.5rem;
   min-width: 0; /* Prevent overflow in flex/grid containers */
+  height: 100%; /* Ensure consistent height */
 `;
 
 const StyledFilterHeader = styled.div`
@@ -61,32 +91,6 @@ const StyledLabel = styled.label`
   color: #2D3748;
   letter-spacing: 0.025em;
   padding: 0.25rem 0;
-`;
-
-const StyledInput = styled.input`
-  width: 100%;
-  padding: 0.875rem 1rem;
-  border: 2px solid ${({ theme }) => theme.colors.border.default};
-  border-radius: ${({ theme }) => theme.borderRadius.lg};
-  background: ${({ theme }) => theme.colors.background.primary};
-  color: ${({ theme }) => theme.colors.text.primary};
-  font-size: ${({ theme }) => theme.typography.fontSize.base};
-  transition: all ${({ theme }) => theme.transitions.base};
-  -webkit-appearance: none; /* Better styling on iOS */
-
-  &:hover {
-    border-color: ${({ theme }) => theme.colors.border.medium};
-  }
-
-  &:focus {
-    outline: none;
-    border-color: ${({ theme }) => theme.colors.primary[500]};
-    box-shadow: ${({ theme }) => theme.shadows.focus};
-  }
-
-  &::placeholder {
-    color: ${({ theme }) => theme.colors.text.muted};
-  }
 `;
 
 const StyledColorChip = styled.div<{ color: string }>`
@@ -195,56 +199,6 @@ const StyledClearButton = styled.button`
   }
 `;
 
-const StyledClearAllButton = styled.button`
-  width: 100%;
-  padding: 1rem;
-  background: linear-gradient(to right, #FFF5F5, #FED7D7);
-  color: #C53030;
-  border: none;
-  border-radius: 12px;
-  font-size: 0.875rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  box-shadow:
-    0 4px 6px -1px rgba(0, 0, 0, 0.1),
-    0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  min-height: 48px; /* Minimum touch target size */
-
-  &:hover {
-    transform: translateY(-1px);
-    box-shadow:
-      0 6px 8px -1px rgba(0, 0, 0, 0.1),
-      0 3px 6px -1px rgba(0, 0, 0, 0.06);
-    background: linear-gradient(to right, #FED7D7, #FEB2B2);
-  }
-
-  &:focus {
-    outline: none;
-    box-shadow:
-      0 0 0 3px rgba(229, 62, 62, 0.2),
-      0 4px 6px -1px rgba(0, 0, 0, 0.1);
-  }
-
-  &::before {
-    content: '×';
-    font-size: 1.25rem;
-    line-height: 1;
-    font-weight: 700;
-  }
-
-  @media (min-width: 768px) {
-    border-radius: 10px;
-    min-height: 44px;
-  }
-`;
-
 const StyledOption = styled.label`
   display: flex;
   align-items: center;
@@ -292,6 +246,7 @@ interface FilterSortProps {
     sort: string;
     rating: string[];
     hasImage: string;
+    isOld: string;
   };
 }
 
@@ -367,7 +322,8 @@ export const FilterSort = ({ brands, finishes, colors, currentFilters }: FilterS
       search: '',
       sort: '',
       rating: [],
-      hasImage: ''
+      hasImage: '',
+      isOld: ''
     };
     setFilters(newFilters);
     updateUrl(newFilters);
@@ -404,11 +360,11 @@ export const FilterSort = ({ brands, finishes, colors, currentFilters }: FilterS
               </StyledClearButton>
             )}
           </StyledFilterHeader>
-          <StyledInput
+          <Input
             type="text"
             placeholder="Search polishes..."
             value={filters.search}
-            onChange={(e) => handleChange('search')(e)}
+            onChange={(value) => handleChange('search')(value)}
           />
         </StyledFilterGroup>
 
@@ -588,12 +544,31 @@ export const FilterSort = ({ brands, finishes, colors, currentFilters }: FilterS
           />
         </StyledFilterGroup>
 
+        <StyledFilterGroup>
+          <StyledFilterHeader>
+            <StyledLabel>Hide Old</StyledLabel>
+            {filters.isOld && (
+              <StyledClearButton onClick={() => clearFilter('isOld')}>
+                Clear
+              </StyledClearButton>
+            )}
+          </StyledFilterHeader>
+          <SingleSelect
+            value={filters.isOld === 'true' ? 'Yes' : 'No'}
+            options={['Yes', 'No']}
+            placeholder="Hide old polishes?"
+            onChange={(selectedValue) => {
+              handleChange('isOld')(selectedValue === 'Yes' ? 'true' : '');
+            }}
+          />
+        </StyledFilterGroup>
+
         {(filters.brand.length > 0 || filters.finish.length > 0 || filters.color.length > 0 ||
-          filters.search || filters.rating.length > 0 || filters.hasImage) && (
+          filters.search || filters.rating.length > 0 || filters.hasImage || filters.isOld) && (
           <StyledFilterGroup className="clear-all">
-            <StyledClearAllButton onClick={clearAllFilters}>
+            <Button $variant="danger" $fullWidth onClick={clearAllFilters}>
               Clear All Filters
-            </StyledClearAllButton>
+            </Button>
           </StyledFilterGroup>
         )}
       </StyledContainer>

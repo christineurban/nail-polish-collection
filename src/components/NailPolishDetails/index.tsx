@@ -6,6 +6,7 @@ import { useState, useEffect, useRef } from 'react';
 import { Rating } from '@prisma/client';
 import { SingleSelect } from '@/components/fields/SingleSelect';
 import { PageHeader } from '@/components/PageHeader';
+import { Button } from '@/components/Button';
 import {
   StyledContainer,
   StyledDetails,
@@ -440,12 +441,12 @@ export const NailPolishDetails = ({ polish, brands, availableColors, availableFi
           </StyledFormSection>
 
           <StyledButtonGroup>
-            <StyledButton onClick={() => setIsEditing(false)} disabled={isLoading}>
+            <Button onClick={() => setIsEditing(false)} disabled={isLoading}>
               Cancel
-            </StyledButton>
-            <StyledButton onClick={handleSave} disabled={isLoading}>
+            </Button>
+            <Button onClick={handleSave} disabled={isLoading}>
               {isLoading ? 'Saving...' : 'Save Changes'}
-            </StyledButton>
+            </Button>
           </StyledButtonGroup>
         </StyledEditForm>
       </StyledFormContainer>
@@ -473,62 +474,47 @@ export const NailPolishDetails = ({ polish, brands, availableColors, availableFi
             )}
           </StyledImageContainer>
           <StyledImageActions>
-            <StyledButton onClick={() => window.location.href = `/polish/${polish.id}/select-image`}>
-              {polish.imageUrl ? 'Choose New Image' : 'Choose Image'}
-            </StyledButton>
+            <Button
+              onClick={() => window.location.href = `/polish/${polish.id}/select-image`}
+              $fullWidth
+            >
+              Choose Image
+            </Button>
             {polish.imageUrl && (
-              <StyledButton
+              <Button
+                $variant="danger"
                 onClick={handleRemoveImage}
                 disabled={isRemovingImage}
-                $variant="danger"
+                $fullWidth
               >
                 {isRemovingImage ? 'Removing...' : 'Remove Image'}
-              </StyledButton>
+              </Button>
             )}
           </StyledImageActions>
         </div>
 
         <div className="details-content">
           <h2>Details</h2>
-          {polish.colors.length > 0 && (
-            <p><strong>Colors</strong>{polish.colors.join(', ')}</p>
-          )}
-          {polish.finishes.length > 0 && (
-            <p><strong>Finishes</strong>{polish.finishes.join(', ')}</p>
-          )}
-          {polish.rating && (
-            <p><strong>Rating</strong>{formatRating(polish.rating)}</p>
-          )}
-          {polish.coats && <p><strong>Coats Needed</strong>{polish.coats}</p>}
-          {(polish.totalBottles ?? 0) > 0 && (
-            <p><strong>Total Bottles</strong>{polish.totalBottles}</p>
-          )}
-          {(polish.emptyBottles ?? 0) > 0 && (
-            <p><strong>Empty Bottles</strong>{polish.emptyBottles}</p>
-          )}
-          {polish.isOld !== undefined && (
-            <p><strong>Is Old</strong>{polish.isOld === null ? 'Select answer' : polish.isOld ? 'Yes' : 'No'}</p>
-          )}
-          {polish.lastUsed && (
-            <p>
-              <strong>Last Used</strong>
-              {new Date(polish.lastUsed).toLocaleDateString()}
-            </p>
-          )}
-          {polish.notes && (
-            <p><strong>Notes</strong>{polish.notes}</p>
-          )}
-          {polish.link && (
-            <p>
-              <strong>Source</strong>
+          <p>
+            <strong>Source</strong>
+            {polish.link ? (
               <Link href={polish.link} target="_blank" rel="noopener noreferrer">
                 {polish.link}
               </Link>
-            </p>
-          )}
-          <StyledButton onClick={() => setIsEditing(true)}>
-            Edit Details
-          </StyledButton>
+            ) : '-'}
+          </p>
+          <p><strong>Colors</strong>{polish.colors.length > 0 ? polish.colors.join(', ') : '-'}</p>
+          <p><strong>Finishes</strong>{polish.finishes.length > 0 ? polish.finishes.join(', ') : '-'}</p>
+          <p><strong>Rating</strong>{polish.rating ? formatRating(polish.rating) : '-'}</p>
+          <p><strong>Coats Needed</strong>{polish.coats || '-'}</p>
+          <p><strong>Total Bottles</strong>{polish.totalBottles ?? '-'}</p>
+          <p><strong>Empty Bottles</strong>{polish.emptyBottles ?? '-'}</p>
+          <p><strong>Is Old</strong>{polish.isOld === null ? '-' : polish.isOld ? 'Yes' : 'No'}</p>
+          <p><strong>Last Used</strong>{polish.lastUsed ? new Date(polish.lastUsed).toLocaleDateString() : '-'}</p>
+          <p><strong>Notes</strong>{polish.notes || '-'}</p>
+          <Button onClick={() => setIsEditing(true)} $fullWidth>
+            Edit Polish
+          </Button>
         </div>
       </StyledDetails>
     </StyledContainer>

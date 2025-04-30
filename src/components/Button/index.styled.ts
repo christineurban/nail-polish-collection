@@ -1,27 +1,32 @@
 'use client';
 
 import styled from 'styled-components';
+import { formStyles } from '@/theme/form';
 
 interface StyledButtonProps {
   $variant?: 'danger';
+  $fullWidth?: boolean;
 }
 
 export const StyledButton = styled.button<StyledButtonProps>`
+  height: ${formStyles.height};
+  padding: ${formStyles.padding};
+  border: ${formStyles.border} transparent;
+  border-radius: ${formStyles.borderRadius};
   background: ${({ theme }) => theme.colors.primary[500]};
   color: ${({ theme }) => theme.colors.text.inverse};
-  border: none;
-  padding: 0.75rem 1.5rem;
-  border-radius: ${({ theme }) => theme.borderRadius.lg};
-  font-weight: ${({ theme }) => theme.typography.fontWeights.medium};
-  font-size: ${({ theme }) => theme.typography.fontSize.base};
+  font-size: ${formStyles.fontSize};
   cursor: pointer;
   transition: all ${({ theme }) => theme.transitions.base};
-  box-shadow: ${({ theme }) => theme.shadows.sm};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: 0.05em;
+  width: ${props => props.$fullWidth ? '100%' : 'auto'};
 
   &:hover {
     background: ${({ theme }) => theme.colors.primary[600]};
     transform: translateY(-1px);
-    box-shadow: ${({ theme }) => theme.shadows.md};
   }
 
   &:focus {

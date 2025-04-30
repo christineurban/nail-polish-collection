@@ -10,8 +10,11 @@ function fetchUrl(url: string, retryCount = 0): Promise<string> {
   return new Promise((resolve, reject) => {
     try {
       const parsedUrl = new URL(url);
-      const maxRetries = 2;
-      const timeout = 15000; // Reduce timeout to 15 seconds
+      const maxRetries = 3; // Increased from 2 to 3
+      const timeout = 30000; // Increased from 15s to 30s
+      const retryDelay = retryCount * 2000; // Progressive delay: 0s, 2s, 4s
+
+      logger.info(`Fetching URL: ${url} (Attempt ${retryCount + 1}/${maxRetries + 1})`);
 
       const options = {
         hostname: parsedUrl.hostname,
@@ -39,9 +42,11 @@ function fetchUrl(url: string, retryCount = 0): Promise<string> {
 
       const protocol = parsedUrl.protocol === 'https:' ? https : http;
       const req = protocol.get(options, (res: IncomingMessage) => {
+        // Handle redirects
         if (res.statusCode === 301 || res.statusCode === 302 || res.statusCode === 307 || res.statusCode === 308) {
           const redirectUrl = res.headers.location;
           if (redirectUrl) {
+            logger.info(`Following redirect to: ${redirectUrl}`);
             // Handle relative redirects
             const absoluteRedirectUrl = redirectUrl.startsWith('http')
               ? redirectUrl
@@ -52,51 +57,76 @@ function fetchUrl(url: string, retryCount = 0): Promise<string> {
           }
         }
 
-        // Only reject if we get a server error
+        // Handle server errors
         if (res.statusCode && res.statusCode >= 500) {
           const error = new Error(`Server error! status: ${res.statusCode} for URL: ${url}`);
           if (retryCount < maxRetries) {
+            logger.warn(`Server error (${res.statusCode}), retrying in ${retryDelay}ms...`);
             setTimeout(() => {
               resolve(fetchUrl(url, retryCount + 1));
-            }, 1000 * (retryCount + 1)); // Exponential backoff
+            }, retryDelay);
             return;
           }
+          logger.error(`Max retries reached for server error: ${url}`);
           return reject(error);
         }
 
+        // Handle successful response
         let data = '';
         res.on('data', (chunk) => {
           data += chunk;
         });
 
         res.on('end', () => {
+          logger.info(`Successfully fetched URL: ${url}`);
           resolve(data);
+        });
+
+        // Handle response errors
+        res.on('error', (error) => {
+          logger.error(`Response error for ${url}: ${error.message}`);
+          if (retryCount < maxRetries) {
+            logger.warn(`Retrying in ${retryDelay}ms...`);
+            setTimeout(() => {
+              resolve(fetchUrl(url, retryCount + 1));
+            }, retryDelay);
+            return;
+          }
+          reject(error);
         });
       });
 
+      // Handle request errors
       req.on('error', (error) => {
+        logger.error(`Request error for ${url}: ${error.message}`);
         if (retryCount < maxRetries) {
+          logger.warn(`Retrying in ${retryDelay}ms...`);
           setTimeout(() => {
             resolve(fetchUrl(url, retryCount + 1));
-          }, 1000 * (retryCount + 1)); // Exponential backoff
+          }, retryDelay);
           return;
         }
         reject(error);
       });
 
+      // Handle timeouts
       req.on('timeout', () => {
+        logger.warn(`Request timeout for ${url}`);
         req.destroy();
         if (retryCount < maxRetries) {
+          logger.warn(`Retrying in ${retryDelay}ms...`);
           setTimeout(() => {
             resolve(fetchUrl(url, retryCount + 1));
-          }, 1000 * (retryCount + 1)); // Exponential backoff
+          }, retryDelay);
           return;
         }
+        logger.error(`Max retries reached for timeout: ${url}`);
         reject(new Error(`Request timed out for: ${url}`));
       });
 
       req.end();
     } catch (error) {
+      logger.error(`Invalid URL: ${url}`);
       reject(new Error('Invalid URL'));
     }
   });
