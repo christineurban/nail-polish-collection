@@ -73,7 +73,7 @@ model nail_polish {
   empty_bottles Int                  @default(0) @db.SmallInt
   last_used     DateTime?            @db.Timestamptz(6)
   total_bottles Int                  @default(1) @db.SmallInt
-  is_old        Boolean              @default(false)
+  is_old        Boolean?
   brands        brands               @relation(fields: [brand_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   colors        nail_polish_color[]
   finishes      nail_polish_finish[]

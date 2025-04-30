@@ -494,8 +494,8 @@ export const PolishDetails = ({ polish, brands, availableColors, availableFinish
         {(polish.emptyBottles ?? 0) > 0 && (
           <p><strong>Empty Bottles</strong>{polish.emptyBottles}</p>
         )}
-        {polish.isOld !== null && (
-          <p><strong>Is Old</strong>{polish.isOld ? 'Yes' : 'No'}</p>
+        {polish.isOld !== undefined && (
+          <p><strong>Is Old</strong>{polish.isOld === null ? 'Select answer' : polish.isOld ? 'Yes' : 'No'}</p>
         )}
         {polish.lastUsed && (
           <p>
@@ -510,7 +510,7 @@ export const PolishDetails = ({ polish, brands, availableColors, availableFinish
           <p>
             <strong>Source</strong>
             <Link href={polish.link} target="_blank" rel="noopener noreferrer">
-              View
+              {polish.link}
             </Link>
           </p>
         )}

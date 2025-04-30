@@ -1,11 +1,15 @@
 import React from 'react';
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Onest } from "next/font/google";
 import StyledComponentsRegistry from '../lib/registry';
 import { ThemeProvider } from '../theme';
 import { Nav } from '@/components/Nav';
 
-const inter = Inter({ subsets: ["latin"] });
+const onest = Onest({
+  subsets: ["latin"],
+  display: 'swap',
+  variable: '--font-onest',
+});
 
 export const metadata: Metadata = {
   title: "Nail Polish Collection",
@@ -18,14 +22,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <head>
-        <link
-          href="https://fonts.googleapis.com/css2?family=Zain&display=swap"
-          rel="stylesheet"
-        />
-      </head>
-      <body className={inter.className}>
+    <html lang="en" className={onest.variable}>
+      <body className={onest.className}>
         <StyledComponentsRegistry>
           <ThemeProvider>
             <Nav />

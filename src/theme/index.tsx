@@ -87,8 +87,8 @@ export const theme: Theme = {
   },
   typography: {
     fontFamily: {
-      body: 'Inter, system-ui, -apple-system, sans-serif',
-      heading: 'Inter, system-ui, -apple-system, sans-serif',
+      body: 'var(--font-onest), system-ui, -apple-system, sans-serif',
+      heading: 'var(--font-onest), system-ui, -apple-system, sans-serif',
       mono: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace',
     },
     fontSize: {
