@@ -243,9 +243,9 @@ export const theme: DefaultTheme = {
   },
   typography: {
     fontFamily: {
-      body: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
-      heading: 'inherit',
-      mono: 'SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
+      body: 'Inter, system-ui, -apple-system, sans-serif',
+      heading: 'Zain, cursive',
+      mono: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace',
     },
     fontSize: {
       xs: '0.75rem',
