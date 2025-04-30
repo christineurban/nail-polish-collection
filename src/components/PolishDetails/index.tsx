@@ -28,6 +28,7 @@ import {
   StyledSingleSelectButton,
   StyledSingleDropdown,
   StyledSingleOption,
+  StyledImageActions,
 } from './index.styled';
 
 interface Polish {
@@ -56,6 +57,7 @@ interface PolishDetailsProps {
 
 export const PolishDetails = ({ polish, brands, availableColors, availableFinishes }: PolishDetailsProps) => {
   const [isEditing, setIsEditing] = useState(false);
+  const [isRemovingImage, setIsRemovingImage] = useState(false);
   const [editedPolish, setEditedPolish] = useState<Polish>(polish);
   const [isLoading, setIsLoading] = useState(false);
   const [isColorDropdownOpen, setIsColorDropdownOpen] = useState(false);
@@ -177,6 +179,32 @@ export const PolishDetails = ({ polish, brands, availableColors, availableFinish
       alert('Failed to update polish. Please try again.');
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const handleRemoveImage = async () => {
+    try {
+      setIsRemovingImage(true);
+      const response = await fetch('/api/remove-image', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          id: polish.id
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to remove image');
+      }
+
+      // Refresh the page to show updated data
+      window.location.reload();
+    } catch (error) {
+      console.error('Error removing image:', error);
+    } finally {
+      setIsRemovingImage(false);
     }
   };
 
@@ -418,22 +446,35 @@ export const PolishDetails = ({ polish, brands, availableColors, availableFinish
 
   const renderViewMode = () => (
     <StyledDetails>
-      <StyledImageContainer>
-        {polish.imageUrl ? (
-          <Image
-            src={polish.imageUrl}
-            alt={`${polish.brand} ${polish.name}`}
-            width={300}
-            height={300}
-            priority
-          />
-        ) : (
-          <p>No image available</p>
-        )}
-        <Link href={`/polish/${polish.id}/select-image`}>
-          <StyledButton>Choose Image</StyledButton>
-        </Link>
-      </StyledImageContainer>
+      <div>
+        <StyledImageContainer>
+          {polish.imageUrl ? (
+            <Image
+              src={polish.imageUrl}
+              alt={`${polish.brand} ${polish.name}`}
+              width={300}
+              height={300}
+              priority
+            />
+          ) : (
+            <p>No image available</p>
+          )}
+        </StyledImageContainer>
+        <StyledImageActions>
+          <StyledButton onClick={() => window.location.href = `/polish/${polish.id}/select-image`}>
+            {polish.imageUrl ? 'Choose New Image' : 'Choose Image'}
+          </StyledButton>
+          {polish.imageUrl && (
+            <StyledButton
+              onClick={handleRemoveImage}
+              disabled={isRemovingImage}
+              $variant="danger"
+            >
+              {isRemovingImage ? 'Removing...' : 'Remove Image'}
+            </StyledButton>
+          )}
+        </StyledImageActions>
+      </div>
 
       <div className="details-content">
         <h2>Details</h2>

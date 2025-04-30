@@ -1,6 +1,38 @@
 import styled from 'styled-components';
 
-export const StyledButton = styled.button`
+export const StyledImageContainer = styled.div`
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  background: ${({ theme }) => theme.colors.background.muted};
+  border-radius: ${({ theme }) => theme.borderRadius.xl};
+  overflow: hidden;
+  box-shadow: ${({ theme }) => theme.shadows.lg};
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  p {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    margin: 0;
+    color: ${({ theme }) => theme.colors.text.secondary};
+    font-size: ${({ theme }) => theme.typography.fontSize.lg};
+  }
+`;
+
+export const StyledImageActions = styled.div`
+  margin-top: 1rem;
+  display: flex;
+  gap: 0.5rem;
+`;
+
+export const StyledButton = styled.button<{ $variant?: 'danger' }>`
   background: ${({ theme }) => theme.colors.primary[500]};
   color: ${({ theme }) => theme.colors.text.inverse};
   border: none;
@@ -28,58 +60,13 @@ export const StyledButton = styled.button`
     cursor: not-allowed;
     transform: none;
   }
-`;
 
-export const StyledImageContainer = styled.div`
-  position: relative;
-  width: 100%;
-  aspect-ratio: 1;
-  background: ${({ theme }) => theme.colors.background.muted};
-  border-radius: ${({ theme }) => theme.borderRadius.xl};
-  overflow: hidden;
-  box-shadow: ${({ theme }) => theme.shadows.lg};
-  display: flex;
-  flex-direction: column;
-
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  p {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    margin: 0;
-    color: ${({ theme }) => theme.colors.text.secondary};
-    font-size: ${({ theme }) => theme.typography.fontSize.lg};
-  }
-
-  > a {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    text-decoration: none;
-
-    ${StyledButton} {
-      width: 100%;
-      border-radius: 0;
-      padding: 1rem;
-      font-size: ${({ theme }) => theme.typography.fontSize.base};
-      background: ${({ theme }) => `${theme.colors.primary[500]}CC`}; // 80% opacity
-      backdrop-filter: blur(8px);
-      box-shadow: none;
-      transition: all ${({ theme }) => theme.transitions.base};
-
-      &:hover {
-        background: ${({ theme }) => theme.colors.primary[600]};
-        transform: none;
-      }
+  ${props => props.$variant === 'danger' && `
+    background: #dc3545;
+    &:hover {
+      background: #c82333;
     }
-  }
+  `}
 `;
 
 export const StyledContainer = styled.div`

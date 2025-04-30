@@ -1,7 +1,19 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { StyledContainer, StyledPolishCard, StyledImagesGrid, StyledImageContainer, StyledImage, StyledSaveButton, StyledMetadata, StyledNoImages, StyledLoadingOverlay, StyledSpinner, StyledSuccessMessage } from './index.styled';
+import {
+  StyledPolishCard,
+  StyledImagesGrid,
+  StyledImageContainer,
+  StyledImage,
+  StyledSaveButton,
+  StyledRemoveButton,
+  StyledMetadata,
+  StyledNoImages,
+  StyledLoadingOverlay,
+  StyledSpinner,
+  StyledSuccessMessage
+} from './index.styled';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface Polish {
@@ -22,10 +34,49 @@ export const ImageSelector = ({ polish, onImageSaved }: ImageSelectorProps) => {
   const [images, setImages] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
+  const [isRemoving, setIsRemoving] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
 
   const handleImageSelect = (imageUrl: string) => {
     setSelectedImage(imageUrl);
+  };
+
+  const handleRemoveImage = async () => {
+    try {
+      setIsRemoving(true);
+
+      const response = await fetch('/api/remove-image', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          id: polish.id
+        }),
+      });
+
+      if (response.ok) {
+        setSuccessMessage('Image removed successfully!');
+        setIsSuccess(true);
+        if (onImageSaved) {
+          setTimeout(() => {
+            onImageSaved();
+          }, 1000);
+        } else {
+          setTimeout(() => {
+            setIsSuccess(false);
+          }, 2000);
+        }
+      } else {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to remove image');
+      }
+    } catch (error) {
+      console.error('Error removing image:', error);
+    } finally {
+      setIsRemoving(false);
+    }
   };
 
   const handleSaveImage = async () => {
@@ -46,13 +97,17 @@ export const ImageSelector = ({ polish, onImageSaved }: ImageSelectorProps) => {
       });
 
       if (response.ok) {
+        setSuccessMessage('Image saved successfully!');
         setIsSuccess(true);
-        // Wait for success animation to complete before calling onImageSaved
-        setTimeout(() => {
-          if (onImageSaved) {
+        if (onImageSaved) {
+          setTimeout(() => {
             onImageSaved();
-          }
-        }, 2000);
+          }, 1000);
+        } else {
+          setTimeout(() => {
+            setIsSuccess(false);
+          }, 2000);
+        }
       } else {
         const errorData = await response.json();
         throw new Error(errorData.error || 'Failed to save image');
@@ -105,6 +160,17 @@ export const ImageSelector = ({ polish, onImageSaved }: ImageSelectorProps) => {
         )}
       </StyledMetadata>
 
+      {polish.imageUrl && (
+        <div style={{ marginBottom: '20px', textAlign: 'center' }}>
+          <h3>Current Image</h3>
+          <StyledImage
+            src={polish.imageUrl}
+            alt={`Current image for ${polish.brand} ${polish.name}`}
+            style={{ maxWidth: '300px', margin: '0 auto' }}
+          />
+        </div>
+      )}
+
       {!polish.link ? (
         <StyledNoImages>No source link available</StyledNoImages>
       ) : isLoading ? (
@@ -124,6 +190,15 @@ export const ImageSelector = ({ polish, onImageSaved }: ImageSelectorProps) => {
         <StyledNoImages>No images found on the linked page</StyledNoImages>
       ) : (
         <>
+          {polish.imageUrl && onImageSaved && (
+            <StyledRemoveButton
+              onClick={handleRemoveImage}
+              disabled={isRemoving}
+              $hasSelectedImage={!!selectedImage}
+            >
+              {isRemoving ? 'Removing...' : 'Remove Current Image'}
+            </StyledRemoveButton>
+          )}
           <StyledSaveButton
             onClick={handleSaveImage}
             disabled={!selectedImage || isSaving}
@@ -155,8 +230,9 @@ export const ImageSelector = ({ polish, onImageSaved }: ImageSelectorProps) => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.5 }}
           >
-            Image saved successfully!
+            {successMessage}
           </StyledSuccessMessage>
         )}
       </AnimatePresence>

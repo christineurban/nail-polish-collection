@@ -44,7 +44,8 @@ export default function ImageSelectionPage() {
   }, []);
 
   const handleImageSaved = (id: string) => {
-    router.push(`/polish/${id}`);
+    // No redirection needed - we want to stay on this page
+    // The success message will be shown and fade away
   };
 
   if (isLoading) {

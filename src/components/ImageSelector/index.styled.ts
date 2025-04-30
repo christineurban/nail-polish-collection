@@ -54,6 +54,28 @@ export const StyledSaveButton = styled.button`
   }
 `;
 
+export const StyledRemoveButton = styled.button<{ $hasSelectedImage?: boolean }>`
+  background: #dc3545;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 4px;
+  position: absolute;
+  top: 20px;
+  right: ${props => props.$hasSelectedImage ? '150px' : '20px'};
+  z-index: 5;
+
+  &:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+  }
+
+  &:hover {
+    background: #c82333;
+  }
+`;
+
 export const StyledMetadata = styled.div`
   margin-bottom: 10px;
   padding-right: 150px; /* Make room for the save button */
