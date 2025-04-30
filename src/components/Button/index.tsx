@@ -4,28 +4,20 @@ import { ButtonHTMLAttributes } from 'react';
 import { StyledButton } from './index.styled';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary' | 'outline';
-  size?: 'small' | 'medium' | 'large';
-  fullWidth?: boolean;
+  $variant?: 'danger';
 }
 
-const Button = ({
+export const Button = ({
   children,
-  variant = 'primary',
-  size = 'medium',
-  fullWidth = false,
+  $variant,
   ...props
 }: ButtonProps) => {
   return (
     <StyledButton
-      variant={variant}
-      size={size}
-      fullWidth={fullWidth}
+      $variant={$variant}
       {...props}
     >
       {children}
     </StyledButton>
   );
 };
-
-export default Button;

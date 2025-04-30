@@ -1,22 +1,25 @@
+'use client';
+
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Button from '../Button';
+import { Button } from '../Button';
+import { SingleSelect } from '../fields/SingleSelect';
+import { MultiSelect } from '../fields/MultiSelect';
+import { Input } from '../fields/Input';
 import { Rating, RATING_OPTIONS } from '@/types/rating';
 import {
   StyledForm,
   StyledFormGroup,
   StyledLabel,
-  StyledInput,
   StyledTextarea,
   StyledButtonGroup,
-  StyledSelect,
 } from './index.styled';
 
 interface NailPolishFormData {
   imageUrl?: string;
   brand: string;
   name: string;
-  color: string;
+  colors: string[];
   finishes: string[];
   link?: string;
   coats?: number;
@@ -27,15 +30,24 @@ interface NailPolishFormData {
 interface NailPolishFormProps {
   initialData?: NailPolishFormData;
   isEditing?: boolean;
+  brands?: string[];
+  availableColors?: string[];
+  availableFinishes?: string[];
 }
 
-const NailPolishForm = ({ initialData, isEditing = false }: NailPolishFormProps) => {
+const NailPolishForm = ({
+  initialData,
+  isEditing = false,
+  brands = [],
+  availableColors = [],
+  availableFinishes = []
+}: NailPolishFormProps) => {
   const router = useRouter();
   const [formData, setFormData] = useState<NailPolishFormData>(
     initialData || {
       brand: '',
       name: '',
-      color: '',
+      colors: [],
       finishes: [],
     }
   );
@@ -49,10 +61,7 @@ const NailPolishForm = ({ initialData, isEditing = false }: NailPolishFormProps)
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          ...formData,
-          finishes: JSON.stringify(formData.finishes),
-        }),
+        body: JSON.stringify(formData),
       });
 
       if (!response.ok) {
@@ -66,87 +75,78 @@ const NailPolishForm = ({ initialData, isEditing = false }: NailPolishFormProps)
     }
   };
 
-  const handleFinishesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const finishes = e.target.value.split(',').map((finish) => finish.trim());
-    setFormData((prev) => ({ ...prev, finishes }));
+  const formatRating = (rating: string): string => {
+    return rating.replace('_PLUS', '+').replace('_MINUS', '-');
   };
 
   return (
     <StyledForm onSubmit={handleSubmit}>
       <StyledFormGroup>
-        <StyledLabel htmlFor="imageUrl">Image URL</StyledLabel>
-        <StyledInput
+        <Input
+          label="Image URL"
           type="url"
-          id="imageUrl"
           value={formData.imageUrl || ''}
-          onChange={(e) => setFormData((prev) => ({ ...prev, imageUrl: e.target.value }))}
+          onChange={(value) => setFormData((prev) => ({ ...prev, imageUrl: value }))}
           placeholder="https://example.com/image.jpg"
         />
       </StyledFormGroup>
 
       <StyledFormGroup>
         <StyledLabel htmlFor="brand">Brand *</StyledLabel>
-        <StyledInput
-          type="text"
-          id="brand"
+        <SingleSelect
           value={formData.brand}
-          onChange={(e) => setFormData((prev) => ({ ...prev, brand: e.target.value }))}
-          required
+          options={brands}
+          placeholder="Select brand"
+          onChange={(value) => setFormData((prev) => ({ ...prev, brand: value }))}
         />
       </StyledFormGroup>
 
       <StyledFormGroup>
-        <StyledLabel htmlFor="name">Name *</StyledLabel>
-        <StyledInput
+        <Input
+          label="Name *"
           type="text"
-          id="name"
           value={formData.name}
-          onChange={(e) => setFormData((prev) => ({ ...prev, name: e.target.value }))}
+          onChange={(value) => setFormData((prev) => ({ ...prev, name: value }))}
           required
         />
       </StyledFormGroup>
 
       <StyledFormGroup>
-        <StyledLabel htmlFor="color">Color *</StyledLabel>
-        <StyledInput
-          type="text"
-          id="color"
-          value={formData.color}
-          onChange={(e) => setFormData((prev) => ({ ...prev, color: e.target.value }))}
-          required
+        <StyledLabel htmlFor="colors">Colors *</StyledLabel>
+        <MultiSelect
+          values={formData.colors}
+          options={availableColors}
+          placeholder="Select colors"
+          onChange={(values) => setFormData((prev) => ({ ...prev, colors: values }))}
         />
       </StyledFormGroup>
 
       <StyledFormGroup>
         <StyledLabel htmlFor="finishes">Finishes *</StyledLabel>
-        <StyledInput
-          type="text"
-          id="finishes"
-          value={formData.finishes.join(', ')}
-          onChange={handleFinishesChange}
-          placeholder="Creme, Shimmer, Glitter"
-          required
+        <MultiSelect
+          values={formData.finishes}
+          options={availableFinishes}
+          placeholder="Select finishes"
+          onChange={(values) => setFormData((prev) => ({ ...prev, finishes: values }))}
         />
       </StyledFormGroup>
 
       <StyledFormGroup>
-        <StyledLabel htmlFor="link">Link</StyledLabel>
-        <StyledInput
+        <Input
+          label="Link"
           type="url"
-          id="link"
           value={formData.link || ''}
-          onChange={(e) => setFormData((prev) => ({ ...prev, link: e.target.value }))}
+          onChange={(value) => setFormData((prev) => ({ ...prev, link: value }))}
           placeholder="https://example.com/polish"
         />
       </StyledFormGroup>
 
       <StyledFormGroup>
-        <StyledLabel htmlFor="coats">Number of Coats</StyledLabel>
-        <StyledInput
+        <Input
+          label="Number of Coats"
           type="number"
-          id="coats"
           value={formData.coats || ''}
-          onChange={(e) => setFormData((prev) => ({ ...prev, coats: parseInt(e.target.value) || undefined }))}
+          onChange={(value) => setFormData((prev) => ({ ...prev, coats: parseInt(value) || undefined }))}
           min="1"
           max="5"
         />
@@ -154,18 +154,12 @@ const NailPolishForm = ({ initialData, isEditing = false }: NailPolishFormProps)
 
       <StyledFormGroup>
         <StyledLabel htmlFor="rating">Rating</StyledLabel>
-        <StyledSelect
-          id="rating"
+        <SingleSelect
           value={formData.rating || ''}
-          onChange={(e) => setFormData((prev) => ({ ...prev, rating: e.target.value as Rating || undefined }))}
-        >
-          <option value="">Select a rating</option>
-          {RATING_OPTIONS.map((rating) => (
-            <option key={rating} value={rating}>
-              {rating.replace('_', ' ')}
-            </option>
-          ))}
-        </StyledSelect>
+          options={RATING_OPTIONS}
+          placeholder="Select rating"
+          onChange={(value) => setFormData((prev) => ({ ...prev, rating: value as Rating || undefined }))}
+        />
       </StyledFormGroup>
 
       <StyledFormGroup>
@@ -179,10 +173,12 @@ const NailPolishForm = ({ initialData, isEditing = false }: NailPolishFormProps)
       </StyledFormGroup>
 
       <StyledButtonGroup>
-        <Button type="button" variant="outline" onClick={() => router.back()}>
+        <Button type="button" onClick={() => router.back()}>
           Cancel
         </Button>
-        <Button type="submit">{isEditing ? 'Update' : 'Add'} Polish</Button>
+        <Button type="submit">
+          {isEditing ? 'Update' : 'Add'} Polish
+        </Button>
       </StyledButtonGroup>
     </StyledForm>
   );

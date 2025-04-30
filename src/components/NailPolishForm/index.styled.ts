@@ -1,3 +1,5 @@
+'use client';
+
 import styled from 'styled-components';
 import { theme } from '@/lib/theme';
 
@@ -16,48 +18,34 @@ export const StyledFormGroup = styled.div`
 `;
 
 export const StyledLabel = styled.label`
-  font-size: ${theme.fontSizes.sm};
-  font-weight: ${theme.fontWeights.medium};
+  font-size: ${theme.typography.fontSize.sm};
+  font-weight: ${theme.typography.fontWeight.medium};
   color: ${theme.colors.text};
-`;
-
-export const StyledInput = styled.input`
-  padding: ${theme.spacing.sm} ${theme.spacing.md};
-  border: 1px solid ${theme.colors.gray};
-  border-radius: ${theme.borderRadius.md};
-  font-size: ${theme.fontSizes.md};
-  color: ${theme.colors.text};
-  background-color: ${theme.colors.white};
-  transition: border-color 0.2s ease-in-out;
-
-  &:focus {
-    outline: none;
-    border-color: ${theme.colors.primary};
-  }
-
-  &::placeholder {
-    color: ${theme.colors.textLight};
-  }
 `;
 
 export const StyledTextarea = styled.textarea`
   padding: ${theme.spacing.sm} ${theme.spacing.md};
-  border: 1px solid ${theme.colors.gray};
+  border: 2px solid ${theme.colors.border};
   border-radius: ${theme.borderRadius.md};
-  font-size: ${theme.fontSizes.md};
+  font-size: ${theme.typography.fontSize.md};
   color: ${theme.colors.text};
-  background-color: ${theme.colors.white};
+  background-color: ${theme.colors.background};
   resize: vertical;
   min-height: 100px;
   transition: border-color 0.2s ease-in-out;
 
+  &:hover {
+    border-color: #666666;
+  }
+
   &:focus {
     outline: none;
     border-color: ${theme.colors.primary};
+    box-shadow: 0 0 0 2px ${theme.colors.primary}20;
   }
 
   &::placeholder {
-    color: ${theme.colors.textLight};
+    color: ${theme.colors.border};
   }
 `;
 
@@ -70,11 +58,11 @@ export const StyledButtonGroup = styled.div`
 
 export const StyledSelect = styled.select`
   padding: ${theme.spacing.sm} ${theme.spacing.md};
-  border: 1px solid ${theme.colors.gray};
+  border: 2px solid ${theme.colors.border};
   border-radius: ${theme.borderRadius.md};
-  font-size: ${theme.fontSizes.md};
+  font-size: ${theme.typography.fontSize.md};
   color: ${theme.colors.text};
-  background-color: ${theme.colors.white};
+  background-color: ${theme.colors.background};
   transition: border-color 0.2s ease-in-out;
   appearance: none;
   background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
@@ -86,9 +74,10 @@ export const StyledSelect = styled.select`
   &:focus {
     outline: none;
     border-color: ${theme.colors.primary};
+    box-shadow: 0 0 0 2px ${theme.colors.primary}20;
   }
 
   &::placeholder {
-    color: ${theme.colors.textLight};
+    color: ${theme.colors.border};
   }
 `;

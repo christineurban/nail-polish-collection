@@ -5,27 +5,12 @@ import styled from 'styled-components';
 import { NailPolishCard } from '@/components/NailPolishCard';
 import { useRouter } from 'next/navigation';
 import { Rating } from '@prisma/client';
+import { PageHeader } from '@/components/PageHeader';
 
 const StyledContainer = styled.div`
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 2rem;
-`;
-
-const StyledHeader = styled.div`
-  margin-bottom: 2rem;
-
-  h1 {
-    font-size: 2rem;
-    color: #2D3748;
-    margin: 0 0 0.5rem 0;
-  }
-
-  p {
-    color: #718096;
-    font-size: 1.125rem;
-    margin: 0;
-  }
 `;
 
 const StyledGrid = styled.div`
@@ -71,20 +56,22 @@ interface Polish {
   rating: Rating | null;
 }
 
-export default function SelectImages() {
+export default function SelectImagesPage() {
   const router = useRouter();
   const [polishes, setPolishes] = useState<Polish[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchPolishes = async () => {
       try {
         const response = await fetch('/api/polishes?hasImage=false');
-        if (!response.ok) throw new Error('Failed to fetch polishes');
+        if (!response.ok) throw new Error('Failed to fetch polish details');
         const data = await response.json();
         setPolishes(data);
       } catch (error) {
         console.error('Error fetching polishes:', error);
+        setError(error instanceof Error ? error.message : 'An error occurred');
       } finally {
         setIsLoading(false);
       }
@@ -93,47 +80,56 @@ export default function SelectImages() {
     fetchPolishes();
   }, []);
 
-  const handleImageSelected = (polishId: string) => {
-    router.push(`/polish/${polishId}/select-image`);
-  };
-
   if (isLoading) {
     return (
       <StyledContainer>
-        <StyledHeader>
-          <h1>Loading...</h1>
-        </StyledHeader>
+        <PageHeader title="Loading..." />
+      </StyledContainer>
+    );
+  }
+
+  if (error) {
+    return (
+      <StyledContainer>
+        <PageHeader
+          title="Error"
+          description={error}
+        />
+      </StyledContainer>
+    );
+  }
+
+  if (polishes.length === 0) {
+    return (
+      <StyledContainer>
+        <PageHeader
+          title="No Polishes Need Images"
+          description="All polishes in your collection have images."
+        />
       </StyledContainer>
     );
   }
 
   return (
     <StyledContainer>
-      <StyledHeader>
-        <h1>Select Missing Images</h1>
-        <p>Choose images for polishes that don't have one yet</p>
-      </StyledHeader>
+      <PageHeader
+        title="Select Images"
+        description="Click on an image to select it, then click 'Save' to update the database."
+      />
       <StyledGrid>
-        {polishes.length > 0 ? (
-          polishes.map((polish) => (
-            <NailPolishCard
-              key={polish.id}
-              id={polish.id}
-              brand={polish.brand}
-              name={polish.name}
-              imageUrl={polish.imageUrl}
-              colors={polish.colors}
-              finishes={polish.finishes}
-              rating={polish.rating}
-              onChooseImage={handleImageSelected}
-            />
-          ))
-        ) : (
-          <StyledEmptyState>
-            <h2>All Set!</h2>
-            <p>All polishes in your collection have images.</p>
-          </StyledEmptyState>
-        )}
+        {polishes.map(polish => (
+          <NailPolishCard
+            key={polish.id}
+            id={polish.id}
+            brand={polish.brand}
+            name={polish.name}
+            imageUrl={polish.imageUrl || undefined}
+            colors={polish.colors}
+            finishes={polish.finishes}
+            rating={polish.rating || undefined}
+            onChooseImage={() => router.push(`/polish/${polish.id}/select-image`)}
+          />
+        ))}
       </StyledGrid>
     </StyledContainer>
   );

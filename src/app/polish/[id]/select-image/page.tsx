@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { ImageSelector } from '@/components/ImageSelector';
 import styled from 'styled-components';
+import { PageHeader } from '@/components/PageHeader';
 
 const StyledContainer = styled.div`
   max-width: 1200px;
@@ -15,20 +16,6 @@ const StyledError = styled.div`
   color: #e53e3e;
   text-align: center;
   padding: 2rem;
-`;
-
-const StyledHeader = styled.div`
-  margin-bottom: 2rem;
-
-  h1 {
-    margin: 0;
-    margin-top: 1rem;
-  }
-
-  p {
-    margin: 0;
-    margin-top: 1rem;
-  }
 `;
 
 const StyledBackButton = styled.button`
@@ -67,13 +54,7 @@ interface Polish {
   brand: string;
 }
 
-interface PageProps {
-  params: {
-    id: string;
-  };
-}
-
-export default function SelectImagePage({ params }: PageProps) {
+export default function SelectImagePage({ params }: { params: { id: string } }) {
   const router = useRouter();
   const [polish, setPolish] = useState<Polish | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -82,24 +63,12 @@ export default function SelectImagePage({ params }: PageProps) {
   useEffect(() => {
     const fetchPolish = async () => {
       try {
-        const response = await fetch(`/api/polish/${params.id}`);
-        if (!response.ok) {
-          throw new Error('Failed to fetch polish details');
-        }
+        const response = await fetch(`/api/polishes/${params.id}`);
+        if (!response.ok) throw new Error('Failed to fetch polish details');
         const data = await response.json();
-
-        if (!data.link) {
-          throw new Error('This polish does not have a source link');
-        }
-
-        setPolish({
-          id: data.id,
-          name: data.name,
-          link: data.link,
-          imageUrl: data.image_url,
-          brand: data.brand
-        });
+        setPolish(data);
       } catch (error) {
+        console.error('Error fetching polish:', error);
         setError(error instanceof Error ? error.message : 'An error occurred');
       } finally {
         setIsLoading(false);
@@ -109,15 +78,18 @@ export default function SelectImagePage({ params }: PageProps) {
     fetchPolish();
   }, [params.id]);
 
+  const handleBack = () => {
+    router.back();
+  };
+
   const handleImageSaved = () => {
-    router.refresh();
     router.push(`/polish/${params.id}`);
   };
 
   if (isLoading) {
     return (
       <StyledContainer>
-        <h1>Loading...</h1>
+        <PageHeader title="Loading..." />
       </StyledContainer>
     );
   }
@@ -125,26 +97,21 @@ export default function SelectImagePage({ params }: PageProps) {
   if (error || !polish) {
     return (
       <StyledContainer>
-        <StyledError>
-          <h1>Error</h1>
-          <p>{error || 'Failed to load polish details'}</p>
-        </StyledError>
+        <PageHeader
+          title="Error"
+          description={error || 'Polish not found'}
+        />
       </StyledContainer>
     );
   }
 
   return (
     <StyledContainer>
-      <StyledBackButton
-        onClick={() => router.push(`/polish/${params.id}`)}
-        aria-label="Back to polish details"
-      >
-        Back to Details
-      </StyledBackButton>
-      <StyledHeader>
-        <h1>Select Image</h1>
-        <p>Click on an image to select it, then click "Save" to update the database.</p>
-      </StyledHeader>
+      <StyledBackButton onClick={handleBack}>Back</StyledBackButton>
+      <PageHeader
+        title={`Select Image for ${polish.brand} - ${polish.name}`}
+        description="Search and select an image for your nail polish"
+      />
       <ImageSelector
         polish={polish}
         onImageSaved={handleImageSaved}

@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { ImageSelector } from '@/components/ImageSelector';
+import { PageHeader } from '@/components/PageHeader';
 
 const StyledContainer = styled.div`
   max-width: 1200px;
@@ -51,7 +52,7 @@ export default function ImageSelectionPage() {
   if (isLoading) {
     return (
       <StyledContainer>
-        <h1>Loading...</h1>
+        <PageHeader title="Loading..." />
       </StyledContainer>
     );
   }
@@ -59,8 +60,10 @@ export default function ImageSelectionPage() {
   if (error) {
     return (
       <StyledContainer>
-        <h1>Error</h1>
-        <p>{error}</p>
+        <PageHeader
+          title="Error"
+          description={error}
+        />
       </StyledContainer>
     );
   }
@@ -68,16 +71,20 @@ export default function ImageSelectionPage() {
   if (polishes.length === 0) {
     return (
       <StyledContainer>
-        <h1>No Polishes Need Images</h1>
-        <p>All polishes in your collection have images.</p>
+        <PageHeader
+          title="No Polishes Need Images"
+          description="All polishes in your collection have images."
+        />
       </StyledContainer>
     );
   }
 
   return (
     <StyledContainer>
-      <h1>Select Images</h1>
-      <p>Click on an image to select it, then click "Save" to update the database.</p>
+      <PageHeader
+        title="Select Images"
+        description='Click on an image to select it, then click "Save" to update the database.'
+      />
       {polishes.map(polish => (
         <ImageSelector
           key={polish.id}

@@ -1,4 +1,7 @@
+'use client';
+
 import styled from 'styled-components';
+import { theme } from '@/lib/theme';
 
 export const StyledContainer = styled.div`
   position: relative;
@@ -12,7 +15,7 @@ export const StyledButton = styled.button<{ $isOpen: boolean }>`
   border-radius: ${({ theme }) => theme.borderRadius.lg};
   background: ${({ theme }) => theme.colors.background.primary};
   color: ${({ theme }) => theme.colors.text.primary};
-  font-size: ${({ theme }) => theme.typography.fontSize.base};
+  font-size: ${({ theme }) => theme.typography.fontSize.md};
   text-align: left;
   cursor: pointer;
   transition: all ${({ theme }) => theme.transitions.base};
@@ -33,7 +36,7 @@ export const StyledButton = styled.button<{ $isOpen: boolean }>`
   }
 
   &:hover {
-    border-color: ${({ theme }) => theme.colors.border.medium};
+    border-color: #666666;
   }
 
   &:focus {
