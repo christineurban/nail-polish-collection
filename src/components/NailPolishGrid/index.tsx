@@ -19,7 +19,7 @@ interface Polish {
   rating: Rating | null;
 }
 
-interface PolishCollectionProps {
+interface NailPolishGridProps {
   polishes: Polish[];
   brands: string[];
   finishes: string[];
@@ -35,13 +35,13 @@ interface PolishCollectionProps {
   };
 }
 
-export const PolishCollection = ({
+export const NailPolishGrid = ({
   polishes,
   brands,
   finishes,
   colors,
   currentFilters,
-}: PolishCollectionProps) => {
+}: NailPolishGridProps) => {
   const router = useRouter();
 
   const handleChooseImage = (id: string) => {

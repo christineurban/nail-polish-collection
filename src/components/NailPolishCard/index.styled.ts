@@ -41,17 +41,17 @@ export const StyledChooseImageButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: rgba(0, 0, 0, 0.6);
-  color: white;
+  background-color: ${({ theme }) => theme.colors.background.muted};
+  color: ${({ theme }) => theme.colors.text.secondary};
   border: none;
   cursor: pointer;
   font-size: ${({ theme }) => theme.typography.fontSize.base};
   font-weight: ${({ theme }) => theme.typography.fontWeights.medium};
   transition: ${({ theme }) => theme.transitions.base};
-  backdrop-filter: blur(4px);
 
   &:hover {
-    background-color: rgba(0, 0, 0, 0.75);
+    background-color: ${({ theme }) => theme.colors.gray[200]};
+    color: ${({ theme }) => theme.colors.gray[700]};
   }
 
   &:focus {

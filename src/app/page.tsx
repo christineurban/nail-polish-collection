@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { PageHeader } from '@/components/PageHeader';
-import { PolishCollection } from '@/components/PolishCollection';
+import { NailPolishGrid } from '@/components/NailPolishGrid';
 import { Rating } from '@prisma/client';
 
 interface Polish {
@@ -87,7 +87,7 @@ export default function Home() {
         title="Nail Polish Collection"
         description="Browse and manage your nail polish collection"
       />
-      <PolishCollection
+      <NailPolishGrid
         polishes={polishes}
         brands={brands}
         colors={colors}

@@ -16,7 +16,7 @@ import {
   StyledFormRow,
 } from './index.styled';
 
-interface NailPolishFormData {
+interface AddEditFormData {
   imageUrl?: string;
   brand: string;
   name: string;
@@ -32,23 +32,23 @@ interface NailPolishFormData {
   emptyBottles?: number;
 }
 
-interface NailPolishFormProps {
-  initialData?: NailPolishFormData;
+interface AddEditFormProps {
+  initialData?: AddEditFormData;
   isEditing?: boolean;
   brands?: string[];
   availableColors?: string[];
   availableFinishes?: string[];
 }
 
-const NailPolishForm = ({
+export const AddEditForm = ({
   initialData,
   isEditing = false,
   brands = [],
   availableColors = [],
   availableFinishes = []
-}: NailPolishFormProps) => {
+}: AddEditFormProps) => {
   const router = useRouter();
-  const [formData, setFormData] = useState<NailPolishFormData>(
+  const [formData, setFormData] = useState<AddEditFormData>(
     initialData || {
       brand: '',
       name: '',
@@ -242,5 +242,3 @@ const NailPolishForm = ({
     </StyledForm>
   );
 };
-
-export default NailPolishForm;

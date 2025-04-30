@@ -49,14 +49,14 @@ interface Polish {
   emptyBottles: number | null;
 }
 
-interface PolishDetailsProps {
+interface NailPolishDetailsProps {
   polish: Polish;
   brands: string[];
   availableColors: string[];
   availableFinishes: string[];
 }
 
-export const PolishDetails = ({ polish, brands, availableColors, availableFinishes }: PolishDetailsProps) => {
+export const NailPolishDetails = ({ polish, brands, availableColors, availableFinishes }: NailPolishDetailsProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const [isRemovingImage, setIsRemovingImage] = useState(false);
   const [editedPolish, setEditedPolish] = useState<Polish>(polish);

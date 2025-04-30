@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 import { prisma } from '@/lib/prisma';
-import { PolishDetails } from '@/components/PolishDetails';
+import { NailPolishDetails } from '@/components/NailPolishDetails';
 import type { NailPolishWithRelations } from '@/types/polish';
 import type { Rating } from '@prisma/client';
 
@@ -64,7 +64,7 @@ export default async function PolishPage({ params }: PageProps) {
   };
 
   return (
-    <PolishDetails
+    <NailPolishDetails
       polish={transformedPolish}
       brands={brands.map(b => b.name)}
       availableColors={colors.map(c => c.name)}

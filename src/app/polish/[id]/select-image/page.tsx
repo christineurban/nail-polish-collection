@@ -57,6 +57,7 @@ export default function SelectImagePage({ params }: { params: { id: string } }) 
   }
 
   return (
+    <>
       <PageHeader
         title={`Select Image for ${polish.brand} ${polish.name}`}
         description='Click on an image to select it, then click "Save" to update the database.'
@@ -65,5 +66,6 @@ export default function SelectImagePage({ params }: { params: { id: string } }) 
         polish={polish}
         onImageSaved={handleImageSaved}
       />
+    </>
   );
 }

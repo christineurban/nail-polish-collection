@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import NailPolishForm from '@/components/NailPolishForm';
+import { AddEditForm } from '@/components/AddEditForm';
 import { StyledContainer } from './page.styled';
 import { PageHeader } from '@/components/PageHeader';
 import styled from 'styled-components';
@@ -44,7 +44,7 @@ export default function AddPolishPage() {
         <PageHeader
           title="Add New Nail Polish"
         />
-        <NailPolishForm
+        <AddEditForm
           brands={options.brands}
           availableColors={options.colors}
           availableFinishes={options.finishes}
