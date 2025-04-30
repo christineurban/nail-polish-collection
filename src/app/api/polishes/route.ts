@@ -37,6 +37,7 @@ export async function GET(request: Request) {
       colors: polish.colors.map(c => c.color.name),
       finishes: polish.finishes.map(f => f.finish.name),
       rating: polish.rating,
+      link: polish.link
     }));
 
     return NextResponse.json(transformedPolishes);

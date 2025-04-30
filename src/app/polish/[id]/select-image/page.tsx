@@ -1,6 +1,29 @@
-import { prisma } from '@/lib/prisma';
-import { notFound } from 'next/navigation';
-import SelectImageClient from './SelectImageClient';
+'use client';
+
+import { useRouter } from 'next/navigation';
+import { useState, useEffect } from 'react';
+import { ImageSelector } from '@/components/ImageSelector';
+import styled from 'styled-components';
+
+const StyledContainer = styled.div`
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+`;
+
+const StyledError = styled.div`
+  color: #e53e3e;
+  text-align: center;
+  padding: 2rem;
+`;
+
+interface Polish {
+  id: string;
+  name: string;
+  link: string | null;
+  imageUrl: string | null;
+  brand: string;
+}
 
 interface PageProps {
   params: {
@@ -8,24 +31,73 @@ interface PageProps {
   };
 }
 
-export default async function SelectImagePage({ params }: PageProps) {
-  const polish = await prisma.nail_polish.findUnique({
-    where: { id: params.id },
-    include: {
-      brands: true
-    }
-  });
+export default function SelectImagePage({ params }: PageProps) {
+  const router = useRouter();
+  const [polish, setPolish] = useState<Polish | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  if (!polish || !polish.link) {
-    notFound();
+  useEffect(() => {
+    const fetchPolish = async () => {
+      try {
+        const response = await fetch(`/api/polish/${params.id}`);
+        if (!response.ok) {
+          throw new Error('Failed to fetch polish details');
+        }
+        const data = await response.json();
+
+        if (!data.link) {
+          throw new Error('This polish does not have a source link');
+        }
+
+        setPolish({
+          id: data.id,
+          name: data.name,
+          link: data.link,
+          imageUrl: data.image_url,
+          brand: data.brand
+        });
+      } catch (error) {
+        setError(error instanceof Error ? error.message : 'An error occurred');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchPolish();
+  }, [params.id]);
+
+  const handleImageSaved = () => {
+    router.push(`/polish/${params.id}`);
+  };
+
+  if (isLoading) {
+    return (
+      <StyledContainer>
+        <h1>Loading...</h1>
+      </StyledContainer>
+    );
+  }
+
+  if (error || !polish) {
+    return (
+      <StyledContainer>
+        <StyledError>
+          <h1>Error</h1>
+          <p>{error || 'Failed to load polish details'}</p>
+        </StyledError>
+      </StyledContainer>
+    );
   }
 
   return (
-    <SelectImageClient
-      id={polish.id}
-      name={polish.name}
-      brand={polish.brands.name}
-      link={polish.link}
-    />
+    <StyledContainer>
+      <h1>Select Image</h1>
+      <p>Click on an image to select it, then click "Save" to update the database.</p>
+      <ImageSelector
+        polish={polish}
+        onImageSaved={handleImageSaved}
+      />
+    </StyledContainer>
   );
 }

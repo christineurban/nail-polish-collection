@@ -1,45 +1,38 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { StyledContainer, StyledPolishCard, StyledImagesGrid, StyledImageContainer, StyledImage, StyledSaveButton, StyledMetadata, StyledNoImages } from './index.styled';
+import { StyledContainer, StyledPolishCard, StyledImagesGrid, StyledImageContainer, StyledImage, StyledSaveButton, StyledMetadata, StyledNoImages, StyledLoadingOverlay, StyledSpinner, StyledSuccessMessage } from './index.styled';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface Polish {
   id: string;
   name: string;
   link: string | null;
-  image_url: string | null;
-  brands: {
-    name: string;
-  };
+  imageUrl: string | null;
+  brand: string;
 }
 
 interface ImageSelectorProps {
-  polishes: Polish[];
+  polish: Polish;
+  onImageSaved?: () => void;
 }
 
-export const ImageSelector = ({ polishes: initialPolishes }: ImageSelectorProps) => {
-  const [selectedImages, setSelectedImages] = useState<Record<string, string>>({});
-  const [polishImages, setPolishImages] = useState<Record<string, string[]>>({});
-  const [loadingStates, setLoadingStates] = useState<Record<string, boolean>>({});
-  const [polishes, setPolishes] = useState<Polish[]>(
-    initialPolishes.filter(polish => !polish.image_url)
-  );
-  const [savingStates, setSavingStates] = useState<Record<string, boolean>>({});
+export const ImageSelector = ({ polish, onImageSaved }: ImageSelectorProps) => {
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [images, setImages] = useState<string[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
 
-  const handleImageSelect = (polishId: string, imageUrl: string) => {
-    setSelectedImages(prev => ({
-      ...prev,
-      [polishId]: imageUrl
-    }));
+  const handleImageSelect = (imageUrl: string) => {
+    setSelectedImage(imageUrl);
   };
 
-  const handleSaveImage = async (polishId: string) => {
-    const imageUrl = selectedImages[polishId];
-    if (!imageUrl) return;
+  const handleSaveImage = async () => {
+    if (!selectedImage) return;
 
     try {
-      setSavingStates(prev => ({ ...prev, [polishId]: true }));
+      setIsSaving(true);
 
       const response = await fetch('/api/update-image', {
         method: 'POST',
@@ -47,125 +40,126 @@ export const ImageSelector = ({ polishes: initialPolishes }: ImageSelectorProps)
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          id: polishId,
-          imageUrl
+          id: polish.id,
+          imageUrl: selectedImage
         }),
       });
 
       if (response.ok) {
-        // Wait for success animation to complete before removing
+        setIsSuccess(true);
+        // Wait for success animation to complete before calling onImageSaved
         setTimeout(() => {
-          setPolishes(prev => prev.filter(p => p.id !== polishId));
-        }, 1500);
+          if (onImageSaved) {
+            onImageSaved();
+          }
+        }, 2000);
       } else {
         const errorData = await response.json();
         throw new Error(errorData.error || 'Failed to save image');
       }
     } catch (error) {
       console.error('Error saving image:', error);
-      setSavingStates(prev => ({ ...prev, [polishId]: false }));
+    } finally {
+      setIsSaving(false);
     }
   };
 
-  const fetchImagesForPolish = async (polish: Polish) => {
-    if (!polish.link || polishImages[polish.id]) return;
+  const fetchImages = async () => {
+    if (!polish.link) return;
 
     try {
-      setLoadingStates(prev => ({ ...prev, [polish.id]: true }));
-      const response = await fetch(`/api/fetch-images?url=${encodeURIComponent(polish.link!)}`);
+      setIsLoading(true);
+      const response = await fetch(`/api/fetch-images?url=${encodeURIComponent(polish.link)}`);
       if (!response.ok) throw new Error('Failed to fetch images');
 
       const data = await response.json();
-      setPolishImages(prev => ({
-        ...prev,
-        [polish.id]: data.images || []
-      }));
+      setImages(data.images || []);
     } catch (error) {
-      console.error(`Error fetching images for ${polish.brands.name} - ${polish.name}:`, error);
-      setPolishImages(prev => ({
-        ...prev,
-        [polish.id]: []
-      }));
+      console.error(`Error fetching images for ${polish.brand} - ${polish.name}:`, error);
+      setImages([]);
     } finally {
-      setLoadingStates(prev => ({ ...prev, [polish.id]: false }));
+      setIsLoading(false);
     }
   };
 
   useEffect(() => {
-    polishes.forEach(polish => {
-      if (polish.link && !polishImages[polish.id]) {
-        fetchImagesForPolish(polish);
-      }
-    });
-  }, []);
+    if (polish?.link) {
+      fetchImages();
+    }
+  }, [polish]);
+
+  if (!polish) {
+    return null;
+  }
 
   return (
-    <StyledContainer>
-      <h1>Nail Polish Images Selection</h1>
-      <p>Click on an image to select it, then click "Save" to update the database.</p>
+    <StyledPolishCard>
+      <StyledMetadata>
+        <h2>{polish.brand} - {polish.name}</h2>
+        {polish.link ? (
+          <p>Source: <a href={polish.link} target="_blank" rel="noopener noreferrer">
+            {polish.link}
+          </a></p>
+        ) : (
+          <p>No source link available</p>
+        )}
+      </StyledMetadata>
+
+      {!polish.link ? (
+        <StyledNoImages>No source link available</StyledNoImages>
+      ) : isLoading ? (
+        <StyledLoadingOverlay>
+          <StyledSpinner
+            as={motion.div}
+            animate={{ rotate: 360 }}
+            transition={{
+              duration: 1,
+              repeat: Infinity,
+              ease: "linear"
+            }}
+          />
+          <p>Loading images...</p>
+        </StyledLoadingOverlay>
+      ) : images.length === 0 ? (
+        <StyledNoImages>No images found on the linked page</StyledNoImages>
+      ) : (
+        <>
+          <StyledSaveButton
+            onClick={handleSaveImage}
+            disabled={!selectedImage || isSaving}
+          >
+            {isSaving ? 'Saving...' : 'Save Selected Image'}
+          </StyledSaveButton>
+          <StyledImagesGrid>
+            {images.map((img, index) => (
+              <StyledImageContainer key={index}>
+                <StyledImage
+                  src={img}
+                  alt={`${polish.brand} ${polish.name} - Image ${index + 1}`}
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    target.style.display = 'none';
+                  }}
+                  onClick={() => handleImageSelect(img)}
+                  $isSelected={selectedImage === img}
+                />
+              </StyledImageContainer>
+            ))}
+          </StyledImagesGrid>
+        </>
+      )}
 
       <AnimatePresence>
-        {polishes.map(polish => (
-          <StyledPolishCard
-            key={polish.id}
-            initial={{ opacity: 1, scale: 1 }}
-            animate={savingStates[polish.id] ? {
-              opacity: 0.5,
-              scale: 0.98,
-              transition: { duration: 0.3 }
-            } : {}}
-            exit={{
-              opacity: 0,
-              scale: 0.95,
-              y: -20,
-              transition: {
-                duration: 0.4,
-                ease: "easeOut"
-              }
-            }}
+        {isSuccess && (
+          <StyledSuccessMessage
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
           >
-            <StyledMetadata>
-              <h2>{polish.brands.name} - {polish.name}</h2>
-              <p>Source: <a href={polish.link || ''} target="_blank" rel="noopener noreferrer">
-                {polish.link}
-              </a></p>
-            </StyledMetadata>
-
-            {!polish.link ? (
-              <StyledNoImages>No source link available</StyledNoImages>
-            ) : loadingStates[polish.id] ? (
-              <StyledNoImages>Loading images...</StyledNoImages>
-            ) : polishImages[polish.id]?.length ? (
-              <>
-                <StyledSaveButton
-                  onClick={() => handleSaveImage(polish.id)}
-                  disabled={!selectedImages[polish.id]}
-                >
-                  Save Selected Image
-                </StyledSaveButton>
-                <StyledImagesGrid>
-                  {polishImages[polish.id].map((img, index) => (
-                    <StyledImageContainer key={index}>
-                      <StyledImage
-                        src={img}
-                        alt={`${polish.brands.name} ${polish.name} - Image ${index + 1}`}
-                        onError={(e) => {
-                          const target = e.target as HTMLImageElement;
-                          target.style.display = 'none';
-                        }}
-                        onClick={() => handleImageSelect(polish.id, img)}
-                        $isSelected={selectedImages[polish.id] === img}
-                      />
-                    </StyledImageContainer>
-                  ))}
-                </StyledImagesGrid>
-              </>
-            ) : (
-              <StyledNoImages>No images found on the linked page</StyledNoImages>
-            )}
-          </StyledPolishCard>
-        ))}
+            Image saved successfully!
+          </StyledSuccessMessage>
+        )}
       </AnimatePresence>
-    </StyledContainer>
+    </StyledPolishCard>
   );
 };

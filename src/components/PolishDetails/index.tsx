@@ -447,10 +447,10 @@ export const PolishDetails = ({ polish, brands, availableColors, availableFinish
           <p><strong>Rating</strong>{formatRating(polish.rating)}</p>
         )}
         {polish.coats && <p><strong>Coats Needed</strong>{polish.coats}</p>}
-        {polish.totalBottles || 0 > 0 && (
+        {(polish.totalBottles ?? 0) > 0 && (
           <p><strong>Total Bottles</strong>{polish.totalBottles}</p>
         )}
-        {polish.emptyBottles || 0 > 0 && (
+        {(polish.emptyBottles ?? 0) > 0 && (
           <p><strong>Empty Bottles</strong>{polish.emptyBottles}</p>
         )}
         {polish.isOld !== null && (

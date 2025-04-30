@@ -20,6 +20,10 @@ import {
 } from './index.styled';
 import { Rating } from '@prisma/client';
 
+const formatRating = (rating: Rating): string => {
+  return rating.replace('_PLUS', '+').replace('_MINUS', '-');
+};
+
 interface NailPolishCardProps {
   id: string;
   brand: string;
@@ -31,20 +35,13 @@ interface NailPolishCardProps {
   onChooseImage?: (id: string) => void;
 }
 
-const formatRating = (rating: Rating | null): string => {
-  if (!rating) return 'Not Rated';
-  return rating.toString()
-    .replace('_PLUS', '+')
-    .replace('_MINUS', '-');
-};
-
 export const NailPolishCard: FC<NailPolishCardProps> = ({
   id,
   brand,
   name,
   imageUrl,
-  colors,
-  finishes,
+  colors = [],
+  finishes = [],
   rating,
   onChooseImage
 }) => {
@@ -61,8 +58,21 @@ export const NailPolishCard: FC<NailPolishCardProps> = ({
     }
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      handleClick();
+    }
+  };
+
   return (
-    <StyledCard onClick={handleClick} tabIndex={0}>
+    <StyledCard
+      onClick={handleClick}
+      onKeyDown={handleKeyDown}
+      tabIndex={0}
+      role="button"
+      aria-label={`View details for ${brand} ${name}`}
+    >
       <StyledImageContainer>
         {imageUrl ? (
           <StyledImage

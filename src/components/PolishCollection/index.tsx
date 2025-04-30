@@ -3,7 +3,7 @@
 import { FilterSort } from '@/components/FilterSort';
 import { NailPolishCard } from '@/components/NailPolishCard';
 import { Rating } from '@prisma/client';
-import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import {
   StyledContainer,
   StyledGrid,
@@ -42,34 +42,43 @@ export const PolishCollection = ({
   finishes,
   colors,
   currentFilters,
-}: PolishCollectionProps) => (
-  <StyledContainer>
-    <FilterSort
-      brands={brands}
-      finishes={finishes}
-      colors={colors}
-      currentFilters={currentFilters}
-    />
-    <StyledGrid>
-      {polishes.length > 0 ? (
-        polishes.map((polish) => (
-          <NailPolishCard
-            key={polish.id}
-            id={polish.id}
-            brand={polish.brand}
-            name={polish.name}
-            imageUrl={polish.imageUrl || undefined}
-            colors={polish.colors}
-            finishes={polish.finishes}
-            rating={polish.rating || undefined}
-          />
-        ))
-      ) : (
-        <StyledEmptyState>
-          <h2>No Polishes Found</h2>
-          <p>Try adjusting your filters to find what you're looking for.</p>
-        </StyledEmptyState>
-      )}
-    </StyledGrid>
-  </StyledContainer>
-);
+}: PolishCollectionProps) => {
+  const router = useRouter();
+
+  const handleChooseImage = (id: string) => {
+    router.push(`/polish/${id}/select-image`);
+  };
+
+  return (
+    <StyledContainer>
+      <FilterSort
+        brands={brands}
+        finishes={finishes}
+        colors={colors}
+        currentFilters={currentFilters}
+      />
+      <StyledGrid>
+        {polishes.length > 0 ? (
+          polishes.map((polish) => (
+            <NailPolishCard
+              key={polish.id}
+              id={polish.id}
+              brand={polish.brand}
+              name={polish.name}
+              imageUrl={polish.imageUrl || undefined}
+              colors={polish.colors}
+              finishes={polish.finishes}
+              rating={polish.rating || undefined}
+              onChooseImage={handleChooseImage}
+            />
+          ))
+        ) : (
+          <StyledEmptyState>
+            <h2>No Polishes Found</h2>
+            <p>Try adjusting your filters to find what you're looking for.</p>
+          </StyledEmptyState>
+        )}
+      </StyledGrid>
+    </StyledContainer>
+  );
+};
