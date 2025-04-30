@@ -2,7 +2,8 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import { Rating } from '@prisma/client';
 import {
   StyledContainer,
   StyledHeader,
@@ -16,16 +17,24 @@ import {
   StyledTextarea,
   StyledMultiSelect,
   StyledButtonGroup,
+  StyledFormSection,
+  StyledFormRow,
+  StyledTag,
+  StyledDropdown,
+  StyledOption,
+  StyledMultiSelectContainer,
+  StyledSingleSelectContainer,
+  StyledSingleSelectButton,
+  StyledSingleDropdown,
+  StyledSingleOption,
 } from './index.styled';
-
-type Rating = 'A_PLUS' | 'A' | 'A_MINUS' | 'B_PLUS' | 'B' | 'B_MINUS' | 'C_PLUS' | 'C' | 'C_MINUS' | 'D_PLUS' | 'D' | 'D_MINUS' | 'F';
 
 interface Polish {
   id: string;
   brand: string;
   name: string;
   imageUrl: string | null;
-  color: string;
+  colors: string[];
   finishes: string[];
   rating: Rating | null;
   link: string | null;
@@ -35,33 +44,69 @@ interface Polish {
   lastUsed: Date | null;
   totalBottles: number | null;
   emptyBottles: number | null;
-  status: string | null;
 }
 
 interface PolishDetailsProps {
   polish: Polish;
+  brands: string[];
+  availableColors: string[];
+  availableFinishes: string[];
 }
 
-export const PolishDetails = ({ polish }: PolishDetailsProps) => {
+export const PolishDetails = ({ polish, brands, availableColors, availableFinishes }: PolishDetailsProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editedPolish, setEditedPolish] = useState<Polish>(polish);
   const [isLoading, setIsLoading] = useState(false);
+  const [isColorDropdownOpen, setIsColorDropdownOpen] = useState(false);
+  const [isFinishDropdownOpen, setIsFinishDropdownOpen] = useState(false);
+  const [isBrandDropdownOpen, setIsBrandDropdownOpen] = useState(false);
+  const [isRatingDropdownOpen, setIsRatingDropdownOpen] = useState(false);
 
-  const ratings = [
+  const colorDropdownRef = useRef<HTMLDivElement>(null);
+  const finishDropdownRef = useRef<HTMLDivElement>(null);
+  const brandDropdownRef = useRef<HTMLDivElement>(null);
+  const ratingDropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        colorDropdownRef.current &&
+        !colorDropdownRef.current.contains(event.target as Node)
+      ) {
+        setIsColorDropdownOpen(false);
+      }
+      if (
+        finishDropdownRef.current &&
+        !finishDropdownRef.current.contains(event.target as Node)
+      ) {
+        setIsFinishDropdownOpen(false);
+      }
+      if (
+        brandDropdownRef.current &&
+        !brandDropdownRef.current.contains(event.target as Node)
+      ) {
+        setIsBrandDropdownOpen(false);
+      }
+      if (
+        ratingDropdownRef.current &&
+        !ratingDropdownRef.current.contains(event.target as Node)
+      ) {
+        setIsRatingDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  const ratings: Rating[] = [
     'A_PLUS', 'A', 'A_MINUS',
     'B_PLUS', 'B', 'B_MINUS',
     'C_PLUS', 'C', 'C_MINUS',
     'D_PLUS', 'D', 'D_MINUS',
     'F'
-  ];
-
-  const statuses = [
-    'In Collection',
-    'Wishlist',
-    'Sold',
-    'Gifted',
-    'Empty',
-    'Destashed'
   ];
 
   const formatRating = (rating: Rating | null): string => {
@@ -73,6 +118,40 @@ export const PolishDetails = ({ polish }: PolishDetailsProps) => {
     setEditedPolish(prev => ({
       ...prev,
       [field]: value
+    }));
+  };
+
+  const handleAddColor = (color: string) => {
+    if (!editedPolish.colors.includes(color)) {
+      setEditedPolish(prev => ({
+        ...prev,
+        colors: [...prev.colors, color]
+      }));
+    }
+    setIsColorDropdownOpen(false);
+  };
+
+  const handleAddFinish = (finish: string) => {
+    if (!editedPolish.finishes.includes(finish)) {
+      setEditedPolish(prev => ({
+        ...prev,
+        finishes: [...prev.finishes, finish]
+      }));
+    }
+    setIsFinishDropdownOpen(false);
+  };
+
+  const handleRemoveColor = (colorToRemove: string) => {
+    setEditedPolish(prev => ({
+      ...prev,
+      colors: prev.colors.filter(color => color !== colorToRemove)
+    }));
+  };
+
+  const handleRemoveFinish = (finishToRemove: string) => {
+    setEditedPolish(prev => ({
+      ...prev,
+      finishes: prev.finishes.filter(finish => finish !== finishToRemove)
     }));
   };
 
@@ -102,147 +181,228 @@ export const PolishDetails = ({ polish }: PolishDetailsProps) => {
 
   const renderEditMode = () => (
     <StyledEditForm>
-      <StyledFormGroup>
-        <label>Brand:</label>
-        <StyledInput
-          type="text"
-          value={editedPolish.brand}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInputChange('brand', e.target.value)}
-        />
-      </StyledFormGroup>
+      <StyledFormSection>
+        <h3>Basic Information</h3>
+        <StyledFormRow>
+          <StyledFormGroup>
+            <label>Brand</label>
+            <StyledSingleSelectContainer ref={brandDropdownRef}>
+              <StyledSingleSelectButton
+                type="button"
+                onClick={() => setIsBrandDropdownOpen(!isBrandDropdownOpen)}
+              >
+                {editedPolish.brand || 'Select brand'}
+              </StyledSingleSelectButton>
+              <StyledSingleDropdown $isOpen={isBrandDropdownOpen}>
+                {brands.map(brand => (
+                  <StyledSingleOption
+                    key={brand}
+                    $isSelected={editedPolish.brand === brand}
+                    onClick={() => {
+                      handleInputChange('brand', brand);
+                      setIsBrandDropdownOpen(false);
+                    }}
+                  >
+                    {brand}
+                  </StyledSingleOption>
+                ))}
+              </StyledSingleDropdown>
+            </StyledSingleSelectContainer>
+          </StyledFormGroup>
+          <StyledFormGroup>
+            <label>Name</label>
+            <StyledInput
+              type="text"
+              value={editedPolish.name}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInputChange('name', e.target.value)}
+            />
+          </StyledFormGroup>
+        </StyledFormRow>
+      </StyledFormSection>
 
-      <StyledFormGroup>
-        <label>Name:</label>
-        <StyledInput
-          type="text"
-          value={editedPolish.name}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInputChange('name', e.target.value)}
-        />
-      </StyledFormGroup>
+      <StyledFormSection>
+        <h3>Appearance</h3>
+        <StyledFormRow>
+          <StyledFormGroup>
+            <label>Colors</label>
+            <StyledMultiSelectContainer ref={colorDropdownRef}>
+              <StyledMultiSelect onClick={() => setIsColorDropdownOpen(!isColorDropdownOpen)}>
+                {editedPolish.colors.map(color => (
+                  <StyledTag key={color}>
+                    {color}
+                    <button onClick={(e) => {
+                      e.stopPropagation();
+                      handleRemoveColor(color);
+                    }}>&times;</button>
+                  </StyledTag>
+                ))}
+              </StyledMultiSelect>
+              {isColorDropdownOpen && (
+                <StyledDropdown>
+                  {availableColors
+                    .filter(color => !editedPolish.colors.includes(color))
+                    .map(color => (
+                      <StyledOption
+                        key={color}
+                        onClick={() => handleAddColor(color)}
+                      >
+                        {color}
+                      </StyledOption>
+                    ))}
+                </StyledDropdown>
+              )}
+            </StyledMultiSelectContainer>
+          </StyledFormGroup>
+          <StyledFormGroup>
+            <label>Finishes</label>
+            <StyledMultiSelectContainer ref={finishDropdownRef}>
+              <StyledMultiSelect onClick={() => setIsFinishDropdownOpen(!isFinishDropdownOpen)}>
+                {editedPolish.finishes.map(finish => (
+                  <StyledTag key={finish}>
+                    {finish}
+                    <button onClick={(e) => {
+                      e.stopPropagation();
+                      handleRemoveFinish(finish);
+                    }}>&times;</button>
+                  </StyledTag>
+                ))}
+              </StyledMultiSelect>
+              {isFinishDropdownOpen && (
+                <StyledDropdown>
+                  {availableFinishes
+                    .filter(finish => !editedPolish.finishes.includes(finish))
+                    .map(finish => (
+                      <StyledOption
+                        key={finish}
+                        onClick={() => handleAddFinish(finish)}
+                      >
+                        {finish}
+                      </StyledOption>
+                    ))}
+                </StyledDropdown>
+              )}
+            </StyledMultiSelectContainer>
+          </StyledFormGroup>
+        </StyledFormRow>
+      </StyledFormSection>
 
-      <StyledFormGroup>
-        <label>Color:</label>
-        <StyledInput
-          type="text"
-          value={editedPolish.color}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInputChange('color', e.target.value)}
-        />
-      </StyledFormGroup>
+      <StyledFormSection>
+        <h3>Details</h3>
+        <StyledFormRow>
+          <StyledFormGroup>
+            <label>Rating</label>
+            <StyledSingleSelectContainer ref={ratingDropdownRef}>
+              <StyledSingleSelectButton
+                type="button"
+                onClick={() => setIsRatingDropdownOpen(!isRatingDropdownOpen)}
+              >
+                {editedPolish.rating ? formatRating(editedPolish.rating) : 'Not Rated'}
+              </StyledSingleSelectButton>
+              <StyledSingleDropdown $isOpen={isRatingDropdownOpen}>
+                <StyledSingleOption
+                  $isSelected={!editedPolish.rating}
+                  onClick={() => {
+                    handleInputChange('rating', null);
+                    setIsRatingDropdownOpen(false);
+                  }}
+                >
+                  Not Rated
+                </StyledSingleOption>
+                {ratings.map(rating => (
+                  <StyledSingleOption
+                    key={rating}
+                    $isSelected={editedPolish.rating === rating}
+                    onClick={() => {
+                      handleInputChange('rating', rating);
+                      setIsRatingDropdownOpen(false);
+                    }}
+                  >
+                    {formatRating(rating as Rating)}
+                  </StyledSingleOption>
+                ))}
+              </StyledSingleDropdown>
+            </StyledSingleSelectContainer>
+          </StyledFormGroup>
+          <StyledFormGroup>
+            <label>Coats Needed</label>
+            <StyledInput
+              type="number"
+              value={editedPolish.coats || ''}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInputChange('coats', e.target.value ? parseInt(e.target.value) : null)}
+              min="1"
+              max="5"
+            />
+          </StyledFormGroup>
+        </StyledFormRow>
 
-      <StyledFormGroup>
-        <label>Finishes:</label>
-        <StyledInput
-          type="text"
-          value={editedPolish.finishes.join(', ')}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInputChange('finishes', e.target.value.split(', '))}
-          placeholder="Separate finishes with commas"
-        />
-      </StyledFormGroup>
+        <StyledFormRow>
+          <StyledFormGroup>
+            <label>Total Bottles</label>
+            <StyledInput
+              type="number"
+              value={editedPolish.totalBottles || ''}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInputChange('totalBottles', e.target.value ? parseInt(e.target.value) : null)}
+              min="0"
+            />
+          </StyledFormGroup>
+          <StyledFormGroup>
+            <label>Empty Bottles</label>
+            <StyledInput
+              type="number"
+              value={editedPolish.emptyBottles || ''}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInputChange('emptyBottles', e.target.value ? parseInt(e.target.value) : null)}
+              min="0"
+            />
+          </StyledFormGroup>
+        </StyledFormRow>
 
-      <StyledFormGroup>
-        <label>Rating:</label>
-        <StyledSelect
-          value={editedPolish.rating || ''}
-          onChange={(e: React.ChangeEvent<HTMLSelectElement>) => handleInputChange('rating', e.target.value || null)}
-        >
-          <option value="">Not Rated</option>
-          {ratings.map(rating => (
-            <option key={rating} value={rating}>
-              {formatRating(rating as Rating)}
-            </option>
-          ))}
-        </StyledSelect>
-      </StyledFormGroup>
+        <StyledFormRow>
+          <StyledFormGroup>
+            <label>Last Used</label>
+            <StyledInput
+              type="date"
+              value={editedPolish.lastUsed ? new Date(editedPolish.lastUsed).toISOString().split('T')[0] : ''}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInputChange('lastUsed', e.target.value ? new Date(e.target.value) : null)}
+            />
+          </StyledFormGroup>
+          <StyledFormGroup>
+            <label>Is Old</label>
+            <StyledInput
+              type="checkbox"
+              checked={editedPolish.isOld || false}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInputChange('isOld', e.target.checked)}
+            />
+          </StyledFormGroup>
+        </StyledFormRow>
+      </StyledFormSection>
 
-      <StyledFormGroup>
-        <label>Link:</label>
-        <StyledInput
-          type="url"
-          value={editedPolish.link || ''}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInputChange('link', e.target.value || null)}
-          placeholder="Product URL"
-        />
-      </StyledFormGroup>
-
-      <StyledFormGroup>
-        <label>Coats Needed:</label>
-        <StyledInput
-          type="number"
-          value={editedPolish.coats || ''}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInputChange('coats', e.target.value ? parseInt(e.target.value) : null)}
-          min="1"
-          max="5"
-        />
-      </StyledFormGroup>
-
-      <StyledFormGroup>
-        <label>Purchase Year:</label>
-        <StyledInput
-          type="number"
-          value={editedPolish.isOld ? 'Yes' : 'No'}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInputChange('isOld', e.target.value === 'Yes')}
-          min="2000"
-          max={new Date().getFullYear()}
-        />
-      </StyledFormGroup>
-
-      <StyledFormGroup>
-        <label>Last Used:</label>
-        <StyledInput
-          type="date"
-          value={editedPolish.lastUsed ? new Date(editedPolish.lastUsed).toISOString().split('T')[0] : ''}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInputChange('lastUsed', e.target.value ? new Date(e.target.value) : null)}
-        />
-      </StyledFormGroup>
-
-      <StyledFormGroup>
-        <label>Total Bottles:</label>
-        <StyledInput
-          type="number"
-          value={editedPolish.totalBottles || ''}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInputChange('totalBottles', e.target.value ? parseInt(e.target.value) : null)}
-          min="0"
-        />
-      </StyledFormGroup>
-
-      <StyledFormGroup>
-        <label>Empty Bottles:</label>
-        <StyledInput
-          type="number"
-          value={editedPolish.emptyBottles || ''}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInputChange('emptyBottles', e.target.value ? parseInt(e.target.value) : null)}
-          min="0"
-        />
-      </StyledFormGroup>
-
-      <StyledFormGroup>
-        <label>Status:</label>
-        <StyledSelect
-          value={editedPolish.status || ''}
-          onChange={(e: React.ChangeEvent<HTMLSelectElement>) => handleInputChange('status', e.target.value || null)}
-        >
-          <option value="">Select Status</option>
-          {statuses.map(status => (
-            <option key={status} value={status}>{status}</option>
-          ))}
-        </StyledSelect>
-      </StyledFormGroup>
-
-      <StyledFormGroup>
-        <label>Notes:</label>
-        <StyledTextarea
-          value={editedPolish.notes || ''}
-          onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => handleInputChange('notes', e.target.value || null)}
-          rows={4}
-        />
-      </StyledFormGroup>
+      <StyledFormSection>
+        <h3>Additional Information</h3>
+        <StyledFormGroup>
+          <label>Link</label>
+          <StyledInput
+            type="url"
+            value={editedPolish.link || ''}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInputChange('link', e.target.value || null)}
+            placeholder="Product URL"
+          />
+        </StyledFormGroup>
+        <StyledFormGroup>
+          <label>Notes</label>
+          <StyledTextarea
+            value={editedPolish.notes || ''}
+            onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => handleInputChange('notes', e.target.value || null)}
+            rows={4}
+          />
+        </StyledFormGroup>
+      </StyledFormSection>
 
       <StyledButtonGroup>
-        <StyledButton onClick={handleSave} disabled={isLoading}>
-          {isLoading ? 'Saving...' : 'Save Changes'}
-        </StyledButton>
         <StyledButton onClick={() => setIsEditing(false)} disabled={isLoading}>
           Cancel
+        </StyledButton>
+        <StyledButton onClick={handleSave} disabled={isLoading}>
+          {isLoading ? 'Saving...' : 'Save Changes'}
         </StyledButton>
       </StyledButtonGroup>
     </StyledEditForm>
@@ -269,7 +429,9 @@ export const PolishDetails = ({ polish }: PolishDetailsProps) => {
 
       <div className="details-content">
         <h2>Details</h2>
-        {polish.color && <p><strong>Color</strong>{polish.color}</p>}
+        {polish.colors.length > 0 && (
+          <p><strong>Colors</strong>{polish.colors.join(', ')}</p>
+        )}
         {polish.finishes.length > 0 && (
           <p><strong>Finishes</strong>{polish.finishes.join(', ')}</p>
         )}
@@ -277,14 +439,13 @@ export const PolishDetails = ({ polish }: PolishDetailsProps) => {
           <p><strong>Rating</strong>{formatRating(polish.rating)}</p>
         )}
         {polish.coats && <p><strong>Coats Needed</strong>{polish.coats}</p>}
-        {polish.status && <p><strong>Status</strong>{polish.status}</p>}
         {polish.totalBottles || 0 > 0 && (
           <p><strong>Total Bottles</strong>{polish.totalBottles}</p>
         )}
         {polish.emptyBottles || 0 > 0 && (
           <p><strong>Empty Bottles</strong>{polish.emptyBottles}</p>
         )}
-        {polish.isOld && (
+        {polish.isOld !== null && (
           <p><strong>Is Old</strong>{polish.isOld ? 'Yes' : 'No'}</p>
         )}
         {polish.lastUsed && (

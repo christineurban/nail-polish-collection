@@ -80,7 +80,7 @@ export const GlobalStyles = createGlobalStyle`
       position: absolute;
       bottom: -8px;
       left: 0;
-      width: 40%;
+      width: 100%;
       height: 4px;
       background: ${({ theme }) => theme.colors.background.gradient};
       border-radius: ${({ theme }) => theme.borderRadius.full};

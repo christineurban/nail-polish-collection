@@ -172,30 +172,57 @@ export const StyledDetails = styled.div`
 `;
 
 export const StyledEditForm = styled.div`
-  grid-column: 1 / -1;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 1.5rem;
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
   background: ${({ theme }) => theme.colors.background.primary};
-  padding: 2rem;
+  padding: 3rem;
   border-radius: ${({ theme }) => theme.borderRadius.xl};
   box-shadow: ${({ theme }) => theme.shadows.lg};
+`;
+
+export const StyledFormSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+
+  h3 {
+    font-size: ${({ theme }) => theme.typography.fontSize.lg};
+    color: ${({ theme }) => theme.colors.text.primary};
+    font-weight: ${({ theme }) => theme.typography.fontWeights.semibold};
+    margin: 0;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid ${({ theme }) => theme.colors.border.medium};
+  }
+`;
+
+export const StyledFormRow = styled.div`
+  display: flex;
+  gap: 2rem;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
 `;
 
 export const StyledFormGroup = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 0.5rem;
+  flex: 1;
 
   label {
     font-size: ${({ theme }) => theme.typography.fontSize.sm};
-    font-weight: ${({ theme }) => theme.typography.fontWeights.semibold};
-    color: ${({ theme }) => theme.colors.text.primary};
+    font-weight: ${({ theme }) => theme.typography.fontWeights.medium};
+    color: ${({ theme }) => theme.colors.text.secondary};
   }
 `;
 
 export const StyledInput = styled.input`
-  padding: 0.75rem 1rem;
+  padding: 0.875rem 1rem;
   border: 2px solid ${({ theme }) => theme.colors.border.default};
   border-radius: ${({ theme }) => theme.borderRadius.lg};
   font-size: ${({ theme }) => theme.typography.fontSize.base};
@@ -205,7 +232,41 @@ export const StyledInput = styled.input`
   color: ${({ theme }) => theme.colors.text.primary};
 
   &:hover {
-    border-color: ${({ theme }) => theme.colors.border.default};
+    border-color: ${({ theme }) => theme.colors.border.medium};
+  }
+
+  &:focus {
+    outline: none;
+    border-color: ${({ theme }) => theme.colors.primary[500]};
+    box-shadow: ${({ theme }) => theme.shadows.focus};
+  }
+
+  &[type="checkbox"] {
+    width: 1.25rem;
+    height: 1.25rem;
+    margin-top: 0.5rem;
+    cursor: pointer;
+  }
+`;
+
+export const StyledSelect = styled.select`
+  padding: 0.875rem 1rem;
+  border: 2px solid ${({ theme }) => theme.colors.border.default};
+  border-radius: ${({ theme }) => theme.borderRadius.lg};
+  font-size: ${({ theme }) => theme.typography.fontSize.base};
+  width: 100%;
+  transition: all ${({ theme }) => theme.transitions.base};
+  background: ${({ theme }) => theme.colors.background.primary};
+  color: ${({ theme }) => theme.colors.text.primary};
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 1em;
+  padding-right: 2.5rem;
+
+  &:hover {
+    border-color: ${({ theme }) => theme.colors.border.medium};
   }
 
   &:focus {
@@ -215,26 +276,210 @@ export const StyledInput = styled.input`
   }
 `;
 
-export const StyledSelect = styled.select`
-  ${StyledInput}
-`;
-
 export const StyledTextarea = styled.textarea`
   ${StyledInput}
   min-height: 120px;
   resize: vertical;
+  line-height: 1.5;
 `;
 
 export const StyledButtonGroup = styled.div`
-  grid-column: 1 / -1;
   display: flex;
   gap: 1rem;
   justify-content: flex-end;
-  margin-top: 1rem;
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 2px solid ${({ theme }) => theme.colors.border.medium};
+
+  ${StyledButton} {
+    min-width: 120px;
+  }
+`;
+
+export const StyledMultiSelectContainer = styled.div`
+  position: relative;
+  width: 100%;
 `;
 
 export const StyledMultiSelect = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
+  padding: 0.75rem;
+  min-height: 3rem;
+  border: 2px solid ${({ theme }) => theme.colors.border.default};
+  border-radius: ${({ theme }) => theme.borderRadius.lg};
+  background: ${({ theme }) => theme.colors.background.primary};
+  cursor: pointer;
+  transition: all ${({ theme }) => theme.transitions.base};
+
+  &:hover {
+    border-color: ${({ theme }) => theme.colors.border.medium};
+  }
+
+  &:focus-within {
+    border-color: ${({ theme }) => theme.colors.primary[500]};
+    box-shadow: ${({ theme }) => theme.shadows.focus};
+  }
+
+  &:empty::before {
+    content: 'Select...';
+    color: ${({ theme }) => theme.colors.text.muted};
+  }
+`;
+
+export const StyledTag = styled.span`
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem 0.75rem;
+  background: ${({ theme }) => theme.colors.primary[100]};
+  color: ${({ theme }) => theme.colors.primary[700]};
+  border-radius: ${({ theme }) => theme.borderRadius.full};
+  font-size: ${({ theme }) => theme.typography.fontSize.sm};
+  font-weight: ${({ theme }) => theme.typography.fontWeights.medium};
+
+  button {
+    border: none;
+    background: none;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    color: ${({ theme }) => theme.colors.primary[700]};
+    opacity: 0.7;
+    transition: opacity ${({ theme }) => theme.transitions.base};
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+`;
+
+export const StyledDropdown = styled.div`
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  margin-top: 0.5rem;
+  background: ${({ theme }) => theme.colors.background.primary};
+  border: 2px solid ${({ theme }) => theme.colors.border.medium};
+  border-radius: ${({ theme }) => theme.borderRadius.lg};
+  box-shadow: ${({ theme }) => theme.shadows.lg};
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 10;
+`;
+
+export const StyledOption = styled.button`
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: none;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+  color: ${({ theme }) => theme.colors.text.primary};
+  font-size: ${({ theme }) => theme.typography.fontSize.base};
+  transition: all ${({ theme }) => theme.transitions.base};
+
+  &:hover {
+    background: ${({ theme }) => theme.colors.primary[50]};
+    color: ${({ theme }) => theme.colors.primary[700]};
+  }
+
+  &:focus {
+    outline: none;
+    background: ${({ theme }) => theme.colors.primary[100]};
+    color: ${({ theme }) => theme.colors.primary[700]};
+  }
+`;
+
+export const StyledSingleSelectContainer = styled.div`
+  position: relative;
+  width: 100%;
+`;
+
+export const StyledSingleSelectButton = styled.button`
+  width: 100%;
+  padding: 0.875rem 1rem;
+  border: 2px solid ${({ theme }) => theme.colors.border.default};
+  border-radius: ${({ theme }) => theme.borderRadius.lg};
+  background: ${({ theme }) => theme.colors.background.primary};
+  color: ${({ theme }) => theme.colors.text.primary};
+  font-size: ${({ theme }) => theme.typography.fontSize.base};
+  text-align: left;
+  cursor: pointer;
+  transition: all ${({ theme }) => theme.transitions.base};
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &:after {
+    content: '';
+    width: 1em;
+    height: 1em;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    transition: transform 0.2s ease;
+  }
+
+  &:hover {
+    border-color: ${({ theme }) => theme.colors.border.medium};
+  }
+
+  &:focus {
+    outline: none;
+    border-color: ${({ theme }) => theme.colors.primary[500]};
+    box-shadow: ${({ theme }) => theme.shadows.focus};
+  }
+`;
+
+export const StyledSingleDropdown = styled.div<{ $isOpen: boolean }>`
+  display: ${props => props.$isOpen ? 'block' : 'none'};
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  left: 0;
+  right: 0;
+  background: ${({ theme }) => theme.colors.background.primary};
+  border: 2px solid ${({ theme }) => theme.colors.border.medium};
+  border-radius: ${({ theme }) => theme.borderRadius.lg};
+  box-shadow: ${({ theme }) => theme.shadows.lg};
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 10;
+`;
+
+export const StyledSingleOption = styled.button<{ $isSelected: boolean }>`
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: none;
+  background: ${({ theme, $isSelected }) =>
+    $isSelected ? theme.colors.primary[50] : 'none'};
+  color: ${({ theme, $isSelected }) =>
+    $isSelected ? theme.colors.primary[700] : theme.colors.text.primary};
+  text-align: left;
+  cursor: pointer;
+  font-size: ${({ theme }) => theme.typography.fontSize.base};
+  transition: all ${({ theme }) => theme.transitions.base};
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  &:hover {
+    background: ${({ theme }) => theme.colors.primary[50]};
+    color: ${({ theme }) => theme.colors.primary[700]};
+  }
+
+  &:focus {
+    outline: none;
+    background: ${({ theme }) => theme.colors.primary[100]};
+    color: ${({ theme }) => theme.colors.primary[700]};
+  }
+
+  &:after {
+    content: ${({ $isSelected }) => $isSelected ? "'✓'" : "none"};
+    font-size: 1.1em;
+    color: ${({ theme }) => theme.colors.primary[700]};
+  }
 `;

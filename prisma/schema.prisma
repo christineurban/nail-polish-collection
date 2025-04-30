@@ -72,7 +72,6 @@ model nail_polish {
   rating        Rating?
   empty_bottles Int                  @default(0) @db.SmallInt
   last_used     DateTime?            @db.Timestamptz(6)
-  status        PolishStatus         @default(ACTIVE)
   total_bottles Int                  @default(1) @db.SmallInt
   is_old        Boolean              @default(false)
   brands        brands               @relation(fields: [brand_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
@@ -97,10 +96,4 @@ enum Rating {
   D
   D_MINUS
   F
-}
-
-enum PolishStatus {
-  ACTIVE
-  EMPTY
-  DISCONTINUED
 }
