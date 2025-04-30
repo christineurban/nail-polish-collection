@@ -2,15 +2,9 @@
 
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
-import styled from 'styled-components';
+import { MainContainer } from '@/components/MainContainer';
 import { ImageSelector } from '@/components/ImageSelector';
 import { PageHeader } from '@/components/PageHeader';
-
-const StyledContainer = styled.div`
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 2rem;
-`;
 
 interface Polish {
   id: string;
@@ -51,36 +45,36 @@ export default function ImageSelectionPage() {
 
   if (isLoading) {
     return (
-      <StyledContainer>
+      <MainContainer>
         <PageHeader title="Loading..." />
-      </StyledContainer>
+      </MainContainer>
     );
   }
 
   if (error) {
     return (
-      <StyledContainer>
+      <MainContainer>
         <PageHeader
           title="Error"
           description={error}
         />
-      </StyledContainer>
+      </MainContainer>
     );
   }
 
   if (polishes.length === 0) {
     return (
-      <StyledContainer>
+      <MainContainer>
         <PageHeader
           title="No Polishes Need Images"
           description="All polishes in your collection have images."
         />
-      </StyledContainer>
+      </MainContainer>
     );
   }
 
   return (
-    <StyledContainer>
+    <MainContainer>
       <PageHeader
         title="Select Images"
         description='Click on an image to select it, then click "Save" to update the database.'
@@ -92,6 +86,6 @@ export default function ImageSelectionPage() {
           onImageSaved={() => handleImageSaved(polish.id)}
         />
       ))}
-    </StyledContainer>
+    </MainContainer>
   );
 }

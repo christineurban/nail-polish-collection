@@ -5,7 +5,6 @@ import { NailPolishCard } from '@/components/NailPolishCard';
 import { Rating } from '@prisma/client';
 import { useRouter } from 'next/navigation';
 import {
-  StyledContainer,
   StyledGrid,
   StyledEmptyState,
 } from './index.styled';
@@ -50,7 +49,7 @@ export const PolishCollection = ({
   };
 
   return (
-    <StyledContainer>
+    <>
       <FilterSort
         brands={brands}
         finishes={finishes}
@@ -79,6 +78,6 @@ export const PolishCollection = ({
           </StyledEmptyState>
         )}
       </StyledGrid>
-    </StyledContainer>
+    </>
   );
 };

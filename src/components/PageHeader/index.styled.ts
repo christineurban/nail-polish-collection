@@ -5,7 +5,7 @@ import { theme } from '@/lib/theme';
 
 export const StyledContainer = styled.div`
   width: 100%;
-  margin-bottom: ${theme.spacing.lg};
+  margin-bottom: 2rem;
 `;
 
 export const StyledHeader = styled.div`

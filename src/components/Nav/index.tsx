@@ -18,10 +18,14 @@ const StyledNav = styled.nav`
 const StyledContainer = styled.div`
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 1rem;
+  padding: 0 2rem;
   display: flex;
   align-items: center;
   gap: 1rem;
+
+  @media (max-width: 640px) {
+    padding: 0 1.5rem;
+  }
 `;
 
 const StyledLogo = styled(Link)`

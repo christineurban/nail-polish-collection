@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { StyledContainer } from './page.styled';
+import { MainContainer } from '@/components/MainContainer';
 import { PageHeader } from '@/components/PageHeader';
 import { PolishCollection } from '@/components/PolishCollection';
 import { FilterSort } from '@/components/FilterSort';
@@ -70,25 +70,25 @@ export default function Home() {
 
   if (isLoading) {
     return (
-      <StyledContainer>
+      <MainContainer>
         <PageHeader title="Loading..." />
-      </StyledContainer>
+      </MainContainer>
     );
   }
 
   if (error) {
     return (
-      <StyledContainer>
+      <MainContainer>
         <PageHeader
           title="Error"
           description={error}
         />
-      </StyledContainer>
+      </MainContainer>
     );
   }
 
   return (
-    <StyledContainer>
+    <MainContainer>
       <PageHeader
         title="Nail Polish Collection"
         description="Browse and manage your nail polish collection"
@@ -100,6 +100,6 @@ export default function Home() {
         finishes={finishes}
         currentFilters={currentFilters}
       />
-    </StyledContainer>
+    </MainContainer>
   );
 }

@@ -3,13 +3,6 @@
 import styled from 'styled-components';
 import { theme } from '../lib/theme';
 
-export const StyledContainer = styled.div`
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem;
-  padding-bottom: 4rem;
-`;
-
 export const StyledHeader = styled.header`
   display: flex;
   justify-content: space-between;

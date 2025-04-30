@@ -2,13 +2,6 @@
 
 import styled from 'styled-components';
 
-export const StyledContainer = styled.div`
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem;
-`;
-
 export const StyledHeader = styled.header`
   margin-bottom: 3rem;
 
@@ -19,4 +12,11 @@ export const StyledHeader = styled.header`
     line-height: 1.2;
     font-weight: ${({ theme }) => theme.typography.fontWeights.bold};
   }
+`;
+
+export const StyledContainer = styled.main`
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
 `;

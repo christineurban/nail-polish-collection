@@ -2,49 +2,9 @@
 
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
+import { MainContainer } from '@/components/MainContainer';
 import { ImageSelector } from '@/components/ImageSelector';
-import styled from 'styled-components';
 import { PageHeader } from '@/components/PageHeader';
-
-const StyledContainer = styled.div`
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem;
-`;
-
-const StyledError = styled.div`
-  color: #e53e3e;
-  text-align: center;
-  padding: 2rem;
-`;
-
-const StyledBackButton = styled.button`
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  background: none;
-  border: none;
-  color: ${({ theme }) => theme.colors.primary[600]};
-  font-size: ${({ theme }) => theme.typography.fontSize.base};
-  font-weight: ${({ theme }) => theme.typography.fontWeights.medium};
-  padding: 0;
-  cursor: pointer;
-  transition: color ${({ theme }) => theme.transitions.base};
-
-  &:hover {
-    color: ${({ theme }) => theme.colors.primary[700]};
-  }
-
-  &:focus {
-    outline: none;
-    color: ${({ theme }) => theme.colors.primary[700]};
-  }
-
-  &::before {
-    content: '←';
-    font-size: 1.2em;
-  }
-`;
 
 interface Polish {
   id: string;
@@ -78,44 +38,39 @@ export default function SelectImagePage({ params }: { params: { id: string } }) 
     fetchPolish();
   }, [params.id]);
 
-  const handleBack = () => {
-    router.back();
-  };
-
   const handleImageSaved = () => {
-    router.push(`/polish/${params.id}`);
+    router.push('/');
   };
 
   if (isLoading) {
     return (
-      <StyledContainer>
+      <MainContainer>
         <PageHeader title="Loading..." />
-      </StyledContainer>
+      </MainContainer>
     );
   }
 
   if (error || !polish) {
     return (
-      <StyledContainer>
+      <MainContainer>
         <PageHeader
           title="Error"
           description={error || 'Polish not found'}
         />
-      </StyledContainer>
+      </MainContainer>
     );
   }
 
   return (
-    <StyledContainer>
-      <StyledBackButton onClick={handleBack}>Back</StyledBackButton>
+    <MainContainer>
       <PageHeader
-        title={`Select Image for ${polish.brand} - ${polish.name}`}
-        description="Search and select an image for your nail polish"
+        title={`Select Image for ${polish.brand} ${polish.name}`}
+        description='Click on an image to select it, then click "Save" to update the database.'
       />
       <ImageSelector
         polish={polish}
         onImageSaved={handleImageSaved}
       />
-    </StyledContainer>
+    </MainContainer>
   );
 }

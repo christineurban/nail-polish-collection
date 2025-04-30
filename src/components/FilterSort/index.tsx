@@ -13,7 +13,6 @@ const StyledFiltersContainer = styled.div`
   flex-direction: column;
   gap: 1.5rem;
   width: 100%;
-  margin: 0 auto;
 
   @media (min-width: 768px) {
     gap: 2rem;
@@ -21,8 +20,6 @@ const StyledFiltersContainer = styled.div`
 `;
 
 const StyledContainer = styled.div`
-  margin: 0;
-  padding: 1.5rem;
   background: linear-gradient(to bottom right, #ffffff, #f8fafc);
   border-radius: 16px;
   box-shadow:
@@ -34,6 +31,7 @@ const StyledContainer = styled.div`
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 1.5rem;
   border: 1px solid rgba(226, 232, 240, 0.8);
+  padding: 1.5rem;
 
   @media (min-width: 768px) {
     padding: 2rem;

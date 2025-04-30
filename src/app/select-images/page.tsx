@@ -1,59 +1,17 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import styled from 'styled-components';
-import { NailPolishCard } from '@/components/NailPolishCard';
 import { useRouter } from 'next/navigation';
-import { Rating } from '@prisma/client';
+import { useState, useEffect } from 'react';
+import { MainContainer } from '@/components/MainContainer';
+import { ImageSelector } from '@/components/ImageSelector';
 import { PageHeader } from '@/components/PageHeader';
-
-const StyledContainer = styled.div`
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 2rem;
-`;
-
-const StyledGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 2rem;
-  margin-top: 2rem;
-
-  @media (max-width: 640px) {
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 1.5rem;
-  }
-`;
-
-const StyledEmptyState = styled.div`
-  text-align: center;
-  padding: 4rem 2rem;
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-  grid-column: 1 / -1;
-
-  h2 {
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: #2d3748;
-    margin-bottom: 1rem;
-  }
-
-  p {
-    color: #4a5568;
-    margin-bottom: 2rem;
-  }
-`;
 
 interface Polish {
   id: string;
-  brand: string;
   name: string;
+  link: string | null;
   imageUrl: string | null;
-  colors: string[];
-  finishes: string[];
-  rating: Rating | null;
+  brand: string;
 }
 
 export default function SelectImagesPage() {
@@ -80,57 +38,54 @@ export default function SelectImagesPage() {
     fetchPolishes();
   }, []);
 
+  const handleImageSaved = (id: string) => {
+    // No redirection needed - we want to stay on this page
+    // The success message will be shown and fade away
+  };
+
   if (isLoading) {
     return (
-      <StyledContainer>
+      <MainContainer>
         <PageHeader title="Loading..." />
-      </StyledContainer>
+      </MainContainer>
     );
   }
 
   if (error) {
     return (
-      <StyledContainer>
+      <MainContainer>
         <PageHeader
           title="Error"
           description={error}
         />
-      </StyledContainer>
+      </MainContainer>
     );
   }
 
   if (polishes.length === 0) {
     return (
-      <StyledContainer>
+      <MainContainer>
         <PageHeader
           title="No Polishes Need Images"
           description="All polishes in your collection have images."
         />
-      </StyledContainer>
+      </MainContainer>
     );
   }
 
   return (
-    <StyledContainer>
+    <MainContainer>
       <PageHeader
         title="Select Images"
-        description="Click on an image to select it, then click 'Save' to update the database."
+        description='Click on an image to select it, then click "Save" to update the database.'
       />
-      <StyledGrid>
-        {polishes.map(polish => (
-          <NailPolishCard
-            key={polish.id}
-            id={polish.id}
-            brand={polish.brand}
-            name={polish.name}
-            imageUrl={polish.imageUrl || undefined}
-            colors={polish.colors}
-            finishes={polish.finishes}
-            rating={polish.rating || undefined}
-            onChooseImage={() => router.push(`/polish/${polish.id}/select-image`)}
-          />
-        ))}
-      </StyledGrid>
-    </StyledContainer>
+      {polishes.map(polish => (
+        <ImageSelector
+          key={polish.id}
+          polish={polish}
+          onImageSaved={() => handleImageSaved(polish.id)}
+        />
+      ))}
+    </MainContainer>
   );
 }

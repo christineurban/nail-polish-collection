@@ -1,9 +1,5 @@
 import styled from 'styled-components';
 
-export const StyledContainer = styled.main`
-  width: 100%;
-`;
-
 export const StyledGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));

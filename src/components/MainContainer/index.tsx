@@ -5,11 +5,11 @@ import styled from 'styled-components';
 const StyledMain = styled.main`
   max-width: 1200px;
   margin: 0 auto;
-  padding: 3rem 2rem 4rem;
+  padding: 2rem;
   min-height: calc(100vh - 64px); /* Account for nav height */
 
   @media (max-width: 640px) {
-    padding: 2rem 1.5rem 3rem;
+    padding: 1.5rem;
   }
 `;
 
