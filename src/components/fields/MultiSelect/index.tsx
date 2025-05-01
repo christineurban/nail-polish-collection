@@ -28,9 +28,8 @@ export const MultiSelect = ({
 }: MultiSelectProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
-  const [dropdownPosition, setDropdownPosition] = useState<{ top: number; left: number; width: number } | null>(null);
-  const buttonRef = useRef<HTMLButtonElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     setMounted(true);
@@ -52,19 +51,7 @@ export const MultiSelect = ({
     };
   }, []);
 
-  const updateDropdownPosition = () => {
-    if (buttonRef.current) {
-      const rect = buttonRef.current.getBoundingClientRect();
-      setDropdownPosition({
-        top: rect.bottom + window.scrollY + 8,
-        left: rect.left + window.scrollX,
-        width: rect.width,
-      });
-    }
-  };
-
   const handleButtonClick = () => {
-    updateDropdownPosition();
     setIsOpen(!isOpen);
   };
 
@@ -121,21 +108,11 @@ export const MultiSelect = ({
           placeholder
         )}
       </StyledButton>
-      {dropdownPosition && (
-        <StyledDropdown
-          $isOpen={isOpen}
-          style={{
-            top: `${dropdownPosition.top}px`,
-            left: `${dropdownPosition.left}px`,
-            width: `${dropdownPosition.width}px`,
-            transform: `translateY(${isOpen ? '0' : '-8px'})`,
-          }}
-        >
-          {options.map(option => (
-            renderOption ? renderOption(option) : renderDefaultOption(option)
-          ))}
-        </StyledDropdown>
-      )}
+      <StyledDropdown $isOpen={isOpen}>
+        {options.map(option => (
+          renderOption ? renderOption(option) : renderDefaultOption(option)
+        ))}
+      </StyledDropdown>
     </StyledContainer>
   );
 };

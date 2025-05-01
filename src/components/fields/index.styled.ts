@@ -8,6 +8,12 @@ import { formStyles } from '@/theme/form';
 export const StyledContainer = styled.div`
   position: relative;
   width: 100%;
+  isolation: isolate;
+  z-index: 0;
+
+  &:focus-within {
+    z-index: 1;
+  }
 `;
 
 // Base label styles
@@ -33,7 +39,9 @@ export const StyledFieldWrapper = styled.div`
 
 // Shared field styles
 export const fieldStyles = css`
-  height: ${formStyles.height};
+  --input-height: ${formStyles.height};
+  min-height: var(--input-height);
+  height: auto;
   padding: ${formStyles.padding};
   border: ${formStyles.border} ${({ theme }) => theme.colors.border.default};
   border-radius: ${formStyles.borderRadius};
@@ -42,6 +50,7 @@ export const fieldStyles = css`
   font-size: ${formStyles.fontSize};
   width: 100%;
   transition: all ${({ theme }) => theme.transitions.base};
+  position: relative;
 
   &:hover {
     border-color: #666666;
@@ -61,7 +70,7 @@ export const fieldStyles = css`
 
 // Dropdown styles
 export const dropdownStyles = css<{ $isOpen: boolean }>`
-  position: fixed;
+  position: absolute;
   background: ${({ theme }) => theme.colors.background.primary};
   border: 2px solid ${({ theme }) => theme.colors.border.medium};
   border-radius: ${({ theme }) => theme.borderRadius.lg};
@@ -71,7 +80,7 @@ export const dropdownStyles = css<{ $isOpen: boolean }>`
   opacity: ${({ $isOpen }) => ($isOpen ? '1' : '0')};
   overflow-y: ${({ $isOpen }) => ($isOpen ? 'auto' : 'hidden')};
   transition: all 0.2s ease;
-  z-index: 1000;
+  z-index: 10;
   width: 100%;
 
   &::-webkit-scrollbar {

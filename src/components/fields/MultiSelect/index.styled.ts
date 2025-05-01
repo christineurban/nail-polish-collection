@@ -21,7 +21,7 @@ export const StyledButton = styled.button<{ $isOpen: boolean }>`
   align-items: center;
   flex-wrap: wrap;
   gap: 0.25rem;
-  padding: 0.375rem 2.5rem 0.375rem 0.75rem;
+  padding: ${formStyles.padding};
   position: relative;
 
   &:after {
@@ -34,6 +34,7 @@ export const StyledButton = styled.button<{ $isOpen: boolean }>`
 
 export const StyledDropdown = styled.div<{ $isOpen: boolean }>`
   ${dropdownStyles}
+  margin-top: 4px;
 
   &::-webkit-scrollbar {
     width: 8px;
