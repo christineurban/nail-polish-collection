@@ -4,7 +4,6 @@ import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { ImageSelector } from '@/components/ImageSelector';
 import { PageHeader } from '@/components/PageHeader';
-import { Button } from '@/components/Button';
 import {
   StyledPagination,
   StyledPaginationButton,

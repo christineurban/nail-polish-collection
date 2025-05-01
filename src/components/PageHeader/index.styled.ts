@@ -7,7 +7,7 @@ export const StyledContainer = styled.div`
   margin-bottom: 2rem;
 `;
 export const StyledHeader = styled.div`
-  ::after {
+  h1::after {
     content: '';
     position: absolute;
     bottom: -8px;
