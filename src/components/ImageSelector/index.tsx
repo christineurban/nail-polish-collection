@@ -160,11 +160,14 @@ export const ImageSelector = ({ polish, onImageSaved }: ImageSelectorProps) => {
           <StyledMetadata>
             <h3>{polish.brand} - {polish.name}</h3>
             {polish.link ? (
-              <p>Link: <a href={polish.link} target="_blank" rel="noopener noreferrer">
-                {polish.link}
-              </a></p>
+              <p>
+                Link: <a href={polish.link} target="_blank" rel="noopener noreferrer">
+                  {polish.link}
+                </a>
+                <a href={`/polish/${polish.id}/edit`} style={{ marginLeft: '20px' }}>Edit link</a>
+              </p>
             ) : (
-              <p>No source link available</p>
+              <p>No source link available. <a href={`/polish/${polish.id}/edit`}>Add a link</a></p>
             )}
           </StyledMetadata>
 
