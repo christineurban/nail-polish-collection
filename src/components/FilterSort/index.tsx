@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { Rating } from '@prisma/client';
 import { getColorMapping, getTextColor } from '@/utils/colors';
 import { SingleSelect } from '@/components/fields/SingleSelect';
 import { MultiSelect } from '@/components/fields/MultiSelect';

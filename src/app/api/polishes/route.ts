@@ -6,7 +6,7 @@ export async function GET(request: Request) {
   const hasImage = searchParams.get('hasImage');
   const search = searchParams.get('search');
   const page = parseInt(searchParams.get('page') || '1');
-  const limit = parseInt(searchParams.get('limit') || '10');
+  const limit = parseInt(searchParams.get('limit') || '45');
   const skip = (page - 1) * limit;
 
   try {

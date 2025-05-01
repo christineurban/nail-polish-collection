@@ -1,6 +1,9 @@
 import { notFound } from 'next/navigation';
-import { prisma } from '@/lib/prisma';
 import { NailPolishDetails } from '@/components/NailPolishDetails';
+import { getPolishById } from '@/lib/api/polish';
+import { getBrands } from '@/lib/api/brands';
+import { getColors } from '@/lib/api/colors';
+import { getFinishes } from '@/lib/api/finishes';
 import type { NailPolishWithRelations } from '@/types/polish';
 import type { Rating } from '@prisma/client';
 
@@ -10,37 +13,11 @@ interface PageProps {
   };
 }
 
-export default async function PolishPage({ params }: PageProps) {
-  const [polish, brands, colors, finishes] = await Promise.all([
-    prisma.nail_polish.findUnique({
-      where: { id: params.id },
-      include: {
-        brands: true,
-        colors: {
-          include: {
-            color: true
-          }
-        },
-        finishes: {
-          include: {
-            finish: true
-          }
-        }
-      }
-    }) as Promise<NailPolishWithRelations | null>,
-    prisma.brands.findMany({
-      orderBy: { name: 'asc' },
-      select: { name: true }
-    }),
-    prisma.colors.findMany({
-      orderBy: { name: 'asc' },
-      select: { name: true }
-    }),
-    prisma.finishes.findMany({
-      orderBy: { name: 'asc' },
-      select: { name: true }
-    })
-  ]);
+export default async function Page({ params }: PageProps) {
+  const polish = await getPolishById(params.id);
+  const brands = await getBrands();
+  const colors = await getColors();
+  const finishes = await getFinishes();
 
   if (!polish) {
     notFound();
@@ -66,9 +43,9 @@ export default async function PolishPage({ params }: PageProps) {
   return (
     <NailPolishDetails
       polish={transformedPolish}
-      brands={brands.map(b => b.name)}
-      availableColors={colors.map(c => c.name)}
-      availableFinishes={finishes.map(f => f.name)}
+      brands={brands.map((b: { name: string }) => b.name)}
+      availableColors={colors.map((c: { name: string }) => c.name)}
+      availableFinishes={finishes.map((f: { name: string }) => f.name)}
     />
   );
 }

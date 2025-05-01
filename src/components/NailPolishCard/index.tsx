@@ -2,7 +2,6 @@
 
 import React, { FC } from 'react';
 import { useRouter } from 'next/navigation';
-import Link from 'next/link';
 import {
   StyledCard,
   StyledContent,

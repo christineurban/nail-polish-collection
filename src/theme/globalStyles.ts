@@ -21,7 +21,6 @@ export const GlobalStyles = createGlobalStyle<{ theme: Theme }>`
     font-size: 16px;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    scroll-behavior: smooth;
   }
 
   body {
@@ -85,17 +84,6 @@ export const GlobalStyles = createGlobalStyle<{ theme: Theme }>`
     margin-bottom: ${({ theme }) => theme.spacing[6]};
     position: relative;
     display: inline-block;
-
-    &:not(.next-error-h1)::after {
-      content: '';
-      position: absolute;
-      bottom: -8px;
-      left: 0;
-      width: 100%;
-      height: 4px;
-      background: ${({ theme }) => theme.colors.background.gradient};
-      border-radius: ${({ theme }) => theme.borderRadius.full};
-    }
   }
 
   h2 {
