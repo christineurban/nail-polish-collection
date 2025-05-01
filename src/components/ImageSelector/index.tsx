@@ -63,11 +63,11 @@ export const ImageSelector = ({ polish, onImageSaved }: ImageSelectorProps) => {
         if (onImageSaved) {
           setTimeout(() => {
             onImageSaved();
-          }, 2000);
+          }, 1500);
         } else {
           setTimeout(() => {
             setIsSuccess(false);
-          }, 2000);
+          }, 1500);
         }
       } else {
         const errorData = await response.json();
@@ -103,11 +103,11 @@ export const ImageSelector = ({ polish, onImageSaved }: ImageSelectorProps) => {
         if (onImageSaved) {
           setTimeout(() => {
             onImageSaved();
-          }, 3000);
+          }, 1500);
         } else {
           setTimeout(() => {
             setIsSuccess(false);
-          }, 3000);
+          }, 1500);
         }
       } else {
         const errorData = await response.json();
@@ -235,11 +235,10 @@ export const ImageSelector = ({ polish, onImageSaved }: ImageSelectorProps) => {
               >
                 <StyledSuccessMessage
                   as={motion.div}
-                  initial={{ opacity: 0, scale: 0.5, y: 50 }}
+                  initial={{ opacity: 0, scale: 0.8 }}
                   animate={{
                     opacity: 1,
-                    scale: [0.5, 1.1, 1],
-                    y: 0
+                    scale: 1
                   }}
                   exit={{
                     opacity: 0,
@@ -250,8 +249,8 @@ export const ImageSelector = ({ polish, onImageSaved }: ImageSelectorProps) => {
                     }
                   }}
                   transition={{
-                    duration: 0.8,
-                    ease: [0.16, 1, 0.3, 1]
+                    duration: 0.3,
+                    ease: "easeOut"
                   }}
                 >
                   {successMessage}
