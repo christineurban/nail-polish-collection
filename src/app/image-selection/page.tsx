@@ -4,6 +4,12 @@ import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { ImageSelector } from '@/components/ImageSelector';
 import { PageHeader } from '@/components/PageHeader';
+import { Button } from '@/components/Button';
+import {
+  StyledPagination,
+  StyledPaginationButton,
+  StyledPaginationInfo
+} from './page.styled';
 
 interface Polish {
   id: string;
@@ -13,19 +19,31 @@ interface Polish {
   brand: string;
 }
 
+interface PaginatedResponse {
+  polishes: Polish[];
+  total: number;
+  page: number;
+  totalPages: number;
+}
+
 export default function ImageSelectionPage() {
   const router = useRouter();
   const [polishes, setPolishes] = useState<Polish[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [totalItems, setTotalItems] = useState(0);
 
   useEffect(() => {
     const fetchPolishes = async () => {
       try {
-        const response = await fetch('/api/polishes?hasImage=false');
+        const response = await fetch(`/api/polishes?hasImage=false&page=${currentPage}&limit=10`);
         if (!response.ok) throw new Error('Failed to fetch polish details');
-        const data = await response.json();
-        setPolishes(data);
+        const data: PaginatedResponse = await response.json();
+        setPolishes(data.polishes);
+        setTotalPages(data.totalPages);
+        setTotalItems(data.total);
       } catch (error) {
         console.error('Error fetching polishes:', error);
         setError(error instanceof Error ? error.message : 'An error occurred');
@@ -35,11 +53,20 @@ export default function ImageSelectionPage() {
     };
 
     fetchPolishes();
-  }, []);
+  }, [currentPage]);
 
   const handleImageSaved = (id: string) => {
-    // No redirection needed - we want to stay on this page
-    // The success message will be shown and fade away
+    // Remove the saved polish from the current page
+    setPolishes(prevPolishes => prevPolishes.filter(p => p.id !== id));
+
+    // If this was the last polish on the page and not the first page, go to previous page
+    if (polishes.length === 1 && currentPage > 1) {
+      setCurrentPage(prev => prev - 1);
+    }
+  };
+
+  const handlePageChange = (newPage: number) => {
+    setCurrentPage(newPage);
   };
 
   if (isLoading) {
@@ -79,6 +106,25 @@ export default function ImageSelectionPage() {
           onImageSaved={() => handleImageSaved(polish.id)}
         />
       ))}
+      <StyledPagination>
+        <StyledPaginationInfo>
+          Showing {polishes.length} of {totalItems} polishes
+        </StyledPaginationInfo>
+        <div>
+          <StyledPaginationButton
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+          >
+            Previous
+          </StyledPaginationButton>
+          <StyledPaginationButton
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={currentPage === totalPages}
+          >
+            Next
+          </StyledPaginationButton>
+        </div>
+      </StyledPagination>
     </>
   );
 }

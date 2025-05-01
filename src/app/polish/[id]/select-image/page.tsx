@@ -46,7 +46,8 @@ export default function SelectImagePage({ params }: { params: { id: string } }) 
   }, [params.id]);
 
   const handleImageSaved = () => {
-    router.push('/');
+    router.push(`/polish/${params.id}`);
+    router.refresh();
   };
 
   if (isLoading) {

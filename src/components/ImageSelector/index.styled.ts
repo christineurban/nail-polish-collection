@@ -103,25 +103,33 @@ export const StyledSpinner = styled(motion.div)`
   border-radius: 50%;
 `;
 
-export const StyledSuccessMessage = styled(motion.div)`
-  position: absolute;
+export const StyledSuccessOverlay = styled(motion.div)`
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+`;
+
+export const StyledSuccessMessage = styled(motion.div)`
   background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  z-index: 10;
   color: #4CAF50;
-  font-size: 1.2rem;
+  font-size: 1.25rem;
+  font-weight: 600;
   text-align: center;
-
-  svg {
-    width: 48px;
-    height: 48px;
-    margin-bottom: 16px;
-  }
+  min-width: 300px;
+  max-width: 90vw;
+  transform-origin: center;
 `;

@@ -5,34 +5,50 @@ export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const hasImage = searchParams.get('hasImage');
   const search = searchParams.get('search');
+  const page = parseInt(searchParams.get('page') || '1');
+  const limit = parseInt(searchParams.get('limit') || '10');
+  const skip = (page - 1) * limit;
 
   try {
-    const polishes = await prisma.nail_polish.findMany({
-      where: {
-        image_url: hasImage === 'false' ? null : undefined,
-        OR: search ? [
-          { name: { contains: search, mode: 'insensitive' } },
-          { brands: { name: { contains: search, mode: 'insensitive' } } }
-        ] : undefined,
-      },
-      include: {
-        brands: true,
-        colors: {
-          include: {
-            color: true
+    const [polishes, total] = await Promise.all([
+      prisma.nail_polish.findMany({
+        where: {
+          image_url: hasImage === 'false' ? null : undefined,
+          OR: search ? [
+            { name: { contains: search, mode: 'insensitive' } },
+            { brands: { name: { contains: search, mode: 'insensitive' } } }
+          ] : undefined,
+        },
+        include: {
+          brands: true,
+          colors: {
+            include: {
+              color: true
+            }
+          },
+          finishes: {
+            include: {
+              finish: true
+            }
           }
         },
-        finishes: {
-          include: {
-            finish: true
-          }
+        orderBy: [
+          { brands: { name: 'asc' } },
+          { name: 'asc' }
+        ],
+        skip,
+        take: limit
+      }),
+      prisma.nail_polish.count({
+        where: {
+          image_url: hasImage === 'false' ? null : undefined,
+          OR: search ? [
+            { name: { contains: search, mode: 'insensitive' } },
+            { brands: { name: { contains: search, mode: 'insensitive' } } }
+          ] : undefined,
         }
-      },
-      orderBy: [
-        { brands: { name: 'asc' } },
-        { name: 'asc' }
-      ]
-    });
+      })
+    ]);
 
     const transformedPolishes = polishes.map(polish => ({
       id: polish.id,
@@ -45,7 +61,12 @@ export async function GET(request: Request) {
       link: polish.link
     }));
 
-    return NextResponse.json(transformedPolishes);
+    return NextResponse.json({
+      polishes: transformedPolishes,
+      total,
+      page,
+      totalPages: Math.ceil(total / limit)
+    });
   } catch (error) {
     console.error('Error fetching polishes:', error);
     return NextResponse.json(

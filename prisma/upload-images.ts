@@ -178,7 +178,7 @@ async function generateHtmlReport(polishesWithImages: Array<{
           <div class="metadata">
             <h2>${polish.brand.name} - ${polish.name}</h2>
             <p>ID: ${polish.id}</p>
-            <p>Source: <a href="${polish.link}" target="_blank">${polish.link}</a></p>
+            <p>Link: <a href="${polish.link}" target="_blank">${polish.link}</a></p>
           </div>
           ${polish.images.length ? `
             <div class="images">

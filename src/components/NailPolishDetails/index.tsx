@@ -483,7 +483,7 @@ export const NailPolishDetails = ({ polish, brands, availableColors, availableFi
               onClick={() => router.push(`/polish/${polish.id}/select-image`)}
               disabled={!polish.link}
             >
-              Add Image
+              {polish.imageUrl ? 'Change Image' : 'Add Image'}
             </Button>
             {!polish.link && (
               <StyledDisabledMessage>
@@ -504,7 +504,7 @@ export const NailPolishDetails = ({ polish, brands, availableColors, availableFi
         <StyledDetailsContent>
           <h2>Details</h2>
           <p>
-            <strong>Source</strong>
+            <strong>Link</strong>
             {polish.link ? (
               <Link href={polish.link} target="_blank" rel="noopener noreferrer">
                 {polish.link}
