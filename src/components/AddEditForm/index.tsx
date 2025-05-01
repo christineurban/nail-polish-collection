@@ -204,15 +204,6 @@ export const AddEditForm = ({
       <StyledFormSection>
         <h3>Additional Information</h3>
         <StyledFormGroup>
-          <label>Image URL</label>
-          <Input
-            type="url"
-            value={formData.imageUrl || ''}
-            onChange={(value) => setFormData((prev) => ({ ...prev, imageUrl: value }))}
-            placeholder="https://example.com/image.jpg"
-          />
-        </StyledFormGroup>
-        <StyledFormGroup>
           <label>Link</label>
           <Input
             type="url"

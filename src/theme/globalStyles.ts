@@ -79,13 +79,14 @@ export const GlobalStyles = createGlobalStyle<{ theme: Theme }>`
   h1 {
     font-size: ${({ theme }) => theme.typography.fontSize['4xl']};
     background: ${({ theme }) => theme.colors.background.gradient};
+    background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     margin-bottom: ${({ theme }) => theme.spacing[6]};
     position: relative;
     display: inline-block;
 
-    &::after {
+    &:not(.next-error-h1)::after {
       content: '';
       position: absolute;
       bottom: -8px;
