@@ -2,6 +2,7 @@
 
 import styled from 'styled-components';
 import { theme } from '@/lib/theme';
+import { formStyles } from '@/theme/form';
 import {
   fieldStyles,
   dropdownStyles,
@@ -11,18 +12,23 @@ import {
 export const StyledButton = styled.button<{ $isOpen: boolean }>`
   ${fieldStyles}
   ${chevronIconStyles}
+  min-height: ${formStyles.height};
+  height: auto;
   text-align: left;
   cursor: pointer;
   display: flex;
   justify-content: flex-start;
   align-items: center;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: 0.25rem;
+  padding: 0.375rem 2.5rem 0.375rem 0.75rem;
   position: relative;
 
   &:after {
     position: absolute;
     right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
   }
 `;
 
@@ -79,7 +85,7 @@ export const StyledTag = styled.span`
   color: ${({ theme }) => theme.colors.primary[700]};
   border-radius: ${({ theme }) => theme.borderRadius.md};
   font-size: ${({ theme }) => theme.typography.fontSize.sm};
-  margin: 0.125rem 2rem 0.125rem 0;
+  margin: 0.125rem;
 
   button {
     border: none;
