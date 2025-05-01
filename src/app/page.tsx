@@ -50,12 +50,34 @@ export default function Home() {
   };
 
   useEffect(() => {
+    const fetchOptions = async () => {
+      try {
+        const response = await fetch('/api/options');
+        if (!response.ok) throw new Error('Failed to fetch options');
+        const data = await response.json();
+        setBrands(data.brands);
+        setColors(data.colors);
+        setFinishes(data.finishes);
+      } catch (error) {
+        console.error('Error fetching options:', error);
+      }
+    };
+
+    fetchOptions();
+  }, []);
+
+  useEffect(() => {
     const fetchPolishes = async () => {
       try {
         // Build the query string from currentFilters
         const params = new URLSearchParams();
         if (currentFilters.search) params.set('search', currentFilters.search);
         if (currentFilters.hasImage) params.set('hasImage', currentFilters.hasImage);
+        if (currentFilters.isOld) params.set('isOld', currentFilters.isOld);
+        currentFilters.brand.forEach(brand => params.append('brand', brand));
+        currentFilters.finish.forEach(finish => params.append('finish', finish));
+        currentFilters.color.forEach(color => params.append('color', color));
+        currentFilters.rating.forEach(rating => params.append('rating', rating));
         params.set('page', currentFilters.page);
         params.set('limit', '45');
 
@@ -70,25 +92,6 @@ export default function Home() {
         setPolishes(data.polishes);
         setCurrentPage(data.page);
         setTotalPages(data.totalPages);
-
-        // Extract unique values for filters
-        const uniqueBrands = data.polishes
-          .map(polish => polish.brand)
-          .filter((brand, index, self) => self.indexOf(brand) === index)
-          .sort();
-        setBrands(uniqueBrands);
-
-        const uniqueColors = data.polishes
-          .flatMap(polish => polish.colors)
-          .filter((color, index, self) => self.indexOf(color) === index)
-          .sort();
-        setColors(uniqueColors);
-
-        const uniqueFinishes = data.polishes
-          .flatMap(polish => polish.finishes)
-          .filter((finish, index, self) => self.indexOf(finish) === index)
-          .sort();
-        setFinishes(uniqueFinishes);
       } catch (error) {
         setError(error instanceof Error ? error.message : 'An error occurred');
       } finally {
@@ -97,7 +100,7 @@ export default function Home() {
     };
 
     fetchPolishes();
-  }, [searchParams]); // Add searchParams as a dependency
+  }, [searchParams]);
 
   const handlePageChange = (newPage: number) => {
     const params = new URLSearchParams(searchParams.toString());

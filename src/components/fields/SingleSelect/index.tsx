@@ -34,11 +34,15 @@ export const SingleSelect = ({ value, options, placeholder = 'Select...', onChan
     };
   }, []);
 
-  const handleButtonClick = () => {
+  const handleButtonClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
     setIsOpen(!isOpen);
   };
 
-  const handleSelect = (option: string) => {
+  const handleSelect = (option: string, e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
     onChange(option);
     setIsOpen(false);
   };
@@ -58,7 +62,7 @@ export const SingleSelect = ({ value, options, placeholder = 'Select...', onChan
           <StyledOption
             key={option}
             $isSelected={value === option}
-            onClick={() => handleSelect(option)}
+            onClick={(e) => handleSelect(option, e)}
           >
             {option}
           </StyledOption>

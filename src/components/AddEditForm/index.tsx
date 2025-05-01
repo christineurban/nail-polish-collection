@@ -17,6 +17,7 @@ import {
 } from './index.styled';
 
 interface AddEditFormData {
+  id?: string;
   imageUrl?: string;
   brand: string;
   name: string;
@@ -63,7 +64,8 @@ export const AddEditForm = ({
     setIsLoading(true);
 
     try {
-      const response = await fetch('/api/polish', {
+      const endpoint = isEditing ? `/api/polish/${formData.id}` : '/api/polish';
+      const response = await fetch(endpoint, {
         method: isEditing ? 'PUT' : 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -75,7 +77,11 @@ export const AddEditForm = ({
         throw new Error('Failed to save nail polish');
       }
 
-      router.push('/');
+      if (isEditing) {
+        router.push(`/polish/${formData.id}`);
+      } else {
+        router.push('/');
+      }
       router.refresh();
     } catch (error) {
       console.error('Error saving nail polish:', error);

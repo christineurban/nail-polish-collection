@@ -39,7 +39,7 @@ export async function GET(request: Request) {
       };
     }
 
-    // Handle finish filter
+    // Handle finish filter - OR within finishes
     if (finishes.length > 0) {
       where.finishes = {
         some: {
@@ -52,7 +52,7 @@ export async function GET(request: Request) {
       };
     }
 
-    // Handle color filter
+    // Handle color filter - OR within colors
     if (colors.length > 0) {
       where.colors = {
         some: {
@@ -65,7 +65,7 @@ export async function GET(request: Request) {
       };
     }
 
-    // Handle rating filter
+    // Handle rating filter - OR within ratings
     if (ratings.length > 0) {
       where.rating = {
         in: ratings

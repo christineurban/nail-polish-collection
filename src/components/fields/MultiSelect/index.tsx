@@ -51,11 +51,15 @@ export const MultiSelect = ({
     };
   }, []);
 
-  const handleButtonClick = () => {
+  const handleButtonClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
     setIsOpen(!isOpen);
   };
 
-  const handleSelect = (option: string) => {
+  const handleSelect = (option: string, e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
     const newValues = values.includes(option)
       ? values.filter(v => v !== option)
       : [...values, option];
@@ -88,7 +92,10 @@ export const MultiSelect = ({
       <input
         type="checkbox"
         checked={values.includes(option)}
-        onChange={() => handleSelect(option)}
+        onChange={(e) => {
+          e.stopPropagation();
+          handleSelect(option, e as unknown as React.MouseEvent);
+        }}
       />
       {option}
     </StyledOption>

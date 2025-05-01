@@ -49,7 +49,7 @@ export default async function EditPage({ params, searchParams }: EditPageProps) 
       <PageHeader
         title={`Edit ${polish.brands.name} - ${polish.name}`}
       />
-      <AddEditForm initialData={transformedPolish} />
+      <AddEditForm initialData={transformedPolish} isEditing={true} />
     </>
   );
 }
