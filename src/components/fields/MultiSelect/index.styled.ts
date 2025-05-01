@@ -1,12 +1,9 @@
 'use client';
 
 import styled from 'styled-components';
-import { theme } from '@/lib/theme';
-import { formStyles } from '@/theme/form';
 import {
   fieldStyles,
-  dropdownStyles,
-  chevronIconStyles
+  chevronIconStyles,
 } from '../index.styled';
 
 export const StyledButton = styled.button<{ $isOpen: boolean }>`
@@ -29,11 +26,6 @@ export const StyledButton = styled.button<{ $isOpen: boolean }>`
     top: 50%;
     transform: translateY(-50%);
   }
-`;
-
-export const StyledDropdown = styled.div<{ $isOpen: boolean }>`
-  ${dropdownStyles}
-  margin-top: 4px;
 `;
 
 export const StyledOption = styled.label`

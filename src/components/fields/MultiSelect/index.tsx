@@ -4,10 +4,10 @@ import { useRef, useState, useEffect } from 'react';
 import { StyledContainer } from '../index.styled';
 import {
   StyledButton,
-  StyledDropdown,
   StyledOption,
   StyledTag,
 } from './index.styled';
+import { StyledDropdown } from '../index.styled';
 
 interface MultiSelectProps {
   values: string[];

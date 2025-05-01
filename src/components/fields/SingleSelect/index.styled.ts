@@ -1,12 +1,10 @@
 'use client';
 
 import styled from 'styled-components';
-import { theme } from '@/lib/theme';
 import { formStyles } from '@/theme/form';
 import {
   fieldStyles,
-  dropdownStyles,
-  chevronIconStyles
+  chevronIconStyles,
 } from '../index.styled';
 
 export const StyledButton = styled.button<{ $isOpen: boolean }>`
@@ -18,10 +16,6 @@ export const StyledButton = styled.button<{ $isOpen: boolean }>`
   justify-content: space-between;
   align-items: center;
   height: ${formStyles.height};
-`;
-
-export const StyledDropdown = styled.div<{ $isOpen: boolean }>`
-  ${dropdownStyles}
 `;
 
 export const StyledOption = styled.button<{ $isSelected: boolean }>`

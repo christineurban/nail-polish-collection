@@ -66,22 +66,6 @@ export const fieldStyles = css`
   }
 `;
 
-// Dropdown styles
-export const dropdownStyles = css<{ $isOpen: boolean }>`
-  position: absolute;
-  background: ${({ theme }) => theme.colors.background.primary};
-  border: 2px solid ${({ theme }) => theme.colors.border.medium};
-  border-radius: ${({ theme }) => theme.borderRadius.lg};
-  box-shadow: ${({ theme }) => theme.shadows.lg};
-  max-height: ${({ $isOpen }) => ($isOpen ? '200px' : '0')};
-  visibility: ${({ $isOpen }) => ($isOpen ? 'visible' : 'hidden')};
-  opacity: ${({ $isOpen }) => ($isOpen ? '1' : '0')};
-  overflow-y: ${({ $isOpen }) => ($isOpen ? 'auto' : 'hidden')};
-  transition: all 0.2s ease;
-  z-index: 10;
-  width: 100%;
-`;
-
 // Chevron icon styles
 export const chevronIconStyles = css<{ $isOpen: boolean }>`
   &:after {
@@ -95,4 +79,20 @@ export const chevronIconStyles = css<{ $isOpen: boolean }>`
     transition: transform 0.2s ease;
     transform: ${({ $isOpen }) => $isOpen ? 'rotate(180deg)' : 'rotate(0)'};
   }
+`;
+
+export const StyledDropdown = styled.div<{ $isOpen: boolean }>`
+    position: absolute;
+    background: ${({ theme }) => theme.colors.background.primary};
+    border: 2px solid ${({ theme }) => theme.colors.border.medium};
+    border-radius: ${({ theme }) => theme.borderRadius.lg};
+    box-shadow: ${({ theme }) => theme.shadows.lg};
+    max-height: ${({ $isOpen }) => ($isOpen ? '200px' : '0')};
+    visibility: ${({ $isOpen }) => ($isOpen ? 'visible' : 'hidden')};
+    opacity: ${({ $isOpen }) => ($isOpen ? '1' : '0')};
+    overflow-y: ${({ $isOpen }) => ($isOpen ? 'auto' : 'hidden')};
+    transition: all 0.2s ease;
+    z-index: 10;
+    width: 100%;
+    margin-top: 4px;
 `;
