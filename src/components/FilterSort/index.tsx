@@ -59,9 +59,14 @@ export const FilterSort = ({ brands, finishes, colors, currentFilters }: FilterS
 
     Object.entries(newFilters).forEach(([key, value]) => {
       if (Array.isArray(value)) {
-        if (value.length > 0) {
-          params.set(key, value.join(','));
-        }
+        // Clear any existing values for this key
+        params.delete(key);
+        // Add each value as a separate parameter
+        value.forEach(v => {
+          if (v) {
+            params.append(key, v);
+          }
+        });
       } else if (value) {
         params.set(key, value);
       }
