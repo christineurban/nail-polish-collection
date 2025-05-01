@@ -61,19 +61,18 @@ export const fieldStyles = css`
 
 // Dropdown styles
 export const dropdownStyles = css<{ $isOpen: boolean }>`
-  position: absolute;
-  top: calc(100% + 0.5rem);
-  left: 0;
-  right: 0;
+  position: fixed;
   background: ${({ theme }) => theme.colors.background.primary};
   border: 2px solid ${({ theme }) => theme.colors.border.medium};
   border-radius: ${({ theme }) => theme.borderRadius.lg};
   box-shadow: ${({ theme }) => theme.shadows.lg};
   max-height: ${({ $isOpen }) => ($isOpen ? '200px' : '0')};
+  visibility: ${({ $isOpen }) => ($isOpen ? 'visible' : 'hidden')};
   opacity: ${({ $isOpen }) => ($isOpen ? '1' : '0')};
   overflow-y: ${({ $isOpen }) => ($isOpen ? 'auto' : 'hidden')};
   transition: all 0.2s ease;
-  z-index: 10;
+  z-index: 1000;
+  width: 100%;
 
   &::-webkit-scrollbar {
     width: 8px;

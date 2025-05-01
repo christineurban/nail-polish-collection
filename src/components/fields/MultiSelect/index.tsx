@@ -28,6 +28,8 @@ export const MultiSelect = ({
 }: MultiSelectProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [dropdownPosition, setDropdownPosition] = useState<{ top: number; left: number; width: number } | null>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -49,6 +51,22 @@ export const MultiSelect = ({
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
+
+  const updateDropdownPosition = () => {
+    if (buttonRef.current) {
+      const rect = buttonRef.current.getBoundingClientRect();
+      setDropdownPosition({
+        top: rect.bottom + window.scrollY + 8,
+        left: rect.left + window.scrollX,
+        width: rect.width,
+      });
+    }
+  };
+
+  const handleButtonClick = () => {
+    updateDropdownPosition();
+    setIsOpen(!isOpen);
+  };
 
   const handleSelect = (option: string) => {
     const newValues = values.includes(option)
@@ -92,8 +110,9 @@ export const MultiSelect = ({
   return (
     <StyledContainer ref={containerRef}>
       <StyledButton
+        ref={buttonRef}
         type="button"
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={handleButtonClick}
         $isOpen={isOpen}
       >
         {values.length > 0 ? (
@@ -102,11 +121,21 @@ export const MultiSelect = ({
           placeholder
         )}
       </StyledButton>
-      <StyledDropdown $isOpen={isOpen}>
-        {options.map(option => (
-          renderOption ? renderOption(option) : renderDefaultOption(option)
-        ))}
-      </StyledDropdown>
+      {dropdownPosition && (
+        <StyledDropdown
+          $isOpen={isOpen}
+          style={{
+            top: `${dropdownPosition.top}px`,
+            left: `${dropdownPosition.left}px`,
+            width: `${dropdownPosition.width}px`,
+            transform: `translateY(${isOpen ? '0' : '-8px'})`,
+          }}
+        >
+          {options.map(option => (
+            renderOption ? renderOption(option) : renderDefaultOption(option)
+          ))}
+        </StyledDropdown>
+      )}
     </StyledContainer>
   );
 };

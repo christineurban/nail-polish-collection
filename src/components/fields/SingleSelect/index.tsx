@@ -15,6 +15,8 @@ interface SingleSelectProps {
 
 export const SingleSelect = ({ value, options, placeholder = 'Select...', onChange }: SingleSelectProps) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [dropdownPosition, setDropdownPosition] = useState<{ top: number; left: number; width: number } | null>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -33,6 +35,22 @@ export const SingleSelect = ({ value, options, placeholder = 'Select...', onChan
     };
   }, []);
 
+  const updateDropdownPosition = () => {
+    if (buttonRef.current) {
+      const rect = buttonRef.current.getBoundingClientRect();
+      setDropdownPosition({
+        top: rect.bottom + window.scrollY + 8,
+        left: rect.left + window.scrollX,
+        width: rect.width,
+      });
+    }
+  };
+
+  const handleButtonClick = () => {
+    updateDropdownPosition();
+    setIsOpen(!isOpen);
+  };
+
   const handleSelect = (option: string) => {
     onChange(option);
     setIsOpen(false);
@@ -41,23 +59,34 @@ export const SingleSelect = ({ value, options, placeholder = 'Select...', onChan
   return (
     <StyledContainer ref={containerRef}>
       <StyledButton
+        ref={buttonRef}
         type="button"
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={handleButtonClick}
         $isOpen={isOpen}
       >
         {value || placeholder}
       </StyledButton>
-      <StyledDropdown $isOpen={isOpen}>
-        {options.map(option => (
-          <StyledOption
-            key={option}
-            $isSelected={value === option}
-            onClick={() => handleSelect(option)}
-          >
-            {option}
-          </StyledOption>
-        ))}
-      </StyledDropdown>
+      {dropdownPosition && (
+        <StyledDropdown
+          $isOpen={isOpen}
+          style={{
+            top: `${dropdownPosition.top}px`,
+            left: `${dropdownPosition.left}px`,
+            width: `${dropdownPosition.width}px`,
+            transform: `translateY(${isOpen ? '0' : '-8px'})`,
+          }}
+        >
+          {options.map(option => (
+            <StyledOption
+              key={option}
+              $isSelected={value === option}
+              onClick={() => handleSelect(option)}
+            >
+              {option}
+            </StyledOption>
+          ))}
+        </StyledDropdown>
+      )}
     </StyledContainer>
   );
 };
