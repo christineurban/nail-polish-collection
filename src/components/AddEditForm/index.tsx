@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '../Button';
 import { SingleSelect } from '../fields/SingleSelect';
 import { MultiSelect } from '../fields/MultiSelect';
@@ -14,6 +15,8 @@ import {
   StyledButtonGroup,
   StyledFormSection,
   StyledFormRow,
+  StyledSuccessOverlay,
+  StyledSuccessMessage
 } from './index.styled';
 
 interface AddEditFormData {
@@ -58,6 +61,7 @@ export const AddEditForm = ({
     }
   );
   const [isLoading, setIsLoading] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -77,12 +81,15 @@ export const AddEditForm = ({
         throw new Error('Failed to save nail polish');
       }
 
-      if (isEditing) {
-        router.push(`/polish/${formData.id}`);
-      } else {
-        router.push('/');
-      }
-      router.refresh();
+      setIsSuccess(true);
+      setTimeout(() => {
+        if (isEditing) {
+          router.push(`/polish/${formData.id}`);
+        } else {
+          router.push('/');
+        }
+        router.refresh();
+      }, 1500);
     } catch (error) {
       console.error('Error saving nail polish:', error);
       alert('Failed to save nail polish. Please try again.');
@@ -92,150 +99,186 @@ export const AddEditForm = ({
   };
 
   return (
-    <StyledForm onSubmit={handleSubmit}>
-      <StyledFormSection>
-        <h3>Basic Information</h3>
-        <StyledFormRow>
+    <>
+      <StyledForm onSubmit={handleSubmit}>
+        <StyledFormSection>
+          <h3>Basic Information</h3>
+          <StyledFormRow>
+            <StyledFormGroup>
+              <label>Brand *</label>
+              <SingleSelect
+                value={formData.brand}
+                options={brands}
+                placeholder="Select brand"
+                onChange={(value) => setFormData((prev) => ({ ...prev, brand: value }))}
+              />
+            </StyledFormGroup>
+            <StyledFormGroup>
+              <label>Name *</label>
+              <Input
+                type="text"
+                value={formData.name}
+                onChange={(value) => setFormData((prev) => ({ ...prev, name: value }))}
+                required
+              />
+            </StyledFormGroup>
+          </StyledFormRow>
+        </StyledFormSection>
+
+        <StyledFormSection>
+          <h3>Appearance</h3>
+          <StyledFormRow>
+            <StyledFormGroup>
+              <label>Colors *</label>
+              <MultiSelect
+                values={formData.colors}
+                options={availableColors}
+                placeholder="Select colors"
+                onChange={(values) => setFormData((prev) => ({ ...prev, colors: values }))}
+              />
+            </StyledFormGroup>
+            <StyledFormGroup>
+              <label>Finishes *</label>
+              <MultiSelect
+                values={formData.finishes}
+                options={availableFinishes}
+                placeholder="Select finishes"
+                onChange={(values) => setFormData((prev) => ({ ...prev, finishes: values }))}
+              />
+            </StyledFormGroup>
+          </StyledFormRow>
+        </StyledFormSection>
+
+        <StyledFormSection>
+          <h3>Details</h3>
+          <StyledFormRow>
+            <StyledFormGroup>
+              <label>Rating</label>
+              <SingleSelect
+                value={formData.rating || ''}
+                options={RATING_OPTIONS}
+                placeholder="Select rating"
+                onChange={(value) => setFormData((prev) => ({ ...prev, rating: value as Rating || undefined }))}
+              />
+            </StyledFormGroup>
+            <StyledFormGroup>
+              <label>Coats Needed</label>
+              <Input
+                type="number"
+                value={formData.coats || ''}
+                onChange={(value) => setFormData((prev) => ({ ...prev, coats: parseInt(value) || undefined }))}
+                min="1"
+                max="5"
+              />
+            </StyledFormGroup>
+          </StyledFormRow>
+
+          <StyledFormRow>
+            <StyledFormGroup>
+              <label>Total Bottles</label>
+              <Input
+                type="number"
+                value={formData.totalBottles || ''}
+                onChange={(value) => setFormData((prev) => ({ ...prev, totalBottles: parseInt(value) || undefined }))}
+                min="0"
+              />
+            </StyledFormGroup>
+            <StyledFormGroup>
+              <label>Empty Bottles</label>
+              <Input
+                type="number"
+                value={formData.emptyBottles || ''}
+                onChange={(value) => setFormData((prev) => ({ ...prev, emptyBottles: parseInt(value) || undefined }))}
+                min="0"
+              />
+            </StyledFormGroup>
+          </StyledFormRow>
+
+          <StyledFormRow>
+            <StyledFormGroup>
+              <label>Last Used</label>
+              <Input
+                type="date"
+                value={formData.lastUsed ? new Date(formData.lastUsed).toISOString().split('T')[0] : ''}
+                onChange={(value) => setFormData((prev) => ({ ...prev, lastUsed: value ? new Date(value) : undefined }))}
+                required={false}
+              />
+            </StyledFormGroup>
+            <StyledFormGroup>
+              <label>Is older polish?</label>
+              <SingleSelect
+                value={formData.isOld === undefined ? '' : formData.isOld ? 'Yes' : 'No'}
+                options={['Yes', 'No']}
+                placeholder="Select answer"
+                onChange={(value) => setFormData((prev) => ({ ...prev, isOld: value === 'Yes' }))}
+              />
+            </StyledFormGroup>
+          </StyledFormRow>
+        </StyledFormSection>
+
+        <StyledFormSection>
+          <h3>Additional Information</h3>
           <StyledFormGroup>
-            <label>Brand *</label>
-            <SingleSelect
-              value={formData.brand}
-              options={brands}
-              placeholder="Select brand"
-              onChange={(value) => setFormData((prev) => ({ ...prev, brand: value }))}
-            />
-          </StyledFormGroup>
-          <StyledFormGroup>
-            <label>Name *</label>
+            <label>Link</label>
             <Input
-              type="text"
-              value={formData.name}
-              onChange={(value) => setFormData((prev) => ({ ...prev, name: value }))}
-              required
+              type="url"
+              value={formData.link || ''}
+              onChange={(value) => setFormData((prev) => ({ ...prev, link: value }))}
+              placeholder="https://example.com/polish"
             />
           </StyledFormGroup>
-        </StyledFormRow>
-      </StyledFormSection>
+          <StyledFormGroup>
+            <label>Notes</label>
+            <StyledTextarea
+              value={formData.notes || ''}
+              onChange={(e) => setFormData((prev) => ({ ...prev, notes: e.target.value }))}
+              rows={4}
+            />
+          </StyledFormGroup>
+        </StyledFormSection>
 
-      <StyledFormSection>
-        <h3>Appearance</h3>
-        <StyledFormRow>
-          <StyledFormGroup>
-            <label>Colors *</label>
-            <MultiSelect
-              values={formData.colors}
-              options={availableColors}
-              placeholder="Select colors"
-              onChange={(values) => setFormData((prev) => ({ ...prev, colors: values }))}
-            />
-          </StyledFormGroup>
-          <StyledFormGroup>
-            <label>Finishes *</label>
-            <MultiSelect
-              values={formData.finishes}
-              options={availableFinishes}
-              placeholder="Select finishes"
-              onChange={(values) => setFormData((prev) => ({ ...prev, finishes: values }))}
-            />
-          </StyledFormGroup>
-        </StyledFormRow>
-      </StyledFormSection>
-
-      <StyledFormSection>
-        <h3>Details</h3>
-        <StyledFormRow>
-          <StyledFormGroup>
-            <label>Rating</label>
-            <SingleSelect
-              value={formData.rating || ''}
-              options={RATING_OPTIONS}
-              placeholder="Select rating"
-              onChange={(value) => setFormData((prev) => ({ ...prev, rating: value as Rating || undefined }))}
-            />
-          </StyledFormGroup>
-          <StyledFormGroup>
-            <label>Coats Needed</label>
-            <Input
-              type="number"
-              value={formData.coats || ''}
-              onChange={(value) => setFormData((prev) => ({ ...prev, coats: parseInt(value) || undefined }))}
-              min="1"
-              max="5"
-            />
-          </StyledFormGroup>
-        </StyledFormRow>
-
-        <StyledFormRow>
-          <StyledFormGroup>
-            <label>Total Bottles</label>
-            <Input
-              type="number"
-              value={formData.totalBottles || ''}
-              onChange={(value) => setFormData((prev) => ({ ...prev, totalBottles: parseInt(value) || undefined }))}
-              min="0"
-            />
-          </StyledFormGroup>
-          <StyledFormGroup>
-            <label>Empty Bottles</label>
-            <Input
-              type="number"
-              value={formData.emptyBottles || ''}
-              onChange={(value) => setFormData((prev) => ({ ...prev, emptyBottles: parseInt(value) || undefined }))}
-              min="0"
-            />
-          </StyledFormGroup>
-        </StyledFormRow>
-
-        <StyledFormRow>
-          <StyledFormGroup>
-            <label>Last Used</label>
-            <Input
-              type="date"
-              value={formData.lastUsed ? new Date(formData.lastUsed).toISOString().split('T')[0] : ''}
-              onChange={(value) => setFormData((prev) => ({ ...prev, lastUsed: value ? new Date(value) : undefined }))}
-            />
-          </StyledFormGroup>
-          <StyledFormGroup>
-            <label>Is older polish?</label>
-            <SingleSelect
-              value={formData.isOld === undefined ? '' : formData.isOld ? 'Yes' : 'No'}
-              options={['Yes', 'No']}
-              placeholder="Select answer"
-              onChange={(value) => setFormData((prev) => ({ ...prev, isOld: value === 'Yes' }))}
-            />
-          </StyledFormGroup>
-        </StyledFormRow>
-      </StyledFormSection>
-
-      <StyledFormSection>
-        <h3>Additional Information</h3>
-        <StyledFormGroup>
-          <label>Link</label>
-          <Input
-            type="url"
-            value={formData.link || ''}
-            onChange={(value) => setFormData((prev) => ({ ...prev, link: value }))}
-            placeholder="https://example.com/polish"
-          />
-        </StyledFormGroup>
-        <StyledFormGroup>
-          <label>Notes</label>
-          <StyledTextarea
-            value={formData.notes || ''}
-            onChange={(e) => setFormData((prev) => ({ ...prev, notes: e.target.value }))}
-            rows={4}
-          />
-        </StyledFormGroup>
-      </StyledFormSection>
-
-      <StyledButtonGroup>
-        <Button onClick={() => router.back()} type="button" $variant="secondary" disabled={isLoading}>
-          Cancel
-        </Button>
-        <Button type="submit" disabled={isLoading}>
-          {isLoading ? 'Saving...' : isEditing ? 'Update Polish' : 'Add Polish'}
-        </Button>
-      </StyledButtonGroup>
-    </StyledForm>
+        <StyledButtonGroup>
+          <Button onClick={() => router.back()} type="button" $variant="secondary" disabled={isLoading}>
+            Cancel
+          </Button>
+          <Button type="submit" disabled={isLoading}>
+            {isLoading ? 'Saving...' : isEditing ? 'Update Polish' : 'Add Polish'}
+          </Button>
+        </StyledButtonGroup>
+      </StyledForm>
+      <AnimatePresence>
+        {isSuccess && (
+          <StyledSuccessOverlay
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <StyledSuccessMessage
+              as={motion.div}
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{
+                opacity: 1,
+                scale: 1
+              }}
+              exit={{
+                opacity: 0,
+                scale: 0.8,
+                transition: {
+                  duration: 0.5,
+                  ease: "easeOut"
+                }
+              }}
+              transition={{
+                duration: 0.3,
+                ease: "easeOut"
+              }}
+            >
+              Polish saved successfully!
+            </StyledSuccessMessage>
+          </StyledSuccessOverlay>
+        )}
+      </AnimatePresence>
+    </>
   );
 };
