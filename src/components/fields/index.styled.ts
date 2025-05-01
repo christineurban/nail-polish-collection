@@ -40,7 +40,6 @@ export const StyledFieldWrapper = styled.div`
 // Shared field styles
 export const fieldStyles = css`
   min-height: ${formStyles.height};
-  height: auto;
   padding: ${formStyles.padding};
   border: ${formStyles.border} ${({ theme }) => theme.colors.border.default};
   border-radius: ${formStyles.borderRadius};

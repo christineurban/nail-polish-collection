@@ -4,4 +4,4 @@ export const formStyles = {
   borderRadius: '0.5rem',
   fontSize: '1rem',
   border: '2px solid',
-} as const;
+};

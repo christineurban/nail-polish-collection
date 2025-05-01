@@ -2,6 +2,7 @@
 
 import styled from 'styled-components';
 import { theme } from '@/lib/theme';
+import { formStyles } from '@/theme/form';
 import {
   fieldStyles,
   dropdownStyles,
@@ -16,6 +17,7 @@ export const StyledButton = styled.button<{ $isOpen: boolean }>`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  height: ${formStyles.height};
 `;
 
 export const StyledDropdown = styled.div<{ $isOpen: boolean }>`

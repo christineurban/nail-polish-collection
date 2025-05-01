@@ -18,10 +18,10 @@ export const StyledButton = styled.button<{ $isOpen: boolean }>`
   justify-content: flex-start;
   align-items: center;
   flex-wrap: wrap;
-  gap: 0.25rem;
+  gap: 0.125rem;
   position: relative;
-  /* margin-top: -4px;
-    margin-bottom: -4px; */
+  padding: 0.5rem 1rem;
+  line-height: 1;
 
   &:after {
     position: absolute;
@@ -62,12 +62,12 @@ export const StyledTag = styled.span`
   display: inline-flex;
   align-items: center;
   gap: 0.25rem;
-  padding: 0.25rem 0.5rem;
+  padding: 0.125rem 0.5rem;
   background: ${({ theme }) => theme.colors.background.secondary};
   color: ${({ theme }) => theme.colors.text.primary};
   border-radius: ${({ theme }) => theme.borderRadius.md};
   font-size: ${({ theme }) => theme.typography.fontSize.sm};
-  margin: 0.125rem;
+  margin: 0.125rem 0.25rem;
 
   button {
     border: none;
