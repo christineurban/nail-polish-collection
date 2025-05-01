@@ -3,13 +3,10 @@
 import styled from 'styled-components';
 import { theme } from '@/lib/theme';
 import {
-  StyledContainer,
   fieldStyles,
   dropdownStyles,
   chevronIconStyles
 } from '../index.styled';
-
-export { StyledContainer };
 
 export const StyledButton = styled.button<{ $isOpen: boolean }>`
   ${fieldStyles}

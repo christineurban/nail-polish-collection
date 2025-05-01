@@ -5,7 +5,7 @@ import styled from 'styled-components';
 const StyledMain = styled.main`
   max-width: 1200px;
   margin: 0 auto;
-  padding: 4rem 2rem;
+  padding: 3.5rem 2rem;
   min-height: calc(100vh - 78px); /* Account for nav height */
 
   @media (max-width: 640px) {

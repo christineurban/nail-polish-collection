@@ -1,7 +1,8 @@
 'use client';
 
 import { InputHTMLAttributes, ChangeEvent } from 'react';
-import { StyledInput, StyledLabel, StyledFieldWrapper, StyledError } from './index.styled';
+import { StyledFieldWrapper, StyledLabel } from '../index.styled';
+import { StyledInput, StyledError } from './index.styled';
 
 interface InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'onChange'> {
   label?: string;

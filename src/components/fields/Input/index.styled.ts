@@ -2,9 +2,7 @@
 
 import styled from 'styled-components';
 import { theme } from '@/lib/theme';
-import { StyledFieldWrapper, StyledLabel, fieldStyles } from '../index.styled';
-
-export { StyledFieldWrapper, StyledLabel };
+import { fieldStyles } from '../index.styled';
 
 export const StyledInput = styled.input`
   padding: 0.875rem 1rem;

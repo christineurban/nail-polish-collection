@@ -1,8 +1,8 @@
 'use client';
 
 import { useRef, useState, useEffect } from 'react';
+import { StyledContainer } from '../index.styled';
 import {
-  StyledContainer,
   StyledButton,
   StyledDropdown,
   StyledOption,
