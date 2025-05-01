@@ -32,8 +32,10 @@ import {
   StyledImageActions,
   StyledFormContainer,
   StyledHeader,
-  StyledDetailsContent
+  StyledDetailsContent,
+  StyledDisabledMessage
 } from './index.styled';
+import { useRouter } from 'next/navigation';
 
 interface Polish {
   id: string;
@@ -73,6 +75,8 @@ export const NailPolishDetails = ({ polish, brands, availableColors, availableFi
   const finishDropdownRef = useRef<HTMLDivElement>(null);
   const ratingDropdownRef = useRef<HTMLDivElement>(null);
   const isOldDropdownRef = useRef<HTMLDivElement>(null);
+
+  const router = useRouter();
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -457,20 +461,46 @@ export const NailPolishDetails = ({ polish, brands, availableColors, availableFi
 
   const renderViewMode = () => (
     <StyledContainer>
-      <StyledHeader>
-        <h1>{polish.name}</h1>
-        <StyledButton onClick={() => setIsEditing(true)}>Edit Polish</StyledButton>
-      </StyledHeader>
-
+      <PageHeader
+        title={`${polish.brand} - ${polish.name}`}
+      />
       <StyledDetails>
-        <StyledImageContainer>
-          {polish.imageUrl ? (
-            <img src={polish.imageUrl} alt={polish.name} />
-          ) : (
-            <p>No image available</p>
-          )}
-        </StyledImageContainer>
-
+        <div>
+          <StyledImageContainer>
+            {polish.imageUrl ? (
+              <Image
+                src={polish.imageUrl}
+                alt={`${polish.brand} ${polish.name}`}
+                fill
+                priority
+              />
+            ) : (
+              <p>No image available</p>
+            )}
+          </StyledImageContainer>
+          <StyledImageActions>
+            <Button
+              onClick={() => router.push(`/polish/${polish.id}/select-image`)}
+              disabled={!polish.link}
+            >
+              Add Image
+            </Button>
+            {!polish.link && (
+              <StyledDisabledMessage>
+                To add an image, you need to add a source link to a website that has images of the polish first. Edit the polish details to add a link.
+              </StyledDisabledMessage>
+            )}
+            {polish.imageUrl && (
+              <Button
+                onClick={handleRemoveImage}
+                disabled={isRemovingImage}
+                $variant="danger"
+              >
+                Remove Image
+              </Button>
+            )}
+          </StyledImageActions>
+        </div>
         <StyledDetailsContent>
           <h2>Details</h2>
           <p>

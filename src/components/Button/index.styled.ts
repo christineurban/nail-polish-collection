@@ -2,9 +2,10 @@
 
 import styled from 'styled-components';
 import { formStyles } from '@/theme/form';
+import { Theme } from '@/theme/types';
 
 interface StyledButtonProps {
-  $variant?: 'danger';
+  $variant?: 'danger' | 'secondary';
   $fullWidth?: boolean;
 }
 
@@ -44,6 +45,14 @@ export const StyledButton = styled.button<StyledButtonProps>`
     background: #dc3545;
     &:hover {
       background: #c82333;
+    }
+  `}
+
+  ${props => props.$variant === 'secondary' && `
+    background: ${({ theme }: { theme: Theme }) => theme.colors.gray[200]};
+    color: ${({ theme }: { theme: Theme }) => theme.colors.gray[700]};
+    &:hover {
+      background: ${({ theme }: { theme: Theme }) => theme.colors.gray[300]};
     }
   `}
 `;

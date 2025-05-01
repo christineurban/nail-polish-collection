@@ -232,7 +232,7 @@ export const AddEditForm = ({
       </StyledFormSection>
 
       <StyledButtonGroup>
-        <Button type="button" onClick={() => router.back()} disabled={isLoading}>
+        <Button onClick={() => router.back()} type="button" $variant="secondary" disabled={isLoading}>
           Cancel
         </Button>
         <Button type="submit" disabled={isLoading}>

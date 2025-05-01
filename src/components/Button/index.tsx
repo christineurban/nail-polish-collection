@@ -4,7 +4,7 @@ import { ButtonHTMLAttributes } from 'react';
 import { StyledButton } from './index.styled';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  $variant?: 'danger';
+  $variant?: 'danger' | 'secondary';
   $fullWidth?: boolean;
 }
 
