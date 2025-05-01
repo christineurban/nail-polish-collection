@@ -5,20 +5,81 @@ export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const hasImage = searchParams.get('hasImage');
   const search = searchParams.get('search');
+  const brands = searchParams.getAll('brand');
+  const finishes = searchParams.getAll('finish');
+  const colors = searchParams.getAll('color');
+  const ratings = searchParams.getAll('rating');
+  const isOld = searchParams.get('isOld');
   const page = parseInt(searchParams.get('page') || '1');
   const limit = parseInt(searchParams.get('limit') || '45');
   const skip = (page - 1) * limit;
 
   try {
+    const where: any = {};
+
+    // Handle hasImage filter
+    if (hasImage === 'false') {
+      where.image_url = null;
+    }
+
+    // Handle search filter
+    if (search) {
+      where.OR = [
+        { name: { contains: search, mode: 'insensitive' } },
+        { brands: { name: { contains: search, mode: 'insensitive' } } }
+      ];
+    }
+
+    // Handle brand filter
+    if (brands.length > 0) {
+      where.brands = {
+        name: {
+          in: brands
+        }
+      };
+    }
+
+    // Handle finish filter
+    if (finishes.length > 0) {
+      where.finishes = {
+        some: {
+          finish: {
+            name: {
+              in: finishes
+            }
+          }
+        }
+      };
+    }
+
+    // Handle color filter
+    if (colors.length > 0) {
+      where.colors = {
+        some: {
+          color: {
+            name: {
+              in: colors
+            }
+          }
+        }
+      };
+    }
+
+    // Handle rating filter
+    if (ratings.length > 0) {
+      where.rating = {
+        in: ratings
+      };
+    }
+
+    // Handle isOld filter
+    if (isOld === 'true') {
+      where.is_old = true;
+    }
+
     const [polishes, total] = await Promise.all([
       prisma.nail_polish.findMany({
-        where: {
-          image_url: hasImage === 'false' ? null : undefined,
-          OR: search ? [
-            { name: { contains: search, mode: 'insensitive' } },
-            { brands: { name: { contains: search, mode: 'insensitive' } } }
-          ] : undefined,
-        },
+        where,
         include: {
           brands: true,
           colors: {
@@ -40,13 +101,7 @@ export async function GET(request: Request) {
         take: limit
       }),
       prisma.nail_polish.count({
-        where: {
-          image_url: hasImage === 'false' ? null : undefined,
-          OR: search ? [
-            { name: { contains: search, mode: 'insensitive' } },
-            { brands: { name: { contains: search, mode: 'insensitive' } } }
-          ] : undefined,
-        }
+        where
       })
     ]);
 

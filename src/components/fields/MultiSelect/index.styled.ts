@@ -12,8 +12,6 @@ import {
 export const StyledButton = styled.button<{ $isOpen: boolean }>`
   ${fieldStyles}
   ${chevronIconStyles}
-  min-height: ${formStyles.height};
-  height: auto;
   text-align: left;
   cursor: pointer;
   display: flex;
@@ -21,8 +19,9 @@ export const StyledButton = styled.button<{ $isOpen: boolean }>`
   align-items: center;
   flex-wrap: wrap;
   gap: 0.25rem;
-  padding: 10px 16px;
   position: relative;
+  /* margin-top: -4px;
+    margin-bottom: -4px; */
 
   &:after {
     position: absolute;

@@ -235,27 +235,25 @@ export const FilterSort = ({ brands, finishes, colors, currentFilters }: FilterS
               </StyledColorOption>
             )}
             renderSelectedPreview={(values) => (
-              <StyledColorPreview>
-                {values.map(color => (
-                  <StyledTag key={color}>
-                    {color}
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        const newValues = values.filter(c => c !== color);
-                        const newFilters = {
-                          ...filters,
-                          color: newValues
-                        };
-                        setFilters(newFilters);
-                        updateUrl(newFilters);
-                      }}
-                    >
-                      &times;
-                    </button>
-                  </StyledTag>
-                ))}
-              </StyledColorPreview>
+              values.map(color => (
+                <StyledTag key={color}>
+                  {color}
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      const newValues = values.filter(c => c !== color);
+                      const newFilters = {
+                        ...filters,
+                        color: newValues
+                      };
+                      setFilters(newFilters);
+                      updateUrl(newFilters);
+                    }}
+                  >
+                    &times;
+                  </button>
+                </StyledTag>
+              ))
             )}
             onChange={(values) => {
               const newFilters = {

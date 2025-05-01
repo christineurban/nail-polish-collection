@@ -39,8 +39,7 @@ export const StyledFieldWrapper = styled.div`
 
 // Shared field styles
 export const fieldStyles = css`
-  --input-height: ${formStyles.height};
-  min-height: var(--input-height);
+  min-height: ${formStyles.height};
   height: auto;
   padding: ${formStyles.padding};
   border: ${formStyles.border} ${({ theme }) => theme.colors.border.default};
