@@ -133,3 +133,21 @@ export const StyledSuccessMessage = styled(motion.div)`
   max-width: 90vw;
   transform-origin: center;
 `;
+
+export const StyledContent = styled(motion.div)`
+  overflow: hidden;
+`;
+
+export const StyledCollapseText = styled.div`
+  color: ${({ theme }) => theme.colors.primary[600]};
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.primary[700]};
+    text-decoration: underline;
+  }
+`;

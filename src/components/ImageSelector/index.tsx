@@ -12,7 +12,8 @@ import {
   StyledLoadingOverlay,
   StyledSpinner,
   StyledSuccessMessage,
-  StyledSuccessOverlay
+  StyledSuccessOverlay,
+  StyledCollapseText
 } from './index.styled';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/Button';
@@ -38,6 +39,7 @@ export const ImageSelector = ({ polish, onImageSaved }: ImageSelectorProps) => {
   const [isRemoving, setIsRemoving] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
+  const [isCollapsed, setIsCollapsed] = useState(false);
 
   const handleImageSelect = (imageUrl: string) => {
     setSelectedImage(imageUrl);
@@ -143,6 +145,10 @@ export const ImageSelector = ({ polish, onImageSaved }: ImageSelectorProps) => {
     }
   };
 
+  const handleCollapse = () => {
+    setIsCollapsed(!isCollapsed);
+  };
+
   useEffect(() => {
     if (polish?.link) {
       fetchImages();
@@ -163,7 +169,12 @@ export const ImageSelector = ({ polish, onImageSaved }: ImageSelectorProps) => {
       >
         <StyledPolishCard>
           <StyledMetadata>
-            <h3>{polish.brand} - {polish.name}</h3>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <h3>{polish.brand} - {polish.name}</h3>
+              <StyledCollapseText onClick={handleCollapse}>
+                {isCollapsed ? 'Show Images' : 'Hide Images'}
+              </StyledCollapseText>
+            </div>
             {polish.link ? (
               <p>
                 Link: <a href={polish.link} target="_blank" rel="noopener noreferrer">
@@ -184,52 +195,56 @@ export const ImageSelector = ({ polish, onImageSaved }: ImageSelectorProps) => {
             {isSaving ? 'Saving...' : 'Save Image'}
           </Button>
 
-          {polish.imageUrl && (
-            <div style={{ marginBottom: '20px', textAlign: 'center' }}>
-              <h3>Current Image</h3>
-              <StyledImage
-                src={polish.imageUrl}
-                alt={`Current image for ${polish.brand} ${polish.name}`}
-                style={{ maxWidth: '300px', margin: '0 auto' }}
-              />
-            </div>
-          )}
-
-          {!polish.link ? (
-            <></>
-          ) : isLoading ? (
-            <StyledLoadingOverlay>
-              <StyledSpinner
-                as={motion.div}
-                animate={{ rotate: 360 }}
-                transition={{
-                  duration: 1,
-                  repeat: Infinity,
-                  ease: "linear"
-                }}
-              />
-              <p>Loading images...</p>
-            </StyledLoadingOverlay>
-          ) : images.length === 0 ? (
-            <StyledNoImages>No images found on the linked page</StyledNoImages>
-          ) : (
+          {!isCollapsed && (
             <>
-              <StyledImagesGrid>
-                {images.map((img, index) => (
-                  <StyledImageContainer key={index}>
-                    <StyledImage
-                      src={img}
-                      alt={`${polish.brand} ${polish.name} - Image ${index + 1}`}
-                      onError={(e) => {
-                        const target = e.target as HTMLImageElement;
-                        target.style.display = 'none';
-                      }}
-                      onClick={() => handleImageSelect(img)}
-                      $isSelected={selectedImage === img}
-                    />
-                  </StyledImageContainer>
-                ))}
-              </StyledImagesGrid>
+              {polish.imageUrl && (
+                <div style={{ marginBottom: '20px', textAlign: 'center' }}>
+                  <h3>Current Image</h3>
+                  <StyledImage
+                    src={polish.imageUrl}
+                    alt={`Current image for ${polish.brand} ${polish.name}`}
+                    style={{ maxWidth: '300px', margin: '0 auto' }}
+                  />
+                </div>
+              )}
+
+              {!polish.link ? (
+                <></>
+              ) : isLoading ? (
+                <StyledLoadingOverlay>
+                  <StyledSpinner
+                    as={motion.div}
+                    animate={{ rotate: 360 }}
+                    transition={{
+                      duration: 1,
+                      repeat: Infinity,
+                      ease: "linear"
+                    }}
+                  />
+                  <p>Loading images...</p>
+                </StyledLoadingOverlay>
+              ) : images.length === 0 ? (
+                <StyledNoImages>No images found on the linked page</StyledNoImages>
+              ) : (
+                <>
+                  <StyledImagesGrid>
+                    {images.map((img, index) => (
+                      <StyledImageContainer key={index}>
+                        <StyledImage
+                          src={img}
+                          alt={`${polish.brand} ${polish.name} - Image ${index + 1}`}
+                          onError={(e) => {
+                            const target = e.target as HTMLImageElement;
+                            target.style.display = 'none';
+                          }}
+                          onClick={() => handleImageSelect(img)}
+                          $isSelected={selectedImage === img}
+                        />
+                      </StyledImageContainer>
+                    ))}
+                  </StyledImagesGrid>
+                </>
+              )}
             </>
           )}
 
