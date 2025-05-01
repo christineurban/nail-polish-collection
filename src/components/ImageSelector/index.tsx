@@ -14,7 +14,7 @@ import {
   StyledSuccessMessage,
   StyledSuccessOverlay,
   StyledCollapseText,
-  StyledImageCount
+  StyledImageCount,
 } from './index.styled';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/Button';
@@ -177,12 +177,14 @@ export const ImageSelector = ({ polish, onImageSaved }: ImageSelectorProps) => {
               </StyledCollapseText>
             </div>
             {polish.link ? (
-              <p>
-                Link: <a href={polish.link} target="_blank" rel="noopener noreferrer">
-                  {polish.link}
-                </a>
-                <a href={`/polish/${polish.id}/edit?returnTo=/image-selection`} style={{ marginLeft: '20px' }}>Edit link</a>
-              </p>
+              <div>
+                <p>
+                  Link: <a href={polish.link} target="_blank" rel="noopener noreferrer">
+                    {polish.link}
+                  </a>
+                </p>
+                  <a href={`/polish/${polish.id}/edit?returnTo=/image-selection`}>Edit link</a>
+              </div>
             ) : (
               <p>No source link available. <a href={`/polish/${polish.id}/edit?returnTo=/image-selection`}>Add a link</a></p>
             )}

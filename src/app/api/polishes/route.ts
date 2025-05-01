@@ -6,16 +6,19 @@ const prisma = new PrismaClient();
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
-    const hasImage = searchParams.get('hasImage') === 'true';
+    const hasImage = searchParams.get('hasImage');
     const search = searchParams.get('search') || '';
     const brands = searchParams.getAll('brand');
     const page = parseInt(searchParams.get('page') || '1');
     const limit = parseInt(searchParams.get('limit') || '10');
 
     // Build the where clause
-    const where: any = {
-      image_url: hasImage ? { not: null } : null,
-    };
+    const where: any = {};
+
+    // Add image filter if provided
+    if (hasImage !== null) {
+      where.image_url = hasImage === 'true' ? { not: null } : null;
+    }
 
     // Add search filter if provided
     if (search) {
@@ -39,9 +42,7 @@ export async function GET(request: Request) {
         brands: true,
       },
       orderBy: [
-        // First sort by whether they have a link (ascending puts null first)
-        { link: 'asc' },
-        // Then by name
+        { brands: { name: 'asc' } },
         { name: 'asc' }
       ],
       skip: (page - 1) * limit,

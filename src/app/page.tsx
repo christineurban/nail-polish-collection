@@ -74,10 +74,18 @@ export default function Home() {
         if (currentFilters.search) params.set('search', currentFilters.search);
         if (currentFilters.hasImage) params.set('hasImage', currentFilters.hasImage);
         if (currentFilters.isOld) params.set('isOld', currentFilters.isOld);
-        currentFilters.brand.forEach(brand => params.append('brand', brand));
-        currentFilters.finish.forEach(finish => params.append('finish', finish));
-        currentFilters.color.forEach(color => params.append('color', color));
-        currentFilters.rating.forEach(rating => params.append('rating', rating));
+        if (currentFilters.brand.length > 0) {
+          currentFilters.brand.forEach(brand => params.append('brand', brand));
+        }
+        if (currentFilters.finish.length > 0) {
+          currentFilters.finish.forEach(finish => params.append('finish', finish));
+        }
+        if (currentFilters.color.length > 0) {
+          currentFilters.color.forEach(color => params.append('color', color));
+        }
+        if (currentFilters.rating.length > 0) {
+          currentFilters.rating.forEach(rating => params.append('rating', rating));
+        }
         params.set('page', currentFilters.page);
         params.set('limit', '45');
 
