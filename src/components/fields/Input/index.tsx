@@ -1,7 +1,7 @@
 'use client';
 
 import { InputHTMLAttributes, ChangeEvent } from 'react';
-import { StyledInput, StyledLabel, StyledFieldWrapper } from './index.styled';
+import { StyledInput, StyledLabel, StyledFieldWrapper, StyledError } from './index.styled';
 
 interface InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'onChange'> {
   label?: string;
@@ -17,7 +17,7 @@ export const Input = ({ label, error, onChange, ...props }: InputProps) => {
         {...props}
         onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e.target.value)}
       />
-      {error && <span className="error">{error}</span>}
+      {error && <StyledError>{error}</StyledError>}
     </StyledFieldWrapper>
   );
 };

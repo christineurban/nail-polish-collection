@@ -165,6 +165,60 @@ export const StyledDetails = styled.div`
   }
 `;
 
+export const StyledDetailsContent = styled.div`
+  background: ${({ theme }) => theme.colors.background.primary};
+  border-radius: ${({ theme }) => theme.borderRadius.xl};
+  padding: 2rem;
+  box-shadow: ${({ theme }) => theme.shadows.sm};
+  border: 1px solid ${({ theme }) => theme.colors.border.medium};
+
+  h2 {
+    font-size: ${({ theme }) => theme.typography.fontSize.xl};
+    color: ${({ theme }) => theme.colors.text.primary};
+    margin: 0 0 2rem 0;
+    font-weight: ${({ theme }) => theme.typography.fontWeights.semibold};
+    padding-bottom: 1rem;
+    border-bottom: 2px solid ${({ theme }) => theme.colors.border.dark};
+  }
+
+  p {
+    margin: 0;
+    padding: 1rem 0;
+    font-size: ${({ theme }) => theme.typography.fontSize.base};
+    line-height: 1.6;
+    color: ${({ theme }) => theme.colors.text.secondary};
+    display: flex;
+    align-items: baseline;
+    border-bottom: 1px solid ${({ theme }) => theme.colors.border.medium};
+
+    &:last-of-type {
+      border-bottom: none;
+    }
+
+    strong {
+      color: ${({ theme }) => theme.colors.text.primary};
+      margin-right: 1rem;
+      min-width: 140px;
+      font-weight: ${({ theme }) => theme.typography.fontWeights.medium};
+    }
+
+    a {
+      color: ${({ theme }) => theme.colors.primary[500]};
+      text-decoration: none;
+      transition: color ${({ theme }) => theme.transitions.base};
+      padding: 0.25rem 0.75rem;
+      border-radius: ${({ theme }) => theme.borderRadius.md};
+      background: ${({ theme }) => theme.colors.primary[50]};
+      font-weight: ${({ theme }) => theme.typography.fontWeights.medium};
+
+      &:hover {
+        color: ${({ theme }) => theme.colors.primary[600]};
+        background: ${({ theme }) => theme.colors.primary[100]};
+      }
+    }
+  }
+`;
+
 export const StyledEditForm = styled.div`
   width: 100%;
   display: flex;

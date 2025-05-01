@@ -31,6 +31,8 @@ import {
   StyledSingleOption,
   StyledImageActions,
   StyledFormContainer,
+  StyledHeader,
+  StyledDetailsContent
 } from './index.styled';
 
 interface Polish {
@@ -455,45 +457,21 @@ export const NailPolishDetails = ({ polish, brands, availableColors, availableFi
 
   const renderViewMode = () => (
     <StyledContainer>
-      <PageHeader
-        title={`${polish.brand} - ${polish.name}`}
-      />
-      <StyledDetails>
-        <div>
-          <StyledImageContainer>
-            {polish.imageUrl ? (
-              <Image
-                src={polish.imageUrl}
-                alt={`${polish.brand} ${polish.name}`}
-                width={300}
-                height={300}
-                priority
-              />
-            ) : (
-              <p>No image available</p>
-            )}
-          </StyledImageContainer>
-          <StyledImageActions>
-            <Button
-              onClick={() => window.location.href = `/polish/${polish.id}/select-image`}
-              $fullWidth
-            >
-              Choose Image
-            </Button>
-            {polish.imageUrl && (
-              <Button
-                $variant="danger"
-                onClick={handleRemoveImage}
-                disabled={isRemovingImage}
-                $fullWidth
-              >
-                {isRemovingImage ? 'Removing...' : 'Remove Image'}
-              </Button>
-            )}
-          </StyledImageActions>
-        </div>
+      <StyledHeader>
+        <h1>{polish.name}</h1>
+        <StyledButton onClick={() => setIsEditing(true)}>Edit Polish</StyledButton>
+      </StyledHeader>
 
-        <div className="details-content">
+      <StyledDetails>
+        <StyledImageContainer>
+          {polish.imageUrl ? (
+            <img src={polish.imageUrl} alt={polish.name} />
+          ) : (
+            <p>No image available</p>
+          )}
+        </StyledImageContainer>
+
+        <StyledDetailsContent>
           <h2>Details</h2>
           <p>
             <strong>Source</strong>
@@ -515,7 +493,7 @@ export const NailPolishDetails = ({ polish, brands, availableColors, availableFi
           <Button onClick={() => setIsEditing(true)} $fullWidth>
             Edit Polish
           </Button>
-        </div>
+        </StyledDetailsContent>
       </StyledDetails>
     </StyledContainer>
   );

@@ -4,6 +4,14 @@ import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { ImageSelector } from '@/components/ImageSelector';
 import { PageHeader } from '@/components/PageHeader';
+import Link from 'next/link';
+import {
+  StyledErrorContainer,
+  StyledErrorMessage,
+  StyledLink,
+  StyledLinkContainer,
+  StyledDivider
+} from './page.styled';
 
 interface Polish {
   id: string;
@@ -22,7 +30,7 @@ export default function SelectImagePage({ params }: { params: { id: string } }) 
   useEffect(() => {
     const fetchPolish = async () => {
       try {
-        const response = await fetch(`/api/polishes/${params.id}`);
+        const response = await fetch(`/api/polish/${params.id}`);
         if (!response.ok) throw new Error('Failed to fetch polish details');
         const data = await response.json();
         setPolish(data);
@@ -49,10 +57,37 @@ export default function SelectImagePage({ params }: { params: { id: string } }) 
 
   if (error || !polish) {
     return (
-      <PageHeader
-        title="Error"
-        description={error || 'Polish not found'}
-      />
+      <div>
+        <PageHeader
+          title="Error"
+          description={error || 'Polish not found'}
+        />
+        <StyledLink href="/">
+          Return to Home
+        </StyledLink>
+      </div>
+    );
+  }
+
+  if (!polish.link) {
+    return (
+      <div>
+        <PageHeader
+          title={`${polish.brand} ${polish.name}`}
+          description="No Link Available"
+        />
+        <StyledErrorMessage>To select images for this polish, you need to add a link to a blog post or review first.</StyledErrorMessage>
+        <StyledLinkContainer>
+          <div>{"You can either:"}</div>
+          <StyledLink href={`/polish/${params.id}/edit`}>
+            Go to Edit Page to add a link
+          </StyledLink>
+          <div>or</div>
+          <StyledLink href="/">
+            Return to Home
+          </StyledLink>
+        </StyledLinkContainer>
+      </div>
     );
   }
 
