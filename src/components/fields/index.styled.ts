@@ -82,24 +82,6 @@ export const dropdownStyles = css<{ $isOpen: boolean }>`
   transition: all 0.2s ease;
   z-index: 10;
   width: 100%;
-
-  &::-webkit-scrollbar {
-    width: 8px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background: ${({ theme }) => theme.colors.background.secondary};
-    border-radius: 8px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: ${({ theme }) => theme.colors.border.medium};
-    border-radius: 8px;
-
-    &:hover {
-      background: ${({ theme }) => theme.colors.border.dark};
-    }
-  }
 `;
 
 // Chevron icon styles

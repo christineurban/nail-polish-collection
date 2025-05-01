@@ -84,37 +84,11 @@ export const StyledLabel = styled.label`
   padding: 0.25rem 0;
 `;
 
-export const StyledColorChip = styled.div<{ color: string }>`
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  margin-right: 4px;
-  border: 1px solid #E2E8F0;
-  flex-shrink: 0;
-  ${({ color }) => {
-    const colorMapping = getColorMapping(color);
-    return colorMapping.isGradient
-      ? `background: ${colorMapping.background};`
-      : `background-color: ${colorMapping.background};`;
-  }}
-
-  @media (min-width: 768px) {
-    width: 20px;
-    height: 20px;
-  }
-`;
-
 export const StyledColorPreview = styled.div`
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  max-width: 120px;
-  gap: 4px;
-
-  @media (min-width: 768px) {
-    max-width: 100px;
-    gap: 2px;
-  }
+  gap: 0.25rem;
 `;
 
 export const StyledColorOption = styled.label<{ $colorName: string }>`

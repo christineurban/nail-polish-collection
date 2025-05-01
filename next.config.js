@@ -17,7 +17,12 @@ const nextConfig = {
     ],
   },
   compiler: {
-    styledComponents: true,
+    styledComponents: {
+      displayName: true,
+      ssr: true,
+      fileName: true,
+      meaninglessFileNames: ['index', 'index.styled'],
+    },
   },
   webpack: (config, { isServer }) => {
     // Add resolve alias for src directory

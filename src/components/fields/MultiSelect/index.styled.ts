@@ -21,7 +21,7 @@ export const StyledButton = styled.button<{ $isOpen: boolean }>`
   align-items: center;
   flex-wrap: wrap;
   gap: 0.25rem;
-  padding: ${formStyles.padding};
+  padding: 10px 16px;
   position: relative;
 
   &:after {
@@ -35,24 +35,6 @@ export const StyledButton = styled.button<{ $isOpen: boolean }>`
 export const StyledDropdown = styled.div<{ $isOpen: boolean }>`
   ${dropdownStyles}
   margin-top: 4px;
-
-  &::-webkit-scrollbar {
-    width: 8px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background: ${({ theme }) => theme.colors.background.secondary};
-    border-radius: 8px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: ${({ theme }) => theme.colors.border.medium};
-    border-radius: 8px;
-
-    &:hover {
-      background: ${({ theme }) => theme.colors.border.dark};
-    }
-  }
 `;
 
 export const StyledOption = styled.label`
@@ -82,8 +64,8 @@ export const StyledTag = styled.span`
   align-items: center;
   gap: 0.25rem;
   padding: 0.25rem 0.5rem;
-  background: ${({ theme }) => theme.colors.primary[50]};
-  color: ${({ theme }) => theme.colors.primary[700]};
+  background: ${({ theme }) => theme.colors.background.secondary};
+  color: ${({ theme }) => theme.colors.text.primary};
   border-radius: ${({ theme }) => theme.borderRadius.md};
   font-size: ${({ theme }) => theme.typography.fontSize.sm};
   margin: 0.125rem;

@@ -14,12 +14,12 @@ import {
   StyledFilterGroup,
   StyledFilterHeader,
   StyledLabel,
-  StyledColorChip,
   StyledColorPreview,
   StyledColorOption,
   StyledClearButton,
-  StyledOption
+  StyledOption,
 } from './index.styled';
+import { StyledTag } from '@/components/fields/MultiSelect/index.styled';
 
 interface FilterSortProps {
   brands: string[];
@@ -237,7 +237,23 @@ export const FilterSort = ({ brands, finishes, colors, currentFilters }: FilterS
             renderSelectedPreview={(values) => (
               <StyledColorPreview>
                 {values.map(color => (
-                  <StyledColorChip key={color} color={color.toLowerCase()} />
+                  <StyledTag key={color}>
+                    {color}
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        const newValues = values.filter(c => c !== color);
+                        const newFilters = {
+                          ...filters,
+                          color: newValues
+                        };
+                        setFilters(newFilters);
+                        updateUrl(newFilters);
+                      }}
+                    >
+                      &times;
+                    </button>
+                  </StyledTag>
                 ))}
               </StyledColorPreview>
             )}
@@ -286,9 +302,9 @@ export const FilterSort = ({ brands, finishes, colors, currentFilters }: FilterS
               </StyledOption>
             )}
             renderSelectedPreview={(values) => (
-              <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', padding: '0.25rem' }}>
+              <>
                 {values.map(rating => (
-                  <div key={rating} style={{ display: 'inline-flex', alignItems: 'center', background: '#EDF2F7', padding: '0.25rem 0.5rem', borderRadius: '0.375rem', fontSize: '0.875rem', color: '#4A5568' }}>
+                  <StyledTag key={rating}>
                     {formatRatingForDisplay(rating)}
                     <button
                       onClick={(e) => {
@@ -301,23 +317,12 @@ export const FilterSort = ({ brands, finishes, colors, currentFilters }: FilterS
                         setFilters(newFilters);
                         updateUrl(newFilters);
                       }}
-                      style={{
-                        border: 'none',
-                        background: 'none',
-                        padding: '0 0 0 0.25rem',
-                        fontSize: '1.25em',
-                        lineHeight: '1',
-                        cursor: 'pointer',
-                        opacity: '0.7',
-                        display: 'inline-flex',
-                        alignItems: 'center'
-                      }}
                     >
                       &times;
                     </button>
-                  </div>
+                  </StyledTag>
                 ))}
-              </div>
+              </>
             )}
             onChange={(values) => {
               const newFilters = {
