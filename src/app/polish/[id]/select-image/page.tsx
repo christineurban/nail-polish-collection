@@ -74,9 +74,12 @@ export default function SelectImagePage({ params }: { params: { id: string } }) 
       <div>
         <PageHeader
           title={`${polish.brand} ${polish.name}`}
-          description="No Link Available"
+          description="No source link available"
         />
-        <StyledErrorMessage>To select images for this polish, you need to add a link to a blog post or review first.</StyledErrorMessage>
+        <StyledErrorMessage>
+          {"To select images for this polish, you need to add a link to a "
+          + "website that has images of the polish first."}
+        </StyledErrorMessage>
         <StyledLinkContainer>
           <div>{"You can either:"}</div>
           <StyledLink href={`/polish/${params.id}/edit`}>

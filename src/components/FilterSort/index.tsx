@@ -352,7 +352,7 @@ export const FilterSort = ({ brands, finishes, colors, currentFilters }: FilterS
         </StyledFilterGroup>
 
         <StyledClearAllContainer>
-          <Button onClick={clearAllFilters} $variant="danger">
+          <Button onClick={clearAllFilters} $variant="danger" $fullWidth>
             Clear All Filters
           </Button>
         </StyledClearAllContainer>
