@@ -236,21 +236,6 @@ export const StyledEditForm = styled.div`
   box-shadow: ${({ theme }) => theme.shadows.lg};
 `;
 
-export const StyledFormSection = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-
-  h3 {
-    font-size: ${({ theme }) => theme.typography.fontSize.lg};
-    color: ${({ theme }) => theme.colors.text.primary};
-    font-weight: ${({ theme }) => theme.typography.fontWeights.semibold};
-    margin: 0;
-    padding-bottom: 0.5rem;
-    border-bottom: 2px solid ${({ theme }) => theme.colors.border.medium};
-  }
-`;
-
 export const StyledFormRow = styled.div`
   display: flex;
   gap: 2rem;
