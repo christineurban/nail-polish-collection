@@ -129,6 +129,11 @@ export const ImageSelector = ({ polish, onImageSaved }: ImageSelectorProps) => {
       if (!response.ok) throw new Error('Failed to fetch images');
 
       const data = await response.json();
+      console.log('Fetched images:', {
+        totalImages: data.images?.length,
+        debugInfo: data.debug,
+        images: data.images
+      });
       setImages(data.images || []);
     } catch (error) {
       console.error(`Error fetching images for ${polish.brand} - ${polish.name}:`, error);
@@ -164,10 +169,10 @@ export const ImageSelector = ({ polish, onImageSaved }: ImageSelectorProps) => {
                 Link: <a href={polish.link} target="_blank" rel="noopener noreferrer">
                   {polish.link}
                 </a>
-                <a href={`/polish/${polish.id}/edit`} style={{ marginLeft: '20px' }}>Edit link</a>
+                <a href={`/polish/${polish.id}/edit?returnTo=/image-selection`} style={{ marginLeft: '20px' }}>Edit link</a>
               </p>
             ) : (
-              <p>No source link available. <a href={`/polish/${polish.id}/edit`}>Add a link</a></p>
+              <p>No source link available. <a href={`/polish/${polish.id}/edit?returnTo=/image-selection`}>Add a link</a></p>
             )}
           </StyledMetadata>
 

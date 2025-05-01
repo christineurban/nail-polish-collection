@@ -1,28 +1,23 @@
+import { PrismaClient } from '@prisma/client';
 import { NextResponse } from 'next/server';
-import { prisma } from '@/lib/prisma';
+
+const prisma = new PrismaClient();
 
 export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url);
-  const hasImage = searchParams.get('hasImage');
-  const search = searchParams.get('search');
-  const brands = searchParams.getAll('brand');
-  const finishes = searchParams.getAll('finish');
-  const colors = searchParams.getAll('color');
-  const ratings = searchParams.getAll('rating');
-  const isOld = searchParams.get('isOld');
-  const page = parseInt(searchParams.get('page') || '1');
-  const limit = parseInt(searchParams.get('limit') || '45');
-  const skip = (page - 1) * limit;
-
   try {
-    const where: any = {};
+    const { searchParams } = new URL(request.url);
+    const hasImage = searchParams.get('hasImage') === 'true';
+    const search = searchParams.get('search') || '';
+    const brands = searchParams.getAll('brand');
+    const page = parseInt(searchParams.get('page') || '1');
+    const limit = parseInt(searchParams.get('limit') || '10');
 
-    // Handle hasImage filter
-    if (hasImage === 'false') {
-      where.image_url = null;
-    }
+    // Build the where clause
+    const where: any = {
+      image_url: hasImage ? { not: null } : null,
+    };
 
-    // Handle search filter
+    // Add search filter if provided
     if (search) {
       where.OR = [
         { name: { contains: search, mode: 'insensitive' } },
@@ -30,97 +25,47 @@ export async function GET(request: Request) {
       ];
     }
 
-    // Handle brand filter
+    // Add brand filter if provided
     if (brands.length > 0) {
       where.brands = {
-        name: {
-          in: brands
-        }
+        name: { in: brands }
       };
     }
 
-    // Handle finish filter - OR within finishes
-    if (finishes.length > 0) {
-      where.finishes = {
-        some: {
-          finish: {
-            name: {
-              in: finishes
-            }
-          }
-        }
-      };
-    }
+    // First, get all polishes that match the filters
+    const polishes = await prisma.nail_polish.findMany({
+      where,
+      include: {
+        brands: true,
+      },
+      orderBy: [
+        // First sort by whether they have a link (ascending puts null first)
+        { link: 'asc' },
+        // Then by name
+        { name: 'asc' }
+      ],
+      skip: (page - 1) * limit,
+      take: limit,
+    });
 
-    // Handle color filter - OR within colors
-    if (colors.length > 0) {
-      where.colors = {
-        some: {
-          color: {
-            name: {
-              in: colors
-            }
-          }
-        }
-      };
-    }
+    // Get total count for pagination
+    const total = await prisma.nail_polish.count({
+      where,
+    });
 
-    // Handle rating filter - OR within ratings
-    if (ratings.length > 0) {
-      where.rating = {
-        in: ratings
-      };
-    }
-
-    // Handle isOld filter
-    if (isOld === 'true') {
-      where.is_old = true;
-    }
-
-    const [polishes, total] = await Promise.all([
-      prisma.nail_polish.findMany({
-        where,
-        include: {
-          brands: true,
-          colors: {
-            include: {
-              color: true
-            }
-          },
-          finishes: {
-            include: {
-              finish: true
-            }
-          }
-        },
-        orderBy: [
-          { brands: { name: 'asc' } },
-          { name: 'asc' }
-        ],
-        skip,
-        take: limit
-      }),
-      prisma.nail_polish.count({
-        where
-      })
-    ]);
-
-    const transformedPolishes = polishes.map(polish => ({
-      id: polish.id,
-      brand: polish.brands.name,
-      name: polish.name,
-      imageUrl: polish.image_url,
-      colors: polish.colors.map(c => c.color.name),
-      finishes: polish.finishes.map(f => f.finish.name),
-      rating: polish.rating,
-      link: polish.link
-    }));
+    const totalPages = Math.ceil(total / limit);
 
     return NextResponse.json({
-      polishes: transformedPolishes,
+      polishes: polishes.map(polish => ({
+        id: polish.id,
+        name: polish.name,
+        link: polish.link,
+        imageUrl: polish.image_url,
+        brand: polish.brands.name,
+      })),
       total,
       page,
-      totalPages: Math.ceil(total / limit)
+      totalPages,
     });
   } catch (error) {
     console.error('Error fetching polishes:', error);

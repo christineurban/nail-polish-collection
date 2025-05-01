@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '../Button';
 import { SingleSelect } from '../fields/SingleSelect';
@@ -52,6 +52,8 @@ export const AddEditForm = ({
   availableFinishes = []
 }: AddEditFormProps) => {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const returnTo = searchParams.get('returnTo');
   const [formData, setFormData] = useState<AddEditFormData>(
     initialData || {
       brand: '',
@@ -84,7 +86,7 @@ export const AddEditForm = ({
       setIsSuccess(true);
       setTimeout(() => {
         if (isEditing) {
-          router.push(`/polish/${formData.id}`);
+          router.push(returnTo || `/polish/${formData.id}`);
         } else {
           router.push('/');
         }

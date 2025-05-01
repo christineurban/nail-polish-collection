@@ -34,33 +34,36 @@ export default function ImageSelectionPage() {
   const [totalPages, setTotalPages] = useState(1);
   const [totalItems, setTotalItems] = useState(0);
 
-  useEffect(() => {
-    const fetchPolishes = async () => {
-      try {
-        const response = await fetch(`/api/polishes?hasImage=false&page=${currentPage}&limit=10`);
-        if (!response.ok) throw new Error('Failed to fetch polish details');
-        const data: PaginatedResponse = await response.json();
-        setPolishes(data.polishes);
-        setTotalPages(data.totalPages);
-        setTotalItems(data.total);
-      } catch (error) {
-        console.error('Error fetching polishes:', error);
-        setError(error instanceof Error ? error.message : 'An error occurred');
-      } finally {
-        setIsLoading(false);
-      }
-    };
+  const fetchPolishes = async () => {
+    try {
+      const response = await fetch(`/api/polishes?hasImage=false&page=${currentPage}&limit=10`);
+      if (!response.ok) throw new Error('Failed to fetch polish details');
+      const data: PaginatedResponse = await response.json();
+      setPolishes(data.polishes);
+      setTotalPages(data.totalPages);
+      setTotalItems(data.total);
+    } catch (error) {
+      console.error('Error fetching polishes:', error);
+      setError(error instanceof Error ? error.message : 'An error occurred');
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
+  useEffect(() => {
     fetchPolishes();
   }, [currentPage]);
 
-  const handleImageSaved = (id: string) => {
+  const handleImageSaved = async (id: string) => {
     // Remove the saved polish from the current page
     setPolishes(prevPolishes => prevPolishes.filter(p => p.id !== id));
 
     // If this was the last polish on the page and not the first page, go to previous page
     if (polishes.length === 1 && currentPage > 1) {
       setCurrentPage(prev => prev - 1);
+    } else {
+      // Refetch the data to get the updated list
+      await fetchPolishes();
     }
   };
 
@@ -107,7 +110,7 @@ export default function ImageSelectionPage() {
       ))}
       <StyledPagination>
         <StyledPaginationInfo>
-          Showing {polishes.length} of {totalItems} polishes
+          Showing {((currentPage - 1) * 10) + 1} to {Math.min(currentPage * 10, totalItems)} of {totalItems} polishes
         </StyledPaginationInfo>
         <div>
           <StyledPaginationButton
