@@ -43,9 +43,6 @@ export default async function Page({ params }: PageProps) {
   return (
     <NailPolishDetails
       polish={transformedPolish}
-      brands={brands.map((b: { name: string }) => b.name)}
-      availableColors={colors.map((c: { name: string }) => c.name)}
-      availableFinishes={finishes.map((f: { name: string }) => f.name)}
     />
   );
 }

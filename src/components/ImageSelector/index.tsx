@@ -13,7 +13,8 @@ import {
   StyledSpinner,
   StyledSuccessMessage,
   StyledSuccessOverlay,
-  StyledCollapseText
+  StyledCollapseText,
+  StyledImageCount
 } from './index.styled';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/Button';
@@ -187,13 +188,19 @@ export const ImageSelector = ({ polish, onImageSaved }: ImageSelectorProps) => {
             )}
           </StyledMetadata>
 
-          <Button
-            onClick={handleSaveImage}
-            disabled={!selectedImage || isSaving}
-            style={{ position: 'absolute', top: '20px', right: '20px', zIndex: 5 }}
-          >
-            {isSaving ? 'Saving...' : 'Save Image'}
-          </Button>
+          <div style={{ position: 'absolute', top: '20px', right: '20px', zIndex: 5, display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '8px' }}>
+            <Button
+              onClick={handleSaveImage}
+              disabled={!selectedImage || isSaving}
+            >
+              {isSaving ? 'Saving...' : 'Save Image'}
+            </Button>
+            {!isLoading && images.length > 0 && (
+              <StyledImageCount>
+                {images.length} image{images.length !== 1 ? 's' : ''} found
+              </StyledImageCount>
+            )}
+          </div>
 
           {!isCollapsed && (
             <>

@@ -14,7 +14,7 @@ import {
   StyledDetailsContent,
   StyledDisabledMessage
 } from './index.styled';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 interface Polish {
   id: string;
@@ -40,6 +40,8 @@ interface NailPolishDetailsProps {
 export const NailPolishDetails = ({ polish }: NailPolishDetailsProps) => {
   const [isRemovingImage, setIsRemovingImage] = useState(false);
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const returnTo = searchParams.get('returnTo');
 
   const formatRating = (rating: Rating | null): string => {
     if (!rating) return 'Not Rated';
@@ -133,7 +135,7 @@ export const NailPolishDetails = ({ polish }: NailPolishDetailsProps) => {
           <p><strong>Is Old</strong>{polish.isOld === null ? '-' : polish.isOld ? 'Yes' : 'No'}</p>
           <p><strong>Last Used</strong>{polish.lastUsed ? new Date(polish.lastUsed).toLocaleDateString() : '-'}</p>
           <p><strong>Notes</strong>{polish.notes || '-'}</p>
-          <Button onClick={() => router.push(`/polish/${polish.id}/edit`)} $fullWidth>
+          <Button onClick={() => router.push(`/polish/${polish.id}/edit?returnTo=${returnTo || `/polish/${polish.id}`}`)} $fullWidth>
             Edit Polish
           </Button>
         </StyledDetailsContent>

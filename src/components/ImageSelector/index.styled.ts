@@ -151,3 +151,13 @@ export const StyledCollapseText = styled.div`
     text-decoration: underline;
   }
 `;
+
+export const StyledImageCount = styled.div`
+  background-color: ${({ theme }) => theme.colors.primary[50]};
+  color: ${({ theme }) => theme.colors.primary[700]};
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  white-space: nowrap;
+`;
