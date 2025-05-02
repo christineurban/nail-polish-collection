@@ -1,6 +1,6 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { ImageSelector } from '@/components/ImageSelector';
 import { PageHeader } from '@/components/PageHeader';
@@ -23,6 +23,7 @@ interface Polish {
 
 export default function SelectImagePage({ params }: { params: { id: string } }) {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [polish, setPolish] = useState<Polish | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -46,7 +47,14 @@ export default function SelectImagePage({ params }: { params: { id: string } }) 
   }, [params.id]);
 
   const handleImageSaved = () => {
-    router.push(`/polish/${params.id}`);
+    const returnTo = searchParams.get('returnTo');
+    if (!returnTo) {
+      // If no returnTo parameter, we came from the polish card, go to homepage
+      router.push('/');
+    } else {
+      // If returnTo parameter exists, use that path
+      router.push(returnTo);
+    }
     router.refresh();
   };
 

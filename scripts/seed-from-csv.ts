@@ -4,13 +4,40 @@ import { fileURLToPath } from 'url';
 import { parse } from 'csv-parse/sync';
 import { PrismaClient } from '@prisma/client';
 import { transformSheetData, type SheetRow } from './transform-sheet-data';
+import { NextResponse } from 'next/server';
+import readline from 'readline';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const prisma = new PrismaClient();
 
+async function promptForConfirmation(): Promise<boolean> {
+  const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+  });
+
+  console.log('\x1b[31m%s\x1b[0m', '⚠️  WARNING: This will delete all existing data in the database.');
+  console.log('\x1b[31m%s\x1b[0m', '   Please make sure you have a backup before proceeding.');
+  console.log('\x1b[31m%s\x1b[0m', '   Run `npm run backup` to create a backup first.');
+
+  const answer = await new Promise<string>(resolve => {
+    rl.question('\nAre you sure you want to proceed? (y/N): ', resolve);
+  });
+
+  rl.close();
+  return answer.toLowerCase() === 'y';
+}
+
 async function seedFromCsv() {
+  const shouldProceed = await promptForConfirmation();
+
+  if (!shouldProceed) {
+    console.log('Operation cancelled');
+    process.exit(0);
+  }
+
   const stats = {
     totalRows: 0,
     successfullyAdded: 0,
