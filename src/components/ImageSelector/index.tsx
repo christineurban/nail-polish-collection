@@ -18,6 +18,7 @@ import {
 } from './index.styled';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/Button';
+import { ImagePasteZone } from './ImagePasteZone';
 
 interface Polish {
   id: string;
@@ -150,6 +151,11 @@ export const ImageSelector = ({ polish, onImageSaved }: ImageSelectorProps) => {
     setIsCollapsed(!isCollapsed);
   };
 
+  const handlePastedImage = (imageUrl: string) => {
+    setImages(prevImages => [imageUrl, ...prevImages]);
+    setSelectedImage(imageUrl);
+  };
+
   useEffect(() => {
     if (polish?.link) {
       fetchImages();
@@ -211,11 +217,13 @@ export const ImageSelector = ({ polish, onImageSaved }: ImageSelectorProps) => {
                   <h3>Current Image</h3>
                   <StyledImage
                     src={polish.imageUrl}
-                    alt={`Current image for ${polish.brand} ${polish.name}`}
+                    alt={`Current image for ${polish.brand} - ${polish.name}`}
                     style={{ maxWidth: '300px', margin: '0 auto' }}
                   />
                 </div>
               )}
+
+              <ImagePasteZone onImagePasted={handlePastedImage} />
 
               {!polish.link ? (
                 <></>
@@ -241,7 +249,7 @@ export const ImageSelector = ({ polish, onImageSaved }: ImageSelectorProps) => {
                       <StyledImageContainer key={index}>
                         <StyledImage
                           src={img}
-                          alt={`${polish.brand} ${polish.name} - Image ${index + 1}`}
+                          alt={`${polish.brand} - ${polish.name} - Image ${index + 1}`}
                           onError={(e) => {
                             const target = e.target as HTMLImageElement;
                             target.style.display = 'none';

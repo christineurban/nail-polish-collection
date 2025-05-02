@@ -85,7 +85,7 @@ export const NailPolishDetails = ({ polish }: NailPolishDetailsProps) => {
             {polish.imageUrl ? (
               <Image
                 src={polish.imageUrl}
-                alt={`${polish.brand} ${polish.name}`}
+                alt={`${polish.brand} - ${polish.name}`}
                 fill
                 priority
               />

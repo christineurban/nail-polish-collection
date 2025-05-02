@@ -74,7 +74,7 @@ export default function SelectImagePage({ params }: { params: { id: string } }) 
     return (
       <div>
         <PageHeader
-          title={`${polish.brand} ${polish.name}`}
+          title={`${polish.brand} - ${polish.name}`}
           description="No source link available"
         />
         <StyledErrorMessage>
@@ -98,7 +98,7 @@ export default function SelectImagePage({ params }: { params: { id: string } }) 
   return (
     <>
       <PageHeader
-        title={`Select Image for ${polish.brand} ${polish.name}`}
+        title={`Select Image for ${polish.brand} - ${polish.name}`}
         description='Click on an image to select it, then click "Save" to update the database.'
       />
       <ImageSelector
