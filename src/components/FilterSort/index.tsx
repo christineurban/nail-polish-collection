@@ -42,6 +42,9 @@ export const FilterSort = ({ brands, finishes, colors, currentFilters }: FilterS
   const searchParams = useSearchParams();
   const [filters, setFilters] = useState(currentFilters);
 
+  console.log('Available color options:', colors);
+  console.log('Current color filters:', filters.color);
+
   const ratings = [
     'A_PLUS', 'A', 'A_MINUS',
     'B_PLUS', 'B', 'B_MINUS',

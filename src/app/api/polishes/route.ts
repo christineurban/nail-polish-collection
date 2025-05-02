@@ -9,8 +9,12 @@ export async function GET(request: Request) {
     const hasImage = searchParams.get('hasImage');
     const search = searchParams.get('search') || '';
     const brands = searchParams.getAll('brand');
+    const colors = searchParams.getAll('color');
+    const finishes = searchParams.getAll('finish');
     const page = parseInt(searchParams.get('page') || '1');
     const limit = parseInt(searchParams.get('limit') || '10');
+
+    console.log('Requested colors:', colors);
 
     // Build the where clause
     const where: any = {};
@@ -35,11 +39,45 @@ export async function GET(request: Request) {
       };
     }
 
+    // Add color filter if provided
+    if (colors.length > 0) {
+      where.colors = {
+        some: {
+          color: {
+            name: { in: colors, mode: 'insensitive' }
+          }
+        }
+      };
+    }
+
+    // Add finish filter if provided
+    if (finishes.length > 0) {
+      where.finishes = {
+        some: {
+          finish: {
+            name: { in: finishes, mode: 'insensitive' }
+          }
+        }
+      };
+    }
+
+    console.log('Query where clause:', JSON.stringify(where, null, 2));
+
     // First, get all polishes that match the filters
     const polishes = await prisma.nail_polish.findMany({
       where,
       include: {
         brands: true,
+        colors: {
+          include: {
+            color: true
+          }
+        },
+        finishes: {
+          include: {
+            finish: true
+          }
+        }
       },
       orderBy: [
         { brands: { name: 'asc' } },
@@ -48,6 +86,11 @@ export async function GET(request: Request) {
       skip: (page - 1) * limit,
       take: limit,
     });
+
+    console.log('Found polishes:', polishes.length);
+    if (polishes.length > 0) {
+      console.log('Sample polish colors:', polishes[0].colors.map(c => c.color.name));
+    }
 
     // Get total count for pagination
     const total = await prisma.nail_polish.count({
@@ -63,6 +106,9 @@ export async function GET(request: Request) {
         link: polish.link,
         imageUrl: polish.image_url,
         brand: polish.brands.name,
+        rating: polish.rating,
+        colors: polish.colors.map(c => c.color.name),
+        finishes: polish.finishes.map(f => f.finish.name)
       })),
       total,
       page,
