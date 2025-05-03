@@ -2,14 +2,12 @@ import styled from 'styled-components';
 
 export const StyledContainer = styled.div`
   padding: 20px;
-  max-width: 1200px;
-  margin: 0 auto;
 `;
 
-export const StyledHeader = styled.div`
+export const StyledHeaderContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   margin-bottom: 20px;
 `;
 
@@ -20,11 +18,11 @@ export const StyledGrid = styled.div`
 `;
 
 export const StyledImageCard = styled.div<{ $markedForDeletion?: boolean }>`
-  border: 1px solid ${({ theme }) => theme.colors.primary[200]};
-  border-radius: 8px;
   padding: 10px;
-  background: ${({ $markedForDeletion, theme }) =>
-    $markedForDeletion ? theme.colors.error[50] : theme.colors.primary[50]};
+  border: 1px solid ${({ theme }) => theme.colors.gray[300]};
+  border-radius: 8px;
+  background: white;
+  opacity: ${({ $markedForDeletion }) => ($markedForDeletion ? 0.5 : 1)};
 `;
 
 export const StyledImage = styled.img`
@@ -36,51 +34,40 @@ export const StyledImage = styled.img`
   border-radius: 4px;
 `;
 
-export const StyledSelect = styled.select`
+export const StyledDeleteButton = styled.button<{ $active?: boolean }>`
   width: 100%;
   padding: 8px;
-  margin-bottom: 10px;
-  border: 1px solid ${({ theme }) => theme.colors.primary[200]};
-  border-radius: 4px;
-`;
-
-export const StyledButton = styled.button`
-  padding: 8px 16px;
-  border-radius: 4px;
+  margin-top: 10px;
   border: none;
-  background: ${({ theme }) => theme.colors.primary[500]};
-  color: ${({ theme }) => theme.colors.primary[50]};
+  border-radius: 4px;
+  background: ${({ $active, theme }) =>
+    $active ? theme.colors.error[500] : theme.colors.gray[200]};
+  color: ${({ $active }) => ($active ? 'white' : 'inherit')};
   cursor: pointer;
+  transition: background-color 0.2s;
 
   &:hover {
+    background: ${({ $active, theme }) =>
+      $active ? theme.colors.error[600] : theme.colors.gray[300]};
+  }
+`;
+
+export const StyledSaveButton = styled.button`
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  background: ${({ theme }) => theme.colors.primary[500]};
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  flex-shrink: 0;
+
+  &:hover:not(:disabled) {
     background: ${({ theme }) => theme.colors.primary[600]};
   }
 
   &:disabled {
-    opacity: 0.5;
+    background: ${({ theme }) => theme.colors.gray[300]};
     cursor: not-allowed;
-  }
-`;
-
-export const StyledDeleteButton = styled(StyledButton)<{ $active?: boolean }>`
-  width: 100%;
-  background: ${({ theme, $active }) =>
-    $active ? theme.colors.error[500] : 'transparent'};
-  color: ${({ theme, $active }) =>
-    $active ? theme.colors.primary[50] : theme.colors.error[500]};
-  border: 1px solid ${({ theme }) => theme.colors.error[500]};
-  margin-top: 10px;
-
-  &:hover {
-    background: ${({ theme }) => theme.colors.error[500]};
-    color: ${({ theme }) => theme.colors.primary[50]};
-  }
-`;
-
-export const StyledSaveButton = styled(StyledButton)`
-  background: ${({ theme }) => theme.colors.success[500]};
-
-  &:hover {
-    background: ${({ theme }) => theme.colors.success[600]};
   }
 `;

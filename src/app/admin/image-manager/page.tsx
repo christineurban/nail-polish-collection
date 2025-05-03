@@ -1,23 +1,21 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { createClient } from '@supabase/supabase-js';
+import { PageHeader } from '@/components/PageHeader';
+import { Autocomplete } from '@/components/Autocomplete';
 import {
   StyledContainer,
-  StyledHeader,
   StyledGrid,
   StyledImageCard,
   StyledImage,
-  StyledSelect,
-  StyledButton,
   StyledDeleteButton,
   StyledSaveButton,
+  StyledHeaderContainer,
 } from './page.styled';
 
 interface Polish {
   id: string;
   name: string;
-  brand_id: string;
   brands: {
     name: string;
   };
@@ -34,43 +32,41 @@ export default function ImageManager() {
   const [images, setImages] = useState<ImageItem[]>([]);
   const [polishes, setPolishes] = useState<Polish[]>([]);
   const [isSaving, setIsSaving] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [totalImages, setTotalImages] = useState(0);
+  const [matchedImages, setMatchedImages] = useState(0);
 
   useEffect(() => {
-    fetchImages();
-    fetchPolishes();
+    fetchData();
   }, []);
 
-  const fetchImages = async () => {
-    const supabase = createClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-    );
+  const fetchData = async () => {
+    try {
+      setIsLoading(true);
+      setError(null);
 
-    const { data: files } = await supabase.storage
-      .from('nail-polish-images')
-      .list();
+      // Fetch images and their associations
+      const imagesResponse = await fetch('/api/images');
+      if (!imagesResponse.ok) {
+        const errorData = await imagesResponse.json();
+        throw new Error(errorData.error || 'Failed to fetch images');
+      }
+      const imagesData = await imagesResponse.json();
+      setImages(imagesData.images);
+      setTotalImages(imagesData.totalImages);
+      setMatchedImages(imagesData.matchedImages);
 
-    if (files) {
-      const imageItems: ImageItem[] = await Promise.all(
-        files.map(async (file) => {
-          const { data: { publicUrl } } = supabase.storage
-            .from('nail-polish-images')
-            .getPublicUrl(file.name);
-
-          return {
-            url: publicUrl,
-            name: file.name
-          };
-        })
-      );
-      setImages(imageItems);
+      // Fetch polish details
+      const polishesResponse = await fetch('/api/admin/polishes');
+      const polishesData = await polishesResponse.json();
+      setPolishes(polishesData.polishes);
+    } catch (err) {
+      console.error('Error fetching data:', err);
+      setError(err instanceof Error ? err.message : 'An error occurred');
+    } finally {
+      setIsLoading(false);
     }
-  };
-
-  const fetchPolishes = async () => {
-    const response = await fetch('/api/polishes');
-    const data = await response.json();
-    setPolishes(data.polishes);
   };
 
   const handlePolishSelect = (imageIndex: number, polishId: string) => {
@@ -115,8 +111,8 @@ export default function ImageManager() {
         });
       }
 
-      // Refresh the page
-      window.location.reload();
+      // Refresh the data
+      await fetchData();
     } catch (error) {
       console.error('Error saving changes:', error);
       alert('Error saving changes. Please try again.');
@@ -125,17 +121,79 @@ export default function ImageManager() {
     }
   };
 
+  if (isLoading) {
+    return (
+      <StyledContainer>
+        <PageHeader
+          title="Image Manager"
+          description="Loading images..."
+        />
+      </StyledContainer>
+    );
+  }
+
+  if (error) {
+    return (
+      <StyledContainer>
+        <PageHeader
+          title="Image Manager"
+          description="An error occurred while loading the image manager"
+        />
+        <p style={{ color: 'red' }}>{error}</p>
+      </StyledContainer>
+    );
+  }
+
+  if (totalImages === 0) {
+    return (
+      <StyledContainer>
+        <PageHeader
+          title="Image Manager"
+          description="No Images Found"
+        />
+        <p>There are no images in storage. Upload images to begin matching them with polishes.</p>
+      </StyledContainer>
+    );
+  }
+
+  if (images.length === 0 && matchedImages === totalImages) {
+    return (
+      <StyledContainer>
+        <PageHeader
+          title="Image Manager"
+          description="All Images Matched"
+        />
+        <p>All {totalImages} images in storage have been matched to polishes. Upload new images to match them with polishes.</p>
+      </StyledContainer>
+    );
+  }
+
+  const hasChanges = images.some(img => img.selectedPolishId || img.markedForDeletion);
+
+  const polishOptions = polishes.map(polish => ({
+    value: polish.id,
+    label: `${polish.brands.name} - ${polish.name}`
+  }));
+
   return (
     <StyledContainer>
-      <StyledHeader>
-        <h1>Image Manager</h1>
+      <StyledHeaderContainer>
+        <PageHeader
+          title="Image Manager"
+          description="Match unmatched images to nail polishes"
+        />
         <StyledSaveButton
           onClick={handleSave}
-          disabled={isSaving}
+          disabled={isSaving || !hasChanges}
         >
-          {isSaving ? 'Saving...' : 'Save All Changes'}
+          {isSaving ? 'Saving...' : hasChanges ? 'Save All Changes' : 'No Changes'}
         </StyledSaveButton>
-      </StyledHeader>
+      </StyledHeaderContainer>
+
+      <p>
+        Showing {images.length} unmatched {images.length === 1 ? 'image' : 'images'}
+        {totalImages > 0 && ` (${matchedImages} of ${totalImages} total images matched)`}
+      </p>
 
       <StyledGrid>
         {images.map((image, index) => (
@@ -144,18 +202,13 @@ export default function ImageManager() {
             $markedForDeletion={image.markedForDeletion}
           >
             <StyledImage src={image.url} alt={image.name} />
-            <StyledSelect
+            <Autocomplete
+              options={polishOptions}
               value={image.selectedPolishId || ''}
-              onChange={(e) => handlePolishSelect(index, e.target.value)}
+              onChange={(value) => handlePolishSelect(index, value)}
               disabled={image.markedForDeletion}
-            >
-              <option value="">Select a polish...</option>
-              {polishes.map(polish => (
-                <option key={polish.id} value={polish.id}>
-                  {polish.brands.name} - {polish.name}
-                </option>
-              ))}
-            </StyledSelect>
+              placeholder="Select a polish..."
+            />
             <StyledDeleteButton
               onClick={() => toggleDeletion(index)}
               $active={image.markedForDeletion}
