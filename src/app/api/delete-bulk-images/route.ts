@@ -1,5 +1,5 @@
-import { createClient } from '@supabase/supabase-js';
 import { NextResponse } from 'next/server';
+import { supabaseAdmin } from '@/lib/supabase';
 
 export async function POST(request: Request) {
   try {
@@ -13,26 +13,32 @@ export async function POST(request: Request) {
       );
     }
 
-    const supabase = createClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-    );
+    console.log('Attempting to delete images:', images);
 
-    // Delete images from storage
-    const { data, error } = await supabase.storage
+    // Delete images from storage using admin client
+    const { data, error } = await supabaseAdmin.storage
       .from('nail-polish-images')
       .remove(images);
 
     if (error) {
+      console.error('Supabase delete error:', error);
       throw error;
     }
 
-    return NextResponse.json({
+    console.log('Supabase delete response:', data);
+
+    // Add cache control headers to prevent browser caching
+    const response = NextResponse.json({
       success: true,
       message: `Deleted ${images.length} images`,
       data
     });
 
+    response.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+    response.headers.set('Pragma', 'no-cache');
+    response.headers.set('Expires', '0');
+
+    return response;
   } catch (error) {
     console.error('Error deleting images:', error);
     return NextResponse.json(

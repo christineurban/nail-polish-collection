@@ -90,16 +90,25 @@ export default function ImageManager() {
 
       // Delete marked images
       if (imagesToDelete.length > 0) {
-        await fetch('/api/delete-bulk-images', {
+        console.log('Deleting images:', imagesToDelete.map(img => img.name));
+        const deleteResponse = await fetch('/api/delete-bulk-images', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ images: imagesToDelete.map(img => img.name) })
         });
+
+        if (!deleteResponse.ok) {
+          const errorData = await deleteResponse.json();
+          throw new Error(errorData.error || 'Failed to delete images');
+        }
+
+        const deleteResult = await deleteResponse.json();
+        console.log('Delete response:', deleteResult);
       }
 
       // Update polish image URLs
       if (imagesToUpdate.length > 0) {
-        await fetch('/api/update-bulk-images', {
+        const updateResponse = await fetch('/api/update-bulk-images', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -109,16 +118,40 @@ export default function ImageManager() {
             }))
           })
         });
+
+        if (!updateResponse.ok) {
+          const errorData = await updateResponse.json();
+          throw new Error(errorData.error || 'Failed to update polish images');
+        }
       }
 
-      // Refresh the data
-      await fetchData();
+      // Clear browser's memory cache
+      if ('caches' in window) {
+        try {
+          const cacheNames = await caches.keys();
+          await Promise.all(
+            cacheNames.map(cacheName => caches.delete(cacheName))
+          );
+        } catch (e) {
+          console.error('Error clearing cache:', e);
+        }
+      }
+
+      // Force a hard refresh of the page
+      window.location.href = window.location.href.split('?')[0] + '?t=' + new Date().getTime();
     } catch (error) {
       console.error('Error saving changes:', error);
       alert('Error saving changes. Please try again.');
     } finally {
       setIsSaving(false);
     }
+  };
+
+  // Add cache-busting parameter to image URLs
+  const getCacheBustedUrl = (url: string) => {
+    const cacheBuster = new Date().getTime();
+    const separator = url.includes('?') ? '&' : '?';
+    return `${url}${separator}t=${cacheBuster}`;
   };
 
   if (isLoading) {
@@ -201,7 +234,10 @@ export default function ImageManager() {
             key={image.name}
             $markedForDeletion={image.markedForDeletion}
           >
-            <StyledImage src={image.url} alt={image.name} />
+            <StyledImage
+              src={getCacheBustedUrl(image.url)}
+              alt={image.name}
+            />
             <Autocomplete
               options={polishOptions}
               value={image.selectedPolishId || ''}
