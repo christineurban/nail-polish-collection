@@ -4,10 +4,18 @@ export interface StatItem {
   percentage: number;
 }
 
+export interface StatCount {
+  name: string;
+  count: number;
+}
+
 export interface CollectionStats {
   totalPolishes: number;
   totalBrands: number;
-  brandStats: StatItem[];
-  colorStats: StatItem[];
-  finishStats: StatItem[];
+  totalColors: number;
+  totalFinishes: number;
+  averageRating: number;
+  mostCommonBrand: StatCount;
+  mostCommonColor: StatCount;
+  mostCommonFinish: StatCount;
 }

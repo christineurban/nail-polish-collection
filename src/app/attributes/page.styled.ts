@@ -2,25 +2,18 @@ import styled from 'styled-components';
 
 export const StyledAttributeList = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 1rem;
   margin-top: 1rem;
 `;
 
 export const StyledAttributeCard = styled.div`
   background: ${({ theme }) => theme.colors.background.secondary};
-  border-radius: ${({ theme }) => theme.borderRadius.lg};
+  border-radius: ${({ theme }) => theme.borderRadius};
   padding: 1rem;
-  box-shadow: ${({ theme }) => theme.shadows.sm};
-  transition: all 0.2s ease;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: ${({ theme }) => theme.shadows.md};
-  }
 
   h3 {
     margin: 0;
@@ -36,12 +29,10 @@ export const StyledDeleteButton = styled.button`
   background: ${({ theme }) => theme.colors.error};
   color: white;
   border: none;
-  border-radius: ${({ theme }) => theme.borderRadius.md};
+  border-radius: ${({ theme }) => theme.borderRadius};
   padding: 0.5rem;
-  margin-top: 0.5rem;
   cursor: pointer;
-  font-size: ${({ theme }) => theme.typography.fontSize.sm};
-  transition: opacity 0.2s ease;
+  margin-top: 0.5rem;
 
   &:hover {
     opacity: 0.9;
@@ -50,53 +41,62 @@ export const StyledDeleteButton = styled.button`
 
 export const StyledSortControls = styled.div`
   display: flex;
-  gap: 1rem;
-  margin-bottom: 1rem;
+  gap: 0.5rem;
+  margin: 1rem 0;
+  flex-wrap: wrap;
 `;
 
 export const StyledSortButton = styled.button<{ $isActive: boolean }>`
-  background: none;
-  border: none;
-  padding: 0.5rem 1rem;
+  background: ${({ theme, $isActive }) =>
+    $isActive ? theme.colors.primary[500] : theme.colors.background.secondary};
   color: ${({ theme, $isActive }) =>
-    $isActive ? theme.colors.primary[500] : theme.colors.text.secondary};
+    $isActive ? 'white' : theme.colors.text.primary};
+  border: none;
+  border-radius: ${({ theme }) => theme.borderRadius};
+  padding: 0.5rem 1rem;
   cursor: pointer;
-  font-size: ${({ theme }) => theme.typography.fontSize.sm};
-  border-bottom: 2px solid ${({ theme, $isActive }) =>
-    $isActive ? theme.colors.primary[500] : 'transparent'};
-  transition: all 0.2s ease;
 
   &:hover {
-    color: ${({ theme }) => theme.colors.primary[500]};
+    opacity: 0.9;
   }
 `;
 
 export const StyledAddForm = styled.form`
   display: flex;
   gap: 1rem;
-  margin-bottom: 1.5rem;
-  align-items: flex-start;
   max-width: 500px;
-
-  > div {
-    flex: 1;
-  }
+  margin-bottom: 1rem;
 `;
 
 export const StyledMessage = styled.div<{ $type: 'error' | 'success' }>`
-  padding: 0.75rem 1rem;
-  border-radius: ${({ theme }) => theme.borderRadius.md};
-  margin-bottom: 1rem;
   background: ${({ theme, $type }) =>
-    $type === 'error'
-      ? theme.colors.error + '15'
-      : theme.colors.success + '15'};
-  color: ${({ theme, $type }) =>
-    $type === 'error'
-      ? theme.colors.error
-      : theme.colors.success};
-  border: 1px solid ${({ theme, $type }) =>
-    $type === 'error'
-      ? theme.colors.error + '30'
-      : theme.colors.success + '30'};
+    $type === 'error' ? theme.colors.error : theme.colors.success};
+  color: white;
+  padding: 1rem;
+  border-radius: ${({ theme }) => theme.borderRadius};
+  margin-bottom: 1rem;
+`;
+
+export const StyledViewControls = styled.div`
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+`;
+
+export const StyledViewButton = styled.button<{ $isActive: boolean }>`
+  background: ${({ theme, $isActive }) =>
+    $isActive ? theme.colors.primary[500] : theme.colors.background.secondary};
+  color: ${({ theme, $isActive }) =>
+    $isActive ? 'white' : theme.colors.text.primary};
+  border: none;
+  border-radius: ${({ theme }) => theme.borderRadius};
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  &:hover {
+    opacity: 0.9;
+  }
 `;

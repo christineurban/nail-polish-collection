@@ -12,16 +12,26 @@ import {
   StyledSortControls,
   StyledSortButton,
   StyledAddForm,
-  StyledMessage
+  StyledMessage,
+  StyledViewControls,
+  StyledViewButton,
+  StyledTable,
+  StyledTableHeader,
+  StyledTableCell,
+  StyledTableRow
 } from './page.styled';
+import { BsGrid, BsTable } from 'react-icons/bs';
+import { Table } from '@/components/Table';
 
 interface Attribute {
   id: string;
   name: string;
   count: number;
+  percentage: number;
 }
 
 type SortOrder = 'name-asc' | 'name-desc' | 'count-asc' | 'count-desc';
+type ViewMode = 'card' | 'table';
 
 export default function AttributesPage() {
   const [colors, setColors] = useState<Attribute[]>([]);
@@ -33,6 +43,7 @@ export default function AttributesPage() {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const [newAttributeName, setNewAttributeName] = useState('');
+  const [viewMode, setViewMode] = useState<ViewMode>('card');
 
   const singularForms = {
     colors: 'color',
@@ -139,6 +150,91 @@ export default function AttributesPage() {
     );
   };
 
+  const renderTable = (attributes: Attribute[], attributeType: 'color' | 'finish' | 'brand') => {
+    const columns = [
+      { header: 'Name', key: 'name' as const, sortable: true },
+      {
+        header: 'Count',
+        key: 'count' as const,
+        sortable: true,
+        render: (item: Attribute) => `${item.count} ${item.count === 1 ? 'polish' : 'polishes'}`
+      },
+      {
+        header: 'Percentage',
+        key: 'percentage' as const,
+        sortable: true,
+        render: (item: Attribute) => `${item.percentage.toFixed(1)}%`
+      },
+      {
+        header: 'Actions',
+        key: 'id' as const,
+        render: (item: Attribute) =>
+          item.count === 0 && (
+            <StyledDeleteButton
+              onClick={() => handleDelete(item.id, attributeType)}
+            >
+              Delete
+            </StyledDeleteButton>
+          )
+      }
+    ];
+
+    const handleSort = (field: string) => {
+      const newOrder = field === 'name'
+        ? sortOrder === 'name-asc' ? 'name-desc' : 'name-asc'
+        : field === 'count'
+        ? sortOrder === 'count-asc' ? 'count-desc' : 'count-asc'
+        : sortOrder;
+      setSortOrder(newOrder as SortOrder);
+    };
+
+    const getSortDirection = (field: string) => {
+      if (field === 'name' && (sortOrder === 'name-asc' || sortOrder === 'name-desc')) {
+        return sortOrder === 'name-asc' ? 'asc' : 'desc';
+      }
+      if (field === 'count' && (sortOrder === 'count-asc' || sortOrder === 'count-desc')) {
+        return sortOrder === 'count-asc' ? 'asc' : 'desc';
+      }
+      return undefined;
+    };
+
+    const getSortField = () => {
+      if (sortOrder.startsWith('name-')) return 'name';
+      if (sortOrder.startsWith('count-')) return 'count';
+      return undefined;
+    };
+
+    return (
+      <Table
+        data={attributes}
+        columns={columns}
+        sortField={getSortField()}
+        sortDirection={getSortDirection(getSortField() || '')}
+        onSort={handleSort}
+      />
+    );
+  };
+
+  const renderCards = (attributes: Attribute[], attributeType: 'color' | 'finish' | 'brand') => (
+    <StyledAttributeList>
+      {attributes.map((attr) => (
+        <StyledAttributeCard key={attr.id}>
+          <h3>{attr.name}</h3>
+          <span>
+            {attr.count} {attr.count === 1 ? 'polish' : 'polishes'} ({attr.percentage.toFixed(1)}%)
+          </span>
+          {attr.count === 0 && (
+            <StyledDeleteButton
+              onClick={() => handleDelete(attr.id, attributeType)}
+            >
+              Delete
+            </StyledDeleteButton>
+          )}
+        </StyledAttributeCard>
+      ))}
+    </StyledAttributeList>
+  );
+
   const getAttributeList = (type: 'colors' | 'finishes' | 'brands') => {
     const attributes = type === 'colors' ? colors : type === 'finishes' ? finishes : brands;
     const filteredAndSorted = filterAttributes(sortAttributes(attributes));
@@ -157,6 +253,21 @@ export default function AttributesPage() {
             Add {attributeType}
           </Button>
         </StyledAddForm>
+
+        <StyledViewControls>
+          <StyledViewButton
+            onClick={() => setViewMode('card')}
+            $isActive={viewMode === 'card'}
+          >
+            <BsGrid /> Cards
+          </StyledViewButton>
+          <StyledViewButton
+            onClick={() => setViewMode('table')}
+            $isActive={viewMode === 'table'}
+          >
+            <BsTable /> Table
+          </StyledViewButton>
+        </StyledViewControls>
 
         <StyledSortControls>
           <StyledSortButton
@@ -194,21 +305,10 @@ export default function AttributesPage() {
           />
         </div>
 
-        <StyledAttributeList>
-          {filteredAndSorted.map((attr) => (
-            <StyledAttributeCard key={attr.id}>
-              <h3>{attr.name}</h3>
-              <span>{attr.count} polishes</span>
-              {attr.count === 0 && (
-                <StyledDeleteButton
-                  onClick={() => handleDelete(attr.id, attributeType)}
-                >
-                  Delete
-                </StyledDeleteButton>
-              )}
-            </StyledAttributeCard>
-          ))}
-        </StyledAttributeList>
+        {viewMode === 'card'
+          ? renderCards(filteredAndSorted, attributeType)
+          : renderTable(filteredAndSorted, attributeType)
+        }
       </>
     );
   };

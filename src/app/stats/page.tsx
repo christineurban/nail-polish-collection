@@ -91,7 +91,7 @@ export default function StatsPage() {
 
         <StyledStatCard>
           <h3>Average Rating</h3>
-          <div className="value">{stats.averageRating.toFixed(1)}</div>
+          <div className="value">{stats.averageRating ? stats.averageRating.toFixed(1) : 'N/A'}</div>
           <div className="description">Average polish rating</div>
         </StyledStatCard>
 

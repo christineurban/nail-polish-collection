@@ -5,6 +5,9 @@ import { prisma } from '@/lib/prisma';
 
 export async function GET() {
   try {
+    // Get total polish count first
+    const totalPolishes = await prisma.nail_polish.count();
+
     const [brands, colors, finishes] = await Promise.all([
       prisma.brands.findMany({
         include: {
@@ -31,19 +34,19 @@ export async function GET() {
         id: brand.id,
         name: brand.name,
         count: brand.nail_polish.length,
-        polishCount: brand.nail_polish.length
+        percentage: Number(((brand.nail_polish.length / totalPolishes) * 100).toFixed(1))
       })),
       colors: colors.map(color => ({
         id: color.id,
         name: color.name,
         count: color.nail_polish.length,
-        polishCount: color.nail_polish.length
+        percentage: Number(((color.nail_polish.length / totalPolishes) * 100).toFixed(1))
       })),
       finishes: finishes.map(finish => ({
         id: finish.id,
         name: finish.name,
         count: finish.nail_polish.length,
-        polishCount: finish.nail_polish.length
+        percentage: Number(((finish.nail_polish.length / totalPolishes) * 100).toFixed(1))
       }))
     });
   } catch (error) {
