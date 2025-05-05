@@ -120,3 +120,23 @@ export const StyledSuccessMessage = styled(motion.div)`
   max-width: 90vw;
   transform-origin: center;
 `;
+
+export const StyledDangerZone = styled.div`
+  margin-top: 48px;
+  padding: 24px;
+  background-color: ${({ theme }) => `${theme.colors.error}10`};
+  border: 1px solid ${({ theme }) => `${theme.colors.error}33`};
+  border-radius: 8px;
+
+  h3 {
+    margin-top: 0;
+    margin-bottom: 12px;
+    color: ${({ theme }) => theme.colors.error};
+    font-size: 1.25rem;
+  }
+
+  p {
+    margin-bottom: 16px;
+    color: ${({ theme }) => theme.colors.error};
+  }
+`;

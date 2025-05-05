@@ -16,7 +16,8 @@ import {
   StyledFormSection,
   StyledFormRow,
   StyledSuccessOverlay,
-  StyledSuccessMessage
+  StyledSuccessMessage,
+  StyledDangerZone
 } from './index.styled';
 
 interface AddEditFormData {
@@ -63,7 +64,9 @@ export const AddEditForm = ({
     }
   );
   const [isLoading, setIsLoading] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -83,6 +86,7 @@ export const AddEditForm = ({
         throw new Error('Failed to save nail polish');
       }
 
+      setSuccessMessage(isEditing ? 'Polish updated successfully!' : 'Polish added successfully!');
       setIsSuccess(true);
       setTimeout(() => {
         if (isEditing) {
@@ -97,6 +101,40 @@ export const AddEditForm = ({
       alert('Failed to save nail polish. Please try again.');
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const handleDelete = async () => {
+    if (!formData.id) return;
+
+    const confirmed = window.confirm(
+      `Are you sure you want to delete "${formData.brand} - ${formData.name}"? This action cannot be undone.`
+    );
+
+    if (!confirmed) return;
+
+    setIsDeleting(true);
+
+    try {
+      const response = await fetch(`/api/polish/${formData.id}`, {
+        method: 'DELETE',
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to delete nail polish');
+      }
+
+      setSuccessMessage('Polish deleted successfully!');
+      setIsSuccess(true);
+      setTimeout(() => {
+        router.push('/');
+        router.refresh();
+      }, 1500);
+    } catch (error) {
+      console.error('Error deleting nail polish:', error);
+      alert('Failed to delete nail polish. Please try again.');
+    } finally {
+      setIsDeleting(false);
     }
   };
 
@@ -247,7 +285,24 @@ export const AddEditForm = ({
             {isLoading ? 'Saving...' : isEditing ? 'Update Polish' : 'Add Polish'}
           </Button>
         </StyledButtonGroup>
+
+        {isEditing && (
+          <StyledDangerZone>
+            <h3>Danger Zone</h3>
+            <p>Once you delete a polish, there is no going back. Please be certain.</p>
+            <Button
+              onClick={handleDelete}
+              type="button"
+              $variant="danger"
+              disabled={isDeleting}
+              $fullWidth
+            >
+              {isDeleting ? 'Deleting...' : 'Delete Polish'}
+            </Button>
+          </StyledDangerZone>
+        )}
       </StyledForm>
+
       <AnimatePresence>
         {isSuccess && (
           <StyledSuccessOverlay
@@ -276,7 +331,7 @@ export const AddEditForm = ({
                 ease: "easeOut"
               }}
             >
-              Polish saved successfully!
+              {successMessage}
             </StyledSuccessMessage>
           </StyledSuccessOverlay>
         )}

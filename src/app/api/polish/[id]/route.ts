@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import type { Polish } from '@/types/polish';
 import type { Rating } from '@prisma/client';
+import { supabaseAdmin } from '@/lib/supabase';
 
 export async function GET(
   request: Request,
@@ -50,6 +51,57 @@ export async function GET(
     });
   } catch (error) {
     console.error('Error fetching polish:', error);
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    );
+  }
+}
+
+export async function DELETE(
+  request: Request,
+  { params }: { params: { id: string } }
+) {
+  try {
+    // First, get the polish to check if it has an image
+    const polish = await prisma.nail_polish.findUnique({
+      where: { id: params.id }
+    });
+
+    if (!polish) {
+      return NextResponse.json(
+        { error: 'Polish not found' },
+        { status: 404 }
+      );
+    }
+
+    // Delete the image from storage if it exists
+    if (polish.image_url) {
+      const { error: storageError } = await supabaseAdmin.storage
+        .from('nail-polish-images')
+        .remove([polish.image_url.split('/').pop()!]);
+
+      if (storageError) {
+        console.error('Error deleting image from storage:', storageError);
+      }
+    }
+
+    // Delete all related records first
+    await prisma.$transaction([
+      prisma.nail_polish_color.deleteMany({
+        where: { nail_polish_id: params.id }
+      }),
+      prisma.nail_polish_finish.deleteMany({
+        where: { nail_polish_id: params.id }
+      }),
+      prisma.nail_polish.delete({
+        where: { id: params.id }
+      })
+    ]);
+
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    console.error('Error deleting polish:', error);
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
