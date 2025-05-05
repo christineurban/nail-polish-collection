@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 interface StyledTabProps {
-  active: boolean;
+  $active: boolean;
 }
 
 export const StyledTabList = styled.div`
@@ -17,7 +17,7 @@ export const StyledTab = styled.button<StyledTabProps>`
   background: none;
   font-size: 1.1rem;
   font-weight: 600;
-  color: ${({ active, theme }) => active ? theme.colors.primary[500] : theme.colors.text};
+  color: ${({ $active, theme }) => $active ? theme.colors.primary[500] : theme.colors.text};
   cursor: pointer;
   position: relative;
   transition: color 0.2s ease;
@@ -29,7 +29,7 @@ export const StyledTab = styled.button<StyledTabProps>`
     left: 0;
     width: 100%;
     height: 2px;
-    background-color: ${({ active, theme }) => active ? theme.colors.primary[500] : 'transparent'};
+    background-color: ${({ $active, theme }) => $active ? theme.colors.primary[500] : 'transparent'};
     transition: background-color 0.2s ease;
   }
 

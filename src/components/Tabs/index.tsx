@@ -26,7 +26,7 @@ export const Tabs = ({ tabs, activeTab, onTabChange }: TabsProps) => {
             aria-selected={activeTab === tab.id}
             aria-controls={`panel-${tab.id}`}
             onClick={() => onTabChange(tab.id)}
-            active={activeTab === tab.id}
+            $active={activeTab === tab.id}
           >
             {tab.label}
           </StyledTab>

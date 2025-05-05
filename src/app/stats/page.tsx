@@ -57,44 +57,39 @@ export default function StatsPage() {
   ];
 
   if (isLoading) {
-    return (
-      <StyledStatsContainer>
-        <PageHeader title="Loading statistics..." />
-      </StyledStatsContainer>
-    );
+    return <PageHeader title="Loading statistics..." />;
   }
 
   if (error) {
     return (
-      <StyledStatsContainer>
-        <PageHeader
-          title="Error loading statistics"
-          description={error}
-        />
-      </StyledStatsContainer>
+      <PageHeader
+        title="Error loading statistics"
+        description={error}
+      />
     );
   }
 
   return (
-    <StyledStatsContainer>
+    <>
       <PageHeader title="Collection Statistics" />
+      <StyledStatsContainer>
+        <StyledTotalStats>
+          <div>
+            <h3>Total Polishes</h3>
+            <p>{stats.totalPolishes}</p>
+          </div>
+          <div>
+            <h3>Total Brands</h3>
+            <p>{stats.totalBrands}</p>
+          </div>
+        </StyledTotalStats>
 
-      <StyledTotalStats>
-        <div>
-          <h3>Total Polishes</h3>
-          <p>{stats.totalPolishes}</p>
-        </div>
-        <div>
-          <h3>Total Brands</h3>
-          <p>{stats.totalBrands}</p>
-        </div>
-      </StyledTotalStats>
-
-      <Tabs
-        tabs={tabs}
-        activeTab={activeTab}
-        onTabChange={setActiveTab}
-      />
-    </StyledStatsContainer>
+        <Tabs
+          tabs={tabs}
+          activeTab={activeTab}
+          onTabChange={setActiveTab}
+        />
+      </StyledStatsContainer>
+    </>
   );
 }

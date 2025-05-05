@@ -1,10 +1,8 @@
+'use client';
+
 import styled from 'styled-components';
 
 export const StyledStatsContainer = styled.div`
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem;
-
   h1 {
     text-align: center;
     margin-bottom: 2rem;
