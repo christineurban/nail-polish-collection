@@ -131,96 +131,10 @@ export const StyledTag = styled.span<{ $type: string }>`
   padding: ${({ theme }) => `${theme.spacing[1]} ${theme.spacing[2]}`};
   border-radius: ${({ theme }) => theme.borderRadius.full};
   font-size: ${({ theme }) => theme.typography.fontSize.xs};
-  background: ${({ theme, $type }) => {
-    switch ($type.toLowerCase()) {
-      case 'metallic':
-        return theme.colors.gray[200];
-      case 'shimmer':
-        return theme.colors.blue[100];
-      case 'glitter':
-        return theme.colors.purple[100];
-      case 'holo':
-        return theme.colors.pink[100];
-      case 'matte':
-        return theme.colors.orange[100];
-      case 'cream':
-        return theme.colors.green[100];
-      case 'jelly':
-        return theme.colors.pink[100];
-      case 'magnetic':
-        return theme.colors.purple[100];
-      case 'neon':
-        return theme.colors.green[100];
-      case 'pearl':
-        return theme.colors.blue[100];
-      case 'chrome':
-        return theme.colors.gray[200];
-      case 'duochrome':
-        return theme.colors.purple[100];
-      case 'frost':
-        return theme.colors.blue[100];
-      case 'creme':
-        return theme.colors.green[100];
-      case 'glass':
-        return theme.colors.blue[100];
-      case 'iridescent':
-        return theme.colors.purple[100];
-      case 'multichrome':
-        return theme.colors.pink[100];
-      case 'sheer':
-        return theme.colors.orange[100];
-      case 'foil':
-        return theme.colors.gray[200];
-      case 'satin':
-        return theme.colors.blue[100];
-      default:
-        return theme.colors.gray[100];
-    }
-  }};
-  color: ${({ theme, $type }) => {
-    switch ($type.toLowerCase()) {
-      case 'metallic':
-        return theme.colors.gray[700];
-      case 'shimmer':
-        return theme.colors.blue[700];
-      case 'glitter':
-        return theme.colors.purple[700];
-      case 'holo':
-        return theme.colors.pink[700];
-      case 'matte':
-        return theme.colors.orange[700];
-      case 'cream':
-        return theme.colors.green[700];
-      case 'jelly':
-        return theme.colors.pink[700];
-      case 'magnetic':
-        return theme.colors.purple[700];
-      case 'neon':
-        return theme.colors.green[700];
-      case 'pearl':
-        return theme.colors.blue[700];
-      case 'chrome':
-        return theme.colors.gray[700];
-      case 'duochrome':
-        return theme.colors.purple[700];
-      case 'frost':
-        return theme.colors.blue[700];
-      case 'creme':
-        return theme.colors.green[700];
-      case 'glass':
-        return theme.colors.blue[700];
-      case 'iridescent':
-        return theme.colors.purple[700];
-      case 'multichrome':
-        return theme.colors.pink[700];
-      case 'sheer':
-        return theme.colors.orange[700];
-      case 'foil':
-        return theme.colors.gray[700];
-      case 'satin':
-        return theme.colors.blue[700];
-      default:
-        return theme.colors.gray[700];
-    }
-  }};
+  background: ${({ theme }) => theme.colors.gray[100]};
+  color: ${({ theme }) => theme.colors.gray[700]};
+`;
+
+export const StyledClickableArea = styled.div`
+  cursor: pointer;
 `;

@@ -16,6 +16,7 @@ import {
   StyledColorChip,
   StyledColorPreview,
   StyledChooseImageButton,
+  StyledClickableArea,
 } from './index.styled';
 import { Rating } from '@prisma/client';
 
@@ -72,12 +73,12 @@ export const NailPolishCard: FC<NailPolishCardProps> = ({
       role="button"
       aria-label={`View details for ${brand} ${name}`}
     >
-      <StyledImageContainer
+      <StyledClickableArea
+        as={StyledImageContainer}
         onClick={(e) => {
           e.stopPropagation();
           handleImageAreaClick();
         }}
-        style={{ cursor: 'pointer' }}
       >
         {imageUrl ? (
           <StyledImage
@@ -94,14 +95,14 @@ export const NailPolishCard: FC<NailPolishCardProps> = ({
             Choose Image
           </StyledChooseImageButton>
         )}
-      </StyledImageContainer>
+      </StyledClickableArea>
 
-      <StyledContent
+      <StyledClickableArea
+        as={StyledContent}
         onClick={(e) => {
           e.stopPropagation();
           handleContentClick();
         }}
-        style={{ cursor: 'pointer' }}
       >
         <StyledMetadata>
           <StyledBrand>{brand}</StyledBrand>
@@ -123,7 +124,7 @@ export const NailPolishCard: FC<NailPolishCardProps> = ({
             </StyledTag>
           ))}
         </StyledFinishes>
-      </StyledContent>
+      </StyledClickableArea>
     </StyledCard>
   );
 };

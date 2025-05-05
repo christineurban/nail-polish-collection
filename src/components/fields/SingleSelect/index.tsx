@@ -3,6 +3,9 @@ import { StyledContainer } from '../index.styled';
 import {
   StyledButton,
   StyledOption,
+  StyledInput,
+  StyledNoMatches,
+  StyledButtonContainer,
 } from './index.styled';
 import { StyledDropdown } from '../index.styled';
 import type { CSSProperties } from 'react';
@@ -89,24 +92,24 @@ export const SingleSelect = ({ value, options, placeholder = 'Select...', onChan
 
   return (
     <StyledContainer ref={containerRef}>
-      <StyledButton
-        ref={buttonRef}
-        type="button"
-        onClick={handleButtonClick}
-        $isOpen={isOpen}
-        style={{ display: isOpen ? 'none' : 'flex' }}
-      >
-        {value || placeholder}
-      </StyledButton>
+      <StyledButtonContainer $isOpen={isOpen}>
+        <StyledButton
+          ref={buttonRef}
+          type="button"
+          onClick={handleButtonClick}
+          $isOpen={isOpen}
+        >
+          {value || placeholder}
+        </StyledButton>
+      </StyledButtonContainer>
       {isOpen && (
-        <input
+        <StyledInput
           ref={inputRef}
           type="text"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           onKeyDown={handleKeyDown}
           placeholder="Type to search..."
-          style={inputStyles}
         />
       )}
       <StyledDropdown $isOpen={isOpen}>
@@ -120,9 +123,9 @@ export const SingleSelect = ({ value, options, placeholder = 'Select...', onChan
           </StyledOption>
         ))}
         {filteredOptions.length === 0 && (
-          <div style={{ padding: '0.75rem 1rem', color: '#666' }}>
+          <StyledNoMatches>
             No matches found
-          </div>
+          </StyledNoMatches>
         )}
       </StyledDropdown>
     </StyledContainer>

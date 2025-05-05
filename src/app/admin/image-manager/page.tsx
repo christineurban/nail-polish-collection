@@ -11,6 +11,7 @@ import {
   StyledDeleteButton,
   StyledSaveButton,
   StyledHeaderContainer,
+  StyledErrorMessage,
 } from './page.styled';
 
 interface Polish {
@@ -172,7 +173,7 @@ export default function ImageManager() {
           title="Image Manager"
           description="An error occurred while loading the image manager"
         />
-        <p style={{ color: 'red' }}>{error}</p>
+        <StyledErrorMessage>{error}</StyledErrorMessage>
       </StyledContainer>
     );
   }

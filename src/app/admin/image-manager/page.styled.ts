@@ -71,3 +71,7 @@ export const StyledSaveButton = styled.button`
     cursor: not-allowed;
   }
 `;
+
+export const StyledErrorMessage = styled.p`
+  color: red;
+`;

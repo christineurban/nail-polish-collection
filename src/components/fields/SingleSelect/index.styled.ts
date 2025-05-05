@@ -51,3 +51,21 @@ export const StyledOption = styled.button<{ $isSelected: boolean }>`
     color: ${({ theme }) => theme.colors.primary[700]};
   }
 `;
+
+export const StyledInput = styled.input`
+  width: 100%;
+  height: 40px;
+  padding: 0.5rem 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+`;
+
+export const StyledNoMatches = styled.div`
+  padding: 0.75rem 1rem;
+  color: #666;
+`;
+
+export const StyledButtonContainer = styled.div<{ $isOpen: boolean }>`
+  display: ${props => props.$isOpen ? 'none' : 'flex'};
+`;
