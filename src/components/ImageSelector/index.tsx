@@ -314,6 +314,8 @@ export const ImageSelector = ({
                   <StyledImage
                     src={selectedImage}
                     alt={`Preview image for ${polish.brand} - ${polish.name}`}
+                    onClick={() => handleImageSelect(selectedImage)}
+                    $isSelected={bulkMode ? externalSelectedImage === selectedImage : selectedImage === selectedImage}
                   />
                 </StyledImagePreviewContainer>
               )}
