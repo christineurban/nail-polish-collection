@@ -11,6 +11,7 @@ export async function GET(request: Request) {
     const brands = searchParams.getAll('brand');
     const colors = searchParams.getAll('color');
     const finishes = searchParams.getAll('finish');
+    const isOld = searchParams.get('isOld');
     const page = parseInt(searchParams.get('page') || '1');
     const limit = parseInt(searchParams.get('limit') || '10');
 
@@ -33,6 +34,14 @@ export async function GET(request: Request) {
           image_url: null // Only include polishes with no image, exclude 'n/a'
         }];
       }
+    }
+
+    // Add isOld filter if provided
+    if (isOld === 'true') {
+      where.AND = where.AND || [];
+      where.AND.push({
+        is_old: false // Show only polishes that are NOT old when isOld is true
+      });
     }
 
     // Add search filter if provided
@@ -120,7 +129,8 @@ export async function GET(request: Request) {
         rating: polish.rating,
         colors: polish.colors.map(c => c.color.name),
         finishes: polish.finishes.map(f => f.finish.name),
-        noImageAvailable: polish.image_url === 'n/a'
+        noImageAvailable: polish.image_url === 'n/a',
+        isOld: polish.is_old
       })),
       total,
       page,
