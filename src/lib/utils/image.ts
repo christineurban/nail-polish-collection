@@ -10,9 +10,50 @@ export function createUrlSafeFilename(brand: string, name: string): string {
   const cleanBrand = safeBrand.replace(/-+/g, '-').replace(/^-|-$/g, '');
   const cleanName = safeName.replace(/-+/g, '-').replace(/^-|-$/g, '');
 
-  const fileName = `${cleanBrand}_${cleanName}.jpg`;
+  // Add timestamp to ensure uniqueness and prevent caching
+  const timestamp = Date.now();
+
+  const fileName = `${cleanBrand}_${cleanName}_${timestamp}.jpg`;
   console.log('Generated filename:', fileName);
   return fileName;
+}
+
+// Delete old image if it exists
+async function deleteOldImage(polish: { brands: { name: string }, name: string }) {
+  try {
+    // Generate the old filename pattern (without timestamp)
+    const safeBrand = polish.brands.name.toLowerCase().replace(/[^a-z0-9]/g, '-');
+    const safeName = polish.name.toLowerCase().replace(/[^a-z0-9]/g, '-');
+    const cleanBrand = safeBrand.replace(/-+/g, '-').replace(/^-|-$/g, '');
+    const cleanName = safeName.replace(/-+/g, '-').replace(/^-|-$/g, '');
+    const filePattern = `${cleanBrand}_${cleanName}`;
+
+    // List all files in the storage bucket
+    const { data: files, error: listError } = await supabaseAdmin.storage
+      .from('nail-polish-images')
+      .list();
+
+    if (listError) {
+      console.error('Error listing files:', listError);
+      return;
+    }
+
+    // Find and delete any files matching the pattern
+    const matchingFiles = files?.filter(file => file.name.startsWith(filePattern));
+    if (matchingFiles && matchingFiles.length > 0) {
+      const { error: deleteError } = await supabaseAdmin.storage
+        .from('nail-polish-images')
+        .remove(matchingFiles.map(file => file.name));
+
+      if (deleteError) {
+        console.error('Error deleting old files:', deleteError);
+      } else {
+        console.log('Successfully deleted old files:', matchingFiles.map(f => f.name));
+      }
+    }
+  } catch (error) {
+    console.error('Error in deleteOldImage:', error);
+  }
 }
 
 export async function uploadImageToSupabase(imageUrl: string, polish: { brands: { name: string }, name: string }): Promise<string> {
@@ -23,6 +64,9 @@ export async function uploadImageToSupabase(imageUrl: string, polish: { brands: 
   });
 
   try {
+    // Delete old image files first
+    await deleteOldImage(polish);
+
     // Fetch the image
     const response = await fetch(imageUrl);
     if (!response.ok) {
