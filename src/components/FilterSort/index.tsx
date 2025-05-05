@@ -143,6 +143,23 @@ export const FilterSort = ({ brands, finishes, colors, currentFilters }: FilterS
     { value: 'false', label: 'Without Image' }
   ];
 
+  const hasActiveFilters = () => {
+    // Check array filters
+    const hasArrayFilters = ['brand', 'finish', 'color', 'rating'].some(
+      key => filters[key as keyof typeof filters].length > 0
+    );
+
+    // Check string filters, excluding empty strings and default values
+    const hasStringFilters = ['search', 'sort', 'hasImage', 'isOld'].some(
+      key => {
+        const value = filters[key as keyof typeof filters];
+        return value !== '' && value !== 'false';
+      }
+    );
+
+    return hasArrayFilters || hasStringFilters;
+  };
+
   return (
     <StyledFiltersContainer>
       <StyledContainer>
@@ -395,10 +412,7 @@ export const FilterSort = ({ brands, finishes, colors, currentFilters }: FilterS
           />
         </StyledFilterGroup>
 
-        {Object.values(filters).some(value =>
-          (Array.isArray(value) && value.length > 0) ||
-          (!Array.isArray(value) && value !== '')
-        ) && (
+        {hasActiveFilters() && (
           <StyledClearAllContainer>
             <Button onClick={clearAllFilters} $variant="danger" $fullWidth>
               Clear All Filters
