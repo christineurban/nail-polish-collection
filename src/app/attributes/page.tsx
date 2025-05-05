@@ -18,7 +18,8 @@ import {
   StyledTable,
   StyledTableHeader,
   StyledTableCell,
-  StyledTableRow
+  StyledTableRow,
+  StyledInputContainer
 } from './page.styled';
 import { BsGrid, BsTable } from 'react-icons/bs';
 import { Table } from '@/components/Table';
@@ -243,12 +244,14 @@ export default function AttributesPage() {
     return (
       <>
         <StyledAddForm onSubmit={(e) => handleAdd(e, attributeType)}>
-          <Input
-            placeholder={`Add new ${attributeType}...`}
-            value={newAttributeName}
-            onChange={setNewAttributeName}
-            aria-label={`Add new ${attributeType}`}
-          />
+          <StyledInputContainer>
+            <Input
+              placeholder={`Add new ${attributeType}...`}
+              value={newAttributeName}
+              onChange={setNewAttributeName}
+              aria-label={`Add new ${attributeType}`}
+            />
+          </StyledInputContainer>
           <Button type="submit">
             Add {attributeType}
           </Button>
@@ -296,14 +299,14 @@ export default function AttributesPage() {
           </StyledSortButton>
         </StyledSortControls>
 
-        <div style={{ maxWidth: '300px', marginBottom: '1rem' }}>
+        <StyledInputContainer>
           <Input
             placeholder={`Search ${type}...`}
             value={searchTerm}
             onChange={setSearchTerm}
             aria-label={`Search ${type}`}
           />
-        </div>
+        </StyledInputContainer>
 
         {viewMode === 'card'
           ? renderCards(filteredAndSorted, attributeType)

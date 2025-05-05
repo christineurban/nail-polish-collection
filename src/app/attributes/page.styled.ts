@@ -61,11 +61,30 @@ export const StyledSortButton = styled.button<{ $isActive: boolean }>`
   }
 `;
 
+export const StyledInputContainer = styled.div`
+  max-width: 300px;
+  margin-bottom: 1rem;
+  flex-shrink: 0;
+`;
+
 export const StyledAddForm = styled.form`
   display: flex;
   gap: 1rem;
-  max-width: 500px;
   margin-bottom: 1rem;
+  align-items: flex-start;
+  width: 300px;
+
+  ${StyledInputContainer} {
+    width: 100%;
+    max-width: none;
+  }
+
+  button {
+    flex-shrink: 0;
+    margin-left: 2rem;
+    position: absolute;
+    left: 320px;
+  }
 `;
 
 export const StyledMessage = styled.div<{ $type: 'error' | 'success' }>`
