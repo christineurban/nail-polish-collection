@@ -29,9 +29,16 @@ export const StyledImage = styled.img<{ $isSelected?: boolean }>`
   max-width: 100%;
   height: auto;
   border: 1px solid #eee;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
   ${props => props.$isSelected && `
-    border: 3px solid #4CAF50;
+    border: 5px solid #4CAF50;
   `}
+
+  &:hover {
+    transform: scale(1.02);
+  }
 `;
 
 export const StyledSaveButton = styled.button`

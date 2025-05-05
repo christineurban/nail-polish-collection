@@ -41,10 +41,19 @@ interface Polish {
 interface ImageSelectorProps {
   polish: Polish;
   onImageSaved?: () => void;
+  bulkMode?: boolean;
+  onImageSelected?: (polishId: string, imageUrl: string | null) => void;
+  selectedImage?: string | null;
 }
 
-export const ImageSelector = ({ polish, onImageSaved }: ImageSelectorProps) => {
-  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+export const ImageSelector = ({
+  polish,
+  onImageSaved,
+  bulkMode = false,
+  onImageSelected,
+  selectedImage: externalSelectedImage
+}: ImageSelectorProps) => {
+  const [selectedImage, setSelectedImage] = useState<string | null>(externalSelectedImage || null);
   const [images, setImages] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
@@ -54,7 +63,11 @@ export const ImageSelector = ({ polish, onImageSaved }: ImageSelectorProps) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   const handleImageSelect = (imageUrl: string) => {
-    setSelectedImage(imageUrl);
+    if (bulkMode && onImageSelected) {
+      onImageSelected(polish.id, imageUrl);
+    } else {
+      setSelectedImage(imageUrl);
+    }
   };
 
   const handleRemoveImage = async () => {
@@ -135,6 +148,11 @@ export const ImageSelector = ({ polish, onImageSaved }: ImageSelectorProps) => {
   };
 
   const handleMarkNoImage = async () => {
+    if (bulkMode && onImageSelected) {
+      onImageSelected(polish.id, 'n/a');
+      return;
+    }
+
     try {
       setIsSaving(true);
 
@@ -248,17 +266,19 @@ export const ImageSelector = ({ polish, onImageSaved }: ImageSelectorProps) => {
                 <StyledButtonGroup>
                   <Button
                     onClick={handleMarkNoImage}
-                    disabled={isSaving}
+                    disabled={bulkMode ? false : isSaving}
                     $variant="secondary"
                   >
                     Mark as No Image Available
                   </Button>
-                  <Button
-                    onClick={handleSaveImage}
-                    disabled={!selectedImage || isSaving}
-                  >
-                    {isSaving ? 'Saving...' : 'Save Image'}
-                  </Button>
+                  {!bulkMode && (
+                    <Button
+                      onClick={handleSaveImage}
+                      disabled={!selectedImage || isSaving}
+                    >
+                      {isSaving ? 'Saving...' : 'Save Image'}
+                    </Button>
+                  )}
                 </StyledButtonGroup>
                 <StyledImageCountContainer>
                   {!isLoading && images.length > 0 && (
@@ -276,7 +296,7 @@ export const ImageSelector = ({ polish, onImageSaved }: ImageSelectorProps) => {
 
           {!isCollapsed && (
             <>
-              {polish.imageUrl && (
+              {polish.imageUrl && polish.imageUrl !== 'n/a' && (
                 <StyledCurrentImageContainer>
                   <h3>Current Image</h3>
                   <StyledCurrentImage
@@ -288,7 +308,7 @@ export const ImageSelector = ({ polish, onImageSaved }: ImageSelectorProps) => {
 
               <ImagePasteZone onImagePasted={handlePastedImage} />
 
-              {selectedImage && !polish.link && (
+              {selectedImage && !polish.link && selectedImage !== 'n/a' && (
                 <StyledImagePreviewContainer>
                   <h3>Preview Image</h3>
                   <StyledImage
@@ -332,7 +352,7 @@ export const ImageSelector = ({ polish, onImageSaved }: ImageSelectorProps) => {
                             target.replaceWith(hiddenImg);
                           }}
                           onClick={() => handleImageSelect(img)}
-                          $isSelected={selectedImage === img}
+                          $isSelected={bulkMode ? externalSelectedImage === img : selectedImage === img}
                         />
                       </StyledImageContainer>
                     ))}

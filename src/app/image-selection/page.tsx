@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { ImageSelector } from '@/components/ImageSelector';
 import { PageHeader } from '@/components/PageHeader';
+import { Button } from '@/components/Button';
 import {
   StyledPagination,
   StyledPaginationButton,
@@ -25,6 +26,11 @@ interface PaginatedResponse {
   totalPages: number;
 }
 
+interface SelectedImage {
+  polishId: string;
+  imageUrl: string;
+}
+
 export default function ImageSelectionPage() {
   const router = useRouter();
   const [polishes, setPolishes] = useState<Polish[]>([]);
@@ -33,15 +39,19 @@ export default function ImageSelectionPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [totalItems, setTotalItems] = useState(0);
+  const [selectedImages, setSelectedImages] = useState<Record<string, string>>({});
+  const [isSavingBulk, setIsSavingBulk] = useState(false);
 
   const fetchPolishes = async () => {
     try {
       const response = await fetch(`/api/polishes?hasImage=false&page=${currentPage}&limit=10`);
       if (!response.ok) throw new Error('Failed to fetch polish details');
       const data: PaginatedResponse = await response.json();
-      setPolishes(data.polishes);
-      setTotalPages(data.totalPages);
-      setTotalItems(data.total);
+      // Filter out polishes with imageUrl set to 'n/a'
+      const filteredPolishes = data.polishes.filter(polish => polish.imageUrl !== 'n/a');
+      setPolishes(filteredPolishes);
+      setTotalPages(Math.ceil((data.total - (data.polishes.length - filteredPolishes.length)) / 10));
+      setTotalItems(data.total - (data.polishes.length - filteredPolishes.length));
     } catch (error) {
       setError(error instanceof Error ? error.message : 'An error occurred');
     } finally {
@@ -53,16 +63,63 @@ export default function ImageSelectionPage() {
     fetchPolishes();
   }, [currentPage]);
 
-  const handleImageSaved = async (id: string) => {
-    // Remove the saved polish from the current page
-    setPolishes(prevPolishes => prevPolishes.filter(p => p.id !== id));
+  const handleImageSelected = (polishId: string, imageUrl: string | null) => {
+    setSelectedImages(prev => {
+      if (imageUrl === null) {
+        const newState = { ...prev };
+        delete newState[polishId];
+        return newState;
+      }
+      return { ...prev, [polishId]: imageUrl };
+    });
+  };
 
-    // If this was the last polish on the page and not the first page, go to previous page
-    if (polishes.length === 1 && currentPage > 1) {
-      setCurrentPage(prev => prev - 1);
-    } else {
-      // Refetch the data to get the updated list
-      await fetchPolishes();
+  const handleBulkSave = async () => {
+    if (Object.keys(selectedImages).length === 0) return;
+
+    try {
+      setIsSavingBulk(true);
+      const updates = Object.entries(selectedImages).map(([polishId, imageUrl]) => ({
+        polishId,
+        imageUrl
+      }));
+
+      const response = await fetch('/api/update-bulk-images', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ updates }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to save images');
+      }
+
+      const data = await response.json();
+
+      // Remove successful updates from the list
+      const successfulIds = data.results
+        .filter((result: { success: boolean }) => result.success)
+        .map((result: { id: string }) => result.id);
+
+      // Remove successful polishes from the page
+      setPolishes(prev => prev.filter(p => !successfulIds.includes(p.id)));
+
+      // Clear selected images
+      setSelectedImages({});
+
+      // If this was the last polish on the page and not the first page, go to previous page
+      if (polishes.length === successfulIds.length && currentPage > 1) {
+        setCurrentPage(prev => prev - 1);
+      } else {
+        // Refetch the data to get the updated list
+        await fetchPolishes();
+      }
+    } catch (error) {
+      console.error('Error saving images:', error);
+    } finally {
+      setIsSavingBulk(false);
     }
   };
 
@@ -98,13 +155,24 @@ export default function ImageSelectionPage() {
     <>
       <PageHeader
         title="Select Images"
-        description='Click on an image to select it, then click "Save" to update the database.'
+        description='Select images for multiple polishes and save them all at once.'
       />
+      {Object.keys(selectedImages).length > 0 && (
+        <Button
+          onClick={handleBulkSave}
+          disabled={isSavingBulk}
+          style={{ margin: '20px 0' }}
+        >
+          {isSavingBulk ? 'Saving...' : `Save ${Object.keys(selectedImages).length} Selected Images`}
+        </Button>
+      )}
       {polishes.map(polish => (
         <ImageSelector
           key={polish.id}
           polish={polish}
-          onImageSaved={() => handleImageSaved(polish.id)}
+          bulkMode={true}
+          onImageSelected={handleImageSelected}
+          selectedImage={selectedImages[polish.id]}
         />
       ))}
       <StyledPagination>
