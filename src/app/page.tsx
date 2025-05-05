@@ -35,6 +35,7 @@ export default function Home() {
   const [error, setError] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [totalPolishes, setTotalPolishes] = useState(0);
 
   // Get current filters from URL
   const currentFilters = {
@@ -100,6 +101,7 @@ export default function Home() {
         setPolishes(data.polishes);
         setCurrentPage(data.page);
         setTotalPages(data.totalPages);
+        setTotalPolishes(data.total);
       } catch (error) {
         setError(error instanceof Error ? error.message : 'An error occurred');
       } finally {
@@ -143,6 +145,7 @@ export default function Home() {
         colors={colors}
         finishes={finishes}
         currentFilters={currentFilters}
+        totalPolishes={totalPolishes}
       />
       <StyledPagination>
         <button

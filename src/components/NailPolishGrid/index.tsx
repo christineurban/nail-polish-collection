@@ -34,6 +34,7 @@ interface NailPolishGridProps {
     hasImage: string;
     isOld: string;
   };
+  totalPolishes: number;
 }
 
 export const NailPolishGrid = ({
@@ -42,6 +43,7 @@ export const NailPolishGrid = ({
   finishes,
   colors,
   currentFilters,
+  totalPolishes,
 }: NailPolishGridProps) => {
   const router = useRouter();
 
@@ -56,6 +58,8 @@ export const NailPolishGrid = ({
         finishes={finishes}
         colors={colors}
         currentFilters={currentFilters}
+        totalPolishes={totalPolishes}
+        displayedPolishes={polishes.length}
       />
       <StyledGrid>
         {polishes.length > 0 ? (

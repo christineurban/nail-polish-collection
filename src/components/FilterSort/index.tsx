@@ -18,6 +18,7 @@ import {
   StyledColorOption,
   StyledClearButton,
   StyledOption,
+  StyledCountDisplay,
 } from './index.styled';
 import { StyledTag } from '@/components/fields/MultiSelect/index.styled';
 
@@ -35,9 +36,18 @@ interface FilterSortProps {
     hasImage: string;
     isOld: string;
   };
+  totalPolishes: number;
+  displayedPolishes: number;
 }
 
-export const FilterSort = ({ brands, finishes, colors, currentFilters }: FilterSortProps) => {
+export const FilterSort = ({
+  brands,
+  finishes,
+  colors,
+  currentFilters,
+  totalPolishes,
+  displayedPolishes,
+}: FilterSortProps) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [filters, setFilters] = useState(currentFilters);
@@ -162,6 +172,9 @@ export const FilterSort = ({ brands, finishes, colors, currentFilters }: FilterS
 
   return (
     <StyledFiltersContainer>
+      <StyledCountDisplay>
+        Showing {displayedPolishes} of {totalPolishes} polishes
+      </StyledCountDisplay>
       <StyledContainer>
         <StyledFilterGroup>
           <StyledFilterHeader>

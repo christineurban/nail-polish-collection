@@ -6,6 +6,10 @@ export const StyledFiltersContainer = styled.div`
   flex-direction: column;
   gap: 1.5rem;
   width: 100%;
+  background-color: ${({ theme }) => theme.colors.background.secondary};
+  padding: 1rem;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
 
   @media (min-width: 768px) {
     gap: 2rem;
@@ -197,4 +201,10 @@ export const StyledOption = styled.label`
       height: 16px;
     }
   }
+`;
+
+export const StyledCountDisplay = styled.div`
+  color: ${({ theme }) => theme.colors.text.secondary};
+  font-size: 0.875rem;
+  text-align: right;
 `;
