@@ -44,6 +44,26 @@ async function uploadImageToSupabase(imageUrl: string, polishId: string): Promis
   return publicUrl;
 }
 
+async function deleteImageFromSupabase(imageUrl: string) {
+  try {
+    // Extract the filename from the URL
+    const url = new URL(imageUrl);
+    const pathParts = url.pathname.split('/');
+    const fileName = pathParts[pathParts.length - 1];
+
+    // Delete the file from storage
+    const { error } = await supabaseAdmin.storage
+      .from('nail-polish-images')
+      .remove([fileName]);
+
+    if (error) {
+      console.error('Error deleting old image from storage:', error);
+    }
+  } catch (error) {
+    console.error('Error parsing old image URL:', error);
+  }
+}
+
 export async function POST(request: Request) {
   try {
     const { id, imageUrl } = await request.json();
@@ -82,10 +102,21 @@ export async function POST(request: Request) {
       );
     }
 
-    // Upload image to Supabase storage
+    // Get current polish data to check for existing image
+    const currentPolish = await prisma.nail_polish.findUnique({
+      where: { id },
+      select: { image_url: true }
+    });
+
+    // Upload new image to Supabase storage
     const supabaseUrl = await uploadImageToSupabase(imageUrl.trim(), id);
 
-    // Update database with Supabase URL
+    // If there was an existing image, delete it from storage
+    if (currentPolish?.image_url) {
+      await deleteImageFromSupabase(currentPolish.image_url);
+    }
+
+    // Update database with new Supabase URL
     const updatedPolish = await prisma.nail_polish.update({
       where: { id },
       data: {
@@ -100,7 +131,7 @@ export async function POST(request: Request) {
       message: 'Image updated successfully'
     });
 
-  } catch (error: unknown) {
+  } catch (error) {
     console.error('Error updating image:', error);
 
     // Handle Prisma-specific errors
