@@ -5,7 +5,7 @@ import { formStyles } from '@/theme/form';
 import { Theme } from '@/theme/types';
 
 interface StyledButtonProps {
-  $variant?: 'danger' | 'secondary';
+  $variant?: 'danger' | 'secondary' | 'tertiary';
   $fullWidth?: boolean;
 }
 
@@ -41,18 +41,33 @@ export const StyledButton = styled.button<StyledButtonProps>`
     transform: none;
   }
 
-  ${props => props.$variant === 'danger' && `
+  ${({ theme, $variant }) => $variant === 'danger' && `
     background: #dc3545;
     &:hover {
       background: #c82333;
     }
   `}
 
-  ${props => props.$variant === 'secondary' && `
-    background: ${({ theme }: { theme: Theme }) => theme.colors.gray[200]};
-    color: ${({ theme }: { theme: Theme }) => theme.colors.gray[700]};
+  ${({ theme, $variant }) => $variant === 'secondary' && `
+    background: ${theme.colors.gray[200]};
+    color: ${theme.colors.gray[700]};
     &:hover {
-      background: ${({ theme }: { theme: Theme }) => theme.colors.gray[300]};
+      background: ${theme.colors.gray[300]};
+    }
+  `}
+
+  ${({ theme, $variant }) => $variant === 'tertiary' && `
+    background: transparent;
+    border: 2px solid ${theme.colors.gray[200]};
+    color: ${theme.colors.gray[700]};
+    &:hover {
+      background: ${theme.colors.gray[50]};
+      border-color: ${theme.colors.gray[300]};
+    }
+    &:disabled {
+      background: transparent;
+      border-color: ${theme.colors.gray[100]};
+      color: ${theme.colors.gray[400]};
     }
   `}
 `;
