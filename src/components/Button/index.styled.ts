@@ -58,15 +58,16 @@ export const StyledButton = styled.button<StyledButtonProps>`
 
   ${({ theme, $variant }) => $variant === 'tertiary' && `
     background: transparent;
-    border: 2px solid ${theme.colors.gray[200]};
-    color: ${theme.colors.gray[700]};
+    border: 2px solid ${theme.colors.primary[500]};
+    color: ${theme.colors.primary[500]};
     &:hover {
-      background: ${theme.colors.gray[50]};
-      border-color: ${theme.colors.gray[300]};
+      background: ${theme.colors.primary[50]};
+      border-color: ${theme.colors.primary[600]};
+      color: ${theme.colors.primary[600]};
     }
     &:disabled {
       background: transparent;
-      border-color: ${theme.colors.gray[100]};
+      border-color: ${theme.colors.gray[300]};
       color: ${theme.colors.gray[400]};
     }
   `}

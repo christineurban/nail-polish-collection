@@ -267,7 +267,7 @@ export const ImageSelector = ({
                   <Button
                     onClick={handleMarkNoImage}
                     disabled={bulkMode ? false : isSaving}
-                    $variant="secondary"
+                    $variant="tertiary"
                   >
                     Mark as No Image Available
                   </Button>

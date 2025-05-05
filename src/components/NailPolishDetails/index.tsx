@@ -144,7 +144,7 @@ export const NailPolishDetails = ({ polish }: NailPolishDetailsProps) => {
               <Button
                 onClick={handleMarkNoImage}
                 disabled={isMarkingNoImage}
-                $variant="secondary"
+                $variant="tertiary"
               >
                 Mark as No Image Available
               </Button>

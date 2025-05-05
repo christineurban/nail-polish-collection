@@ -47,11 +47,9 @@ export default function ImageSelectionPage() {
       const response = await fetch(`/api/polishes?hasImage=false&page=${currentPage}&limit=25`);
       if (!response.ok) throw new Error('Failed to fetch polish details');
       const data: PaginatedResponse = await response.json();
-      // Filter out polishes with imageUrl set to 'n/a'
-      const filteredPolishes = data.polishes.filter(polish => polish.imageUrl !== 'n/a');
-      setPolishes(filteredPolishes);
-      setTotalPages(Math.ceil((data.total - (data.polishes.length - filteredPolishes.length)) / 25));
-      setTotalItems(data.total - (data.polishes.length - filteredPolishes.length));
+      setPolishes(data.polishes);
+      setTotalPages(data.totalPages);
+      setTotalItems(data.total);
     } catch (error) {
       setError(error instanceof Error ? error.message : 'An error occurred');
     } finally {

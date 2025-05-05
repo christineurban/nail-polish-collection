@@ -29,10 +29,9 @@ export async function GET(request: Request) {
           }
         }];
       } else {
-        where.OR = [
-          { image_url: null },
-          { image_url: 'n/a' }
-        ];
+        where.AND = [{
+          image_url: null // Only include polishes with no image, exclude 'n/a'
+        }];
       }
     }
 
@@ -71,7 +70,6 @@ export async function GET(request: Request) {
           }
         }
       };
-
     }
 
     console.log('Query where clause:', JSON.stringify(where, null, 2));

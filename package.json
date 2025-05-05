@@ -12,7 +12,8 @@
     "prisma:migrate-nail-polishes": "node --import tsx prisma/migrate-nail-polishes.ts",
     "ts": "node --import tsx",
     "seed:from-csv": "node --import tsx scripts/seed-from-csv.ts",
-    "backup": "node --import tsx scripts/backup-db.ts"
+    "backup": "node --import tsx scripts/backup-db.ts",
+    "backup:images": "node --import tsx scripts/backup-images.ts"
   },
   "prisma": {
     "seed": "node --import tsx prisma/seed.ts",
@@ -23,9 +24,11 @@
     "@supabase/auth-helpers-nextjs": "^0.10.0",
     "@supabase/ssr": "^0.6.1",
     "@supabase/supabase-js": "^2.39.3",
+    "@types/dotenv": "^6.1.1",
     "axios": "^1.9.0",
     "cheerio": "^1.0.0",
     "csv-parse": "^5.5.3",
+    "dotenv": "^16.5.0",
     "framer-motion": "^12.9.2",
     "next": "14.1.0",
     "node-fetch": "^3.3.2",
