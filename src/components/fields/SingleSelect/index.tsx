@@ -5,6 +5,7 @@ import {
   StyledOption,
 } from './index.styled';
 import { StyledDropdown } from '../index.styled';
+import type { CSSProperties } from 'react';
 
 interface SingleSelectProps {
   value: string;
@@ -15,8 +16,11 @@ interface SingleSelectProps {
 
 export const SingleSelect = ({ value, options, placeholder = 'Select...', onChange }: SingleSelectProps) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filteredOptions, setFilteredOptions] = useState(options);
   const containerRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -25,6 +29,7 @@ export const SingleSelect = ({ value, options, placeholder = 'Select...', onChan
         !containerRef.current.contains(event.target as Node)
       ) {
         setIsOpen(false);
+        setSearchTerm('');
       }
     };
 
@@ -33,6 +38,20 @@ export const SingleSelect = ({ value, options, placeholder = 'Select...', onChan
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
+
+  useEffect(() => {
+    if (isOpen && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [isOpen]);
+
+  useEffect(() => {
+    setFilteredOptions(
+      options.filter(option =>
+        option.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    );
+  }, [searchTerm, options]);
 
   const handleButtonClick = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -45,6 +64,27 @@ export const SingleSelect = ({ value, options, placeholder = 'Select...', onChan
     e.stopPropagation();
     onChange(option);
     setIsOpen(false);
+    setSearchTerm('');
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter' && filteredOptions.length > 0) {
+      onChange(filteredOptions[0]);
+      setIsOpen(false);
+      setSearchTerm('');
+    } else if (e.key === 'Escape') {
+      setIsOpen(false);
+      setSearchTerm('');
+    }
+  };
+
+  const inputStyles: CSSProperties = {
+    width: '100%',
+    height: '40px',
+    padding: '0.5rem 1rem',
+    border: '1px solid #ccc',
+    borderRadius: '4px',
+    fontSize: '1rem',
   };
 
   return (
@@ -54,11 +94,23 @@ export const SingleSelect = ({ value, options, placeholder = 'Select...', onChan
         type="button"
         onClick={handleButtonClick}
         $isOpen={isOpen}
+        style={{ display: isOpen ? 'none' : 'flex' }}
       >
         {value || placeholder}
       </StyledButton>
+      {isOpen && (
+        <input
+          ref={inputRef}
+          type="text"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          onKeyDown={handleKeyDown}
+          placeholder="Type to search..."
+          style={inputStyles}
+        />
+      )}
       <StyledDropdown $isOpen={isOpen}>
-        {options.map(option => (
+        {filteredOptions.map(option => (
           <StyledOption
             key={option}
             $isSelected={value === option}
@@ -67,6 +119,11 @@ export const SingleSelect = ({ value, options, placeholder = 'Select...', onChan
             {option}
           </StyledOption>
         ))}
+        {filteredOptions.length === 0 && (
+          <div style={{ padding: '0.75rem 1rem', color: '#666' }}>
+            No matches found
+          </div>
+        )}
       </StyledDropdown>
     </StyledContainer>
   );
