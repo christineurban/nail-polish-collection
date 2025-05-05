@@ -17,10 +17,13 @@ export async function GET() {
 
     console.log('Polish data from Prisma:', polishData);
 
-    // Get storage files using admin client
+    // Get storage files using admin client with a high limit
     const { data: files, error: listError } = await supabaseAdmin.storage
       .from('nail-polish-images')
-      .list();
+      .list('', {
+        limit: 10000, // Set a very high limit that's unlikely to be reached
+        offset: 0
+      });
 
     if (listError) {
       console.error('Error listing files:', listError);

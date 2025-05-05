@@ -194,9 +194,9 @@ export default function ImageManager() {
       <StyledContainer>
         <PageHeader
           title="Image Manager"
-          description="All Images Matched"
+          description="Match unmatched images to nail polishes"
         />
-        <p>All {totalImages} images in storage have been matched to polishes. Upload new images to match them with polishes.</p>
+        <p>All {totalImages} images in storage have been matched to polishes.</p>
       </StyledContainer>
     );
   }
