@@ -96,15 +96,9 @@ export const NailPolishDetails = ({ polish }: NailPolishDetailsProps) => {
           <StyledImageActions>
             <Button
               onClick={() => router.push(`/polish/${polish.id}/select-image`)}
-              disabled={!polish.link}
             >
               {polish.imageUrl ? 'Change Image' : 'Add Image'}
             </Button>
-            {!polish.link && (
-              <StyledDisabledMessage>
-                To add an image, you need to add a source link to a website that has images of the polish first. Edit the polish details to add a link.
-              </StyledDisabledMessage>
-            )}
             {polish.imageUrl && (
               <Button
                 onClick={handleRemoveImage}

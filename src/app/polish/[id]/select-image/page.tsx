@@ -78,41 +78,26 @@ export default function SelectImagePage({ params }: { params: { id: string } }) 
     );
   }
 
-  if (!polish.link) {
-    return (
-      <div>
-        <PageHeader
-          title={`${polish.brand} - ${polish.name}`}
-          description="No source link available"
-        />
-        <StyledErrorMessage>
-          {"To select images for this polish, you need to add a link to a "
-          + "website that has images of the polish first."}
-        </StyledErrorMessage>
-        <StyledLinkContainer>
-          <div>{"You can either:"}</div>
-          <StyledLink href={`/polish/${params.id}/edit`}>
-            Go to Edit Page to add a link
-          </StyledLink>
-          <div>or</div>
-          <StyledLink href="/">
-            Return to Home
-          </StyledLink>
-        </StyledLinkContainer>
-      </div>
-    );
-  }
-
   return (
     <>
       <PageHeader
         title={`Select Image for ${polish.brand} - ${polish.name}`}
-        description='Click on an image to select it, then click "Save" to update the database.'
+        description={polish.link
+          ? 'Click on an image to select it, then click "Save" to update the database.'
+          : 'Paste an image from your clipboard to add it to this polish.'}
       />
       <ImageSelector
         polish={polish}
         onImageSaved={handleImageSaved}
       />
+      {!polish.link && (
+        <StyledLinkContainer>
+          <StyledDivider>or</StyledDivider>
+          <StyledLink href={`/polish/${params.id}/edit`}>
+            Add a source link to fetch images automatically
+          </StyledLink>
+        </StyledLinkContainer>
+      )}
     </>
   );
 }
