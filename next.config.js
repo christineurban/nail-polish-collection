@@ -21,7 +21,7 @@ const nextConfig = {
       displayName: true,
       ssr: true,
       fileName: true,
-      meaninglessFileNames: ['index', 'index.styled'],
+      meaninglessFileNames: ['index', 'index.styled', 'page', 'page.styled'],
     },
   },
   webpack: (config, { isServer }) => {

@@ -3,6 +3,7 @@
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import styled from 'styled-components';
+import { useState } from 'react';
 
 const StyledNav = styled.nav`
   background: ${({ theme }) => theme.colors.background.gradient};
@@ -23,8 +24,9 @@ const StyledContainer = styled.div`
   align-items: center;
   gap: 1rem;
 
-  @media (max-width: 640px) {
+  @media (max-width: 768px) {
     padding: 0 1.5rem;
+    justify-content: space-between;
   }
 `;
 
@@ -80,28 +82,87 @@ const StyledLink = styled(Link)<{ $isActive: boolean }>`
   }
 `;
 
+const StyledLinks = styled.div<{ $isOpen: boolean }>`
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  @media (max-width: 768px) {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    background: ${({ theme }) => theme.colors.background.gradient};
+    padding: 1rem;
+    gap: 0.5rem;
+    transform: translateY(${({ $isOpen }) => ($isOpen ? '0' : '-100%')});
+    opacity: ${({ $isOpen }) => ($isOpen ? '1' : '0')};
+    visibility: ${({ $isOpen }) => ($isOpen ? 'visible' : 'hidden')};
+    transition: all 0.3s ease;
+    box-shadow: ${({ theme }) => theme.shadows.md};
+    backdrop-filter: blur(8px);
+  }
+`;
+
+const StyledHamburger = styled.button`
+  display: none;
+  background: none;
+  border: none;
+  color: ${({ theme }) => theme.colors.text.inverse};
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  transition: all ${({ theme }) => theme.transitions.base};
+
+  &:hover {
+    transform: scale(1.1);
+  }
+
+  @media (max-width: 768px) {
+    display: block;
+  }
+`;
+
 export function Nav() {
   const pathname = usePathname();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const routes = [
     { path: '/polish/add', label: 'Add New Polish' },
     { path: '/image-selection', label: 'Select Missing Images' },
+    { path: '/attributes', label: 'Attributes' },
+    { path: '/stats', label: 'Stats' },
   ];
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
 
   return (
     <StyledNav>
       <StyledContainer>
         <StyledLogo href="/">My Nail Polish Collection 💅🏼</StyledLogo>
-        {routes.map(({ path, label }) => (
-          <StyledLink
-            key={path}
-            href={path}
-            $isActive={pathname === path}
-            aria-current={pathname === path ? 'page' : undefined}
-          >
-            {label}
-          </StyledLink>
-        ))}
+        <StyledHamburger
+          onClick={toggleMenu}
+          aria-label="Toggle navigation menu"
+          aria-expanded={isMenuOpen}
+        >
+          ☰
+        </StyledHamburger>
+        <StyledLinks $isOpen={isMenuOpen}>
+          {routes.map(({ path, label }) => (
+            <StyledLink
+              key={path}
+              href={path}
+              $isActive={pathname === path}
+              aria-current={pathname === path ? 'page' : undefined}
+              onClick={() => setIsMenuOpen(false)}
+            >
+              {label}
+            </StyledLink>
+          ))}
+        </StyledLinks>
       </StyledContainer>
     </StyledNav>
   );

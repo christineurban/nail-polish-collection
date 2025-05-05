@@ -6,10 +6,6 @@ import styled from 'styled-components';
 import { Tabs } from '@/components/Tabs';
 import { useState } from 'react';
 
-const StyledContainer = styled.div`
-  padding: 1rem;
-`;
-
 export default function AttributesPage() {
   const [activeTab, setActiveTab] = useState('brands');
 
@@ -37,13 +33,11 @@ export default function AttributesPage() {
         title="Manage Attributes"
         description="Add, view, and delete brands, colors, and finishes. Attributes can only be deleted if they are not used by any polish."
       />
-      <StyledContainer>
-        <Tabs
-          tabs={tabs}
-          activeTab={activeTab}
-          onTabChange={setActiveTab}
-        />
-      </StyledContainer>
+      <Tabs
+        tabs={tabs}
+        activeTab={activeTab}
+        onTabChange={setActiveTab}
+      />
     </>
   );
 }

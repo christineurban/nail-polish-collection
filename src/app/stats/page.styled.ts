@@ -1,38 +1,33 @@
-'use client';
-
 import styled from 'styled-components';
 
-export const StyledStatsContainer = styled.div`
-  h1 {
-    text-align: center;
-    margin-bottom: 2rem;
-    color: ${({ theme }) => theme.colors.primary[700]};
-  }
+export const StyledStatsGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
 `;
 
-export const StyledTotalStats = styled.div`
-  display: flex;
-  justify-content: center;
-  gap: 4rem;
-  margin-bottom: 3rem;
+export const StyledStatCard = styled.div`
+  background: ${({ theme }) => theme.colors.background.secondary};
+  border-radius: ${({ theme }) => theme.borderRadius.lg};
+  padding: 1.5rem;
+  box-shadow: ${({ theme }) => theme.shadows.sm};
 
-  div {
-    text-align: center;
-    padding: 2rem;
-    background-color: ${({ theme }) => theme.colors.background};
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    min-width: 200px;
+  h3 {
+    margin: 0 0 0.5rem;
+    color: ${({ theme }) => theme.colors.text.primary};
+    font-size: ${({ theme }) => theme.typography.fontSize.lg};
+  }
 
-    h3 {
-      color: ${({ theme }) => theme.colors.primary[600]};
-      margin-bottom: 1rem;
-    }
+  .value {
+    font-size: ${({ theme }) => theme.typography.fontSize['2xl']};
+    font-weight: ${({ theme }) => theme.typography.fontWeights.bold};
+    color: ${({ theme }) => theme.colors.primary[500]};
+    margin: 0.5rem 0;
+  }
 
-    p {
-      font-size: 2rem;
-      font-weight: 600;
-      color: ${({ theme }) => theme.colors.primary[500]};
-    }
+  .description {
+    color: ${({ theme }) => theme.colors.text.secondary};
+    font-size: ${({ theme }) => theme.typography.fontSize.sm};
   }
 `;
