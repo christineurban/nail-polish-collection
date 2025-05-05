@@ -60,23 +60,23 @@ model finishes {
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model nail_polish {
-  id            String               @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  image_url     String?
-  brand_id      String               @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  name          String
-  link          String?
-  coats         Int?                 @db.SmallInt
-  notes         String?
-  created_at    DateTime             @default(now()) @db.Timestamptz(6)
-  updated_at    DateTime             @db.Timestamptz(6)
-  rating        Rating?
-  empty_bottles Int                  @default(0) @db.SmallInt
-  last_used     DateTime?            @db.Timestamptz(6)
-  total_bottles Int                  @default(1) @db.SmallInt
-  is_old        Boolean?
-  brands        brands               @relation(fields: [brand_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  colors        nail_polish_color[]
-  finishes      nail_polish_finish[]
+  id                  String               @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  image_url           String?
+  brand_id            String               @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name                String
+  link                String?
+  coats               Int?                 @db.SmallInt
+  notes               String?
+  created_at          DateTime             @default(now()) @db.Timestamptz(6)
+  updated_at          DateTime             @db.Timestamptz(6)
+  rating              Rating?
+  empty_bottles       Int                  @default(0) @db.SmallInt
+  last_used           DateTime?            @db.Timestamptz(6)
+  total_bottles       Int                  @default(1) @db.SmallInt
+  is_old              Boolean?
+  brands              brands               @relation(fields: [brand_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  colors              nail_polish_color[]
+  finishes            nail_polish_finish[]
 
   @@unique([brand_id, name])
   @@map("nail_polish")

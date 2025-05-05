@@ -1,0 +1,36 @@
+name: Database Backup
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # Run daily at midnight
+  workflow_dispatch:  # Allow manual trigger
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run backup
+        run: npm run backup
+
+      - name: Create backup PR
+        uses: peter-evans/create-pull-request@v5
+        with:
+          commit-message: "chore: Database backup ${{ github.run_number }}"
+          title: "chore: Database backup ${{ github.run_number }}"
+          body: "Automated database backup"
+          branch: backup/db-${{ github.run_number }}
+          base: main

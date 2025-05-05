@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, type nail_polish } from '@prisma/client';
 import { NextResponse } from 'next/server';
 
 const prisma = new PrismaClient();
@@ -21,7 +21,16 @@ export async function GET(request: Request) {
 
     // Add image filter if provided
     if (hasImage !== null) {
-      where.image_url = hasImage === 'true' ? { not: null } : null;
+      if (hasImage === 'true') {
+        where.image_url = {
+          notIn: [null, 'n/a']
+        };
+      } else {
+        where.OR = [
+          { image_url: null },
+          { image_url: 'n/a' }
+        ];
+      }
     }
 
     // Add search filter if provided
@@ -105,11 +114,12 @@ export async function GET(request: Request) {
         id: polish.id,
         name: polish.name,
         link: polish.link,
-        imageUrl: polish.image_url,
+        imageUrl: polish.image_url === 'n/a' ? null : polish.image_url,
         brand: polish.brands.name,
         rating: polish.rating,
         colors: polish.colors.map(c => c.color.name),
-        finishes: polish.finishes.map(f => f.finish.name)
+        finishes: polish.finishes.map(f => f.finish.name),
+        noImageAvailable: polish.image_url === 'n/a'
       })),
       total,
       page,

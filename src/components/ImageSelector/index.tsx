@@ -16,6 +16,7 @@ import {
   StyledCollapseText,
   StyledImageCount,
   StyledPolishLink,
+  StyledImagePreviewContainer,
 } from './index.styled';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/Button';
@@ -125,6 +126,44 @@ export const ImageSelector = ({ polish, onImageSaved }: ImageSelectorProps) => {
     }
   };
 
+  const handleMarkNoImage = async () => {
+    try {
+      setIsSaving(true);
+
+      const response = await fetch('/api/update-image', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          id: polish.id,
+          imageUrl: 'n/a'
+        }),
+      });
+
+      if (response.ok) {
+        setSuccessMessage('Marked as no image available!');
+        setIsSuccess(true);
+        if (onImageSaved) {
+          setTimeout(() => {
+            onImageSaved();
+          }, 1500);
+        } else {
+          setTimeout(() => {
+            setIsSuccess(false);
+          }, 1500);
+        }
+      } else {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to mark as no image available');
+      }
+    } catch (error) {
+      console.error('Error marking as no image available:', error);
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
   const fetchImages = async () => {
     if (!polish.link) return;
 
@@ -177,41 +216,53 @@ export const ImageSelector = ({ polish, onImageSaved }: ImageSelectorProps) => {
       >
         <StyledPolishCard>
           <StyledMetadata>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <StyledPolishLink href={`/polish/${polish.id}`}>
-                <h3>{polish.brand} - {polish.name}</h3>
-              </StyledPolishLink>
-              <StyledCollapseText onClick={handleCollapse}>
-                {isCollapsed ? 'Show Images' : 'Hide Images'}
-              </StyledCollapseText>
-            </div>
-            {polish.link ? (
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
               <div>
-                <p>
-                  Link: <a href={polish.link} target="_blank" rel="noopener noreferrer">
-                    {polish.link}
-                  </a>
-                </p>
-                  <a href={`/polish/${polish.id}/edit?returnTo=/image-selection`}>Edit link</a>
+                <StyledPolishLink href={`/polish/${polish.id}`}>
+                  <h3>{polish.brand} - {polish.name}</h3>
+                </StyledPolishLink>
+                {polish.link ? (
+                  <div style={{ marginTop: '8px' }}>
+                    <p>
+                      Link: <a href={polish.link} target="_blank" rel="noopener noreferrer">
+                        {polish.link}
+                      </a>
+                    </p>
+                    <a href={`/polish/${polish.id}/edit?returnTo=/image-selection`}>Edit link</a>
+                  </div>
+                ) : (
+                  <p style={{ marginTop: '8px' }}>No source link available. <a href={`/polish/${polish.id}/edit?returnTo=/image-selection`}>Add a link</a></p>
+                )}
               </div>
-            ) : (
-              <p>No source link available. <a href={`/polish/${polish.id}/edit?returnTo=/image-selection`}>Add a link</a></p>
-            )}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', alignItems: 'flex-end' }}>
+                <div style={{ display: 'flex', gap: '8px' }}>
+                  <Button
+                    onClick={handleMarkNoImage}
+                    disabled={isSaving}
+                    $variant="secondary"
+                  >
+                    Mark as No Image Available
+                  </Button>
+                  <Button
+                    onClick={handleSaveImage}
+                    disabled={!selectedImage || isSaving}
+                  >
+                    {isSaving ? 'Saving...' : 'Save Image'}
+                  </Button>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+                  {!isLoading && images.length > 0 && (
+                    <StyledImageCount>
+                      {images.length} image{images.length !== 1 ? 's' : ''} found
+                    </StyledImageCount>
+                  )}
+                  <StyledCollapseText onClick={handleCollapse}>
+                    {isCollapsed ? 'Show Images' : 'Hide Images'}
+                  </StyledCollapseText>
+                </div>
+              </div>
+            </div>
           </StyledMetadata>
-
-          <div style={{ position: 'absolute', top: '20px', right: '20px', zIndex: 5, display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '8px' }}>
-            <Button
-              onClick={handleSaveImage}
-              disabled={!selectedImage || isSaving}
-            >
-              {isSaving ? 'Saving...' : 'Save Image'}
-            </Button>
-            {!isLoading && images.length > 0 && (
-              <StyledImageCount>
-                {images.length} image{images.length !== 1 ? 's' : ''} found
-              </StyledImageCount>
-            )}
-          </div>
 
           {!isCollapsed && (
             <>
@@ -227,6 +278,16 @@ export const ImageSelector = ({ polish, onImageSaved }: ImageSelectorProps) => {
               )}
 
               <ImagePasteZone onImagePasted={handlePastedImage} />
+
+              {selectedImage && !polish.link && (
+                <StyledImagePreviewContainer>
+                  <h3>Preview Image</h3>
+                  <StyledImage
+                    src={selectedImage}
+                    alt={`Preview image for ${polish.brand} - ${polish.name}`}
+                  />
+                </StyledImagePreviewContainer>
+              )}
 
               {!polish.link ? (
                 <></>

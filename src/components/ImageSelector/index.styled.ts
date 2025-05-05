@@ -76,7 +76,6 @@ export const StyledRemoveButton = styled.button<{ $hasSelectedImage?: boolean }>
 
 export const StyledMetadata = styled.div`
   margin-bottom: 10px;
-  padding-right: 150px; /* Make room for the save button */
 `;
 
 export const StyledNoImages = styled.p`
@@ -176,5 +175,26 @@ export const StyledPolishLink = styled(Link)`
   h3 {
     margin: 0;
     display: inline-block;
+  }
+`;
+
+export const StyledImagePreviewContainer = styled.div`
+  margin-top: 20px;
+  text-align: center;
+  padding: 20px;
+  background: ${({ theme }) => theme.colors.gray[50]};
+  border-radius: 8px;
+  border: 1px dashed ${({ theme }) => theme.colors.gray[300]};
+
+  h3 {
+    margin-bottom: 16px;
+    color: ${({ theme }) => theme.colors.gray[700]};
+  }
+
+  ${StyledImage} {
+    max-width: 300px;
+    margin: 0 auto;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
 `;

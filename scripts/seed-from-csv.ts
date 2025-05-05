@@ -150,6 +150,7 @@ async function seedFromCsv() {
             empty_bottles: polish.empty_bottles,
             total_bottles: polish.total_bottles,
             last_used: polish.last_used,
+            no_image_available: polish.no_image_available,
             updated_at: new Date(),
             colors: {
               create: polish.colors.map(color => ({

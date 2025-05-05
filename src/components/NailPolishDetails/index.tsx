@@ -39,6 +39,7 @@ interface NailPolishDetailsProps {
 
 export const NailPolishDetails = ({ polish }: NailPolishDetailsProps) => {
   const [isRemovingImage, setIsRemovingImage] = useState(false);
+  const [isMarkingNoImage, setIsMarkingNoImage] = useState(false);
   const router = useRouter();
   const searchParams = useSearchParams();
   const returnTo = searchParams.get('returnTo');
@@ -74,6 +75,33 @@ export const NailPolishDetails = ({ polish }: NailPolishDetailsProps) => {
     }
   };
 
+  const handleMarkNoImage = async () => {
+    try {
+      setIsMarkingNoImage(true);
+      const response = await fetch('/api/update-image', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          id: polish.id,
+          imageUrl: 'n/a'
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to mark as no image available');
+      }
+
+      window.location.reload();
+    } catch (error) {
+      console.error('Error marking as no image available:', error);
+      alert('Failed to mark as no image available. Please try again.');
+    } finally {
+      setIsMarkingNoImage(false);
+    }
+  };
+
   return (
     <StyledContainer>
       <PageHeader
@@ -82,30 +110,51 @@ export const NailPolishDetails = ({ polish }: NailPolishDetailsProps) => {
       <StyledDetails>
         <div>
           <StyledImageContainer>
-            {polish.imageUrl ? (
+            {polish.imageUrl && polish.imageUrl !== 'n/a' ? (
               <Image
                 src={polish.imageUrl}
                 alt={`${polish.brand} - ${polish.name}`}
                 fill
                 priority
               />
+            ) : polish.imageUrl === 'n/a' ? (
+              <p>No image available for this polish</p>
             ) : (
               <p>No image available</p>
             )}
           </StyledImageContainer>
           <StyledImageActions>
-            <Button
-              onClick={() => router.push(`/polish/${polish.id}/select-image`)}
-            >
-              {polish.imageUrl ? 'Change Image' : 'Add Image'}
-            </Button>
-            {polish.imageUrl && (
+            {polish.imageUrl !== 'n/a' && (
+              <Button
+                onClick={() => router.push(`/polish/${polish.id}/select-image`)}
+              >
+                {polish.imageUrl ? 'Change Image' : 'Add Image'}
+              </Button>
+            )}
+            {polish.imageUrl && polish.imageUrl !== 'n/a' && (
               <Button
                 onClick={handleRemoveImage}
                 disabled={isRemovingImage}
                 $variant="danger"
               >
                 Remove Image
+              </Button>
+            )}
+            {!polish.imageUrl && (
+              <Button
+                onClick={handleMarkNoImage}
+                disabled={isMarkingNoImage}
+                $variant="secondary"
+              >
+                Mark as No Image Available
+              </Button>
+            )}
+            {polish.imageUrl === 'n/a' && (
+              <Button
+                onClick={() => router.push(`/polish/${polish.id}/select-image`)}
+                $variant="secondary"
+              >
+                Add Image Anyway
               </Button>
             )}
           </StyledImageActions>

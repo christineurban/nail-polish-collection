@@ -97,7 +97,7 @@ export const transformSheetRow = (row: SheetRow, duplicateCounts: Map<string, nu
     : [];
 
   return {
-    image_url: row.Image || undefined,  // Preserve image URL if it exists
+    image_url: row.Image || 'n/a',  // Use 'n/a' when no image URL exists
     brand: row.Brand === 'zzz *unmarked*' ? 'N/A' : row.Brand,
     name: row.Polish,
     colors: [row.Color], // Single color wrapped in array
@@ -109,7 +109,7 @@ export const transformSheetRow = (row: SheetRow, duplicateCounts: Map<string, nu
     is_old: undefined,
     empty_bottles: 0, // Default to 0
     total_bottles: totalBottles,
-    last_used: undefined,
+    last_used: undefined
   };
 };
 

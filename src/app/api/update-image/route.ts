@@ -2,47 +2,9 @@ import { PrismaClient } from '@prisma/client';
 import { NextResponse } from 'next/server';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import { supabaseAdmin } from '@/lib/supabase';
-import sharp from 'sharp';
+import { uploadImageToSupabase } from '@/lib/utils/image';
 
 const prisma = new PrismaClient();
-
-async function uploadImageToSupabase(imageUrl: string, polishId: string): Promise<string> {
-  // Fetch the image
-  const response = await fetch(imageUrl);
-  const imageBuffer = await response.arrayBuffer();
-
-  // Compress the image using sharp
-  const compressedImageBuffer = await sharp(Buffer.from(imageBuffer))
-    .resize(800, 800, { // Resize to max dimensions while maintaining aspect ratio
-      fit: 'inside',
-      withoutEnlargement: true
-    })
-    .jpeg({ // Convert to JPEG and compress
-      quality: 80,
-      mozjpeg: true
-    })
-    .toBuffer();
-
-  // Upload to Supabase storage
-  const fileName = `${polishId}-${Date.now()}.jpg`;
-  const { data, error } = await supabaseAdmin.storage
-    .from('nail-polish-images')
-    .upload(fileName, compressedImageBuffer, {
-      contentType: 'image/jpeg',
-      upsert: true
-    });
-
-  if (error) {
-    throw new Error(`Failed to upload image to Supabase: ${error.message}`);
-  }
-
-  // Get the public URL
-  const { data: { publicUrl } } = supabaseAdmin.storage
-    .from('nail-polish-images')
-    .getPublicUrl(fileName);
-
-  return publicUrl;
-}
 
 async function deleteImageFromSupabase(imageUrl: string) {
   try {
@@ -80,6 +42,47 @@ export async function POST(request: Request) {
       );
     }
 
+    // Get current polish data to check for existing image
+    const currentPolish = await prisma.nail_polish.findUnique({
+      where: { id },
+      include: { brands: true }
+    });
+
+    if (!currentPolish) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: 'Polish not found',
+          details: 'The specified nail polish id does not exist.'
+        },
+        { status: 404 }
+      );
+    }
+
+    // If marking as no image available (imageUrl === 'n/a')
+    if (imageUrl === 'n/a') {
+      // If there was an existing image, delete it from storage
+      if (currentPolish.image_url && currentPolish.image_url !== 'n/a') {
+        await deleteImageFromSupabase(currentPolish.image_url);
+      }
+
+      // Update database to mark as no image available
+      const updatedPolish = await prisma.nail_polish.update({
+        where: { id },
+        data: {
+          image_url: 'n/a',
+          updated_at: new Date()
+        }
+      });
+
+      return NextResponse.json({
+        success: true,
+        data: updatedPolish,
+        message: 'Marked as no image available'
+      });
+    }
+
+    // Regular image update flow
     if (!imageUrl) {
       return NextResponse.json(
         {
@@ -102,17 +105,11 @@ export async function POST(request: Request) {
       );
     }
 
-    // Get current polish data to check for existing image
-    const currentPolish = await prisma.nail_polish.findUnique({
-      where: { id },
-      select: { image_url: true }
-    });
-
     // Upload new image to Supabase storage
-    const supabaseUrl = await uploadImageToSupabase(imageUrl.trim(), id);
+    const supabaseUrl = await uploadImageToSupabase(imageUrl.trim(), currentPolish);
 
     // If there was an existing image, delete it from storage
-    if (currentPolish?.image_url) {
+    if (currentPolish.image_url && currentPolish.image_url !== 'n/a') {
       await deleteImageFromSupabase(currentPolish.image_url);
     }
 
