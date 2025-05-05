@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
+import Link from 'next/link';
 
 export const StyledContainer = styled.div`
   width: 100%;
@@ -160,4 +161,20 @@ export const StyledImageCount = styled.div`
   font-size: 0.9rem;
   font-weight: 500;
   white-space: nowrap;
+`;
+
+export const StyledPolishLink = styled(Link)`
+  text-decoration: none;
+  color: ${({ theme }) => theme.colors.primary[700]};
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.primary[900]};
+    text-decoration: underline;
+  }
+
+  h3 {
+    margin: 0;
+    display: inline-block;
+  }
 `;

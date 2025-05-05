@@ -15,6 +15,7 @@ import {
   StyledSuccessOverlay,
   StyledCollapseText,
   StyledImageCount,
+  StyledPolishLink,
 } from './index.styled';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/Button';
@@ -177,7 +178,9 @@ export const ImageSelector = ({ polish, onImageSaved }: ImageSelectorProps) => {
         <StyledPolishCard>
           <StyledMetadata>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <h3>{polish.brand} - {polish.name}</h3>
+              <StyledPolishLink href={`/polish/${polish.id}`}>
+                <h3>{polish.brand} - {polish.name}</h3>
+              </StyledPolishLink>
               <StyledCollapseText onClick={handleCollapse}>
                 {isCollapsed ? 'Show Images' : 'Hide Images'}
               </StyledCollapseText>
