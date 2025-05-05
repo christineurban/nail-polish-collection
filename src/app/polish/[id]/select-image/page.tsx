@@ -49,8 +49,8 @@ export default function SelectImagePage({ params }: { params: { id: string } }) 
   const handleImageSaved = () => {
     const returnTo = searchParams.get('returnTo');
     if (!returnTo) {
-      // If no returnTo parameter, we came from the polish card, go to homepage
-      router.push('/');
+      // If no returnTo parameter, return to the polish details page
+      router.push(`/polish/${params.id}`);
     } else {
       // If returnTo parameter exists, use that path
       router.push(returnTo);
