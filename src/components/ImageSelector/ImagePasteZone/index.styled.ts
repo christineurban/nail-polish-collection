@@ -4,20 +4,28 @@ import { motion } from 'framer-motion';
 export const StyledPasteZone = styled.div`
   width: 100%;
   min-height: 120px;
-  border: 2px dashed ${({ theme }) => theme.colors.primary[300]};
+  border: 2px dashed ${({ theme }) => theme.colors.gray[300]};
   border-radius: 8px;
+  padding: 20px;
+  margin: 20px 0;
+  text-align: center;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 20px;
   cursor: pointer;
   transition: all 0.2s ease;
   background: ${({ theme }) => theme.colors.primary[50]};
   position: relative;
 
+  &:focus {
+    outline: none;
+    border-color: ${({ theme }) => theme.colors.primary[500]};
+    background-color: ${({ theme }) => theme.colors.primary[50]};
+  }
+
   &:hover {
     border-color: ${({ theme }) => theme.colors.primary[500]};
-    background: ${({ theme }) => theme.colors.primary[100]};
+    background-color: ${({ theme }) => theme.colors.primary[50]};
   }
 `;
 

@@ -19,6 +19,7 @@ interface ImagePasteZoneProps {
 export const ImagePasteZone = ({ onImagePasted }: ImagePasteZoneProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [isFocused, setIsFocused] = useState(false);
 
   const handlePaste = useCallback(async (event: ClipboardEvent) => {
     const items = event.clipboardData?.items;
@@ -98,14 +99,23 @@ export const ImagePasteZone = ({ onImagePasted }: ImagePasteZoneProps) => {
   }, [onImagePasted]);
 
   useEffect(() => {
-    document.addEventListener('paste', handlePaste);
-    return () => {
-      document.removeEventListener('paste', handlePaste);
-    };
-  }, [handlePaste]);
+    if (isFocused) {
+      document.addEventListener('paste', handlePaste);
+      return () => {
+        document.removeEventListener('paste', handlePaste);
+      };
+    }
+  }, [handlePaste, isFocused]);
 
   return (
-    <StyledPasteZone onClick={() => setError(null)}>
+    <StyledPasteZone
+      onClick={() => setError(null)}
+      onFocus={() => setIsFocused(true)}
+      onBlur={() => setIsFocused(false)}
+      onMouseEnter={() => setIsFocused(true)}
+      onMouseLeave={() => setIsFocused(false)}
+      tabIndex={0}
+    >
       <StyledPasteContent>
         <StyledPasteIcon>
           <FaPaste />
@@ -114,7 +124,7 @@ export const ImagePasteZone = ({ onImagePasted }: ImagePasteZoneProps) => {
           Paste image here
         </StyledPasteText>
         <StyledPasteSubtext>
-          or press Ctrl/Cmd + V anywhere
+          or press Ctrl/Cmd + V while hovering
         </StyledPasteSubtext>
         {error && <StyledErrorMessage>{error}</StyledErrorMessage>}
       </StyledPasteContent>
