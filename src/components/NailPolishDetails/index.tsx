@@ -118,7 +118,7 @@ export const NailPolishDetails = ({ polish }: NailPolishDetailsProps) => {
                 priority
               />
             ) : polish.imageUrl === 'n/a' ? (
-              <p>No image available for this polish</p>
+              <p>❌ Marked as no image</p>
             ) : (
               <p>No image available</p>
             )}

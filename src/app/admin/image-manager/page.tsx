@@ -63,7 +63,6 @@ export default function ImageManager() {
       const polishesData = await polishesResponse.json();
       setPolishes(polishesData.polishes);
     } catch (err) {
-      console.error('Error fetching data:', err);
       setError(err instanceof Error ? err.message : 'An error occurred');
     } finally {
       setIsLoading(false);
@@ -83,8 +82,8 @@ export default function ImageManager() {
   };
 
   const handleSave = async () => {
-    setIsSaving(true);
     try {
+      setIsSaving(true);
       // Handle deletions
       const imagesToDelete = images.filter(img => img.markedForDeletion);
       const imagesToUpdate = images.filter(img => img.selectedPolishId && !img.markedForDeletion);
@@ -141,7 +140,6 @@ export default function ImageManager() {
       // Force a hard refresh of the page
       window.location.href = window.location.href.split('?')[0] + '?t=' + new Date().getTime();
     } catch (error) {
-      console.error('Error saving changes:', error);
       alert('Error saving changes. Please try again.');
     } finally {
       setIsSaving(false);

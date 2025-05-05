@@ -28,7 +28,7 @@ interface NailPolishCardProps {
   id: string;
   brand: string;
   name: string;
-  imageUrl?: string;
+  imageUrl: string | null;
   colors?: string[];
   finishes?: string[];
   rating?: Rating;
@@ -52,10 +52,12 @@ export const NailPolishCard: FC<NailPolishCardProps> = ({
   };
 
   const handleImageAreaClick = () => {
-    if (imageUrl) {
+    // Go to details page if we have any image (including 'n/a')
+    if (imageUrl !== null) {
       router.push(`/polish/${id}`);
-    } else if (onChooseImage) {
-      onChooseImage(id);
+    } else {
+      // Only go to image selection if there's no image at all
+      onChooseImage?.(id);
     }
   };
 
@@ -80,21 +82,42 @@ export const NailPolishCard: FC<NailPolishCardProps> = ({
           handleImageAreaClick();
         }}
       >
-        {imageUrl ? (
-          <StyledImage
-            src={imageUrl}
-            alt={`${brand} ${name}`}
-            width={200}
-            height={200}
-          />
-        ) : (
-          <StyledChooseImageButton
-            type="button"
-            aria-label="Choose image for nail polish"
-          >
-            Choose Image
-          </StyledChooseImageButton>
-        )}
+        {(() => {
+          // Case 1: Marked as no image available
+          if (imageUrl === 'n/a') {
+            return (
+              <StyledChooseImageButton
+                type="button"
+                aria-label="View details for nail polish"
+                $isNoImage
+              >
+                ❌ Marked as no image
+              </StyledChooseImageButton>
+            );
+          }
+
+          // Case 2: Has an actual image
+          if (imageUrl && imageUrl !== 'n/a') {
+            return (
+              <StyledImage
+                src={imageUrl}
+                alt={`${brand} ${name}`}
+                width={200}
+                height={200}
+              />
+            );
+          }
+
+          // Case 3: No image (null or undefined)
+          return (
+            <StyledChooseImageButton
+              type="button"
+              aria-label="Choose image for nail polish"
+            >
+              Choose Image
+            </StyledChooseImageButton>
+          );
+        })()}
       </StyledClickableArea>
 
       <StyledClickableArea

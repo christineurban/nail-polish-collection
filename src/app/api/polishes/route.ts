@@ -14,17 +14,20 @@ export async function GET(request: Request) {
     const page = parseInt(searchParams.get('page') || '1');
     const limit = parseInt(searchParams.get('limit') || '10');
 
-    console.log('Requested colors:', colors);
-
     // Build the where clause
     const where: any = {};
 
     // Add image filter if provided
     if (hasImage !== null) {
       if (hasImage === 'true') {
-        where.image_url = {
-          notIn: [null, 'n/a']
-        };
+        where.AND = [{
+          NOT: {
+            OR: [
+              { image_url: null },
+              { image_url: 'n/a' }
+            ]
+          }
+        }];
       } else {
         where.OR = [
           { image_url: null },
@@ -114,7 +117,7 @@ export async function GET(request: Request) {
         id: polish.id,
         name: polish.name,
         link: polish.link,
-        imageUrl: polish.image_url === 'n/a' ? null : polish.image_url,
+        imageUrl: polish.image_url,
         brand: polish.brands.name,
         rating: polish.rating,
         colors: polish.colors.map(c => c.color.name),

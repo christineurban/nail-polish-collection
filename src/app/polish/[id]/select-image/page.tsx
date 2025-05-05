@@ -36,7 +36,6 @@ export default function SelectImagePage({ params }: { params: { id: string } }) 
         const data = await response.json();
         setPolish(data);
       } catch (error) {
-        console.error('Error fetching polish:', error);
         setError(error instanceof Error ? error.message : 'An error occurred');
       } finally {
         setIsLoading(false);

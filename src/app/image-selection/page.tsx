@@ -43,7 +43,6 @@ export default function ImageSelectionPage() {
       setTotalPages(data.totalPages);
       setTotalItems(data.total);
     } catch (error) {
-      console.error('Error fetching polishes:', error);
       setError(error instanceof Error ? error.message : 'An error occurred');
     } finally {
       setIsLoading(false);

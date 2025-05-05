@@ -35,13 +35,16 @@ export const StyledImageContainer = styled.div`
   overflow: hidden;
 `;
 
-export const StyledChooseImageButton = styled.button`
+export const StyledChooseImageButton = styled.button<{ $isNoImage?: boolean }>`
   width: 100%;
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: ${({ theme }) => theme.colors.background.muted};
+  background-color: ${({ theme, $isNoImage }) =>
+    $isNoImage
+      ? theme.colors.gray[200]
+      : theme.colors.background.muted};
   color: ${({ theme }) => theme.colors.text.secondary};
   border: none;
   cursor: pointer;
@@ -50,7 +53,10 @@ export const StyledChooseImageButton = styled.button`
   transition: ${({ theme }) => theme.transitions.base};
 
   &:hover {
-    background-color: ${({ theme }) => theme.colors.gray[200]};
+    background-color: ${({ theme, $isNoImage }) =>
+      $isNoImage
+        ? theme.colors.gray[300]
+        : theme.colors.gray[200]};
     color: ${({ theme }) => theme.colors.gray[700]};
   }
 
