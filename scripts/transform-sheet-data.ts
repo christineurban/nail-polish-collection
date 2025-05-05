@@ -54,7 +54,7 @@ export type SheetRow = {
 };
 
 type TransformedPolish = {
-  image_url: string | undefined;
+  image_url: string | null;
   brand: string;
   name: string;
   colors: string[];
@@ -97,7 +97,7 @@ export const transformSheetRow = (row: SheetRow, duplicateCounts: Map<string, nu
     : [];
 
   return {
-    image_url: row.Image || 'n/a',  // Use 'n/a' when no image URL exists
+    image_url: row.Image || null,  // Use null when no image URL exists
     brand: row.Brand === 'zzz *unmarked*' ? 'N/A' : row.Brand,
     name: row.Polish,
     colors: [row.Color], // Single color wrapped in array

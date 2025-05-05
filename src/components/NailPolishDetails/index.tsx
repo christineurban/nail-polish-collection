@@ -154,7 +154,7 @@ export const NailPolishDetails = ({ polish }: NailPolishDetailsProps) => {
                 onClick={() => router.push(`/polish/${polish.id}/select-image`)}
                 $variant="secondary"
               >
-                Add Image Anyway
+                Add Image
               </Button>
             )}
           </StyledImageActions>

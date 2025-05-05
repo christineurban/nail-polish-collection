@@ -198,3 +198,47 @@ export const StyledImagePreviewContainer = styled.div`
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
 `;
+
+export const StyledMetadataContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 15px;
+`;
+
+export const StyledLinkContainer = styled.div`
+  margin-top: 8px;
+`;
+
+export const StyledActionsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-end;
+  flex-shrink: 0;
+`;
+
+export const StyledButtonGroup = styled.div`
+  display: flex;
+  gap: 8px;
+`;
+
+export const StyledImageCountContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 16px;
+`;
+
+export const StyledCurrentImageContainer = styled.div`
+  margin-bottom: 20px;
+  text-align: center;
+`;
+
+export const StyledCurrentImage = styled(StyledImage)`
+  max-width: 300px;
+  margin: 0 auto;
+`;
+
+export const StyledHiddenImage = styled(StyledImage)`
+  display: none;
+`;

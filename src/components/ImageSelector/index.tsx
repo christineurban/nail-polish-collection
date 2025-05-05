@@ -17,6 +17,14 @@ import {
   StyledImageCount,
   StyledPolishLink,
   StyledImagePreviewContainer,
+  StyledMetadataContainer,
+  StyledLinkContainer,
+  StyledActionsContainer,
+  StyledButtonGroup,
+  StyledImageCountContainer,
+  StyledCurrentImageContainer,
+  StyledCurrentImage,
+  StyledHiddenImage,
 } from './index.styled';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/Button';
@@ -216,26 +224,28 @@ export const ImageSelector = ({ polish, onImageSaved }: ImageSelectorProps) => {
       >
         <StyledPolishCard>
           <StyledMetadata>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+            <StyledMetadataContainer>
               <div>
                 <StyledPolishLink href={`/polish/${polish.id}`}>
                   <h3>{polish.brand} - {polish.name}</h3>
                 </StyledPolishLink>
                 {polish.link ? (
-                  <div style={{ marginTop: '8px' }}>
+                  <StyledLinkContainer>
                     <p>
                       Link: <a href={polish.link} target="_blank" rel="noopener noreferrer">
                         {polish.link}
                       </a>
                     </p>
                     <a href={`/polish/${polish.id}/edit?returnTo=/image-selection`}>Edit link</a>
-                  </div>
+                  </StyledLinkContainer>
                 ) : (
-                  <p style={{ marginTop: '8px' }}>No source link available. <a href={`/polish/${polish.id}/edit?returnTo=/image-selection`}>Add a link</a></p>
+                  <StyledLinkContainer>
+                    <p>No source link available. <a href={`/polish/${polish.id}/edit?returnTo=/image-selection`}>Add a link</a></p>
+                  </StyledLinkContainer>
                 )}
               </div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', alignItems: 'flex-end' }}>
-                <div style={{ display: 'flex', gap: '8px' }}>
+              <StyledActionsContainer>
+                <StyledButtonGroup>
                   <Button
                     onClick={handleMarkNoImage}
                     disabled={isSaving}
@@ -249,8 +259,8 @@ export const ImageSelector = ({ polish, onImageSaved }: ImageSelectorProps) => {
                   >
                     {isSaving ? 'Saving...' : 'Save Image'}
                   </Button>
-                </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+                </StyledButtonGroup>
+                <StyledImageCountContainer>
                   {!isLoading && images.length > 0 && (
                     <StyledImageCount>
                       {images.length} image{images.length !== 1 ? 's' : ''} found
@@ -259,22 +269,21 @@ export const ImageSelector = ({ polish, onImageSaved }: ImageSelectorProps) => {
                   <StyledCollapseText onClick={handleCollapse}>
                     {isCollapsed ? 'Show Images' : 'Hide Images'}
                   </StyledCollapseText>
-                </div>
-              </div>
-            </div>
+                </StyledImageCountContainer>
+              </StyledActionsContainer>
+            </StyledMetadataContainer>
           </StyledMetadata>
 
           {!isCollapsed && (
             <>
               {polish.imageUrl && (
-                <div style={{ marginBottom: '20px', textAlign: 'center' }}>
+                <StyledCurrentImageContainer>
                   <h3>Current Image</h3>
-                  <StyledImage
+                  <StyledCurrentImage
                     src={polish.imageUrl}
                     alt={`Current image for ${polish.brand} - ${polish.name}`}
-                    style={{ maxWidth: '300px', margin: '0 auto' }}
                   />
-                </div>
+                </StyledCurrentImageContainer>
               )}
 
               <ImagePasteZone onImagePasted={handlePastedImage} />
@@ -316,7 +325,10 @@ export const ImageSelector = ({ polish, onImageSaved }: ImageSelectorProps) => {
                           alt={`${polish.brand} - ${polish.name} - Image ${index + 1}`}
                           onError={(e) => {
                             const target = e.target as HTMLImageElement;
-                            target.style.display = 'none';
+                            target.replaceWith(StyledHiddenImage.withComponent('img').attrs({
+                              src: img,
+                              alt: `${polish.brand} - ${polish.name} - Image ${index + 1}`
+                            }));
                           }}
                           onClick={() => handleImageSelect(img)}
                           $isSelected={selectedImage === img}
