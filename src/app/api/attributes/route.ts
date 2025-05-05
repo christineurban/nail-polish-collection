@@ -30,16 +30,19 @@ export async function GET() {
       brands: brands.map(brand => ({
         id: brand.id,
         name: brand.name,
+        count: brand.nail_polish.length,
         polishCount: brand.nail_polish.length
       })),
       colors: colors.map(color => ({
         id: color.id,
         name: color.name,
+        count: color.nail_polish.length,
         polishCount: color.nail_polish.length
       })),
       finishes: finishes.map(finish => ({
         id: finish.id,
         name: finish.name,
+        count: finish.nail_polish.length,
         polishCount: finish.nail_polish.length
       }))
     });
