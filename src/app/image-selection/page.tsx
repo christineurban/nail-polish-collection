@@ -44,13 +44,13 @@ export default function ImageSelectionPage() {
 
   const fetchPolishes = async () => {
     try {
-      const response = await fetch(`/api/polishes?hasImage=false&page=${currentPage}&limit=10`);
+      const response = await fetch(`/api/polishes?hasImage=false&page=${currentPage}&limit=25`);
       if (!response.ok) throw new Error('Failed to fetch polish details');
       const data: PaginatedResponse = await response.json();
       // Filter out polishes with imageUrl set to 'n/a'
       const filteredPolishes = data.polishes.filter(polish => polish.imageUrl !== 'n/a');
       setPolishes(filteredPolishes);
-      setTotalPages(Math.ceil((data.total - (data.polishes.length - filteredPolishes.length)) / 10));
+      setTotalPages(Math.ceil((data.total - (data.polishes.length - filteredPolishes.length)) / 25));
       setTotalItems(data.total - (data.polishes.length - filteredPolishes.length));
     } catch (error) {
       setError(error instanceof Error ? error.message : 'An error occurred');
@@ -177,7 +177,7 @@ export default function ImageSelectionPage() {
       ))}
       <StyledPagination>
         <StyledPaginationInfo>
-          Showing {((currentPage - 1) * 10) + 1} to {Math.min(currentPage * 10, totalItems)} of {totalItems} polishes
+          Showing {((currentPage - 1) * 25) + 1} to {Math.min(currentPage * 25, totalItems)} of {totalItems} polishes
         </StyledPaginationInfo>
         <div>
           <StyledPaginationButton

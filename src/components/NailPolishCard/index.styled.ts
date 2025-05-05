@@ -69,7 +69,8 @@ export const StyledChooseImageButton = styled.button<{ $isNoImage?: boolean }>`
 export const StyledImage = styled(Image)`
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
+  background-color: ${({ theme }) => theme.colors.gray[100]};
 `;
 
 export const StyledContent = styled.div`
