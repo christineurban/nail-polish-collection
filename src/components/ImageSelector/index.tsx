@@ -325,10 +325,11 @@ export const ImageSelector = ({ polish, onImageSaved }: ImageSelectorProps) => {
                           alt={`${polish.brand} - ${polish.name} - Image ${index + 1}`}
                           onError={(e) => {
                             const target = e.target as HTMLImageElement;
-                            target.replaceWith(StyledHiddenImage.withComponent('img').attrs({
-                              src: img,
-                              alt: `${polish.brand} - ${polish.name} - Image ${index + 1}`
-                            }));
+                            const hiddenImg = document.createElement('img');
+                            hiddenImg.src = img;
+                            hiddenImg.alt = `${polish.brand} - ${polish.name} - Image ${index + 1}`;
+                            hiddenImg.style.display = 'none';
+                            target.replaceWith(hiddenImg);
                           }}
                           onClick={() => handleImageSelect(img)}
                           $isSelected={selectedImage === img}
