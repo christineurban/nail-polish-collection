@@ -13,54 +13,11 @@ export const StyledStatsGrid = styled.div`
   margin-top: 2rem;
 `;
 
-export const StyledStatCard = styled.div`
-  background: ${({ theme }) => theme.colors.background.secondary};
-  border-radius: ${({ theme }) => theme.borderRadius.lg};
-  padding: 1.5rem;
-  box-shadow: ${({ theme }) => theme.shadows.sm};
-
-  h3 {
-    margin: 0 0 0.5rem;
-    color: ${({ theme }) => theme.colors.text.primary};
-    font-size: ${({ theme }) => theme.typography.fontSize.lg};
-  }
-
-  .value {
-    font-size: ${({ theme }) => theme.typography.fontSize['2xl']};
-    font-weight: ${({ theme }) => theme.typography.fontWeights.bold};
-    color: ${({ theme }) => theme.colors.primary[500]};
-    margin: 0.5rem 0;
-  }
-
-  .description {
-    color: ${({ theme }) => theme.colors.text.secondary};
-    font-size: ${({ theme }) => theme.typography.fontSize.sm};
-  }
-`;
-
 export const StyledAttributeList = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 1rem;
   margin-top: 1rem;
-`;
-
-export const StyledAttributeCard = styled.div`
-  background: ${({ theme }) => theme.colors.background.secondary};
-  border-radius: ${({ theme }) => theme.borderRadius};
-  padding: 1rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-
-  h3 {
-    margin: 0;
-    color: ${({ theme }) => theme.colors.text.primary};
-  }
-
-  span {
-    color: ${({ theme }) => theme.colors.text.secondary};
-  }
 `;
 
 export const StyledDeleteButton = styled.button`

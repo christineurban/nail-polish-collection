@@ -4,9 +4,7 @@ import { useState, useEffect } from 'react';
 import { PageHeader } from '@/components/PageHeader';
 import {
   StyledStatsGrid,
-  StyledStatCard,
   StyledAttributeList,
-  StyledAttributeCard,
   StyledDeleteButton,
   StyledSortControls,
   StyledSortButton,
@@ -21,6 +19,7 @@ import { Table } from '@/components/Table';
 import { Tabs } from '@/components/Tabs';
 import { Input } from '@/components/fields/Input';
 import { Button } from '@/components/Button';
+import { Tile } from '@/components/Tile';
 
 interface Stats {
   totalPolishes: number;
@@ -270,11 +269,12 @@ export default function DashboardPage() {
   const renderCards = (attributes: Attribute[], attributeType: 'color' | 'finish' | 'brand') => (
     <StyledAttributeList>
       {attributes.map(attr => (
-        <StyledAttributeCard key={attr.id}>
-          <h3>{attr.name}</h3>
-          <span>
-            {attr.count} {attr.count === 1 ? 'polish' : 'polishes'} ({attr.percentage.toFixed(1)}%)
-          </span>
+        <div key={attr.id}>
+          <Tile
+            title={attr.name}
+            value={`${attr.count} ${attr.count === 1 ? 'polish' : 'polishes'} (${attr.percentage.toFixed(1)}%)`}
+            variant="attribute"
+          />
           {attr.count === 0 && (
             <StyledDeleteButton
               onClick={() => handleDelete(attr.id, attributeType)}
@@ -282,7 +282,7 @@ export default function DashboardPage() {
               Delete
             </StyledDeleteButton>
           )}
-        </StyledAttributeCard>
+        </div>
       ))}
     </StyledAttributeList>
   );
@@ -404,53 +404,53 @@ export default function DashboardPage() {
         description="Overview and insights about your nail polish collection"
       />
       <StyledStatsGrid>
-        <StyledStatCard>
-          <h3>Total Polishes</h3>
-          <div className="value">{stats.totalPolishes}</div>
-          <div className="description">Polishes in your collection</div>
-        </StyledStatCard>
+        <Tile
+          title="Total Polishes"
+          value={stats.totalPolishes}
+          description="Polishes in your collection"
+        />
 
-        <StyledStatCard>
-          <h3>Brands</h3>
-          <div className="value">{stats.totalBrands}</div>
-          <div className="description">Different brands collected</div>
-        </StyledStatCard>
+        <Tile
+          title="Brands"
+          value={stats.totalBrands}
+          description="Different brands collected"
+        />
 
-        <StyledStatCard>
-          <h3>Colors</h3>
-          <div className="value">{stats.totalColors}</div>
-          <div className="description">Unique colors in collection</div>
-        </StyledStatCard>
+        <Tile
+          title="Colors"
+          value={stats.totalColors}
+          description="Unique colors in collection"
+        />
 
-        <StyledStatCard>
-          <h3>Finishes</h3>
-          <div className="value">{stats.totalFinishes}</div>
-          <div className="description">Different finishes available</div>
-        </StyledStatCard>
+        <Tile
+          title="Finishes"
+          value={stats.totalFinishes}
+          description="Different finishes available"
+        />
 
-        <StyledStatCard>
-          <h3>Average Rating</h3>
-          <div className="value">{stats.averageRating ? stats.averageRating.toFixed(1) : 'N/A'}</div>
-          <div className="description">Average polish rating</div>
-        </StyledStatCard>
+        <Tile
+          title="Average Rating"
+          value={stats.averageRating ? stats.averageRating.toFixed(1) : 'N/A'}
+          description="Average polish rating"
+        />
 
-        <StyledStatCard>
-          <h3>Most Popular Brand</h3>
-          <div className="value">{stats.mostCommonBrand.name}</div>
-          <div className="description">{stats.mostCommonBrand.count} polishes</div>
-        </StyledStatCard>
+        <Tile
+          title="Most Popular Brand"
+          value={stats.mostCommonBrand.name}
+          description={`${stats.mostCommonBrand.count} polishes`}
+        />
 
-        <StyledStatCard>
-          <h3>Most Common Color</h3>
-          <div className="value">{stats.mostCommonColor.name}</div>
-          <div className="description">{stats.mostCommonColor.count} polishes</div>
-        </StyledStatCard>
+        <Tile
+          title="Most Common Color"
+          value={stats.mostCommonColor.name}
+          description={`${stats.mostCommonColor.count} polishes`}
+        />
 
-        <StyledStatCard>
-          <h3>Most Common Finish</h3>
-          <div className="value">{stats.mostCommonFinish.name}</div>
-          <div className="description">{stats.mostCommonFinish.count} polishes</div>
-        </StyledStatCard>
+        <Tile
+          title="Most Common Finish"
+          value={stats.mostCommonFinish.name}
+          description={`${stats.mostCommonFinish.count} polishes`}
+        />
       </StyledStatsGrid>
 
       {error && (
