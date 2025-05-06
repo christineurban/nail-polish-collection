@@ -6,6 +6,8 @@ import {
   StyledButton,
   StyledOption,
   StyledTag,
+  StyledInput,
+  StyledNoMatches,
 } from './index.styled';
 import { StyledDropdown } from '../index.styled';
 
@@ -16,6 +18,7 @@ interface MultiSelectProps {
   onChange: (values: string[]) => void;
   renderOption?: (option: string) => React.ReactNode;
   renderSelectedPreview?: (values: string[]) => React.ReactNode;
+  disableSearch?: boolean;
 }
 
 export const MultiSelect = ({
@@ -25,11 +28,15 @@ export const MultiSelect = ({
   onChange,
   renderOption,
   renderSelectedPreview,
+  disableSearch = false,
 }: MultiSelectProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filteredOptions, setFilteredOptions] = useState(options);
   const containerRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     setMounted(true);
@@ -42,6 +49,7 @@ export const MultiSelect = ({
         !containerRef.current.contains(event.target as Node)
       ) {
         setIsOpen(false);
+        setSearchTerm('');
       }
     };
 
@@ -50,6 +58,20 @@ export const MultiSelect = ({
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
+
+  useEffect(() => {
+    if (isOpen && inputRef.current && !disableSearch) {
+      inputRef.current.focus();
+    }
+  }, [isOpen, disableSearch]);
+
+  useEffect(() => {
+    setFilteredOptions(
+      options.filter(option =>
+        option.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    );
+  }, [searchTerm, options]);
 
   const handleButtonClick = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -69,6 +91,13 @@ export const MultiSelect = ({
   const handleRemove = (valueToRemove: string) => {
     const newValues = values.filter(value => value !== valueToRemove);
     onChange(newValues);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Escape') {
+      setIsOpen(false);
+      setSearchTerm('');
+    }
   };
 
   const renderDefaultSelectedPreview = () => (
@@ -116,9 +145,24 @@ export const MultiSelect = ({
         )}
       </StyledButton>
       <StyledDropdown $isOpen={isOpen}>
-        {options.map(option => (
+        {isOpen && !disableSearch && (
+          <StyledInput
+            ref={inputRef}
+            type="text"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            onKeyDown={handleKeyDown}
+            placeholder="Type to search..."
+          />
+        )}
+        {filteredOptions.map(option => (
           renderOption ? renderOption(option) : renderDefaultOption(option)
         ))}
+        {filteredOptions.length === 0 && (
+          <StyledNoMatches>
+            No matches found
+          </StyledNoMatches>
+        )}
       </StyledDropdown>
     </StyledContainer>
   );

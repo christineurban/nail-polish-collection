@@ -78,3 +78,29 @@ export const StyledTag = styled.span`
     }
   }
 `;
+
+export const StyledInput = styled.input`
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: none;
+  border-bottom: 1px solid ${({ theme }) => theme.colors.border.default};
+  font-size: ${({ theme }) => theme.typography.fontSize.base};
+  color: ${({ theme }) => theme.colors.text.primary};
+  background: transparent;
+
+  &:focus {
+    outline: none;
+    border-color: ${({ theme }) => theme.colors.primary[500]};
+  }
+
+  &::placeholder {
+    color: ${({ theme }) => theme.colors.text.muted};
+  }
+`;
+
+export const StyledNoMatches = styled.div`
+  padding: 0.75rem 1rem;
+  color: ${({ theme }) => theme.colors.text.muted};
+  text-align: center;
+  font-size: ${({ theme }) => theme.typography.fontSize.sm};
+`;
