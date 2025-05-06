@@ -143,8 +143,7 @@ export function Nav() {
   const routes = [
     { path: '/polish/add', label: 'Add New Polish' },
     { path: '/image-selection', label: 'Select Missing Images' },
-    { path: '/attributes', label: 'Attributes' },
-    { path: '/stats', label: 'Stats' },
+    { path: '/dashboard', label: 'Dashboard' },
   ];
 
   const toggleMenu = () => {

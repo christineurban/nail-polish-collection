@@ -2,10 +2,9 @@
 
 import { useState, useEffect } from 'react';
 import { PageHeader } from '@/components/PageHeader';
-import { Tabs } from '@/components/Tabs';
-import { Input } from '@/components/fields/Input';
-import { Button } from '@/components/Button';
 import {
+  StyledStatsGrid,
+  StyledStatCard,
   StyledAttributeList,
   StyledAttributeCard,
   StyledDeleteButton,
@@ -15,14 +14,33 @@ import {
   StyledMessage,
   StyledViewControls,
   StyledViewButton,
-  StyledTable,
-  StyledTableHeader,
-  StyledTableCell,
-  StyledTableRow,
   StyledInputContainer
 } from './page.styled';
 import { BsGrid, BsTable } from 'react-icons/bs';
 import { Table } from '@/components/Table';
+import { Tabs } from '@/components/Tabs';
+import { Input } from '@/components/fields/Input';
+import { Button } from '@/components/Button';
+
+interface Stats {
+  totalPolishes: number;
+  totalBrands: number;
+  totalColors: number;
+  totalFinishes: number;
+  averageRating: number;
+  mostCommonBrand: {
+    name: string;
+    count: number;
+  };
+  mostCommonColor: {
+    name: string;
+    count: number;
+  };
+  mostCommonFinish: {
+    name: string;
+    count: number;
+  };
+}
 
 interface Attribute {
   id: string;
@@ -34,14 +52,16 @@ interface Attribute {
 type SortOrder = 'name-asc' | 'name-desc' | 'count-asc' | 'count-desc';
 type ViewMode = 'card' | 'table';
 
-export default function AttributesPage() {
+export default function DashboardPage() {
+  const [stats, setStats] = useState<Stats | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [colors, setColors] = useState<Attribute[]>([]);
   const [finishes, setFinishes] = useState<Attribute[]>([]);
   const [brands, setBrands] = useState<Attribute[]>([]);
   const [activeTab, setActiveTab] = useState('brands');
   const [sortOrder, setSortOrder] = useState<SortOrder>('name-asc');
   const [searchTerm, setSearchTerm] = useState('');
-  const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const [newAttributeName, setNewAttributeName] = useState('');
   const [viewMode, setViewMode] = useState<ViewMode>('card');
@@ -52,22 +72,31 @@ export default function AttributesPage() {
     brands: 'brand'
   };
 
-  const fetchAttributes = async () => {
-    try {
-      const response = await fetch('/api/attributes');
-      const data = await response.json();
-      setColors(data.colors);
-      setFinishes(data.finishes);
-      setBrands(data.brands);
-      setError(null);
-    } catch (error) {
-      console.error('Failed to fetch attributes:', error);
-      setError('Failed to fetch attributes');
-    }
-  };
-
   useEffect(() => {
-    fetchAttributes();
+    const fetchData = async () => {
+      try {
+        const [statsResponse, attributesResponse] = await Promise.all([
+          fetch('/api/stats'),
+          fetch('/api/attributes')
+        ]);
+
+        const statsData = await statsResponse.json();
+        const attributesData = await attributesResponse.json();
+
+        setStats(statsData);
+        setColors(attributesData.colors);
+        setFinishes(attributesData.finishes);
+        setBrands(attributesData.brands);
+        setError(null);
+      } catch (error) {
+        console.error('Failed to fetch data:', error);
+        setError('Failed to fetch data');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
   }, []);
 
   const handleDelete = async (id: string, type: 'color' | 'finish' | 'brand') => {
@@ -83,6 +112,14 @@ export default function AttributesPage() {
         throw new Error(data.error || 'Failed to delete attribute');
       }
 
+      const fetchAttributes = async () => {
+        const response = await fetch('/api/attributes');
+        const data = await response.json();
+        setColors(data.colors);
+        setFinishes(data.finishes);
+        setBrands(data.brands);
+      };
+
       fetchAttributes();
     } catch (error: any) {
       console.error('Error deleting attribute:', error);
@@ -92,6 +129,7 @@ export default function AttributesPage() {
 
   const handleAdd = async (e: React.FormEvent, type: 'color' | 'finish' | 'brand') => {
     e.preventDefault();
+
     if (!newAttributeName.trim()) {
       setError('Name cannot be empty');
       setSuccess(null);
@@ -118,6 +156,15 @@ export default function AttributesPage() {
       setError(null);
       setSuccess(`Successfully added ${singularType}: ${newAttributeName}`);
       setTimeout(() => setSuccess(null), 3000);
+
+      const fetchAttributes = async () => {
+        const response = await fetch('/api/attributes');
+        const data = await response.json();
+        setColors(data.colors);
+        setFinishes(data.finishes);
+        setBrands(data.brands);
+      };
+
       fetchAttributes();
     } catch (error: any) {
       console.error('Error adding attribute:', error);
@@ -153,7 +200,11 @@ export default function AttributesPage() {
 
   const renderTable = (attributes: Attribute[], attributeType: 'color' | 'finish' | 'brand') => {
     const columns = [
-      { header: 'Name', key: 'name' as const, sortable: true },
+      {
+        header: 'Name',
+        key: 'name' as const,
+        sortable: true
+      },
       {
         header: 'Count',
         key: 'count' as const,
@@ -218,7 +269,7 @@ export default function AttributesPage() {
 
   const renderCards = (attributes: Attribute[], attributeType: 'color' | 'finish' | 'brand') => (
     <StyledAttributeList>
-      {attributes.map((attr) => (
+      {attributes.map(attr => (
         <StyledAttributeCard key={attr.id}>
           <h3>{attr.name}</h3>
           <span>
@@ -334,12 +385,74 @@ export default function AttributesPage() {
     },
   ];
 
+  if (isLoading) {
+    return <PageHeader title="Loading..." />;
+  }
+
+  if (error) {
+    return <PageHeader title="Error" description={error} />;
+  }
+
+  if (!stats) {
+    return <PageHeader title="No data available" />;
+  }
+
   return (
     <>
       <PageHeader
-        title="Attributes"
-        description="View all colors, finishes, and brands in your collection"
+        title="Dashboard"
+        description="Overview and insights about your nail polish collection"
       />
+      <StyledStatsGrid>
+        <StyledStatCard>
+          <h3>Total Polishes</h3>
+          <div className="value">{stats.totalPolishes}</div>
+          <div className="description">Polishes in your collection</div>
+        </StyledStatCard>
+
+        <StyledStatCard>
+          <h3>Brands</h3>
+          <div className="value">{stats.totalBrands}</div>
+          <div className="description">Different brands collected</div>
+        </StyledStatCard>
+
+        <StyledStatCard>
+          <h3>Colors</h3>
+          <div className="value">{stats.totalColors}</div>
+          <div className="description">Unique colors in collection</div>
+        </StyledStatCard>
+
+        <StyledStatCard>
+          <h3>Finishes</h3>
+          <div className="value">{stats.totalFinishes}</div>
+          <div className="description">Different finishes available</div>
+        </StyledStatCard>
+
+        <StyledStatCard>
+          <h3>Average Rating</h3>
+          <div className="value">{stats.averageRating ? stats.averageRating.toFixed(1) : 'N/A'}</div>
+          <div className="description">Average polish rating</div>
+        </StyledStatCard>
+
+        <StyledStatCard>
+          <h3>Most Popular Brand</h3>
+          <div className="value">{stats.mostCommonBrand.name}</div>
+          <div className="description">{stats.mostCommonBrand.count} polishes</div>
+        </StyledStatCard>
+
+        <StyledStatCard>
+          <h3>Most Common Color</h3>
+          <div className="value">{stats.mostCommonColor.name}</div>
+          <div className="description">{stats.mostCommonColor.count} polishes</div>
+        </StyledStatCard>
+
+        <StyledStatCard>
+          <h3>Most Common Finish</h3>
+          <div className="value">{stats.mostCommonFinish.name}</div>
+          <div className="description">{stats.mostCommonFinish.count} polishes</div>
+        </StyledStatCard>
+      </StyledStatsGrid>
+
       {error && (
         <StyledMessage $type="error">{error}</StyledMessage>
       )}
