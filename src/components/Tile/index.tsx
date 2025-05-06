@@ -1,5 +1,6 @@
-import { ReactNode } from 'react';
+import { ReactNode, MouseEvent } from 'react';
 import { StyledTile, StyledTileContent } from './index.styled';
+import { Button } from '@/components/Button';
 
 interface TileProps {
   title: string;
@@ -8,6 +9,8 @@ interface TileProps {
   variant?: 'stat' | 'attribute';
   onClick?: () => void;
   $isActive?: boolean;
+  onDelete?: () => void;
+  showDelete?: boolean;
 }
 
 export const Tile = ({
@@ -16,7 +19,9 @@ export const Tile = ({
   description,
   variant = 'stat',
   onClick,
-  $isActive = false
+  $isActive = false,
+  onDelete,
+  showDelete = false
 }: TileProps) => {
   return (
     <StyledTile
@@ -40,6 +45,20 @@ export const Tile = ({
           </>
         )}
       </StyledTileContent>
+      {showDelete && onDelete && (
+        <Button
+          onClick={(e: MouseEvent) => {
+            e.stopPropagation();
+            onDelete();
+          }}
+          aria-label={`Delete ${title}`}
+          $variant="danger"
+          $fullWidth
+          $size="small"
+        >
+          Delete
+        </Button>
+      )}
     </StyledTile>
   );
 };

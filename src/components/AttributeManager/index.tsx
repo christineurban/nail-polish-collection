@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { Input } from '@/components/fields/Input';
+import { Button } from '@/components/Button';
 import {
   StyledContainer,
   StyledTable,
@@ -9,7 +10,6 @@ import {
   StyledTableRow,
   StyledTableCell,
   StyledAddForm,
-  StyledDeleteButton,
   StyledErrorMessage,
   StyledActionsCell,
   StyledPolishCount
@@ -143,12 +143,14 @@ export const AttributeManager = ({ title, type }: AttributeManagerProps) => {
                 </StyledTableCell>
                 <StyledActionsCell>
                   {attr.polishCount === 0 && (
-                    <StyledDeleteButton
+                    <Button
                       onClick={() => handleDelete(attr.id)}
                       aria-label={`Delete ${attr.name}`}
+                      $variant="danger"
+                      $size="small"
                     >
                       Delete
-                    </StyledDeleteButton>
+                    </Button>
                   )}
                 </StyledActionsCell>
               </StyledTableRow>

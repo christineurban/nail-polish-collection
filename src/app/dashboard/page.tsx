@@ -6,7 +6,6 @@ import { PageHeader } from '@/components/PageHeader';
 import {
   StyledStatsGrid,
   StyledAttributeList,
-  StyledDeleteButton,
   StyledSortControls,
   StyledSortButton,
   StyledAddForm,
@@ -15,7 +14,8 @@ import {
   StyledViewButton,
   StyledInputContainer,
   StyledSectionHeading,
-  StyledInputControls
+  StyledInputControls,
+  StyledNote
 } from './page.styled';
 import { BsGrid, BsTable } from 'react-icons/bs';
 import { Table } from '@/components/Table';
@@ -205,6 +205,7 @@ export default function DashboardPage() {
   };
 
   const renderTable = (attributes: Attribute[], attributeType: 'color' | 'finish' | 'brand') => {
+    console.log('Rendering table for:', attributeType, attributes);
     const columns = [
       {
         header: 'Name',
@@ -215,7 +216,10 @@ export default function DashboardPage() {
         header: 'Count',
         key: 'count' as const,
         sortable: true,
-        render: (item: Attribute) => `${item.count} ${item.count === 1 ? 'polish' : 'polishes'}`
+        render: (item: Attribute) => {
+          console.log('Table row item:', item.name, 'Count:', item.count);
+          return `${item.count} ${item.count === 1 ? 'polish' : 'polishes'}`;
+        }
       },
       {
         header: 'Percentage',
@@ -226,14 +230,15 @@ export default function DashboardPage() {
       {
         header: 'Actions',
         key: 'id' as const,
-        render: (item: Attribute) =>
-          item.count === 0 && (
-            <StyledDeleteButton
-              onClick={() => handleDelete(item.id, attributeType)}
-            >
-              Delete
-            </StyledDeleteButton>
-          )
+        render: (item: Attribute) => Number(item.count) <= 0 && (
+          <Button
+            onClick={() => handleDelete(item.id, attributeType)}
+            $variant="danger"
+            $size="small"
+          >
+            Delete
+          </Button>
+        )
       }
     ];
 
@@ -273,26 +278,23 @@ export default function DashboardPage() {
     );
   };
 
-  const renderCards = (attributes: Attribute[], attributeType: 'color' | 'finish' | 'brand') => (
-    <StyledAttributeList>
-      {attributes.map(attr => (
-        <div key={attr.id}>
-          <Tile
-            title={attr.name}
-            value={`${attr.count} ${attr.count === 1 ? 'polish' : 'polishes'} (${attr.percentage.toFixed(1)}%)`}
-            variant="attribute"
-          />
-          {attr.count === 0 && (
-            <StyledDeleteButton
-              onClick={() => handleDelete(attr.id, attributeType)}
-            >
-              Delete
-            </StyledDeleteButton>
-          )}
-        </div>
-      ))}
-    </StyledAttributeList>
-  );
+  const renderCards = (attributes: Attribute[], attributeType: 'color' | 'finish' | 'brand') => {
+    return (
+      <StyledAttributeList>
+        {attributes.map(attr => (
+          <div key={attr.id}>
+            <Tile
+              title={attr.name}
+              value={`${attr.count} ${attr.count === 1 ? 'polish' : 'polishes'} (${attr.percentage.toFixed(1)}%)`}
+              variant="attribute"
+              showDelete={attr.count === 0}
+              onDelete={() => handleDelete(attr.id, attributeType)}
+            />
+          </div>
+        ))}
+      </StyledAttributeList>
+    );
+  };
 
   const handleStatClick = (type: 'brands' | 'colors' | 'finishes') => {
     setSelectedAttribute(selectedAttribute === type ? null : type);
@@ -381,6 +383,10 @@ export default function DashboardPage() {
           ? renderCards(filteredAndSorted, attributeType)
           : renderTable(filteredAndSorted, attributeType)
         }
+
+        <StyledNote>
+          Note: A {attributeType} can only be deleted if there are no polishes associated with it
+        </StyledNote>
       </>
     );
   };

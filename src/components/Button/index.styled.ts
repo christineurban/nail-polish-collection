@@ -1,22 +1,23 @@
 'use client';
 
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { formStyles } from '@/theme/form';
 import { Theme } from '@/theme/types';
 
 interface StyledButtonProps {
   $variant?: 'danger' | 'secondary' | 'tertiary';
   $fullWidth?: boolean;
+  $size?: 'small' | 'default';
 }
 
 export const StyledButton = styled.button<StyledButtonProps>`
-  height: ${formStyles.height};
-  padding: ${formStyles.padding};
+  height: ${props => props.$size === 'small' ? '32px' : formStyles.height};
+  padding: ${props => props.$size === 'small' ? '0.25rem 0.75rem' : formStyles.padding};
   border: ${formStyles.border} transparent;
-  border-radius: ${formStyles.borderRadius};
+  border-radius: ${props => props.$size === 'small' ? '0' : formStyles.borderRadius};
   background: ${({ theme }) => theme.colors.primary[500]};
   color: ${({ theme }) => theme.colors.text.inverse};
-  font-size: ${formStyles.fontSize};
+  font-size: ${props => props.$size === 'small' ? '0.875rem' : formStyles.fontSize};
   cursor: pointer;
   transition: all ${({ theme }) => theme.transitions.base};
   display: flex;
@@ -26,7 +27,6 @@ export const StyledButton = styled.button<StyledButtonProps>`
   width: ${props => props.$fullWidth ? '100%' : 'auto'};
 
   &:hover {
-    background: ${({ theme }) => theme.colors.primary[600]};
     transform: translateY(-1px);
   }
 
@@ -41,14 +41,20 @@ export const StyledButton = styled.button<StyledButtonProps>`
     transform: none;
   }
 
-  ${({ theme, $variant }) => $variant === 'danger' && `
-    background: #dc3545;
+  ${({ theme, $variant }) => !$variant && css`
     &:hover {
-      background: #c82333;
+      background: ${theme.colors.primary[600]};
     }
   `}
 
-  ${({ theme, $variant }) => $variant === 'secondary' && `
+  ${({ theme, $variant }) => $variant === 'danger' && css`
+    background: ${theme.colors.error};
+    &:hover {
+      opacity: 0.9;
+    }
+  `}
+
+  ${({ theme, $variant }) => $variant === 'secondary' && css`
     background: ${theme.colors.gray[200]};
     color: ${theme.colors.gray[700]};
     &:hover {
@@ -56,7 +62,7 @@ export const StyledButton = styled.button<StyledButtonProps>`
     }
   `}
 
-  ${({ theme, $variant }) => $variant === 'tertiary' && `
+  ${({ theme, $variant }) => $variant === 'tertiary' && css`
     background: transparent;
     border: 2px solid ${theme.colors.primary[500]};
     color: ${theme.colors.primary[500]};

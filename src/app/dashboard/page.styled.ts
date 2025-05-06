@@ -21,25 +21,13 @@ export const StyledAttributeList = styled.div`
   grid-auto-flow: dense;
 
   > div {
-    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
 
-    > * {
-      height: 100%;
+    > *:first-child {
+      flex: 1;
     }
-  }
-`;
-
-export const StyledDeleteButton = styled.button`
-  background: ${({ theme }) => theme.colors.error[500]};
-  color: white;
-  border: none;
-  border-radius: ${({ theme }) => theme.borderRadius};
-  padding: 0.5rem 1rem;
-  cursor: pointer;
-  transition: background-color ${({ theme }) => theme.transitions.base};
-
-  &:hover {
-    background: ${({ theme }) => theme.colors.error[600]};
   }
 `;
 
@@ -130,4 +118,11 @@ export const StyledSectionHeading = styled.h2`
   font-size: ${({ theme }) => theme.typography.fontSize['2xl']};
   font-weight: ${({ theme }) => theme.typography.fontWeights.semibold};
   margin: 4rem 0 1rem;
+`;
+
+export const StyledNote = styled.p`
+  color: ${({ theme }) => theme.colors.text.secondary};
+  font-size: ${({ theme }) => theme.typography.fontSize.sm};
+  margin-top: 1rem;
+  font-style: italic;
 `;

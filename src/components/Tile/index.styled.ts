@@ -17,6 +17,10 @@ export const StyledTile = styled.div<StyledTileProps>`
   transition: all ${({ theme }) => theme.transitions.base};
   border: 2px solid transparent;
   transform: translateY(0);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 
   ${({ $isClickable }) => $isClickable && css`
     cursor: pointer;
@@ -39,6 +43,10 @@ export const StyledTile = styled.div<StyledTileProps>`
 `;
 
 export const StyledTileContent = styled.div<StyledTileContentProps>`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+
   ${({ theme, $variant = 'stat' }) => $variant === 'stat' ? css`
     h3 {
       margin: 0 0 0.5rem;
@@ -58,8 +66,6 @@ export const StyledTileContent = styled.div<StyledTileContentProps>`
       font-size: ${theme.typography.fontSize.sm};
     }
   ` : css`
-    display: flex;
-    flex-direction: column;
     gap: 0.5rem;
 
     h3 {
