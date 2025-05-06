@@ -18,6 +18,15 @@ export const StyledAttributeList = styled.div`
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 1rem;
   margin-top: 1rem;
+  grid-auto-flow: dense;
+
+  > div {
+    height: 100%;
+
+    > * {
+      height: 100%;
+    }
+  }
 `;
 
 export const StyledDeleteButton = styled.button`

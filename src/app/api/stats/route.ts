@@ -2,24 +2,8 @@ import { prisma } from '@/lib/prisma';
 import { NextResponse } from 'next/server';
 import { CollectionStats } from '@/types/stats';
 
-const ratingToNumber = (rating: string | null): number => {
-  if (!rating) return 0;
-  const ratingMap: { [key: string]: number } = {
-    'A_PLUS': 4.3,
-    'A': 4.0,
-    'A_MINUS': 3.7,
-    'B_PLUS': 3.3,
-    'B': 3.0,
-    'B_MINUS': 2.7,
-    'C_PLUS': 2.3,
-    'C': 2.0,
-    'C_MINUS': 1.7,
-    'D_PLUS': 1.3,
-    'D': 1.0,
-    'D_MINUS': 0.7,
-    'F': 0.0
-  };
-  return ratingMap[rating] || 0;
+const formatRating = (rating: string): string => {
+  return rating.replace('_PLUS', '+').replace('_MINUS', '-');
 };
 
 export async function GET() {
@@ -36,6 +20,30 @@ export async function GET() {
     // Get total finishes
     const totalFinishes = await prisma.finishes.count();
 
+    // Get most popular brand among new polishes
+    const brandsWithNewPolishes = await prisma.brands.findMany({
+      select: {
+        name: true,
+        nail_polish: {
+          where: {
+            OR: [
+              { is_old: false },
+              { is_old: null }
+            ]
+          }
+        }
+      }
+    });
+
+    const brandCounts = brandsWithNewPolishes.map(brand => ({
+      name: brand.name,
+      count: brand.nail_polish.length
+    })).sort((a, b) => b.count - a.count);
+
+    const mostPopularNewBrand = brandCounts.length > 0
+      ? brandCounts[0]
+      : { name: 'N/A', count: 0 };
+
     // Get all ratings
     const polishesWithRatings = await prisma.nail_polish.findMany({
       select: {
@@ -43,13 +51,18 @@ export async function GET() {
       }
     });
 
-    // Calculate average rating
-    const totalRating = polishesWithRatings.reduce((sum, polish) => {
-      return sum + ratingToNumber(polish.rating || null);
-    }, 0);
-    const averageRating = polishesWithRatings.length > 0
-      ? totalRating / polishesWithRatings.length
-      : 0;
+    // Calculate most common rating
+    const ratedPolishes = polishesWithRatings.filter(polish => polish.rating !== null);
+    const ratedPolishesCount = ratedPolishes.length;
+
+    const ratingsCount = ratedPolishes.reduce((acc, polish) => {
+      const rating = polish.rating as string;
+      acc[rating] = (acc[rating] || 0) + 1;
+      return acc;
+    }, {} as Record<string, number>);
+
+    const mostCommonRating = Object.entries(ratingsCount)
+      .sort(([, a], [, b]) => b - a)[0]?.[0] || null;
 
     // Get brand stats with highest count
     const mostCommonBrand = await prisma.brands.findMany({
@@ -101,7 +114,9 @@ export async function GET() {
       totalBrands,
       totalColors,
       totalFinishes,
-      averageRating,
+      averageRating: mostCommonRating ? formatRating(mostCommonRating) : null,
+      ratedPolishesCount,
+      mostPopularNewBrand,
       mostCommonBrand: {
         name: mostCommonBrand[0]?.name || 'N/A',
         count: mostCommonBrand[0]?._count.nail_polish || 0

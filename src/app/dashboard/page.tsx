@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { PageHeader } from '@/components/PageHeader';
 import {
   StyledStatsGrid,
@@ -28,7 +29,10 @@ interface Stats {
   totalBrands: number;
   totalColors: number;
   totalFinishes: number;
-  averageRating: number;
+  mostPopularNewBrand: {
+    name: string;
+    count: number;
+  };
   mostCommonBrand: {
     name: string;
     count: number;
@@ -54,6 +58,7 @@ type SortOrder = 'name-asc' | 'name-desc' | 'count-asc' | 'count-desc';
 type ViewMode = 'card' | 'table';
 
 export default function DashboardPage() {
+  const router = useRouter();
   const [stats, setStats] = useState<Stats | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -396,13 +401,14 @@ export default function DashboardPage() {
     <>
       <PageHeader
         title="Dashboard"
-        description="Overview and insights about your nail polish collection"
+        description="Click on a tile to view and manage details"
       />
       <StyledStatsGrid>
         <Tile
           title="Total Polishes"
           value={stats.totalPolishes}
           description="Polishes in your collection"
+          onClick={() => router.push('/')}
         />
 
         <Tile
@@ -430,9 +436,9 @@ export default function DashboardPage() {
         />
 
         <Tile
-          title="Average Rating"
-          value={stats.averageRating ? stats.averageRating.toFixed(1) : 'N/A'}
-          description="Average polish rating"
+          title="Top New Brand"
+          value={stats.mostPopularNewBrand.name}
+          description={`${stats.mostPopularNewBrand.count} polishes`}
         />
 
         <Tile
