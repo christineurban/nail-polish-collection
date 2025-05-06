@@ -18,8 +18,8 @@ export function Nav() {
 
   const routes = [
     { path: '/', label: 'Search' },
-    { path: '/dashboard', label: 'Dashboard' },
     { path: '/polish/add', label: 'Add New Polish' },
+    { path: '/dashboard', label: 'Dashboard' },
     { path: '/image-selection', label: 'Select Missing Images' },
   ];
 
