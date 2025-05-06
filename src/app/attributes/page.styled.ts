@@ -71,19 +71,15 @@ export const StyledAddForm = styled.form`
   display: flex;
   gap: 1rem;
   margin-bottom: 1rem;
-  align-items: flex-start;
-  width: 300px;
+  align-items: center;
 
   ${StyledInputContainer} {
-    width: 100%;
-    max-width: none;
+    width: 300px;
+    margin-bottom: 0;
   }
 
   button {
     flex-shrink: 0;
-    margin-left: 2rem;
-    position: absolute;
-    left: 320px;
   }
 `;
 

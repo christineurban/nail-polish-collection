@@ -4,6 +4,7 @@ import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import styled from 'styled-components';
 import { useState } from 'react';
+import { HiMenu, HiX } from 'react-icons/hi';
 
 const StyledNav = styled.nav`
   background: ${({ theme }) => theme.colors.background.gradient};
@@ -105,22 +106,33 @@ const StyledLinks = styled.div<{ $isOpen: boolean }>`
   }
 `;
 
-const StyledHamburger = styled.button`
+const StyledHamburger = styled.button<{ $isOpen: boolean }>`
   display: none;
   background: none;
   border: none;
   color: ${({ theme }) => theme.colors.text.inverse};
-  font-size: 1.5rem;
   cursor: pointer;
   padding: 0.5rem;
   transition: all ${({ theme }) => theme.transitions.base};
+  position: relative;
+  width: 48px;
+  height: 48px;
+  align-items: center;
+  justify-content: center;
+
+  svg {
+    width: 32px;
+    height: 32px;
+    transition: transform 0.3s ease;
+    transform: ${({ $isOpen }) => ($isOpen ? 'rotate(90deg)' : 'rotate(0)')};
+  }
 
   &:hover {
     transform: scale(1.1);
   }
 
   @media (max-width: 768px) {
-    display: block;
+    display: flex;
   }
 `;
 
@@ -147,8 +159,9 @@ export function Nav() {
           onClick={toggleMenu}
           aria-label="Toggle navigation menu"
           aria-expanded={isMenuOpen}
+          $isOpen={isMenuOpen}
         >
-          ☰
+          {isMenuOpen ? <HiX /> : <HiMenu />}
         </StyledHamburger>
         <StyledLinks $isOpen={isMenuOpen}>
           {routes.map(({ path, label }) => (
