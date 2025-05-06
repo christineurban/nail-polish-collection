@@ -12,7 +12,9 @@ import {
   StyledMessage,
   StyledViewControls,
   StyledViewButton,
-  StyledInputContainer
+  StyledInputContainer,
+  StyledSectionHeading,
+  StyledInputControls
 } from './page.styled';
 import { BsGrid, BsTable } from 'react-icons/bs';
 import { Table } from '@/components/Table';
@@ -58,7 +60,7 @@ export default function DashboardPage() {
   const [colors, setColors] = useState<Attribute[]>([]);
   const [finishes, setFinishes] = useState<Attribute[]>([]);
   const [brands, setBrands] = useState<Attribute[]>([]);
-  const [activeTab, setActiveTab] = useState('brands');
+  const [selectedAttribute, setSelectedAttribute] = useState<'brands' | 'colors' | 'finishes' | null>(null);
   const [sortOrder, setSortOrder] = useState<SortOrder>('name-asc');
   const [searchTerm, setSearchTerm] = useState('');
   const [success, setSuccess] = useState<string | null>(null);
@@ -287,6 +289,15 @@ export default function DashboardPage() {
     </StyledAttributeList>
   );
 
+  const handleStatClick = (type: 'brands' | 'colors' | 'finishes') => {
+    setSelectedAttribute(selectedAttribute === type ? null : type);
+    setNewAttributeName('');
+    setError(null);
+    setSuccess(null);
+    setSortOrder('name-asc');
+    setSearchTerm('');
+  };
+
   const getAttributeList = (type: 'colors' | 'finishes' | 'brands') => {
     const attributes = type === 'colors' ? colors : type === 'finishes' ? finishes : brands;
     const filteredAndSorted = filterAttributes(sortAttributes(attributes));
@@ -294,20 +305,6 @@ export default function DashboardPage() {
 
     return (
       <>
-        <StyledAddForm onSubmit={(e) => handleAdd(e, attributeType)}>
-          <StyledInputContainer>
-            <Input
-              placeholder={`Add new ${attributeType}...`}
-              value={newAttributeName}
-              onChange={setNewAttributeName}
-              aria-label={`Add new ${attributeType}`}
-            />
-          </StyledInputContainer>
-          <Button type="submit">
-            Add {attributeType}
-          </Button>
-        </StyledAddForm>
-
         <StyledViewControls>
           <StyledViewButton
             onClick={() => setViewMode('card')}
@@ -350,14 +347,30 @@ export default function DashboardPage() {
           </StyledSortButton>
         </StyledSortControls>
 
-        <StyledInputContainer>
-          <Input
-            placeholder={`Search ${type}...`}
-            value={searchTerm}
-            onChange={setSearchTerm}
-            aria-label={`Search ${type}`}
-          />
-        </StyledInputContainer>
+        <StyledInputControls>
+          <StyledInputContainer>
+            <Input
+              placeholder={`Search ${type}...`}
+              value={searchTerm}
+              onChange={setSearchTerm}
+              aria-label={`Search ${type}`}
+            />
+          </StyledInputContainer>
+
+          <StyledAddForm onSubmit={(e) => handleAdd(e, attributeType)}>
+            <StyledInputContainer>
+              <Input
+                placeholder={`Add new ${attributeType}...`}
+                value={newAttributeName}
+                onChange={setNewAttributeName}
+                aria-label={`Add new ${attributeType}`}
+              />
+            </StyledInputContainer>
+            <Button type="submit">
+              Add {attributeType}
+            </Button>
+          </StyledAddForm>
+        </StyledInputControls>
 
         {viewMode === 'card'
           ? renderCards(filteredAndSorted, attributeType)
@@ -366,24 +379,6 @@ export default function DashboardPage() {
       </>
     );
   };
-
-  const tabs = [
-    {
-      id: 'brands',
-      label: 'Brands',
-      content: getAttributeList('brands'),
-    },
-    {
-      id: 'colors',
-      label: 'Colors',
-      content: getAttributeList('colors'),
-    },
-    {
-      id: 'finishes',
-      label: 'Finishes',
-      content: getAttributeList('finishes'),
-    },
-  ];
 
   if (isLoading) {
     return <PageHeader title="Loading..." />;
@@ -414,18 +409,24 @@ export default function DashboardPage() {
           title="Brands"
           value={stats.totalBrands}
           description="Different brands collected"
+          onClick={() => handleStatClick('brands')}
+          $isActive={selectedAttribute === 'brands'}
         />
 
         <Tile
           title="Colors"
           value={stats.totalColors}
           description="Unique colors in collection"
+          onClick={() => handleStatClick('colors')}
+          $isActive={selectedAttribute === 'colors'}
         />
 
         <Tile
           title="Finishes"
           value={stats.totalFinishes}
           description="Different finishes available"
+          onClick={() => handleStatClick('finishes')}
+          $isActive={selectedAttribute === 'finishes'}
         />
 
         <Tile
@@ -459,16 +460,16 @@ export default function DashboardPage() {
       {success && (
         <StyledMessage $type="success">{success}</StyledMessage>
       )}
-      <Tabs
-        tabs={tabs}
-        activeTab={activeTab}
-        onTabChange={(tab) => {
-          setActiveTab(tab);
-          setNewAttributeName('');
-          setError(null);
-          setSuccess(null);
-        }}
-      />
+      {selectedAttribute && (
+        <>
+          <StyledSectionHeading>
+            {selectedAttribute === 'brands' ? 'Brand Details' :
+             selectedAttribute === 'colors' ? 'Color Details' :
+             'Finish Details'}
+          </StyledSectionHeading>
+          {getAttributeList(selectedAttribute)}
+        </>
+      )}
     </>
   );
 }

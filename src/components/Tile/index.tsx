@@ -6,11 +6,26 @@ interface TileProps {
   value: ReactNode;
   description?: string;
   variant?: 'stat' | 'attribute';
+  onClick?: () => void;
+  $isActive?: boolean;
 }
 
-export const Tile = ({ title, value, description, variant = 'stat' }: TileProps) => {
+export const Tile = ({
+  title,
+  value,
+  description,
+  variant = 'stat',
+  onClick,
+  $isActive = false
+}: TileProps) => {
   return (
-    <StyledTile>
+    <StyledTile
+      onClick={onClick}
+      $isActive={$isActive}
+      $isClickable={!!onClick}
+      role={onClick ? "button" : undefined}
+      tabIndex={onClick ? 0 : undefined}
+    >
       <StyledTileContent $variant={variant}>
         {variant === 'stat' ? (
           <>

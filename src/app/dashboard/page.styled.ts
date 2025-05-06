@@ -58,11 +58,18 @@ export const StyledSortButton = styled.button<{ $isActive: boolean }>`
   }
 `;
 
-export const StyledAddForm = styled.form`
+export const StyledInputControls = styled.div`
   display: flex;
   gap: 1rem;
   margin-bottom: 1rem;
   align-items: flex-start;
+`;
+
+export const StyledAddForm = styled.form`
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  margin-left: auto;
 `;
 
 export const StyledMessage = styled.div<{ $type: 'error' | 'success' }>`
@@ -104,7 +111,14 @@ export const StyledViewButton = styled.button<{ $isActive: boolean }>`
 `;
 
 export const StyledInputContainer = styled.div`
-  max-width: 300px;
+  width: 300px;
   margin-bottom: 1rem;
   flex-shrink: 0;
+`;
+
+export const StyledSectionHeading = styled.h2`
+  color: ${({ theme }) => theme.colors.text.primary};
+  font-size: ${({ theme }) => theme.typography.fontSize['2xl']};
+  font-weight: ${({ theme }) => theme.typography.fontWeights.semibold};
+  margin: 4rem 0 1rem;
 `;

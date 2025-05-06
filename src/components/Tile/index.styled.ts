@@ -4,11 +4,38 @@ interface StyledTileContentProps {
   $variant?: 'stat' | 'attribute';
 }
 
-export const StyledTile = styled.div`
+interface StyledTileProps {
+  $isActive?: boolean;
+  $isClickable?: boolean;
+}
+
+export const StyledTile = styled.div<StyledTileProps>`
   background: ${({ theme }) => theme.colors.background.secondary};
   border-radius: ${({ theme }) => theme.borderRadius.lg};
   padding: 1.5rem;
   box-shadow: ${({ theme }) => theme.shadows.sm};
+  transition: all ${({ theme }) => theme.transitions.base};
+  border: 2px solid transparent;
+  transform: translateY(0);
+
+  ${({ $isClickable }) => $isClickable && css`
+    cursor: pointer;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: ${({ theme }) => theme.shadows.md};
+    }
+  `}
+
+  ${({ $isActive, theme }) => $isActive && css`
+    border-color: ${theme.colors.primary[500]};
+    box-shadow: ${theme.shadows.md}, 0 0 0 1px ${theme.colors.primary[500]};
+
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: ${theme.shadows.lg}, 0 0 0 1px ${theme.colors.primary[500]};
+    }
+  `}
 `;
 
 export const StyledTileContent = styled.div<StyledTileContentProps>`
