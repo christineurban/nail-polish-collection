@@ -128,6 +128,20 @@ export const StyledHamburger = styled.button<{ $isOpen: boolean }>`
     transform: scale(1.1);
   }
 
+  &:focus {
+    outline: none;
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: none;
+  }
+
+  &:focus:not(:focus-visible) {
+    outline: none;
+    box-shadow: none;
+  }
+
   @media (max-width: 1024px) {
     display: flex;
   }

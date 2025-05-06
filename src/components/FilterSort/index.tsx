@@ -19,6 +19,8 @@ import {
   StyledClearButton,
   StyledOption,
   StyledCountDisplay,
+  StyledHeader,
+  StyledToggleButton,
 } from './index.styled';
 import { StyledTag } from '@/components/fields/MultiSelect/index.styled';
 
@@ -51,6 +53,7 @@ export const FilterSort = ({
   const router = useRouter();
   const searchParams = useSearchParams();
   const [filters, setFilters] = useState(currentFilters);
+  const [isFiltersVisible, setIsFiltersVisible] = useState(true);
 
   console.log('Available color options:', colors);
   console.log('Current color filters:', filters.color);
@@ -172,10 +175,21 @@ export const FilterSort = ({
 
   return (
     <StyledFiltersContainer>
-      <StyledCountDisplay>
-        Showing {displayedPolishes} of {totalPolishes} polishes
-      </StyledCountDisplay>
-      <StyledContainer>
+      <StyledHeader>
+        <StyledCountDisplay>
+          Showing {displayedPolishes} of {totalPolishes} polishes
+        </StyledCountDisplay>
+        <StyledToggleButton
+          onClick={() => setIsFiltersVisible(!isFiltersVisible)}
+          aria-expanded={isFiltersVisible}
+          aria-controls="filters-container"
+          $isExpanded={isFiltersVisible}
+        >
+          {isFiltersVisible ? 'Hide Filters' : 'Show Filters'}
+        </StyledToggleButton>
+      </StyledHeader>
+
+      <StyledContainer id="filters-container" $isVisible={isFiltersVisible}>
         <StyledFilterGroup>
           <StyledFilterHeader>
             <StyledLabel>Search</StyledLabel>

@@ -16,7 +16,7 @@ export const StyledFiltersContainer = styled.div`
   }
 `;
 
-export const StyledContainer = styled.div`
+export const StyledContainer = styled.div<{ $isVisible: boolean }>`
   background: linear-gradient(to bottom right, #ffffff, #f8fafc);
   border-radius: 16px;
   box-shadow:
@@ -24,7 +24,7 @@ export const StyledContainer = styled.div`
     0 2px 4px -1px rgba(0, 0, 0, 0.06),
     inset 0 2px 4px rgba(255, 255, 255, 0.9);
   width: 100%;
-  display: grid;
+  display: ${({ $isVisible }) => ($isVisible ? 'grid' : 'none')};
   grid-template-columns: 1fr;
   gap: 1.5rem;
   border: 1px solid rgba(226, 232, 240, 0.8);
@@ -207,4 +207,47 @@ export const StyledCountDisplay = styled.div`
   color: ${({ theme }) => theme.colors.text.secondary};
   font-size: 0.875rem;
   text-align: right;
+`;
+
+export const StyledHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+`;
+
+export const StyledToggleButton = styled.button<{ $isExpanded: boolean }>`
+  background: none;
+  border: none;
+  color: ${({ theme }) => theme.colors.primary[600]};
+  font-size: 0.875rem;
+  padding: 0.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.2s ease;
+
+  &:after {
+    content: '${({ $isExpanded }) => $isExpanded ? '↑' : '↓'}';
+    margin-left: 0.25rem;
+  }
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.primary[700]};
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: none;
+  }
+
+  &:focus:not(:focus-visible) {
+    outline: none;
+    box-shadow: none;
+  }
 `;
