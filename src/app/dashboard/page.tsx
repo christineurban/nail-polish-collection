@@ -445,24 +445,44 @@ export default function DashboardPage() {
           title="Top New Brand"
           value={stats.mostPopularNewBrand.name}
           description={`${stats.mostPopularNewBrand.count} polishes`}
+          onClick={() => {
+            const params = new URLSearchParams();
+            params.append('brand', stats.mostPopularNewBrand.name);
+            router.push(`/?${params.toString()}`);
+          }}
         />
 
         <Tile
           title="Most Popular Brand"
           value={stats.mostCommonBrand.name}
           description={`${stats.mostCommonBrand.count} polishes`}
+          onClick={() => {
+            const params = new URLSearchParams();
+            params.append('brand', stats.mostCommonBrand.name);
+            router.push(`/?${params.toString()}`);
+          }}
         />
 
         <Tile
           title="Most Common Color"
           value={stats.mostCommonColor.name}
           description={`${stats.mostCommonColor.count} polishes`}
+          onClick={() => {
+            const params = new URLSearchParams();
+            params.append('color', stats.mostCommonColor.name);
+            router.push(`/?${params.toString()}`);
+          }}
         />
 
         <Tile
           title="Most Common Finish"
           value={stats.mostCommonFinish.name}
           description={`${stats.mostCommonFinish.count} polishes`}
+          onClick={() => {
+            const params = new URLSearchParams();
+            params.append('finish', stats.mostCommonFinish.name);
+            router.push(`/?${params.toString()}`);
+          }}
         />
       </StyledStatsGrid>
 

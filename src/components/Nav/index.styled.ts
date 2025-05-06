@@ -22,7 +22,7 @@ export const StyledContainer = styled.div`
   align-items: center;
   gap: 1rem;
 
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
     padding: 0 1.5rem;
     justify-content: space-between;
   }
@@ -85,7 +85,7 @@ export const StyledLinks = styled.div<{ $isOpen: boolean }>`
   align-items: center;
   gap: 1rem;
 
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
     position: absolute;
     top: 100%;
     left: 0;
@@ -128,7 +128,7 @@ export const StyledHamburger = styled.button<{ $isOpen: boolean }>`
     transform: scale(1.1);
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
     display: flex;
   }
 `;
