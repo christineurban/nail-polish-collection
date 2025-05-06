@@ -8,6 +8,7 @@ import { SingleSelect } from '../fields/SingleSelect';
 import { MultiSelect } from '../fields/MultiSelect';
 import { Input } from '../fields/Input';
 import { Rating, RATING_OPTIONS } from '@/types/rating';
+import { SuccessMessage } from '@/components/SuccessMessage';
 import {
   StyledForm,
   StyledFormGroup,
@@ -312,39 +313,10 @@ export const AddEditForm = ({
         )}
       </StyledForm>
 
-      <AnimatePresence>
-        {isSuccess && (
-          <StyledSuccessOverlay
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-          >
-            <StyledSuccessMessage
-              as={motion.div}
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{
-                opacity: 1,
-                scale: 1
-              }}
-              exit={{
-                opacity: 0,
-                scale: 0.8,
-                transition: {
-                  duration: 0.5,
-                  ease: "easeOut"
-                }
-              }}
-              transition={{
-                duration: 0.3,
-                ease: "easeOut"
-              }}
-            >
-              {successMessage}
-            </StyledSuccessMessage>
-          </StyledSuccessOverlay>
-        )}
-      </AnimatePresence>
+      <SuccessMessage
+        message={successMessage}
+        onClose={() => setIsSuccess(false)}
+      />
     </>
   );
 };

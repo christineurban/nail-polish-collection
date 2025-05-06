@@ -2,7 +2,7 @@
 
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
-import { HiMenu, HiX } from 'react-icons/hi';
+import { HiOutlineMenu, HiOutlineX } from 'react-icons/hi';
 import {
   StyledNav,
   StyledContainer,
@@ -37,7 +37,7 @@ export function Nav() {
           aria-expanded={isMenuOpen}
           $isOpen={isMenuOpen}
         >
-          {isMenuOpen ? <HiX /> : <HiMenu />}
+          {isMenuOpen ? <HiOutlineX /> : <HiOutlineMenu />}
         </StyledHamburger>
         <StyledLinks $isOpen={isMenuOpen}>
           {routes.map(({ path, label }) => (

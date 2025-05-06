@@ -22,6 +22,11 @@ export const StyledTile = styled.div<StyledTileProps>`
   flex-direction: column;
   gap: 1rem;
 
+  @media (max-width: 480px) {
+    padding: 1rem;
+    gap: 0.75rem;
+  }
+
   ${({ $isClickable }) => $isClickable && css`
     cursor: pointer;
 
@@ -54,16 +59,9 @@ export const StyledTileContent = styled.div<StyledTileContentProps>`
       font-size: ${theme.typography.fontSize.lg};
     }
 
-    .value {
-      font-size: ${theme.typography.fontSize['2xl']};
-      font-weight: ${theme.typography.fontWeights.bold};
-      color: ${theme.colors.primary[500]};
-      margin: 0.5rem 0;
-    }
-
-    .description {
-      color: ${theme.colors.text.secondary};
-      font-size: ${theme.typography.fontSize.sm};
+    @media (max-width: 480px) {
+      justify-content: space-between;
+      height: 100%;
     }
   ` : css`
     gap: 0.5rem;
@@ -77,4 +75,25 @@ export const StyledTileContent = styled.div<StyledTileContentProps>`
       color: ${theme.colors.text.secondary};
     }
   `}
+`;
+
+export const StyledValue = styled.div`
+  font-size: ${({ theme }) => theme.typography.fontSize['2xl']};
+  font-weight: ${({ theme }) => theme.typography.fontWeights.bold};
+  color: ${({ theme }) => theme.colors.primary[500]};
+  margin: 0.5rem 0;
+
+  @media (max-width: 480px) {
+    font-size: ${({ theme }) => theme.typography.fontSize.xl};
+    margin: 0.25rem 0;
+  }
+`;
+
+export const StyledDescription = styled.div`
+  color: ${({ theme }) => theme.colors.text.secondary};
+  font-size: ${({ theme }) => theme.typography.fontSize.sm};
+
+  @media (max-width: 480px) {
+    font-size: ${({ theme }) => theme.typography.fontSize.xs};
+  }
 `;

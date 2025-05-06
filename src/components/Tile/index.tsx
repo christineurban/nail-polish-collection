@@ -1,5 +1,5 @@
 import { ReactNode, MouseEvent } from 'react';
-import { StyledTile, StyledTileContent } from './index.styled';
+import { StyledTile, StyledTileContent, StyledValue, StyledDescription } from './index.styled';
 import { Button } from '@/components/Button';
 
 interface TileProps {
@@ -35,8 +35,10 @@ export const Tile = ({
         {variant === 'stat' ? (
           <>
             <h3>{title}</h3>
-            <div className="value">{value}</div>
-            {description && <div className="description">{description}</div>}
+            <div>
+              <StyledValue>{value}</StyledValue>
+              {description && <StyledDescription>{description}</StyledDescription>}
+            </div>
           </>
         ) : (
           <>

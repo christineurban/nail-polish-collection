@@ -6,9 +6,16 @@ export const StyledGrid = styled.div`
   gap: 2rem;
   margin-top: 2rem;
 
-  @media (max-width: 640px) {
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 1.5rem;
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.75rem;
+    margin-top: 1.5rem;
+  }
+
+  @media (max-width: 480px) {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
   }
 `;
 
@@ -25,10 +32,19 @@ export const StyledEmptyState = styled.div`
     font-weight: 600;
     color: #2d3748;
     margin-bottom: 1rem;
+
+    @media (max-width: 480px) {
+      font-size: 1.25rem;
+    }
   }
 
   p {
     color: #4a5568;
     margin-bottom: 2rem;
+
+    @media (max-width: 480px) {
+      font-size: 0.875rem;
+      margin-bottom: 1.5rem;
+    }
   }
 `;

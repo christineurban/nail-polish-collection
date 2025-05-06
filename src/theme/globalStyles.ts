@@ -84,15 +84,40 @@ export const GlobalStyles = createGlobalStyle<{ theme: Theme }>`
     margin-bottom: ${({ theme }) => theme.spacing[6]};
     position: relative;
     display: inline-block;
+
+    @media (max-width: 1024px) {
+      font-size: ${({ theme }) => theme.typography.fontSize['3xl']};
+    }
+
+    @media (max-width: 480px) {
+      font-size: ${({ theme }) => theme.typography.fontSize['2xl']};
+      margin-bottom: ${({ theme }) => theme.spacing[4]};
+    }
   }
 
   h2 {
     font-size: ${({ theme }) => theme.typography.fontSize['3xl']};
     color: ${({ theme }) => theme.colors.primary[700]};
+
+    @media (max-width: 1024px) {
+      font-size: ${({ theme }) => theme.typography.fontSize['2xl']};
+    }
+
+    @media (max-width: 480px) {
+      font-size: ${({ theme }) => theme.typography.fontSize.xl};
+    }
   }
 
   h3 {
     font-size: ${({ theme }) => theme.typography.fontSize['2xl']};
+
+    @media (max-width: 1024px) {
+      font-size: ${({ theme }) => theme.typography.fontSize.xl};
+    }
+
+    @media (max-width: 480px) {
+      font-size: ${({ theme }) => theme.typography.fontSize.lg};
+    }
   }
 
   h4 {

@@ -12,6 +12,10 @@ export const StyledNav = styled.nav`
   box-shadow: ${({ theme }) => theme.shadows.md};
   backdrop-filter: blur(8px);
   border-bottom: 1px solid ${({ theme }) => `${theme.colors.primary[400]}30`};
+
+  @media (max-width: 480px) {
+    padding: 0.5rem 0;
+  }
 `;
 
 export const StyledContainer = styled.div`
@@ -26,6 +30,11 @@ export const StyledContainer = styled.div`
     padding: 0 1.5rem;
     justify-content: space-between;
   }
+
+  @media (max-width: 480px) {
+    padding: 0 1rem;
+    gap: 0.5rem;
+  }
 `;
 
 export const StyledLogo = styled(Link)`
@@ -37,6 +46,15 @@ export const StyledLogo = styled(Link)`
   transition: all ${({ theme }) => theme.transitions.base};
   position: relative;
   padding: 0.5rem 0;
+
+  @media (max-width: 1024px) {
+    font-size: ${({ theme }) => theme.typography.fontSize.lg};
+  }
+
+  @media (max-width: 480px) {
+    font-size: ${({ theme }) => theme.typography.fontSize.base};
+    padding: 0.25rem 0;
+  }
 
   &:hover {
     transform: translateY(-1px);
@@ -71,6 +89,10 @@ export const StyledLink = styled(Link)<{ $isActive: boolean }>`
   transition: all ${({ theme }) => theme.transitions.base};
   backdrop-filter: ${({ $isActive }) => ($isActive ? 'blur(4px)' : 'none')};
 
+  @media (max-width: 480px) {
+    padding: 0.375rem 0.75rem;
+  }
+
   &:hover {
     color: ${({ theme }) => theme.colors.text.inverse};
     transform: translateY(-1px);
@@ -101,6 +123,10 @@ export const StyledLinks = styled.div<{ $isOpen: boolean }>`
     box-shadow: ${({ theme }) => theme.shadows.md};
     backdrop-filter: blur(8px);
   }
+
+  @media (max-width: 480px) {
+    padding: 0.75rem;
+  }
 `;
 
 export const StyledHamburger = styled.button<{ $isOpen: boolean }>`
@@ -124,6 +150,21 @@ export const StyledHamburger = styled.button<{ $isOpen: boolean }>`
     transform: ${({ $isOpen }) => ($isOpen ? 'rotate(90deg)' : 'rotate(0)')};
   }
 
+  @media (max-width: 1024px) {
+    display: flex;
+  }
+
+  @media (max-width: 480px) {
+    width: 40px;
+    height: 40px;
+    padding: 0.375rem;
+
+    svg {
+      width: 28px;
+      height: 28px;
+    }
+  }
+
   &:hover {
     transform: scale(1.1);
   }
@@ -140,9 +181,5 @@ export const StyledHamburger = styled.button<{ $isOpen: boolean }>`
   &:focus:not(:focus-visible) {
     outline: none;
     box-shadow: none;
-  }
-
-  @media (max-width: 1024px) {
-    display: flex;
   }
 `;

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import { PageHeader } from '@/components/PageHeader';
 import {
@@ -15,7 +15,8 @@ import {
   StyledInputContainer,
   StyledSectionHeading,
   StyledInputControls,
-  StyledNote
+  StyledNote,
+  StyledAddButtonContainer
 } from './page.styled';
 import { BsGrid, BsTable } from 'react-icons/bs';
 import { Table } from '@/components/Table';
@@ -23,6 +24,8 @@ import { Tabs } from '@/components/Tabs';
 import { Input } from '@/components/fields/Input';
 import { Button } from '@/components/Button';
 import { Tile } from '@/components/Tile';
+import { Modal } from '@/components/Modal';
+import { SuccessMessage } from '@/components/SuccessMessage';
 
 interface Stats {
   totalPolishes: number;
@@ -71,6 +74,7 @@ export default function DashboardPage() {
   const [success, setSuccess] = useState<string | null>(null);
   const [newAttributeName, setNewAttributeName] = useState('');
   const [viewMode, setViewMode] = useState<ViewMode>('card');
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
   const singularForms = {
     colors: 'color',
@@ -161,7 +165,6 @@ export default function DashboardPage() {
       setNewAttributeName('');
       setError(null);
       setSuccess(`Successfully added ${singularType}: ${newAttributeName}`);
-      setTimeout(() => setSuccess(null), 3000);
 
       const fetchAttributes = async () => {
         const response = await fetch('/api/attributes');
@@ -187,9 +190,9 @@ export default function DashboardPage() {
         case 'name-desc':
           return b.name.localeCompare(a.name);
         case 'count-asc':
-          return a.count - b.count;
-        case 'count-desc':
           return b.count - a.count;
+        case 'count-desc':
+          return a.count - b.count;
         default:
           return 0;
       }
@@ -329,28 +332,28 @@ export default function DashboardPage() {
 
         <StyledSortControls>
           <StyledSortButton
-            onClick={() => setSortOrder('name-asc')}
-            $isActive={sortOrder === 'name-asc'}
+            onClick={() => {
+              const newOrder = sortOrder.startsWith('name-')
+                ? sortOrder === 'name-asc' ? 'name-desc' : 'name-asc'
+                : 'name-asc';
+              setSortOrder(newOrder);
+            }}
+            $isActive={sortOrder.startsWith('name-')}
+            $direction={sortOrder === 'name-asc' ? 'asc' : sortOrder === 'name-desc' ? 'desc' : undefined}
           >
-            Name ↑
+            Name
           </StyledSortButton>
           <StyledSortButton
-            onClick={() => setSortOrder('name-desc')}
-            $isActive={sortOrder === 'name-desc'}
+            onClick={() => {
+              const newOrder = sortOrder.startsWith('count-')
+                ? sortOrder === 'count-asc' ? 'count-desc' : 'count-asc'
+                : 'count-asc';
+              setSortOrder(newOrder);
+            }}
+            $isActive={sortOrder.startsWith('count-')}
+            $direction={sortOrder === 'count-asc' ? 'asc' : sortOrder === 'count-desc' ? 'desc' : undefined}
           >
-            Name ↓
-          </StyledSortButton>
-          <StyledSortButton
-            onClick={() => setSortOrder('count-desc')}
-            $isActive={sortOrder === 'count-desc'}
-          >
-            Count ↑
-          </StyledSortButton>
-          <StyledSortButton
-            onClick={() => setSortOrder('count-asc')}
-            $isActive={sortOrder === 'count-asc'}
-          >
-            Count ↓
+            Count
           </StyledSortButton>
         </StyledSortControls>
 
@@ -387,6 +390,50 @@ export default function DashboardPage() {
         <StyledNote>
           Note: A {attributeType} can only be deleted if there are no polishes associated with it
         </StyledNote>
+
+        <Modal
+          isOpen={isAddModalOpen}
+          onClose={() => {
+            setIsAddModalOpen(false);
+            setNewAttributeName('');
+          }}
+          title={`Add New ${attributeType}`}
+          footer={
+            <>
+              <Button
+                onClick={() => {
+                  setIsAddModalOpen(false);
+                  setNewAttributeName('');
+                }}
+                $variant="secondary"
+              >
+                Cancel
+              </Button>
+              <Button
+                onClick={(e) => {
+                  handleAdd(e as any, attributeType);
+                  setIsAddModalOpen(false);
+                }}
+              >
+                Add {attributeType}
+              </Button>
+            </>
+          }
+        >
+          <form onSubmit={(e) => {
+            e.preventDefault();
+            handleAdd(e, attributeType);
+            setIsAddModalOpen(false);
+          }}>
+            <Input
+              type="text"
+              value={newAttributeName}
+              onChange={setNewAttributeName}
+              placeholder={`Enter ${attributeType} name...`}
+              autoFocus
+            />
+          </form>
+        </Modal>
       </>
     );
   };
@@ -428,7 +475,7 @@ export default function DashboardPage() {
         <Tile
           title="Colors"
           value={stats.totalColors}
-          description="Unique colors in collection"
+          description="Unique colors in your collection"
           onClick={() => handleStatClick('colors')}
           $isActive={selectedAttribute === 'colors'}
         />
@@ -489,19 +536,35 @@ export default function DashboardPage() {
       {error && (
         <StyledMessage $type="error">{error}</StyledMessage>
       )}
-      {success && (
-        <StyledMessage $type="success">{success}</StyledMessage>
-      )}
+
       {selectedAttribute && (
         <>
           <StyledSectionHeading>
-            {selectedAttribute === 'brands' ? 'Brand Details' :
-             selectedAttribute === 'colors' ? 'Color Details' :
-             'Finish Details'}
+            <h2>
+              {selectedAttribute === 'brands' ? 'Brand Details' :
+               selectedAttribute === 'colors' ? 'Color Details' :
+               'Finish Details'}
+            </h2>
+            <StyledAddButtonContainer>
+              <a
+                href="#"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setIsAddModalOpen(true);
+                }}
+              >
+                + Add New
+              </a>
+            </StyledAddButtonContainer>
           </StyledSectionHeading>
           {getAttributeList(selectedAttribute)}
         </>
       )}
+
+      <SuccessMessage
+        message={success}
+        onClose={() => setSuccess(null)}
+      />
     </>
   );
 }

@@ -29,6 +29,7 @@ import {
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/Button';
 import { ImagePasteZone } from './ImagePasteZone';
+import { SuccessMessage } from '@/components/SuccessMessage';
 
 interface Polish {
   id: string;
@@ -363,41 +364,12 @@ export const ImageSelector = ({
               )}
             </>
           )}
-
-          <AnimatePresence>
-            {isSuccess && (
-              <StyledSuccessOverlay
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.3 }}
-              >
-                <StyledSuccessMessage
-                  as={motion.div}
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{
-                    opacity: 1,
-                    scale: 1
-                  }}
-                  exit={{
-                    opacity: 0,
-                    scale: 0.8,
-                    transition: {
-                      duration: 0.5,
-                      ease: "easeOut"
-                    }
-                  }}
-                  transition={{
-                    duration: 0.3,
-                    ease: "easeOut"
-                  }}
-                >
-                  {successMessage}
-                </StyledSuccessMessage>
-              </StyledSuccessOverlay>
-            )}
-          </AnimatePresence>
         </StyledPolishCard>
+
+        <SuccessMessage
+          message={isSuccess ? successMessage : null}
+          onClose={() => setIsSuccess(false)}
+        />
       </StyledContainer>
     </AnimatePresence>
   );

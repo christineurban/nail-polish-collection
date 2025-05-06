@@ -8,17 +8,35 @@ export const StyledDashboardContainer = styled.div`
 
 export const StyledStatsGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
   margin-top: 2rem;
+
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  @media (min-width: 1024px) {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
 `;
 
 export const StyledAttributeList = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-template-columns: repeat(2, 1fr);
   gap: 1rem;
   margin-top: 1rem;
   grid-auto-flow: dense;
+
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  @media (min-width: 1024px) {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  }
 
   > div {
     display: flex;
@@ -36,9 +54,20 @@ export const StyledSortControls = styled.div`
   gap: 0.5rem;
   margin: 1rem 0;
   flex-wrap: wrap;
+
+  @media (max-width: 768px) {
+    gap: 0.75rem;
+    margin: 0 0 1.5rem 0;
+    width: 100%;
+
+    button {
+      flex: 1;
+      justify-content: center;
+    }
+  }
 `;
 
-export const StyledSortButton = styled.button<{ $isActive: boolean }>`
+export const StyledSortButton = styled.button<{ $isActive: boolean; $direction?: 'asc' | 'desc' }>`
   background: ${({ theme, $isActive }) =>
     $isActive ? theme.colors.primary[500] : theme.colors.background.secondary};
   color: ${({ theme, $isActive }) =>
@@ -48,6 +77,19 @@ export const StyledSortButton = styled.button<{ $isActive: boolean }>`
   padding: 0.5rem 1rem;
   cursor: pointer;
   transition: all ${({ theme }) => theme.transitions.base};
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  @media (max-width: 480px) {
+    padding: 0.375rem 0.75rem;
+    font-size: ${({ theme }) => theme.typography.fontSize.sm};
+  }
+
+  &::after {
+    content: '${({ $direction }) => $direction === 'asc' ? '↑' : $direction === 'desc' ? '↓' : ''}';
+    opacity: ${({ $direction }) => $direction ? '1' : '0.3'};
+  }
 
   &:hover {
     background: ${({ theme }) => theme.colors.primary[500]};
@@ -60,6 +102,36 @@ export const StyledInputControls = styled.div`
   gap: 1rem;
   margin-bottom: 1rem;
   align-items: flex-start;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+`;
+
+export const StyledAddButtonContainer = styled.div`
+  display: none;
+
+  @media (max-width: 768px) {
+    display: block;
+  }
+
+  a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: ${({ theme }) => theme.colors.primary[500]};
+    font-weight: ${({ theme }) => theme.typography.fontWeights.medium};
+    text-decoration: none;
+    padding: 0.5rem;
+    border-radius: ${({ theme }) => theme.borderRadius.md};
+    transition: all ${({ theme }) => theme.transitions.base};
+
+    &:hover {
+      background: ${({ theme }) => theme.colors.primary[50]};
+    }
+  }
 `;
 
 export const StyledAddForm = styled.form`
@@ -67,6 +139,10 @@ export const StyledAddForm = styled.form`
   gap: 1rem;
   align-items: flex-start;
   margin-left: auto;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
 `;
 
 export const StyledMessage = styled.div<{ $type: 'error' | 'success' }>`
@@ -85,6 +161,10 @@ export const StyledViewControls = styled.div`
   display: flex;
   gap: 0.5rem;
   margin-bottom: 1rem;
+
+  @media (max-width: 768px) {
+    margin-bottom: 1.5rem;
+  }
 `;
 
 export const StyledViewButton = styled.button<{ $isActive: boolean }>`
@@ -101,6 +181,12 @@ export const StyledViewButton = styled.button<{ $isActive: boolean }>`
   cursor: pointer;
   transition: all ${({ theme }) => theme.transitions.base};
 
+  @media (max-width: 768px) {
+    flex: 1;
+    justify-content: center;
+    padding: 0.75rem;
+  }
+
   &:hover {
     background: ${({ theme }) => theme.colors.primary[500]};
     color: white;
@@ -111,13 +197,26 @@ export const StyledInputContainer = styled.div`
   width: 300px;
   margin-bottom: 1rem;
   flex-shrink: 0;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    margin-bottom: 0;
+  }
 `;
 
-export const StyledSectionHeading = styled.h2`
-  color: ${({ theme }) => theme.colors.text.primary};
-  font-size: ${({ theme }) => theme.typography.fontSize['2xl']};
-  font-weight: ${({ theme }) => theme.typography.fontWeights.semibold};
+export const StyledSectionHeading = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
   margin: 4rem 0 1rem;
+
+  h2 {
+    color: ${({ theme }) => theme.colors.text.primary};
+    font-size: ${({ theme }) => theme.typography.fontSize['2xl']};
+    font-weight: ${({ theme }) => theme.typography.fontWeights.semibold};
+    margin: 0;
+  }
 `;
 
 export const StyledNote = styled.p`

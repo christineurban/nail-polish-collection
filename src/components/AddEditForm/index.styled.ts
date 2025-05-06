@@ -90,53 +90,21 @@ export const StyledButtonGroup = styled.div`
   }
 `;
 
-export const StyledSuccessOverlay = styled(motion.div)`
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.7);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-`;
-
-export const StyledSuccessMessage = styled(motion.div)`
-  background: white;
-  padding: 2rem;
-  border-radius: 12px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  color: #4CAF50;
-  font-size: 1.25rem;
-  font-weight: 600;
-  text-align: center;
-  min-width: 300px;
-  max-width: 90vw;
-  transform-origin: center;
-`;
-
 export const StyledDangerZone = styled.div`
-  margin-top: 48px;
-  padding: 24px;
-  background-color: ${({ theme }) => `${theme.colors.error}10`};
-  border: 1px solid ${({ theme }) => `${theme.colors.error}33`};
-  border-radius: 8px;
+  margin-top: 2rem;
+  padding: 2rem;
+  border: 2px solid ${({ theme }) => theme.colors.error[300]};
+  border-radius: ${({ theme }) => theme.borderRadius.lg};
+  background: ${({ theme }) => theme.colors.error[50]};
 
   h3 {
-    margin-top: 0;
-    margin-bottom: 12px;
-    color: ${({ theme }) => theme.colors.error};
-    font-size: 1.25rem;
+    color: ${({ theme }) => theme.colors.error[700]};
+    font-size: ${({ theme }) => theme.typography.fontSize.lg};
+    margin: 0 0 1rem;
   }
 
   p {
-    margin-bottom: 16px;
-    color: ${({ theme }) => theme.colors.error};
+    color: ${({ theme }) => theme.colors.error[600]};
+    margin: 0 0 1.5rem;
   }
 `;

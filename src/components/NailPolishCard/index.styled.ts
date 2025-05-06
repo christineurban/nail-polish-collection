@@ -79,17 +79,30 @@ export const StyledContent = styled.div`
   flex-direction: column;
   gap: ${({ theme }) => theme.spacing[2]};
   position: relative;
+
+  @media (max-width: 480px) {
+    padding: ${({ theme }) => theme.spacing[3]};
+    gap: ${({ theme }) => theme.spacing[1.5]};
+  }
 `;
 
 export const StyledMetadata = styled.div`
   display: flex;
   flex-direction: column;
   gap: ${({ theme }) => theme.spacing[1]};
+
+  @media (max-width: 480px) {
+    gap: ${({ theme }) => theme.spacing[0.5]};
+  }
 `;
 
 export const StyledBrand = styled.span`
   color: ${({ theme }) => theme.colors.text.secondary};
   font-size: ${({ theme }) => theme.typography.fontSize.sm};
+
+  @media (max-width: 480px) {
+    font-size: ${({ theme }) => theme.typography.fontSize.xs};
+  }
 `;
 
 export const StyledTitle = styled.h3`
@@ -97,6 +110,10 @@ export const StyledTitle = styled.h3`
   font-size: ${({ theme }) => theme.typography.fontSize.base};
   font-weight: ${({ theme }) => theme.typography.fontWeights.medium};
   margin: 0;
+
+  @media (max-width: 480px) {
+    font-size: ${({ theme }) => theme.typography.fontSize.sm};
+  }
 `;
 
 export const StyledRating = styled.div`
@@ -109,12 +126,23 @@ export const StyledRating = styled.div`
   background: ${({ theme }) => theme.colors.background.muted};
   padding: ${({ theme }) => `${theme.spacing[1]} ${theme.spacing[2]}`};
   border-radius: ${({ theme }) => theme.borderRadius.md};
+
+  @media (max-width: 480px) {
+    top: ${({ theme }) => theme.spacing[3]};
+    right: ${({ theme }) => theme.spacing[3]};
+    font-size: ${({ theme }) => theme.typography.fontSize.xs};
+    padding: ${({ theme }) => `${theme.spacing[0.5]} ${theme.spacing[1.5]}`};
+  }
 `;
 
 export const StyledColorPreview = styled.div`
   display: flex;
   gap: ${({ theme }) => theme.spacing[1]};
   flex-wrap: wrap;
+
+  @media (max-width: 480px) {
+    gap: ${({ theme }) => theme.spacing[0.5]};
+  }
 `;
 
 export const StyledColorChip = styled.div<{ $color: string }>`
@@ -132,6 +160,10 @@ export const StyledFinishes = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: ${({ theme }) => theme.spacing[1]};
+
+  @media (max-width: 480px) {
+    gap: ${({ theme }) => theme.spacing[0.5]};
+  }
 `;
 
 export const StyledTag = styled.span<{ $type: string }>`
@@ -140,6 +172,11 @@ export const StyledTag = styled.span<{ $type: string }>`
   font-size: ${({ theme }) => theme.typography.fontSize.xs};
   background: ${({ theme }) => theme.colors.gray[100]};
   color: ${({ theme }) => theme.colors.gray[700]};
+
+  @media (max-width: 480px) {
+    padding: ${({ theme }) => `${theme.spacing[0.5]} ${theme.spacing[1.5]}`};
+    font-size: ${({ theme }) => theme.typography.fontSize.xxs};
+  }
 `;
 
 export const StyledClickableArea = styled.div`
