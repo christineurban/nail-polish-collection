@@ -6,12 +6,11 @@ import {
   StyledTableCell,
   StyledTableHeader,
   StyledTableRow,
-  StyledTableControls,
-  StyledSortButton
+  StyledTableControls
 } from './index.styled';
 
 interface Column<T> {
-  header: string;
+  header: string | ReactNode;
   key: keyof T;
   render?: (item: T) => ReactNode;
   sortable?: boolean;
@@ -37,18 +36,14 @@ export const Table = <T extends object>({
       <thead>
         <StyledTableRow>
           {columns.map((column) => (
-            <StyledTableHeader key={column.key as string}>
-              {column.sortable && onSort ? (
-                <StyledSortButton
-                  onClick={() => onSort(column.key as string)}
-                  active={sortField === column.key}
-                  direction={sortField === column.key ? sortDirection : undefined}
-                >
-                  {column.header}
-                </StyledSortButton>
-              ) : (
-                column.header
-              )}
+            <StyledTableHeader
+              key={column.key as string}
+              onClick={column.sortable && onSort ? () => onSort(column.key as string) : undefined}
+              style={{ cursor: column.sortable ? 'pointer' : 'default' }}
+              $active={sortField === column.key}
+              $direction={sortField === column.key ? sortDirection : undefined}
+            >
+              {column.header}
             </StyledTableHeader>
           ))}
         </StyledTableRow>

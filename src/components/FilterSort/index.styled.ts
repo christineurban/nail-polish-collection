@@ -206,14 +206,17 @@ export const StyledOption = styled.label`
 export const StyledCountDisplay = styled.div`
   color: ${({ theme }) => theme.colors.text.secondary};
   font-size: 0.875rem;
-  text-align: right;
+  white-space: nowrap;
 `;
 
 export const StyledHeader = styled.div`
   display: flex;
-  justify-content: space-between;
+  flex-direction: row;
+  justify-content: flex-end;
   align-items: center;
+  gap: 1rem;
   width: 100%;
+  flex-wrap: wrap;
 `;
 
 export const StyledToggleButton = styled.button<{ $isExpanded: boolean }>`
@@ -221,7 +224,6 @@ export const StyledToggleButton = styled.button<{ $isExpanded: boolean }>`
   border: none;
   color: ${({ theme }) => theme.colors.primary[600]};
   font-size: 0.875rem;
-  padding: 0.5rem;
   cursor: pointer;
   display: flex;
   align-items: center;

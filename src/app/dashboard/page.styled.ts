@@ -218,7 +218,6 @@ export const StyledSectionHeading = styled.div`
     margin: 0;
   }
 `;
-
 export const StyledNote = styled.p`
   color: ${({ theme }) => theme.colors.text.secondary};
   font-size: ${({ theme }) => theme.typography.fontSize.sm};

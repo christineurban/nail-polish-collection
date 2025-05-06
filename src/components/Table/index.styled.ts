@@ -7,6 +7,11 @@ interface SortButtonProps {
   direction?: 'asc' | 'desc';
 }
 
+interface TableHeaderProps {
+  $active?: boolean;
+  $direction?: 'asc' | 'desc';
+}
+
 export const StyledTable = styled.table`
   width: 100%;
   border-collapse: collapse;
@@ -15,6 +20,10 @@ export const StyledTable = styled.table`
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+  @media (max-width: 768px) {
+    font-size: 0.875rem;
+  }
 `;
 
 export const StyledTableRow = styled.tr`
@@ -35,14 +44,46 @@ export const StyledTableCell = styled.td`
   padding: 1rem;
   text-align: left;
   border-bottom: 1px solid ${({ theme }) => theme.colors.border};
+  word-break: break-word;
+  min-width: 60px;
+
+  &:nth-child(2),
+  &:nth-child(3) {
+    text-align: center;
+  }
+
+  @media (max-width: 768px) {
+    padding: 0.75rem 0.5rem;
+
+    &:first-child {
+      max-width: 150px;
+    }
+  }
 `;
 
-export const StyledTableHeader = styled.th`
+export const StyledTableHeader = styled.th<TableHeaderProps>`
   padding: 1rem;
   text-align: left;
   background-color: ${({ theme }) => theme.colors.primary[500]};
   color: #ffffff;
   font-weight: 600;
+  white-space: nowrap;
+
+  &:nth-child(2),
+  &:nth-child(3) {
+    text-align: center;
+  }
+
+  @media (max-width: 768px) {
+    padding: 0.75rem 0.5rem;
+  }
+
+  &:after {
+    content: '${({ $direction }) => $direction === 'asc' ? '↑' : $direction === 'desc' ? '↓' : ''}';
+    display: ${({ $active }) => $active ? 'inline-block' : 'none'};
+    margin-left: 0.5rem;
+    opacity: 0.8;
+  }
 `;
 
 export const StyledTableControls = styled.div`
@@ -53,42 +94,46 @@ export const StyledTableControls = styled.div`
 
   > div {
     width: 300px;
+    @media (max-width: 768px) {
+      width: 100%;
+    }
+  }
+
+  @media (max-width: 768px) {
+    flex-direction: column;
   }
 `;
 
-export const StyledSortButton = styled.button<SortButtonProps>`
-  background: none;
-  border: none;
-  color: inherit;
-  font: inherit;
-  cursor: pointer;
-  padding: 0;
-  display: inline-flex;
+export const StyledNameCell = styled.div`
+  display: flex;
   align-items: center;
   gap: 0.5rem;
-  font-weight: 600;
-  color: #ffffff;
 
-  &:after {
-    content: '';
-    display: inline-block;
-    width: 0;
-    height: 0;
-    margin-left: 0.5rem;
-    opacity: ${({ active }) => active ? '1' : '0.3'};
-    border-left: 4px solid transparent;
-    border-right: 4px solid transparent;
+  .delete-icon {
+    color: ${({ theme }) => theme.colors.error};
+    width: 1rem;
+    height: 1rem;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
 
-    ${({ direction }) => direction === 'asc' && css`
-      border-bottom: 6px solid currentColor;
-    `}
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+`;
 
-    ${({ direction }) => direction === 'desc' && css`
-      border-top: 6px solid currentColor;
-    `}
+export const StyledPercentageHeader = styled.span`
+  .desktop-only {
+    display: inline;
+    @media (max-width: 768px) {
+      display: none;
+    }
   }
 
-  &:hover:after {
-    opacity: 1;
+  .mobile-only {
+    display: none;
+    @media (max-width: 768px) {
+      display: inline;
+    }
   }
 `;

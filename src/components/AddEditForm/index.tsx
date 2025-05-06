@@ -16,8 +16,6 @@ import {
   StyledButtonGroup,
   StyledFormSection,
   StyledFormRow,
-  StyledSuccessOverlay,
-  StyledSuccessMessage,
   StyledDangerZone
 } from './index.styled';
 

@@ -11,8 +11,6 @@ import {
   StyledNoImages,
   StyledLoadingOverlay,
   StyledSpinner,
-  StyledSuccessMessage,
-  StyledSuccessOverlay,
   StyledCollapseText,
   StyledImageCount,
   StyledPolishLink,
@@ -24,7 +22,6 @@ import {
   StyledImageCountContainer,
   StyledCurrentImageContainer,
   StyledCurrentImage,
-  StyledHiddenImage,
 } from './index.styled';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/Button';

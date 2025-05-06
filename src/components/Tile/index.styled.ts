@@ -21,6 +21,27 @@ export const StyledTile = styled.div<StyledTileProps>`
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  position: relative;
+
+  .delete-icon {
+    color: ${({ theme }) => theme.colors.error};
+    width: 1rem;
+    height: 1rem;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+
+    &:hover {
+      opacity: 0.8;
+    }
+
+    @media (max-width: 480px) {
+      top: 0.75rem;
+      right: 0.75rem;
+    }
+  }
 
   @media (max-width: 480px) {
     padding: 1rem;

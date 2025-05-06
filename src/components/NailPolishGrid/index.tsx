@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import { FilterSort } from '@/components/FilterSort';
 import { NailPolishCard } from '@/components/NailPolishCard';
 import { Rating } from '@prisma/client';
@@ -7,7 +8,10 @@ import { useRouter } from 'next/navigation';
 import {
   StyledGrid,
   StyledEmptyState,
+  StyledViewToggle,
+  StyledToggleContainer,
 } from './index.styled';
+import { BsGrid, BsTable } from 'react-icons/bs';
 
 interface Polish {
   id: string;
@@ -37,6 +41,8 @@ interface NailPolishGridProps {
   totalPolishes: number;
 }
 
+type ViewMode = 'grid' | 'list';
+
 export const NailPolishGrid = ({
   polishes,
   brands,
@@ -46,6 +52,7 @@ export const NailPolishGrid = ({
   totalPolishes,
 }: NailPolishGridProps) => {
   const router = useRouter();
+  const [viewMode, setViewMode] = useState<ViewMode>('grid');
 
   const handleChooseImage = (id: string) => {
     router.push(`/polish/${id}/select-image`);
@@ -61,7 +68,27 @@ export const NailPolishGrid = ({
         totalPolishes={totalPolishes}
         displayedPolishes={polishes.length}
       />
-      <StyledGrid>
+      <StyledToggleContainer role="radiogroup" aria-label="View mode">
+        <StyledViewToggle
+          role="radio"
+          aria-checked={viewMode === 'grid'}
+          onClick={() => setViewMode('grid')}
+          $isActive={viewMode === 'grid'}
+          type="button"
+        >
+          <BsGrid /> Grid
+        </StyledViewToggle>
+        <StyledViewToggle
+          role="radio"
+          aria-checked={viewMode === 'list'}
+          onClick={() => setViewMode('list')}
+          $isActive={viewMode === 'list'}
+          type="button"
+        >
+          <BsTable /> List
+        </StyledViewToggle>
+      </StyledToggleContainer>
+      <StyledGrid $isSingleColumn={viewMode === 'list'}>
         {polishes.length > 0 ? (
           polishes.map((polish) => (
             <NailPolishCard

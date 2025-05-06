@@ -1,6 +1,7 @@
 import { ReactNode, MouseEvent } from 'react';
 import { StyledTile, StyledTileContent, StyledValue, StyledDescription } from './index.styled';
-import { Button } from '@/components/Button';
+import { BsTrash } from 'react-icons/bs';
+import { Tooltip } from 'react-tooltip';
 
 interface TileProps {
   title: string;
@@ -48,18 +49,20 @@ export const Tile = ({
         )}
       </StyledTileContent>
       {showDelete && onDelete && (
-        <Button
+        <BsTrash
           onClick={(e: MouseEvent) => {
             e.stopPropagation();
             onDelete();
           }}
+          role="button"
           aria-label={`Delete ${title}`}
-          $variant="danger"
-          $fullWidth
-          $size="small"
-        >
-          Delete
-        </Button>
+          className="delete-icon"
+          data-tooltip-id={`delete-tile-tooltip-${title}`}
+          data-tooltip-content={`Delete ${title}`}
+        />
+      )}
+      {showDelete && onDelete && (
+        <Tooltip id={`delete-tile-tooltip-${title}`} />
       )}
     </StyledTile>
   );

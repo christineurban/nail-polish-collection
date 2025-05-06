@@ -18,7 +18,7 @@ import {
   StyledNote,
   StyledAddButtonContainer
 } from './page.styled';
-import { BsGrid, BsTable } from 'react-icons/bs';
+import { BsGrid, BsTable, BsTrash } from 'react-icons/bs';
 import { Table } from '@/components/Table';
 import { Tabs } from '@/components/Tabs';
 import { Input } from '@/components/fields/Input';
@@ -26,6 +26,8 @@ import { Button } from '@/components/Button';
 import { Tile } from '@/components/Tile';
 import { Modal } from '@/components/Modal';
 import { SuccessMessage } from '@/components/SuccessMessage';
+import { StyledNameCell, StyledPercentageHeader } from '@/components/Table/index.styled';
+import { Tooltip } from 'react-tooltip';
 
 interface Stats {
   totalPolishes: number;
@@ -213,35 +215,37 @@ export default function DashboardPage() {
       {
         header: 'Name',
         key: 'name' as const,
-        sortable: true
+        sortable: true,
+        render: (item: Attribute) => (
+          <StyledNameCell>
+            {item.name}
+            {Number(item.count) <= 0 && (
+              <>
+                <BsTrash
+                  onClick={() => handleDelete(item.id, attributeType)}
+                  role="button"
+                  aria-label={`Delete ${item.name}`}
+                  className="delete-icon"
+                  data-tooltip-id={`delete-tooltip-${item.id}`}
+                  data-tooltip-content={`Delete ${item.name}`}
+                />
+                <Tooltip id={`delete-tooltip-${item.id}`} />
+              </>
+            )}
+          </StyledNameCell>
+        )
       },
       {
         header: 'Count',
         key: 'count' as const,
         sortable: true,
-        render: (item: Attribute) => {
-          console.log('Table row item:', item.name, 'Count:', item.count);
-          return `${item.count} ${item.count === 1 ? 'polish' : 'polishes'}`;
-        }
+        render: (item: Attribute) => item.count.toString()
       },
       {
-        header: 'Percentage',
+        header: <StyledPercentageHeader><span className="desktop-only">Percentage</span><span className="mobile-only">%</span></StyledPercentageHeader>,
         key: 'percentage' as const,
         sortable: true,
         render: (item: Attribute) => `${item.percentage.toFixed(1)}%`
-      },
-      {
-        header: 'Actions',
-        key: 'id' as const,
-        render: (item: Attribute) => Number(item.count) <= 0 && (
-          <Button
-            onClick={() => handleDelete(item.id, attributeType)}
-            $variant="danger"
-            $size="small"
-          >
-            Delete
-          </Button>
-        )
       }
     ];
 

@@ -1,19 +1,23 @@
 import styled from 'styled-components';
 
-export const StyledGrid = styled.div`
+export const StyledGrid = styled.div<{ $isSingleColumn?: boolean }>`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: ${({ $isSingleColumn }) =>
+    $isSingleColumn ? '1fr' : 'repeat(auto-fill, minmax(280px, 1fr))'};
   gap: 2rem;
   margin-top: 2rem;
+  will-change: grid-template-columns;
 
   @media (max-width: 768px) {
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    grid-template-columns: ${({ $isSingleColumn }) =>
+      $isSingleColumn ? '1fr' : 'repeat(2, 1fr)'};
     gap: 1.75rem;
     margin-top: 1.5rem;
   }
 
   @media (max-width: 480px) {
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    grid-template-columns: ${({ $isSingleColumn }) =>
+      $isSingleColumn ? '1fr' : 'repeat(2, 1fr)'};
     gap: 1rem;
     margin-top: 1rem;
   }
@@ -46,5 +50,51 @@ export const StyledEmptyState = styled.div`
       font-size: 0.875rem;
       margin-bottom: 1.5rem;
     }
+  }
+`;
+
+export const StyledToggleContainer = styled.div`
+  display: none;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+
+  @media (max-width: 768px) {
+    display: flex;
+  }
+
+  button:first-child {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  button:last-child {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+`;
+
+export const StyledViewToggle = styled.button<{ $isActive: boolean }>`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: ${({ theme, $isActive }) =>
+    $isActive ? theme.colors.primary[500] : theme.colors.background.secondary};
+  color: ${({ theme, $isActive }) =>
+    $isActive ? 'white' : theme.colors.text.primary};
+  border: none;
+  border-radius: ${({ theme }) => theme.borderRadius};
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  will-change: background-color, color;
+
+  @media (max-width: 768px) {
+    flex: 1;
+    justify-content: center;
+    padding: 0.75rem;
+  }
+
+  &:hover {
+    background: ${({ theme }) => theme.colors.primary[500]};
+    color: white;
   }
 `;
