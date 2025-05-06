@@ -6,6 +6,7 @@ import { fieldStyles } from '../index.styled';
 
 export const StyledInput = styled.input`
   ${fieldStyles}
+  padding: 0.5rem 1rem;
 `;
 
 export const StyledError = styled.span`

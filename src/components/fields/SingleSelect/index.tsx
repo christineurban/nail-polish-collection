@@ -15,9 +15,10 @@ interface SingleSelectProps {
   options: string[];
   placeholder?: string;
   onChange: (value: string) => void;
+  disableSearch?: boolean;
 }
 
-export const SingleSelect = ({ value, options, placeholder = 'Select...', onChange }: SingleSelectProps) => {
+export const SingleSelect = ({ value, options, placeholder = 'Select...', onChange, disableSearch = false }: SingleSelectProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredOptions, setFilteredOptions] = useState(options);
@@ -70,6 +71,14 @@ export const SingleSelect = ({ value, options, placeholder = 'Select...', onChan
     setSearchTerm('');
   };
 
+  const handleClear = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    onChange('');
+    setIsOpen(false);
+    setSearchTerm('');
+  };
+
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' && filteredOptions.length > 0) {
       onChange(filteredOptions[0]);
@@ -102,7 +111,7 @@ export const SingleSelect = ({ value, options, placeholder = 'Select...', onChan
           {value || placeholder}
         </StyledButton>
       </StyledButtonContainer>
-      {isOpen && (
+      {isOpen && !disableSearch && (
         <StyledInput
           ref={inputRef}
           type="text"
@@ -113,6 +122,13 @@ export const SingleSelect = ({ value, options, placeholder = 'Select...', onChan
         />
       )}
       <StyledDropdown $isOpen={isOpen}>
+        <StyledOption
+          key="clear"
+          $isSelected={!value}
+          onClick={handleClear}
+        >
+          {placeholder}
+        </StyledOption>
         {filteredOptions.map(option => (
           <StyledOption
             key={option}

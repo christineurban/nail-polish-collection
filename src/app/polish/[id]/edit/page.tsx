@@ -1,8 +1,17 @@
+'use client';
+
+import { useEffect, useState } from 'react';
 import { AddEditForm } from '@/components/AddEditForm';
 import { getPolishById } from '@/lib/api/polish';
-import type { NailPolishWithRelations } from '@/types/polish';
+import type { Polish } from '@/types/polish';
 import type { Rating } from '@prisma/client';
 import { PageHeader } from '@/components/PageHeader';
+
+interface Options {
+  brands: string[];
+  colors: string[];
+  finishes: string[];
+}
 
 interface EditPageProps {
   params: {
@@ -13,43 +22,76 @@ interface EditPageProps {
   };
 }
 
-export default async function EditPage({ params, searchParams }: EditPageProps) {
-  let polish: NailPolishWithRelations;
+export default function EditPage({ params, searchParams }: EditPageProps) {
+  const [polish, setPolish] = useState<Polish | null>(null);
+  const [options, setOptions] = useState<Options>({
+    brands: [],
+    colors: [],
+    finishes: [],
+  });
+  const [isLoading, setIsLoading] = useState(true);
 
-  if (searchParams.polish) {
-    try {
-      polish = JSON.parse(decodeURIComponent(searchParams.polish));
-    } catch (e) {
-      console.error('Failed to parse polish data from URL:', e);
-      polish = await getPolishById(params.id);
-    }
-  } else {
-    polish = await getPolishById(params.id);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Fetch polish data
+        const response = await fetch(`/api/polish/${params.id}`);
+        if (!response.ok) throw new Error('Failed to fetch polish');
+        const polishData = await response.json();
+        setPolish(polishData);
+
+        // Fetch options
+        const optionsResponse = await fetch('/api/options');
+        if (!optionsResponse.ok) throw new Error('Failed to fetch options');
+        const optionsData = await optionsResponse.json();
+        setOptions(optionsData);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [params.id]);
+
+  if (isLoading || !polish) {
+    return (
+      <PageHeader
+        title="Loading..."
+      />
+    );
   }
 
   const transformedPolish = {
     id: polish.id,
-    brand: polish.brands.name,
+    brand: polish.brand,
     name: polish.name,
-    imageUrl: polish.image_url || undefined,
-    colors: polish.colors.map(c => c.color.name),
-    finishes: polish.finishes.map(f => f.finish.name),
+    imageUrl: polish.imageUrl || undefined,
+    colors: polish.colors,
+    finishes: polish.finishes,
     rating: polish.rating || undefined,
     link: polish.link || undefined,
     coats: polish.coats || undefined,
     notes: polish.notes || undefined,
-    lastUsed: polish.last_used || undefined,
-    totalBottles: polish.total_bottles || 1,
-    emptyBottles: polish.empty_bottles || 0,
-    isOld: polish.is_old || false
+    lastUsed: polish.lastUsed || undefined,
+    totalBottles: polish.totalBottles || 1,
+    emptyBottles: polish.emptyBottles || 0,
+    isOld: polish.isOld
   };
 
   return (
     <>
       <PageHeader
-        title={`Edit ${polish.brands.name} - ${polish.name}`}
+        title={`Edit ${polish.brand} - ${polish.name}`}
       />
-      <AddEditForm initialData={transformedPolish} isEditing={true} />
+      <AddEditForm
+        initialData={transformedPolish}
+        isEditing={true}
+        brands={options.brands}
+        availableColors={options.colors}
+        availableFinishes={options.finishes}
+      />
     </>
   );
 }

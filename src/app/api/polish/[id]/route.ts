@@ -144,7 +144,7 @@ export async function PUT(
           last_used: data.lastUsed,
           total_bottles: data.totalBottles || undefined,
           empty_bottles: data.emptyBottles || undefined,
-          is_old: data.isOld || undefined,
+          is_old: data.isOld === null ? undefined : data.isOld,
           updated_at: new Date()
         }
       });

@@ -31,7 +31,7 @@ interface AddEditFormData {
   coats?: number;
   rating?: Rating;
   notes?: string;
-  isOld?: boolean;
+  isOld: boolean | null;
   lastUsed?: Date;
   totalBottles?: number;
   emptyBottles?: number;
@@ -61,6 +61,7 @@ export const AddEditForm = ({
       name: '',
       colors: [],
       finishes: [],
+      isOld: isEditing ? null : false,
     }
   );
   const [isLoading, setIsLoading] = useState(false);
@@ -86,13 +87,14 @@ export const AddEditForm = ({
         throw new Error('Failed to save nail polish');
       }
 
+      const savedPolish = await response.json();
       setSuccessMessage(isEditing ? 'Polish updated successfully!' : 'Polish added successfully!');
       setIsSuccess(true);
       setTimeout(() => {
         if (isEditing) {
           router.push(returnTo || `/polish/${formData.id}`);
         } else {
-          router.push('/');
+          router.push(`/polish/${savedPolish.id}`);
         }
         router.refresh();
       }, 1500);
@@ -247,10 +249,17 @@ export const AddEditForm = ({
             <StyledFormGroup>
               <label>Is older polish?</label>
               <SingleSelect
-                value={formData.isOld === undefined ? '' : formData.isOld ? 'Yes' : 'No'}
+                value={formData.isOld === null ? '' : formData.isOld ? 'Yes' : 'No'}
                 options={['Yes', 'No']}
                 placeholder="Select answer"
-                onChange={(value) => setFormData((prev) => ({ ...prev, isOld: value === 'Yes' }))}
+                onChange={(value) => {
+                  if (value === '') {
+                    setFormData((prev) => ({ ...prev, isOld: null }));
+                  } else {
+                    setFormData((prev) => ({ ...prev, isOld: value === 'Yes' }));
+                  }
+                }}
+                disableSearch={true}
               />
             </StyledFormGroup>
           </StyledFormRow>
