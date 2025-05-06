@@ -51,12 +51,11 @@ export const StyledAttributeList = styled.div`
 
 export const StyledSortControls = styled.div`
   display: flex;
-  gap: 0.5rem;
+  gap: 1rem;
   margin: 1rem 0;
   flex-wrap: wrap;
 
   @media (max-width: 768px) {
-    gap: 0.75rem;
     margin: 0 0 1.5rem 0;
     width: 100%;
 
@@ -159,7 +158,7 @@ export const StyledMessage = styled.div<{ $type: 'error' | 'success' }>`
 
 export const StyledViewControls = styled.div`
   display: flex;
-  gap: 0.5rem;
+  gap: 1rem;
   margin-bottom: 1rem;
 
   @media (max-width: 768px) {
@@ -209,15 +208,15 @@ export const StyledSectionHeading = styled.div`
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  margin: 4rem 0 1rem;
+  margin: 2rem 0 1rem;
 
   h2 {
-    color: ${({ theme }) => theme.colors.text.primary};
-    font-size: ${({ theme }) => theme.typography.fontSize['2xl']};
-    font-weight: ${({ theme }) => theme.typography.fontWeights.semibold};
     margin: 0;
+    font-size: ${({ theme }) => theme.typography.fontSize.xl};
+    color: ${({ theme }) => theme.colors.text.primary};
   }
 `;
+
 export const StyledNote = styled.p`
   color: ${({ theme }) => theme.colors.text.secondary};
   font-size: ${({ theme }) => theme.typography.fontSize.sm};

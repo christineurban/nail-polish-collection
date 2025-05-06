@@ -17,6 +17,7 @@ import {
   StyledColorPreview,
   StyledChooseImageButton,
   StyledClickableArea,
+  StyledBrandNameContainer,
 } from './index.styled';
 import { Rating } from '@prisma/client';
 
@@ -128,11 +129,12 @@ export const NailPolishCard: FC<NailPolishCardProps> = ({
         }}
       >
         <StyledMetadata>
-          <StyledBrand>{brand}</StyledBrand>
-          <StyledTitle>{name}</StyledTitle>
+          <StyledBrandNameContainer>
+            <StyledBrand>{brand}</StyledBrand>
+            <StyledTitle>{name}</StyledTitle>
+          </StyledBrandNameContainer>
+          <StyledRating>{rating ? formatRating(rating) : 'Not Rated'}</StyledRating>
         </StyledMetadata>
-
-        <StyledRating>{rating ? formatRating(rating) : 'Not Rated'}</StyledRating>
 
         <StyledColorPreview>
           {colors?.map((color, index) => (

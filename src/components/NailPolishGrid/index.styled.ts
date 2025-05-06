@@ -54,23 +54,9 @@ export const StyledEmptyState = styled.div`
 `;
 
 export const StyledToggleContainer = styled.div`
-  display: none;
-  gap: 0.5rem;
+  display: flex;
+  gap: 1rem;
   margin-bottom: 1rem;
-
-  @media (max-width: 768px) {
-    display: flex;
-  }
-
-  button:first-child {
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-  }
-
-  button:last-child {
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-  }
 `;
 
 export const StyledViewToggle = styled.button<{ $isActive: boolean }>`
