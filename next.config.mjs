@@ -65,7 +65,6 @@ const nextConfig = {
   },
   // Add experimental features to improve build performance
   experimental: {
-    serverActions: true,
     serverComponentsExternalPackages: ['@prisma/client'],
   },
 };
