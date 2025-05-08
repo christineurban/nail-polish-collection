@@ -12,6 +12,7 @@ import {
   StyledToggleContainer,
 } from './index.styled';
 import { BsGrid, BsTable } from 'react-icons/bs';
+import { useAuth } from '@/lib/auth/AuthContext';
 
 interface Polish {
   id: string;
@@ -53,6 +54,7 @@ export const NailPolishGrid = ({
 }: NailPolishGridProps) => {
   const router = useRouter();
   const [viewMode, setViewMode] = useState<ViewMode>('grid');
+  const { isAuthenticated } = useAuth();
 
   const handleChooseImage = (id: string) => {
     router.push(`/polish/${id}/select-image`);
@@ -100,7 +102,7 @@ export const NailPolishGrid = ({
               colors={polish.colors}
               finishes={polish.finishes}
               rating={polish.rating || undefined}
-              onChooseImage={handleChooseImage}
+              onChooseImage={isAuthenticated ? handleChooseImage : undefined}
             />
           ))
         ) : (

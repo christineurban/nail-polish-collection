@@ -7,6 +7,7 @@ import { Rating } from '@prisma/client';
 import { PageHeader } from '@/components/PageHeader';
 import { Button } from '@/components/Button';
 import { SuspenseBoundary } from '@/components/SuspenseBoundary';
+import { useAuth } from '@/lib/auth/AuthContext';
 import {
   StyledContainer,
   StyledDetails,
@@ -51,6 +52,7 @@ function NailPolishDetailsContent({ polish }: NailPolishDetailsProps) {
   const [isMarkingNoImage, setIsMarkingNoImage] = useState(false);
   const router = useRouter();
   const searchParams = useSearchParams();
+  const { isAuthenticated } = useAuth();
   const returnTo = searchParams.get('returnTo');
 
   const formatRating = (rating: Rating | null): string => {
@@ -132,41 +134,43 @@ function NailPolishDetailsContent({ polish }: NailPolishDetailsProps) {
               <p>No image available</p>
             )}
           </StyledImageContainer>
-          <StyledImageActions>
-            {polish.imageUrl !== 'n/a' && (
-              <Button
-                onClick={() => router.push(`/polish/${polish.id}/select-image`)}
-              >
-                {polish.imageUrl ? 'Change Image' : 'Add Image'}
-              </Button>
-            )}
-            {polish.imageUrl && polish.imageUrl !== 'n/a' && (
-              <Button
-                onClick={handleRemoveImage}
-                disabled={isRemovingImage}
-                $variant="danger"
-              >
-                Remove Image
-              </Button>
-            )}
-            {!polish.imageUrl && (
-              <Button
-                onClick={handleMarkNoImage}
-                disabled={isMarkingNoImage}
-                $variant="tertiary"
-              >
-                Mark as No Image Available
-              </Button>
-            )}
-            {polish.imageUrl === 'n/a' && (
-              <Button
-                onClick={() => router.push(`/polish/${polish.id}/select-image`)}
-                $variant="secondary"
-              >
-                Add Image
-              </Button>
-            )}
-          </StyledImageActions>
+          {isAuthenticated && (
+            <StyledImageActions>
+              {polish.imageUrl !== 'n/a' && (
+                <Button
+                  onClick={() => router.push(`/polish/${polish.id}/select-image`)}
+                >
+                  {polish.imageUrl ? 'Change Image' : 'Add Image'}
+                </Button>
+              )}
+              {polish.imageUrl && polish.imageUrl !== 'n/a' && (
+                <Button
+                  onClick={handleRemoveImage}
+                  disabled={isRemovingImage}
+                  $variant="danger"
+                >
+                  Remove Image
+                </Button>
+              )}
+              {!polish.imageUrl && (
+                <Button
+                  onClick={handleMarkNoImage}
+                  disabled={isMarkingNoImage}
+                  $variant="tertiary"
+                >
+                  Mark as No Image Available
+                </Button>
+              )}
+              {polish.imageUrl === 'n/a' && (
+                <Button
+                  onClick={() => router.push(`/polish/${polish.id}/select-image`)}
+                  $variant="secondary"
+                >
+                  Add Image
+                </Button>
+              )}
+            </StyledImageActions>
+          )}
         </div>
         <StyledDetailsContent>
           <h2>Details</h2>
@@ -187,9 +191,15 @@ function NailPolishDetailsContent({ polish }: NailPolishDetailsProps) {
           <p><strong>Is Old</strong>{polish.isOld === null ? '-' : polish.isOld ? 'Yes' : 'No'}</p>
           <p><strong>Last Used</strong>{polish.lastUsed ? new Date(polish.lastUsed).toLocaleDateString() : '-'}</p>
           <p><strong>Notes</strong>{polish.notes || '-'}</p>
-          <Button onClick={() => router.push(`/polish/${polish.id}/edit?returnTo=${returnTo || `/polish/${polish.id}`}`)} $fullWidth>
-            Edit Polish
-          </Button>
+          {isAuthenticated ? (
+            <Button onClick={() => router.push(`/polish/${polish.id}/edit?returnTo=${returnTo || `/polish/${polish.id}`}`)} $fullWidth>
+              Edit Polish
+            </Button>
+          ) : (
+            <StyledDisabledMessage>
+              Please log in to edit this polish
+            </StyledDisabledMessage>
+          )}
         </StyledDetailsContent>
       </StyledDetails>
     </StyledContainer>

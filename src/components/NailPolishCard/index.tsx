@@ -2,6 +2,7 @@
 
 import React, { FC } from 'react';
 import { useRouter } from 'next/navigation';
+import { useAuth } from '@/lib/auth/AuthContext';
 import {
   StyledCard,
   StyledContent,
@@ -47,12 +48,17 @@ export const NailPolishCard: FC<NailPolishCardProps> = ({
   onChooseImage
 }) => {
   const router = useRouter();
+  const { isAuthenticated } = useAuth();
 
   const handleContentClick = () => {
-    router.push(`/polish/${id}`);
+    if (isAuthenticated) {
+      router.push(`/polish/${id}`);
+    }
   };
 
   const handleImageAreaClick = () => {
+    if (!isAuthenticated) return;
+
     // Go to details page if we have any image (including 'n/a')
     if (imageUrl !== null) {
       router.push(`/polish/${id}`);
@@ -63,6 +69,8 @@ export const NailPolishCard: FC<NailPolishCardProps> = ({
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (!isAuthenticated) return;
+
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
       handleContentClick();
@@ -72,9 +80,10 @@ export const NailPolishCard: FC<NailPolishCardProps> = ({
   return (
     <StyledCard
       onKeyDown={handleKeyDown}
-      tabIndex={0}
-      role="button"
-      aria-label={`View details for ${brand} ${name}`}
+      tabIndex={isAuthenticated ? 0 : -1}
+      role={isAuthenticated ? "button" : "article"}
+      aria-label={isAuthenticated ? `View details for ${brand} ${name}` : `${brand} ${name}`}
+      style={{ cursor: isAuthenticated ? 'pointer' : 'default' }}
     >
       <StyledClickableArea
         as={StyledImageContainer}

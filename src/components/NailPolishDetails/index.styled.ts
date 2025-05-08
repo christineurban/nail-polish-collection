@@ -43,8 +43,11 @@ export const StyledImageActions = styled.div`
 
 export const StyledDisabledMessage = styled.p`
   color: ${({ theme }) => theme.colors.text.secondary};
-  font-size: ${({ theme }) => theme.typography.fontSize.sm};
-  margin-top: 0.5rem;
+  text-align: center;
+  padding: 1rem;
+  background-color: ${({ theme }) => theme.colors.background.secondary};
+  border-radius: 4px;
+  margin: 0;
 `;
 
 export const StyledButton = styled.button<{ $variant?: 'danger' }>`

@@ -3,6 +3,7 @@
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 import { HiOutlineMenu, HiOutlineX } from 'react-icons/hi';
+import { useAuth } from '@/lib/auth/AuthContext';
 import {
   StyledNav,
   StyledContainer,
@@ -15,12 +16,21 @@ import {
 export function Nav() {
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { isAuthenticated, logout } = useAuth();
+
+  const publicRoutes = [
+    { path: '/', label: 'Search' },
+  ];
+
+  const protectedRoutes = [
+    { path: '/dashboard', label: 'Dashboard' },
+    { path: '/polish/add', label: 'Add New Polish' },
+    { path: '/image-selection', label: 'Select Missing Images' },
+  ];
 
   const routes = [
-    { path: '/', label: 'Search' },
-    { path: '/polish/add', label: 'Add New Polish' },
-    { path: '/dashboard', label: 'Dashboard' },
-    { path: '/image-selection', label: 'Select Missing Images' },
+    ...publicRoutes,
+    ...(isAuthenticated ? protectedRoutes : []),
   ];
 
   const toggleMenu = () => {
@@ -51,6 +61,27 @@ export function Nav() {
               {label}
             </StyledLink>
           ))}
+          {isAuthenticated ? (
+            <StyledLink
+              href="#"
+              $isActive={false}
+              onClick={(e) => {
+                e.preventDefault();
+                logout();
+                setIsMenuOpen(false);
+              }}
+            >
+              Logout
+            </StyledLink>
+          ) : (
+            <StyledLink
+              href="/login"
+              $isActive={pathname === '/login'}
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Login
+            </StyledLink>
+          )}
         </StyledLinks>
       </StyledContainer>
     </StyledNav>

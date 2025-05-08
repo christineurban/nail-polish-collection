@@ -5,6 +5,7 @@ import StyledComponentsRegistry from '../lib/registry';
 import { ThemeProvider } from '../theme';
 import { Nav } from '@/components/Nav';
 import { MainContainer } from '@/components/MainContainer';
+import { AuthProvider } from '@/lib/auth/AuthContext';
 
 const onest = Onest({
   subsets: ["latin"],
@@ -31,10 +32,12 @@ export default function RootLayout({
       <body className={onest.className}>
         <StyledComponentsRegistry>
           <ThemeProvider>
-            <Nav />
-            <MainContainer>
-              {children}
-            </MainContainer>
+            <AuthProvider>
+              <Nav />
+              <MainContainer>
+                {children}
+              </MainContainer>
+            </AuthProvider>
           </ThemeProvider>
         </StyledComponentsRegistry>
       </body>
