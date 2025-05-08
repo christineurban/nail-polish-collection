@@ -12,6 +12,7 @@ export async function GET(request: Request) {
     const brands = searchParams.getAll('brand');
     const colors = searchParams.getAll('color');
     const finishes = searchParams.getAll('finish');
+    const ratings = searchParams.getAll('rating');
     const isOld = searchParams.get('isOld');
     const page = parseInt(searchParams.get('page') || '1');
     const limit = parseInt(searchParams.get('limit') || '10');
@@ -79,6 +80,13 @@ export async function GET(request: Request) {
             name: { in: finishes, mode: 'insensitive' }
           }
         }
+      };
+    }
+
+    // Add rating filter if provided
+    if (ratings.length > 0) {
+      where.rating = {
+        in: ratings
       };
     }
 
