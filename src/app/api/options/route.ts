@@ -18,8 +18,6 @@ export async function GET() {
       })
     ]);
 
-    console.log('Available colors:', colors.map(c => c.name));
-
     return NextResponse.json({
       brands: brands.map(b => b.name),
       colors: colors.map(c => c.name),

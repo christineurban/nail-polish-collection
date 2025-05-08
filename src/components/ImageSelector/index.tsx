@@ -197,11 +197,6 @@ export const ImageSelector = ({
       if (!response.ok) throw new Error('Failed to fetch images');
 
       const data = await response.json();
-      console.log('Fetched images:', {
-        totalImages: data.images?.length,
-        debugInfo: data.debug,
-        images: data.images
-      });
       setImages(data.images || []);
     } catch (error) {
       console.error(`Error fetching images for ${polish.brand} - ${polish.name}:`, error);

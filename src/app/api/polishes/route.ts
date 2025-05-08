@@ -82,8 +82,6 @@ export async function GET(request: Request) {
       };
     }
 
-    console.log('Query where clause:', JSON.stringify(where, null, 2));
-
     // First, get all polishes that match the filters
     const polishes = await prisma.nail_polish.findMany({
       where,
@@ -107,11 +105,6 @@ export async function GET(request: Request) {
       skip: (page - 1) * limit,
       take: limit,
     });
-
-    console.log('Found polishes:', polishes.length);
-    if (polishes.length > 0) {
-      console.log('Sample polish colors:', polishes[0].colors.map(c => c.color.name));
-    }
 
     // Get total count for pagination
     const total = await prisma.nail_polish.count({

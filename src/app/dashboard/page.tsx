@@ -212,7 +212,6 @@ export default function DashboardPage() {
   };
 
   const renderTable = (attributes: Attribute[], attributeType: 'color' | 'finish' | 'brand') => {
-    console.log('Rendering table for:', attributeType, attributes);
     const columns = [
       {
         header: 'Name',

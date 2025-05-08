@@ -15,8 +15,6 @@ export async function GET() {
       }
     });
 
-    console.log('Polish data from Prisma:', polishData);
-
     // Get storage files using admin client with a high limit
     const { data: files, error: listError } = await supabaseAdmin.storage
       .from('nail-polish-images')
@@ -29,8 +27,6 @@ export async function GET() {
       console.error('Error listing files:', listError);
       return NextResponse.json({ error: listError.message }, { status: 500 });
     }
-
-    console.log('Files from storage:', files);
 
     if (!files || files.length === 0) {
       console.log('No files found in storage');

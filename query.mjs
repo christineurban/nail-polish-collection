@@ -22,7 +22,6 @@ async function main() {
         }
       }
     });
-    console.log(JSON.stringify(polishes, null, 2));
   } catch (error) {
     console.error('Error:', error);
   } finally {

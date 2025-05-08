@@ -64,9 +64,6 @@ function FilterSortContent({
   const [filters, setFilters] = useState(currentFilters);
   const [isFiltersVisible, setIsFiltersVisible] = useState(true);
 
-  console.log('Available color options:', colors);
-  console.log('Current color filters:', filters.color);
-
   const ratings = [
     'A_PLUS', 'A', 'A_MINUS',
     'B_PLUS', 'B', 'B_MINUS',

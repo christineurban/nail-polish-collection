@@ -66,8 +66,6 @@ export async function POST(request: Request) {
       include: { brands: true }
     });
 
-    console.log('Current polish data:', JSON.stringify(currentPolish, null, 2));
-
     if (!currentPolish) {
       return NextResponse.json(
         {
