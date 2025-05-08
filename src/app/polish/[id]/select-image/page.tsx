@@ -4,6 +4,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { ImageSelector } from '@/components/ImageSelector';
 import { PageHeader } from '@/components/PageHeader';
+import { SuspenseBoundary } from '@/components/SuspenseBoundary';
 import Link from 'next/link';
 import {
   StyledErrorContainer,
@@ -22,6 +23,14 @@ interface Polish {
 }
 
 export default function SelectImagePage({ params }: { params: { id: string } }) {
+  return (
+    <SuspenseBoundary>
+      <SelectImagePageContent params={params} />
+    </SuspenseBoundary>
+  );
+}
+
+function SelectImagePageContent({ params }: { params: { id: string } }) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [polish, setPolish] = useState<Polish | null>(null);

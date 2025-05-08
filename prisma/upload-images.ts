@@ -2,7 +2,7 @@ import { PrismaClient } from '@prisma/client';
 import axios from 'axios';
 import fs from 'fs';
 import path from 'path';
-import { load, Element } from 'cheerio';
+import { load } from 'cheerio';
 
 const prisma = new PrismaClient();
 
@@ -19,7 +19,7 @@ async function getImagesFromUrl(url: string): Promise<string[]> {
     const images: string[] = [];
 
     // Get all img elements
-    $('img').each((_: number, element: Element) => {
+    $('img').each((_: number, element) => {
       const src = $(element).attr('src');
       const dataSrc = $(element).attr('data-src'); // Some blogs lazy load images
       const srcset = $(element).attr('srcset');

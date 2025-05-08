@@ -7,6 +7,7 @@ import { SingleSelect } from '@/components/fields/SingleSelect';
 import { MultiSelect } from '@/components/fields/MultiSelect';
 import { Button } from '@/components/Button';
 import { Input } from '@/components/fields/Input';
+import { SuspenseBoundary } from '@/components/SuspenseBoundary';
 import {
   StyledFiltersContainer,
   StyledContainer,
@@ -42,14 +43,22 @@ interface FilterSortProps {
   displayedPolishes: number;
 }
 
-export const FilterSort = ({
+export const FilterSort = (props: FilterSortProps) => {
+  return (
+    <SuspenseBoundary>
+      <FilterSortContent {...props} />
+    </SuspenseBoundary>
+  );
+};
+
+function FilterSortContent({
   brands,
   finishes,
   colors,
   currentFilters,
   totalPolishes,
   displayedPolishes,
-}: FilterSortProps) => {
+}: FilterSortProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [filters, setFilters] = useState(currentFilters);
@@ -449,4 +458,4 @@ export const FilterSort = ({
       </StyledContainer>
     </StyledFiltersContainer>
   );
-};
+}

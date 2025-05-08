@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { Rating } from '@prisma/client';
 import { PageHeader } from '@/components/PageHeader';
 import { Button } from '@/components/Button';
+import { SuspenseBoundary } from '@/components/SuspenseBoundary';
 import {
   StyledContainer,
   StyledDetails,
@@ -37,7 +38,15 @@ interface NailPolishDetailsProps {
   polish: Polish;
 }
 
-export const NailPolishDetails = ({ polish }: NailPolishDetailsProps) => {
+export const NailPolishDetails = (props: NailPolishDetailsProps) => {
+  return (
+    <SuspenseBoundary>
+      <NailPolishDetailsContent {...props} />
+    </SuspenseBoundary>
+  );
+};
+
+function NailPolishDetailsContent({ polish }: NailPolishDetailsProps) {
   const [isRemovingImage, setIsRemovingImage] = useState(false);
   const [isMarkingNoImage, setIsMarkingNoImage] = useState(false);
   const router = useRouter();
@@ -185,4 +194,4 @@ export const NailPolishDetails = ({ polish }: NailPolishDetailsProps) => {
       </StyledDetails>
     </StyledContainer>
   );
-};
+}

@@ -11,16 +11,42 @@ type PolishWithRelations = {
   coats: number | null;
   rating: string | null;
   notes: string | null;
-  purchase_year: number | null;
   total_bottles: number;
   empty_bottles: number;
-  status: string;
+  is_old: boolean | null;
   last_used: Date | null;
   created_at: Date;
   updated_at: Date;
-  brands: { name: string };
-  colors: Array<{ color: { name: string } }>;
-  finishes: Array<{ finish: { name: string } }>;
+  brands: {
+    name: string;
+    id: string;
+    created_at: Date;
+    updated_at: Date;
+  };
+  colors: Array<{
+    color: {
+      name: string;
+      id: string;
+      created_at: Date;
+      updated_at: Date;
+    };
+    created_at: Date;
+    updated_at: Date;
+    nail_polish_id: string;
+    color_id: string;
+  }>;
+  finishes: Array<{
+    finish: {
+      name: string;
+      id: string;
+      created_at: Date;
+      updated_at: Date;
+    };
+    created_at: Date;
+    updated_at: Date;
+    nail_polish_id: string;
+    finish_id: string;
+  }>;
 };
 
 async function main() {

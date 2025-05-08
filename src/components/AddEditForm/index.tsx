@@ -18,6 +18,7 @@ import {
   StyledFormRow,
   StyledDangerZone
 } from './index.styled';
+import { SuspenseBoundary } from '@/components/SuspenseBoundary';
 
 interface AddEditFormData {
   id?: string;
@@ -44,13 +45,21 @@ interface AddEditFormProps {
   availableFinishes?: string[];
 }
 
-export const AddEditForm = ({
+export const AddEditForm = (props: AddEditFormProps) => {
+  return (
+    <SuspenseBoundary>
+      <AddEditFormContent {...props} />
+    </SuspenseBoundary>
+  );
+};
+
+function AddEditFormContent({
   initialData,
   isEditing = false,
   brands = [],
   availableColors = [],
   availableFinishes = []
-}: AddEditFormProps) => {
+}: AddEditFormProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const returnTo = searchParams.get('returnTo');
@@ -317,4 +326,4 @@ export const AddEditForm = ({
       />
     </>
   );
-};
+}

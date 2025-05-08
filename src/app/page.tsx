@@ -6,6 +6,7 @@ import { PageHeader } from '@/components/PageHeader';
 import { NailPolishGrid } from '@/components/NailPolishGrid';
 import { Rating } from '@prisma/client';
 import { StyledPagination } from '@/components/Pagination/index.styled';
+import { SuspenseBoundary } from '@/components/SuspenseBoundary';
 
 interface Polish {
   id: string;
@@ -25,6 +26,14 @@ interface ApiResponse {
 }
 
 export default function Home() {
+  return (
+    <SuspenseBoundary>
+      <HomeContent />
+    </SuspenseBoundary>
+  );
+}
+
+function HomeContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [polishes, setPolishes] = useState<Polish[]>([]);
