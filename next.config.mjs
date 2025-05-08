@@ -63,6 +63,11 @@ const nextConfig = {
     SUPABASE_URL: process.env.SUPABASE_URL,
     SUPABASE_SERVICE_ROLE_KEY: process.env.SUPABASE_SERVICE_ROLE_KEY,
   },
+  // Add experimental features to improve build performance
+  experimental: {
+    serverActions: true,
+    serverComponentsExternalPackages: ['@prisma/client'],
+  },
 };
 
 export default nextConfig;

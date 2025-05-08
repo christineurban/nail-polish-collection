@@ -12,7 +12,8 @@ const onest = Onest({
   variable: '--font-onest',
   weight: ['400', '500', '600', '700'],
   preload: true,
-  fallback: ['system-ui', '-apple-system', 'sans-serif'],
+  fallback: ['system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
+  adjustFontFallback: true,
 });
 
 export const metadata: Metadata = {
