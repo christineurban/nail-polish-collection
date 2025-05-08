@@ -13,6 +13,10 @@ export const StyledForm = styled.form`
   padding: 3rem;
   border-radius: ${({ theme }) => theme.borderRadius.xl};
   box-shadow: ${({ theme }) => theme.shadows.lg};
+
+  @media (max-width: 768px) {
+    padding: 1.5rem;
+  }
 `;
 
 export const StyledFormSection = styled.div`
@@ -88,23 +92,28 @@ export const StyledButtonGroup = styled.div`
   button {
     min-width: 120px;
   }
+
+  @media (max-width: 768px) {
+    flex-direction: column-reverse;
+  }
 `;
 
 export const StyledDangerZone = styled.div`
-  margin-top: 2rem;
-  padding: 2rem;
-  border: 2px solid ${({ theme }) => theme.colors.error[300]};
-  border-radius: ${({ theme }) => theme.borderRadius.lg};
-  background: ${({ theme }) => theme.colors.error[50]};
+  margin-top: 48px;
+  padding: 24px;
+  background-color: ${({ theme }) => `${theme.colors.error}10`};
+  border: 1px solid ${({ theme }) => `${theme.colors.error}33`};
+  border-radius: 8px;
 
   h3 {
-    color: ${({ theme }) => theme.colors.error[700]};
-    font-size: ${({ theme }) => theme.typography.fontSize.lg};
-    margin: 0 0 1rem;
+    margin-top: 0;
+    margin-bottom: 12px;
+    color: ${({ theme }) => theme.colors.error};
+    font-size: 1.25rem;
   }
 
   p {
-    color: ${({ theme }) => theme.colors.error[600]};
-    margin: 0 0 1.5rem;
+    margin-bottom: 16px;
+    color: ${({ theme }) => theme.colors.error};
   }
 `;
