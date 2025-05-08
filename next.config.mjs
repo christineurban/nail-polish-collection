@@ -49,6 +49,12 @@ const nextConfig = {
 
     return config;
   },
+  // Add this section to handle static generation
+  experimental: {
+    serverActions: true,
+  },
+  // Disable static optimization for API routes
+  output: 'standalone',
 };
 
 export default nextConfig;

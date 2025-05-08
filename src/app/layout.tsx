@@ -11,6 +11,8 @@ const onest = Onest({
   display: 'swap',
   variable: '--font-onest',
   weight: ['400', '500', '600', '700'],
+  preload: true,
+  fallback: ['system-ui', '-apple-system', 'sans-serif'],
 });
 
 export const metadata: Metadata = {
