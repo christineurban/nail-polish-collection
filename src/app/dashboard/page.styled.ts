@@ -1,9 +1,40 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 export const StyledDashboardContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 2rem;
+`;
+
+const bounceAnimation = keyframes`
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
+`;
+
+export const StyledScrollIndicator = styled.div`
+  display: none;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1rem;
+  color: ${({ theme }) => theme.colors.primary[500]};
+  font-size: ${({ theme }) => theme.typography.fontSize.sm};
+  animation: ${bounceAnimation} 2s infinite;
+
+  @media (max-width: 768px) {
+    display: flex;
+  }
+
+  svg {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
 `;
 
 export const StyledStatsGrid = styled.div`
@@ -19,6 +50,14 @@ export const StyledStatsGrid = styled.div`
 
   @media (min-width: 1024px) {
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
+
+  > div {
+    transition: transform 0.2s ease-in-out;
+
+    &:active {
+      transform: scale(0.98);
+    }
   }
 `;
 

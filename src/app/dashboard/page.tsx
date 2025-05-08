@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, FormEvent } from 'react';
+import { useState, useEffect, FormEvent, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { PageHeader } from '@/components/PageHeader';
 import {
@@ -16,9 +16,10 @@ import {
   StyledSectionHeading,
   StyledInputControls,
   StyledNote,
-  StyledAddButtonContainer
+  StyledAddButtonContainer,
+  StyledScrollIndicator
 } from './page.styled';
-import { BsGrid, BsTable, BsTrash } from 'react-icons/bs';
+import { BsGrid, BsTable, BsTrash, BsChevronDown } from 'react-icons/bs';
 import { Table } from '@/components/Table';
 import { Tabs } from '@/components/Tabs';
 import { Input } from '@/components/fields/Input';
@@ -77,8 +78,9 @@ export default function DashboardPage() {
   const [newAttributeName, setNewAttributeName] = useState('');
   const [viewMode, setViewMode] = useState<ViewMode>('card');
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const attributeListRef = useRef<HTMLDivElement>(null);
 
-  const singularForms = {
+  const singularForms: Record<'brands' | 'colors' | 'finishes', 'brand' | 'color' | 'finish'> = {
     colors: 'color',
     finishes: 'finish',
     brands: 'brand'
@@ -292,7 +294,8 @@ export default function DashboardPage() {
           <div key={attr.id}>
             <Tile
               title={attr.name}
-              value={`${attr.count} ${attr.count === 1 ? 'polish' : 'polishes'} (${attr.percentage.toFixed(1)}%)`}
+              value={`${attr.count} ${attr.count === 1 ? 'polish' : 'polishes'}`}
+              percentage={`${attr.percentage.toFixed(1)}%`}
               variant="attribute"
               showDelete={attr.count === 0}
               onDelete={() => handleDelete(attr.id, attributeType)}
@@ -304,142 +307,27 @@ export default function DashboardPage() {
   };
 
   const handleStatClick = (type: 'brands' | 'colors' | 'finishes') => {
-    setSelectedAttribute(selectedAttribute === type ? null : type);
-    setNewAttributeName('');
-    setError(null);
-    setSuccess(null);
-    setSortOrder('name-asc');
-    setSearchTerm('');
+    setSelectedAttribute(type);
+
+    // Only scroll on mobile
+    if (window.innerWidth <= 768) {
+      setTimeout(() => {
+        if (attributeListRef.current) {
+          const navHeight = 64; // Height of the nav bar
+          const elementPosition = attributeListRef.current.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - navHeight;
+
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          });
+        }
+      }, 100);
+    }
   };
 
-  const getAttributeList = (type: 'colors' | 'finishes' | 'brands') => {
-    const attributes = type === 'colors' ? colors : type === 'finishes' ? finishes : brands;
-    const filteredAndSorted = filterAttributes(sortAttributes(attributes));
-    const attributeType = singularForms[type] as 'color' | 'finish' | 'brand';
-
-    return (
-      <>
-        <StyledViewControls>
-          <StyledViewButton
-            onClick={() => setViewMode('card')}
-            $isActive={viewMode === 'card'}
-          >
-            <BsGrid /> Cards
-          </StyledViewButton>
-          <StyledViewButton
-            onClick={() => setViewMode('table')}
-            $isActive={viewMode === 'table'}
-          >
-            <BsTable /> Table
-          </StyledViewButton>
-        </StyledViewControls>
-
-        <StyledSortControls>
-          <StyledSortButton
-            onClick={() => {
-              const newOrder = sortOrder.startsWith('name-')
-                ? sortOrder === 'name-asc' ? 'name-desc' : 'name-asc'
-                : 'name-asc';
-              setSortOrder(newOrder);
-            }}
-            $isActive={sortOrder.startsWith('name-')}
-            $direction={sortOrder === 'name-asc' ? 'asc' : sortOrder === 'name-desc' ? 'desc' : undefined}
-          >
-            Name
-          </StyledSortButton>
-          <StyledSortButton
-            onClick={() => {
-              const newOrder = sortOrder.startsWith('count-')
-                ? sortOrder === 'count-asc' ? 'count-desc' : 'count-asc'
-                : 'count-asc';
-              setSortOrder(newOrder);
-            }}
-            $isActive={sortOrder.startsWith('count-')}
-            $direction={sortOrder === 'count-asc' ? 'asc' : sortOrder === 'count-desc' ? 'desc' : undefined}
-          >
-            Count
-          </StyledSortButton>
-        </StyledSortControls>
-
-        <StyledInputControls>
-          <StyledInputContainer>
-            <Input
-              placeholder={`Search ${type}...`}
-              value={searchTerm}
-              onChange={setSearchTerm}
-              aria-label={`Search ${type}`}
-            />
-          </StyledInputContainer>
-
-          <StyledAddForm onSubmit={(e) => handleAdd(e, attributeType)}>
-            <StyledInputContainer>
-              <Input
-                placeholder={`Add new ${attributeType}...`}
-                value={newAttributeName}
-                onChange={setNewAttributeName}
-                aria-label={`Add new ${attributeType}`}
-              />
-            </StyledInputContainer>
-            <Button type="submit">
-              Add {attributeType}
-            </Button>
-          </StyledAddForm>
-        </StyledInputControls>
-
-        {viewMode === 'card'
-          ? renderCards(filteredAndSorted, attributeType)
-          : renderTable(filteredAndSorted, attributeType)
-        }
-
-        <StyledNote>
-          Note: A {attributeType} can only be deleted if there are no polishes associated with it
-        </StyledNote>
-
-        <Modal
-          isOpen={isAddModalOpen}
-          onClose={() => {
-            setIsAddModalOpen(false);
-            setNewAttributeName('');
-          }}
-          title={`Add New ${attributeType}`}
-          footer={
-            <>
-              <Button
-                onClick={() => {
-                  setIsAddModalOpen(false);
-                  setNewAttributeName('');
-                }}
-                $variant="secondary"
-              >
-                Cancel
-              </Button>
-              <Button
-                onClick={(e) => {
-                  handleAdd(e as any, attributeType);
-                  setIsAddModalOpen(false);
-                }}
-              >
-                Add {attributeType}
-              </Button>
-            </>
-          }
-        >
-          <form onSubmit={(e) => {
-            e.preventDefault();
-            handleAdd(e, attributeType);
-            setIsAddModalOpen(false);
-          }}>
-            <Input
-              type="text"
-              value={newAttributeName}
-              onChange={setNewAttributeName}
-              placeholder={`Enter ${attributeType} name...`}
-              autoFocus
-            />
-          </form>
-        </Modal>
-      </>
-    );
+  const getAttributeList = (type: 'colors' | 'finishes' | 'brands'): Attribute[] => {
+    return type === 'colors' ? colors : type === 'finishes' ? finishes : brands;
   };
 
   if (isLoading) {
@@ -458,7 +346,7 @@ export default function DashboardPage() {
     <>
       <PageHeader
         title="Dashboard"
-        description="Click on a tile to view and manage details"
+        description="View statistics and manage your nail polish collection"
       />
       <StyledStatsGrid>
         <Tile
@@ -543,25 +431,145 @@ export default function DashboardPage() {
 
       {selectedAttribute && (
         <>
-          <StyledSectionHeading>
-            <h2>
-              {selectedAttribute === 'brands' ? 'Brand Details' :
-               selectedAttribute === 'colors' ? 'Color Details' :
-               'Finish Details'}
-            </h2>
-            <StyledAddButtonContainer>
-              <a
-                href="#"
-                onClick={(e) => {
-                  e.preventDefault();
-                  setIsAddModalOpen(true);
-                }}
+          <StyledScrollIndicator>
+            <BsChevronDown />
+          </StyledScrollIndicator>
+
+          <div ref={attributeListRef}>
+            <StyledSectionHeading>
+              <h2>{selectedAttribute.charAt(0).toUpperCase() + selectedAttribute.slice(1)}</h2>
+              <StyledAddButtonContainer>
+                <a
+                  onClick={() => setIsAddModalOpen(true)}
+                  role="button"
+                  tabIndex={0}
+                >
+                  + Add {singularForms[selectedAttribute]}
+                </a>
+              </StyledAddButtonContainer>
+            </StyledSectionHeading>
+
+            <StyledViewControls>
+              <StyledViewButton
+                onClick={() => setViewMode('card')}
+                $isActive={viewMode === 'card'}
               >
-                + Add New
-              </a>
-            </StyledAddButtonContainer>
-          </StyledSectionHeading>
-          {getAttributeList(selectedAttribute)}
+                <BsGrid /> Cards
+              </StyledViewButton>
+              <StyledViewButton
+                onClick={() => setViewMode('table')}
+                $isActive={viewMode === 'table'}
+              >
+                <BsTable /> Table
+              </StyledViewButton>
+            </StyledViewControls>
+
+            <StyledSortControls>
+              <StyledSortButton
+                onClick={() => {
+                  const newOrder = sortOrder.startsWith('name-')
+                    ? sortOrder === 'name-asc' ? 'name-desc' : 'name-asc'
+                    : 'name-asc';
+                  setSortOrder(newOrder);
+                }}
+                $isActive={sortOrder.startsWith('name-')}
+                $direction={sortOrder === 'name-asc' ? 'asc' : sortOrder === 'name-desc' ? 'desc' : undefined}
+              >
+                Name
+              </StyledSortButton>
+              <StyledSortButton
+                onClick={() => {
+                  const newOrder = sortOrder.startsWith('count-')
+                    ? sortOrder === 'count-asc' ? 'count-desc' : 'count-asc'
+                    : 'count-asc';
+                  setSortOrder(newOrder);
+                }}
+                $isActive={sortOrder.startsWith('count-')}
+                $direction={sortOrder === 'count-asc' ? 'asc' : sortOrder === 'count-desc' ? 'desc' : undefined}
+              >
+                Count
+              </StyledSortButton>
+            </StyledSortControls>
+
+            <StyledInputControls>
+              <StyledInputContainer>
+                <Input
+                  placeholder={`Search ${selectedAttribute}...`}
+                  value={searchTerm}
+                  onChange={setSearchTerm}
+                  aria-label={`Search ${selectedAttribute}`}
+                />
+              </StyledInputContainer>
+
+              <StyledAddForm onSubmit={(e) => handleAdd(e, singularForms[selectedAttribute])}>
+                <StyledInputContainer>
+                  <Input
+                    placeholder={`Add new ${singularForms[selectedAttribute]}...`}
+                    value={newAttributeName}
+                    onChange={setNewAttributeName}
+                    aria-label={`Add new ${singularForms[selectedAttribute]}`}
+                  />
+                </StyledInputContainer>
+                <Button type="submit">
+                  Add {singularForms[selectedAttribute]}
+                </Button>
+              </StyledAddForm>
+            </StyledInputControls>
+
+            {viewMode === 'card' ? (
+              renderCards(filterAttributes(sortAttributes(getAttributeList(selectedAttribute))), singularForms[selectedAttribute])
+            ) : (
+              renderTable(filterAttributes(sortAttributes(getAttributeList(selectedAttribute))), singularForms[selectedAttribute])
+            )}
+
+            <StyledNote>
+              Note: A {singularForms[selectedAttribute]} can only be deleted if there are no polishes associated with it
+            </StyledNote>
+
+            <Modal
+              isOpen={isAddModalOpen}
+              onClose={() => {
+                setIsAddModalOpen(false);
+                setNewAttributeName('');
+              }}
+              title={`Add new ${singularForms[selectedAttribute]}`}
+              footer={
+                <>
+                  <Button
+                    onClick={() => {
+                      setIsAddModalOpen(false);
+                      setNewAttributeName('');
+                    }}
+                    $variant="secondary"
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    onClick={(e) => {
+                      handleAdd(e as any, singularForms[selectedAttribute]);
+                      setIsAddModalOpen(false);
+                    }}
+                  >
+                    Add {singularForms[selectedAttribute]}
+                  </Button>
+                </>
+              }
+            >
+              <form onSubmit={(e) => {
+                e.preventDefault();
+                handleAdd(e, singularForms[selectedAttribute]);
+                setIsAddModalOpen(false);
+              }}>
+                <Input
+                  type="text"
+                  value={newAttributeName}
+                  onChange={setNewAttributeName}
+                  placeholder={`Enter ${singularForms[selectedAttribute]} name...`}
+                  autoFocus
+                />
+              </form>
+            </Modal>
+          </div>
         </>
       )}
 

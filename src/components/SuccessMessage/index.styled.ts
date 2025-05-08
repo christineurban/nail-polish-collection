@@ -23,7 +23,7 @@ export const StyledMessage = styled(motion.div)`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  color: ${({ theme }) => theme.colors.success[600]};
+  color: ${({ theme }) => theme.colors.success};
   font-size: ${({ theme }) => theme.typography.fontSize.lg};
   font-weight: ${({ theme }) => theme.typography.fontWeights.semibold};
   text-align: center;

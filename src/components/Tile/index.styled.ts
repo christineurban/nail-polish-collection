@@ -72,7 +72,7 @@ export const StyledTileContent = styled.div<StyledTileContentProps>`
   flex: 1;
   display: flex;
   flex-direction: column;
-
+  justify-content: space-between;
   ${({ theme, $variant = 'stat' }) => $variant === 'stat' ? css`
     h3 {
       margin: 0 0 0.5rem;
@@ -90,6 +90,12 @@ export const StyledTileContent = styled.div<StyledTileContentProps>`
     h3 {
       margin: 0;
       color: ${theme.colors.text.primary};
+    }
+
+    div {
+      display: flex;
+      gap: 0.25rem;
+      justify-content: space-between;
     }
 
     span {
@@ -117,4 +123,10 @@ export const StyledDescription = styled.div`
   @media (max-width: 480px) {
     font-size: ${({ theme }) => theme.typography.fontSize.xs};
   }
+`;
+
+export const StyledPercentage = styled.span`
+  display: block;
+  color: ${({ theme }) => theme.colors.text.secondary};
+  font-size: ${({ theme }) => theme.typography.fontSize.base};
 `;

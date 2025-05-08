@@ -1,5 +1,7 @@
+'use client';
+
 import { ReactNode, MouseEvent } from 'react';
-import { StyledTile, StyledTileContent, StyledValue, StyledDescription } from './index.styled';
+import { StyledTile, StyledTileContent, StyledValue, StyledDescription, StyledPercentage } from './index.styled';
 import { BsTrash } from 'react-icons/bs';
 import { Tooltip } from 'react-tooltip';
 
@@ -12,6 +14,7 @@ interface TileProps {
   $isActive?: boolean;
   onDelete?: () => void;
   showDelete?: boolean;
+  percentage?: string;
 }
 
 export const Tile = ({
@@ -22,7 +25,8 @@ export const Tile = ({
   onClick,
   $isActive = false,
   onDelete,
-  showDelete = false
+  showDelete = false,
+  percentage
 }: TileProps) => {
   return (
     <StyledTile
@@ -44,7 +48,10 @@ export const Tile = ({
         ) : (
           <>
             <h3>{title}</h3>
-            <span>{value}</span>
+            <div>
+              <span>{value}</span>
+              {percentage && <StyledPercentage>{percentage}</StyledPercentage>}
+            </div>
           </>
         )}
       </StyledTileContent>
