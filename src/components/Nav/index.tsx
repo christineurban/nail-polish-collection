@@ -1,6 +1,6 @@
 'use client';
 
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { HiOutlineMenu, HiOutlineX } from 'react-icons/hi';
 import { useAuth } from '@/lib/auth/AuthContext';
@@ -15,6 +15,7 @@ import {
 
 export function Nav() {
   const pathname = usePathname();
+  const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { isAuthenticated, logout } = useAuth();
 
@@ -37,12 +38,26 @@ export function Nav() {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  const handleNavigation = (path: string) => {
+    router.push(path);
+    setIsMenuOpen(false);
+  };
+
+  const handleBlur = (e: React.FocusEvent) => {
+    // Check if the new focused element is within the navigation menu
+    const navMenu = document.querySelector('nav');
+    if (navMenu && !navMenu.contains(e.relatedTarget as Node)) {
+      setIsMenuOpen(false);
+    }
+  };
+
   return (
     <StyledNav>
       <StyledContainer>
         <StyledLogo href="/">My Nail Polish Collection 💅🏼</StyledLogo>
         <StyledHamburger
           onClick={toggleMenu}
+          onBlur={handleBlur}
           aria-label="Toggle navigation menu"
           aria-expanded={isMenuOpen}
           $isOpen={isMenuOpen}
@@ -56,7 +71,7 @@ export function Nav() {
               href={path}
               $isActive={pathname === path}
               aria-current={pathname === path ? 'page' : undefined}
-              onClick={() => setIsMenuOpen(false)}
+              onClick={() => handleNavigation(path)}
             >
               {label}
             </StyledLink>
@@ -75,9 +90,12 @@ export function Nav() {
             </StyledLink>
           ) : (
             <StyledLink
-              href="/login"
+              href="#"
               $isActive={pathname === '/login'}
-              onClick={() => setIsMenuOpen(false)}
+              onClick={(e) => {
+                e.preventDefault();
+                handleNavigation('/login');
+              }}
             >
               Login
             </StyledLink>

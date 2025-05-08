@@ -83,7 +83,7 @@ export const NailPolishCard: FC<NailPolishCardProps> = ({
       tabIndex={isAuthenticated ? 0 : -1}
       role={isAuthenticated ? "button" : "article"}
       aria-label={isAuthenticated ? `View details for ${brand} ${name}` : `${brand} ${name}`}
-      style={{ cursor: isAuthenticated ? 'pointer' : 'default' }}
+      $isAuthenticated={isAuthenticated}
     >
       <StyledClickableArea
         as={StyledImageContainer}
@@ -91,6 +91,7 @@ export const NailPolishCard: FC<NailPolishCardProps> = ({
           e.stopPropagation();
           handleImageAreaClick();
         }}
+        $isAuthenticated={isAuthenticated}
       >
         {(() => {
           // Case 1: Marked as no image available
@@ -100,6 +101,7 @@ export const NailPolishCard: FC<NailPolishCardProps> = ({
                 type="button"
                 aria-label="View details for nail polish"
                 $isNoImage
+                $isAuthenticated={isAuthenticated}
               >
                 ❌ Marked as no image
               </StyledChooseImageButton>
@@ -123,6 +125,7 @@ export const NailPolishCard: FC<NailPolishCardProps> = ({
             <StyledChooseImageButton
               type="button"
               aria-label="Choose image for nail polish"
+              $isAuthenticated={isAuthenticated}
             >
               Choose Image
             </StyledChooseImageButton>
@@ -136,6 +139,7 @@ export const NailPolishCard: FC<NailPolishCardProps> = ({
           e.stopPropagation();
           handleContentClick();
         }}
+        $isAuthenticated={isAuthenticated}
       >
         <StyledMetadata>
           <StyledBrandNameContainer>

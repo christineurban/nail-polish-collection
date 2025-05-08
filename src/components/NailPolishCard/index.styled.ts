@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { getColorMapping, getTextColor } from '@/utils/colors';
 import Image from 'next/image';
 
-export const StyledCard = styled.div`
+export const StyledCard = styled.div<{ $isAuthenticated?: boolean }>`
   container-name: card;
   container-type: inline-size;
   display: flex;
@@ -11,13 +11,15 @@ export const StyledCard = styled.div`
   border-radius: ${({ theme }) => theme.borderRadius.sm};
   box-shadow: ${({ theme }) => theme.shadows.md};
   overflow: hidden;
-  cursor: pointer;
+  cursor: ${({ $isAuthenticated }) => $isAuthenticated ? 'pointer' : 'default'};
   transition: ${({ theme }) => theme.transitions.base};
 
-  &:hover {
-    transform: translateY(-4px);
-    box-shadow: ${({ theme }) => theme.shadows.lg};
-  }
+  ${({ $isAuthenticated, theme }) => $isAuthenticated && `
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: ${theme.shadows.lg};
+    }
+  `}
 
   &:focus {
     outline: none;
@@ -37,7 +39,7 @@ export const StyledImageContainer = styled.div`
   overflow: hidden;
 `;
 
-export const StyledChooseImageButton = styled.button<{ $isNoImage?: boolean }>`
+export const StyledChooseImageButton = styled.button<{ $isNoImage?: boolean; $isAuthenticated?: boolean }>`
   width: 100%;
   height: 100%;
   display: flex;
@@ -49,18 +51,19 @@ export const StyledChooseImageButton = styled.button<{ $isNoImage?: boolean }>`
       : theme.colors.background.muted};
   color: ${({ theme }) => theme.colors.text.secondary};
   border: none;
-  cursor: pointer;
+  cursor: ${({ $isAuthenticated }) => $isAuthenticated ? 'pointer' : 'default'};
   font-size: ${({ theme }) => theme.typography.fontSize.base};
   font-weight: ${({ theme }) => theme.typography.fontWeights.medium};
   transition: ${({ theme }) => theme.transitions.base};
 
-  &:hover {
-    background-color: ${({ theme, $isNoImage }) =>
-      $isNoImage
+  ${({ $isAuthenticated, theme, $isNoImage }) => $isAuthenticated && `
+    &:hover {
+      background-color: ${$isNoImage
         ? theme.colors.gray[300]
         : theme.colors.gray[200]};
-    color: ${({ theme }) => theme.colors.gray[700]};
-  }
+      color: ${theme.colors.gray[700]};
+    }
+  `}
 
   &:focus {
     outline: none;
@@ -197,6 +200,6 @@ export const StyledTag = styled.span<{ $type: string }>`
   }
 `;
 
-export const StyledClickableArea = styled.div`
-  cursor: pointer;
+export const StyledClickableArea = styled.div<{ $isAuthenticated?: boolean }>`
+  cursor: ${({ $isAuthenticated }) => $isAuthenticated ? 'pointer' : 'default'};
 `;

@@ -6,8 +6,8 @@ export async function POST(request: Request) {
     const { password } = await request.json();
 
     if (password === process.env.PASSWORD) {
-      // Set the authentication cookie
-      cookies().set('isAuthenticated', 'true', {
+      // Set the authentication cookie with a more specific name
+      cookies().set('nail-polish-auth', 'true', {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
         sameSite: 'strict',

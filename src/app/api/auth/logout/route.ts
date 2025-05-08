@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 
 export async function POST() {
   const cookieStore = cookies();
-  cookieStore.delete('auth');
+  cookieStore.delete('nail-polish-auth');
 
   return NextResponse.json({ success: true });
 }

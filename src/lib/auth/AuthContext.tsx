@@ -1,17 +1,19 @@
 'use client';
 
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { useRouter } from 'next/navigation';
 
 interface AuthContextType {
   isAuthenticated: boolean;
   login: (password: string) => Promise<boolean>;
-  logout: () => void;
+  logout: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     // Check authentication status on mount
@@ -53,10 +55,22 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const logout = async () => {
     try {
-      await fetch('/api/auth/logout', { method: 'POST' });
+      const response = await fetch('/api/auth/logout', {
+        method: 'POST',
+        credentials: 'include', // Important: include cookies in the request
+      });
+
+      if (!response.ok) {
+        throw new Error('Logout failed');
+      }
+
       setIsAuthenticated(false);
+      router.replace('/');
     } catch (error) {
       console.error('Logout error:', error);
+      // Even if the API call fails, we should still clear the local state
+      setIsAuthenticated(false);
+      router.replace('/');
     }
   };
 

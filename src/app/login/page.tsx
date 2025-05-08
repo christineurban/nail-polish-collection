@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/lib/auth/AuthContext';
 import styled from 'styled-components';
@@ -80,20 +80,49 @@ const StyledError = styled.p`
 export default function LoginPage() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const { login } = useAuth();
+  const [isLoading, setIsLoading] = useState(true);
+  const { login, isAuthenticated } = useAuth();
   const router = useRouter();
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const response = await fetch('/api/auth/check');
+        const data = await response.json();
+
+        if (data.isAuthenticated) {
+          router.push('/');
+        } else {
+          setIsLoading(false);
+        }
+      } catch (error) {
+        console.error('Auth check error:', error);
+        setIsLoading(false);
+      }
+    };
+
+    checkAuth();
+  }, [router]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
 
-    const success = await login(password);
-    if (success) {
-      router.push('/');
-    } else {
-      setError('Incorrect password');
+    try {
+      const success = await login(password);
+      if (success) {
+        router.push('/');
+      } else {
+        setError('Incorrect password');
+      }
+    } catch (err) {
+      setError('An error occurred. Please try again.');
     }
   };
+
+  if (isLoading) {
+    return null; // or a loading spinner if you prefer
+  }
 
   return (
     <StyledContainer>
@@ -105,6 +134,7 @@ export default function LoginPage() {
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Enter password"
           aria-label="Password"
+          autoFocus
         />
         {error && <StyledError>{error}</StyledError>}
         <StyledButton type="submit">Login</StyledButton>
