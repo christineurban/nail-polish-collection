@@ -5,11 +5,14 @@ declare global {
 }
 
 const prismaClientSingleton = () => {
+  // Add connection parameters to the URL
+  const connectionUrl = process.env.DATABASE_URL + '?pgbouncer=true&connection_limit=1&pool_timeout=0';
+
   return new PrismaClient({
     log: ['query', 'error', 'warn'],
     datasources: {
       db: {
-        url: process.env.DATABASE_URL
+        url: connectionUrl
       }
     }
   });
