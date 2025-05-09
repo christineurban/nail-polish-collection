@@ -43,9 +43,17 @@ export const StyledLogo = styled(Link)`
   font-weight: ${({ theme }) => theme.typography.fontWeights.bold};
   font-size: ${({ theme }) => theme.typography.fontSize.xl};
   margin-right: auto;
-  transition: all ${({ theme }) => theme.transitions.base};
-  position: relative;
   padding: 0.5rem 0;
+  position: relative;
+  cursor: pointer;
+
+  &::after {
+    display: none;
+  }
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.text.inverse};
+  }
 
   @media (max-width: 1024px) {
     font-size: ${({ theme }) => theme.typography.fontSize.lg};
@@ -54,26 +62,6 @@ export const StyledLogo = styled(Link)`
   @media (max-width: 480px) {
     font-size: ${({ theme }) => theme.typography.fontSize.base};
     padding: 0.25rem 0;
-  }
-
-  &:hover {
-    transform: translateY(-1px);
-    text-shadow: 0 0 20px ${({ theme }) => `${theme.colors.primary[400]}50`};
-  }
-
-  &::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: ${({ theme }) => theme.colors.text.inverse};
-    transition: width ${({ theme }) => theme.transitions.base};
-  }
-
-  &:hover::after {
-    width: 100%;
   }
 `;
 
