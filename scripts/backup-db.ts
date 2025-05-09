@@ -4,7 +4,9 @@ import path from 'path';
 import { createGzip } from 'zlib';
 import { pipeline } from 'stream/promises';
 
-const prisma = new PrismaClient();
+const prisma = new PrismaClient({
+  log: ['error', 'warn'],
+});
 
 const MAX_BACKUPS = 30; // Keep last 30 days of backups
 
@@ -102,12 +104,12 @@ async function backupDatabase() {
       }
     ];
 
-    const results = await Promise.all(
-      tables.map(table => backupTable(table.name, table.query, backupDir))
-    );
-
-    if (results.some(result => !result)) {
-      throw new Error('One or more tables failed to backup');
+    // Process tables sequentially to avoid connection issues
+    for (const table of tables) {
+      const result = await backupTable(table.name, table.query, backupDir);
+      if (!result) {
+        throw new Error(`Failed to backup ${table.name}`);
+      }
     }
 
     // Create a manifest file with backup info
