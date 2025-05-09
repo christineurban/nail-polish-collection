@@ -95,7 +95,7 @@ export const StyledLinks = styled.div<{ $isOpen: boolean }>`
   align-items: center;
   gap: 1rem;
 
-  @media (max-width: 1024px) {
+  @media (max-width: 1112px) {
     position: absolute;
     top: 100%;
     left: 0;
@@ -138,7 +138,7 @@ export const StyledHamburger = styled.button<{ $isOpen: boolean }>`
     transform: ${({ $isOpen }) => ($isOpen ? 'rotate(90deg)' : 'rotate(0)')};
   }
 
-  @media (max-width: 1024px) {
+  @media (max-width: 1112px) {
     display: flex;
   }
 
