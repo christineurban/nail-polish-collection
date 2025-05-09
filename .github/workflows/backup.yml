@@ -41,7 +41,7 @@ jobs:
         run: npm run backup
 
       - name: Run image backup
-        run: npm run backup-images
+        run: npm run backup:images
 
       - name: Debug directory contents
         run: |
@@ -58,29 +58,25 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: database-backup-${{ github.run_number }}
-          path: |
-            backups/
-            !backups/**/node_modules/
+          path: ${{ github.workspace }}/backups/
           retention-days: 90
-          if-no-files-found: warn
+          if-no-files-found: error
 
       - name: Upload image backup as artifact
         uses: actions/upload-artifact@v4
         with:
           name: image-backup-${{ github.run_number }}
-          path: |
-            image-backups/
-            !image-backups/**/node_modules/
+          path: ${{ github.workspace }}/image-backups/
           retention-days: 90
-          if-no-files-found: warn
+          if-no-files-found: error
 
       - name: List backup contents
         run: |
           echo "Database backup contents:"
-          ls -la backups/ || echo "Backups directory not found"
+          ls -la ${{ github.workspace }}/backups/ || echo "Backups directory not found"
           echo "\nLatest database backup directory:"
-          ls -la backups/$(ls -t backups/ | head -n1) || echo "No database backup found"
+          ls -la ${{ github.workspace }}/backups/$(ls -t ${{ github.workspace }}/backups/ | head -n1) || echo "No database backup found"
           echo "\nImage backup contents:"
-          ls -la image-backups/ || echo "Image backups directory not found"
+          ls -la ${{ github.workspace }}/image-backups/ || echo "Image backups directory not found"
           echo "\nLatest image backup directory:"
-          ls -la image-backups/$(ls -t image-backups/ | head -n1) || echo "No image backup found"
+          ls -la ${{ github.workspace }}/image-backups/$(ls -t ${{ github.workspace }}/image-backups/ | head -n1) || echo "No image backup found"
