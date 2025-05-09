@@ -127,8 +127,10 @@ export const StyledLoadingOverlay = styled(motion.div)`
   bottom: 0;
   background: rgba(255, 255, 255, 0.9);
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 1rem;
   z-index: 10;
 `;
 
