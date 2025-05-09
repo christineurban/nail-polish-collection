@@ -34,6 +34,27 @@ async function compressFile(inputPath: string, outputPath: string) {
   fs.unlinkSync(inputPath); // Remove original file after compression
 }
 
+async function backupTable(tableName: string, query: () => Promise<any>, backupDir: string) {
+  try {
+    console.log(`Backing up ${tableName}...`);
+    const data = await query();
+
+    // Write uncompressed file first
+    const tempPath = path.join(backupDir, `${tableName}.json`);
+    fs.writeFileSync(tempPath, JSON.stringify(data, null, 2));
+
+    // Compress the file
+    const compressedPath = `${tempPath}.gz`;
+    await compressFile(tempPath, compressedPath);
+
+    console.log(`✓ ${tableName} backed up and compressed successfully`);
+    return true;
+  } catch (error) {
+    console.error(`Failed to backup ${tableName}:`, error);
+    return false;
+  }
+}
+
 async function backupDatabase() {
   const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
   const backupsDir = path.join(process.cwd(), 'backups');
@@ -50,22 +71,19 @@ async function backupDatabase() {
     // Backup each table
     const tables = [
       {
-        name: 'brands' as const,
-        query: () => prisma.brands.findMany(),
-        count: () => prisma.brands.count()
+        name: 'brands',
+        query: () => prisma.brands.findMany()
       },
       {
-        name: 'colors' as const,
-        query: () => prisma.colors.findMany(),
-        count: () => prisma.colors.count()
+        name: 'colors',
+        query: () => prisma.colors.findMany()
       },
       {
-        name: 'finishes' as const,
-        query: () => prisma.finishes.findMany(),
-        count: () => prisma.finishes.count()
+        name: 'finishes',
+        query: () => prisma.finishes.findMany()
       },
       {
-        name: 'nail_polish' as const,
+        name: 'nail_polish',
         query: () => prisma.nail_polish.findMany({
           include: {
             colors: {
@@ -80,24 +98,16 @@ async function backupDatabase() {
             },
             brands: true
           }
-        }),
-        count: () => prisma.nail_polish.count()
+        })
       }
-    ] as const;
+    ];
 
-    for (const table of tables) {
-      console.log(`Backing up ${table.name}...`);
-      const data = await table.query();
+    const results = await Promise.all(
+      tables.map(table => backupTable(table.name, table.query, backupDir))
+    );
 
-      // Write uncompressed file first
-      const tempPath = path.join(backupDir, `${table.name}.json`);
-      fs.writeFileSync(tempPath, JSON.stringify(data, null, 2));
-
-      // Compress the file
-      const compressedPath = `${tempPath}.gz`;
-      await compressFile(tempPath, compressedPath);
-
-      console.log(`✓ ${table.name} backed up and compressed successfully`);
+    if (results.some(result => !result)) {
+      throw new Error('One or more tables failed to backup');
     }
 
     // Create a manifest file with backup info
@@ -112,16 +122,6 @@ async function backupDatabase() {
     );
 
     console.log(`\nBackup completed successfully in: ${backupDir}`);
-
-    // Export total counts for verification
-    const counts = await Promise.all(tables.map(async table => ({
-      table: table.name,
-      count: await table.count()
-    })));
-    fs.writeFileSync(
-      path.join(backupDir, 'counts.json'),
-      JSON.stringify(counts, null, 2)
-    );
 
   } catch (error) {
     console.error('Backup failed:', error);
