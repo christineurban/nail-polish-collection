@@ -52,6 +52,18 @@ export const StyledClearAllContainer = styled.div`
   align-items: flex-end;
   width: 100%;
 
+  @media (max-width: 767px) {
+    margin-top: 0.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid ${({ theme }) => theme.colors.gray[200]};
+  }
+
+  @media (min-width: 768px) {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: none;
+  }
+
   @media (min-width: 600px) and (max-width: 1199px) {
     grid-column: 1 / -1;
   }
@@ -69,6 +81,19 @@ export const StyledFilterGroup = styled.div`
   gap: 0.5rem;
   min-width: 0;
   height: 100%;
+  margin-bottom: 1rem;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  @media (max-width: 767px) {
+    margin-bottom: 1.25rem;
+  }
+
+  @media (min-width: 768px) {
+    margin-bottom: 0;
+  }
 `;
 
 export const StyledFilterHeader = styled.div`
@@ -78,6 +103,7 @@ export const StyledFilterHeader = styled.div`
   min-height: 24px;
   flex-wrap: wrap;
   gap: 0.5rem;
+  margin-bottom: 0.25rem;
 `;
 
 export const StyledLabel = styled.label`
@@ -252,4 +278,117 @@ export const StyledToggleButton = styled.button<{ $isExpanded: boolean }>`
     outline: none;
     box-shadow: none;
   }
+`;
+
+export const StyledMobileButton = styled.button`
+  display: none;
+  background: ${({ theme }) => theme.colors.primary[500]};
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 100%;
+  margin-bottom: 1rem;
+
+  &:hover {
+    background: ${({ theme }) => theme.colors.primary[600]};
+  }
+
+  @media (max-width: 767px) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+`;
+
+export const StyledDrawerBackdrop = styled.div<{ $isOpen: boolean }>`
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  opacity: ${({ $isOpen }) => ($isOpen ? 1 : 0)};
+  transition: opacity 0.3s ease;
+  pointer-events: ${({ $isOpen }) => ($isOpen ? 'auto' : 'none')};
+
+  @media (max-width: 767px) {
+    display: block;
+  }
+`;
+
+export const StyledDrawer = styled.div<{ $isOpen: boolean }>`
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: white;
+  border-radius: 16px 16px 0 0;
+  z-index: 1001;
+  transform: translateY(${({ $isOpen }) => ($isOpen ? '0' : '100%')});
+  transition: transform 0.3s ease;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 1rem;
+  box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.1);
+
+  @media (max-width: 767px) {
+    display: block;
+  }
+`;
+
+export const StyledDrawerHeader = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid ${({ theme }) => theme.colors.gray[200]};
+`;
+
+export const StyledDrawerTitle = styled.h2`
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: ${({ theme }) => theme.colors.text.primary};
+  margin: 0;
+`;
+
+export const StyledDrawerCloseButton = styled.button`
+  background: none;
+  border: none;
+  color: ${({ theme }) => theme.colors.text.secondary};
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.text.primary};
+  }
+`;
+
+export const StyledFilterCountBadge = styled.span`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.5em;
+  height: 1.5em;
+  padding: 0 0.4em;
+  background: ${({ theme }) => theme.colors.primary[600]};
+  color: #fff;
+  font-size: 0.875rem;
+  font-weight: 700;
+  border-radius: 999px;
+  margin-left: 0.5em;
+  line-height: 1;
 `;

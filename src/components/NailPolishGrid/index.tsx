@@ -11,7 +11,8 @@ import {
   StyledViewToggle,
   StyledToggleContainer,
 } from './index.styled';
-import { BsGrid, BsTable } from 'react-icons/bs';
+import { BsGrid } from 'react-icons/bs';
+import { MdOutlineViewAgenda } from 'react-icons/md';
 import { useAuth } from '@/lib/auth/AuthContext';
 
 interface Polish {
@@ -77,6 +78,7 @@ export const NailPolishGrid = ({
           onClick={() => setViewMode('grid')}
           $isActive={viewMode === 'grid'}
           type="button"
+          aria-label="Grid view"
         >
           <BsGrid /> Grid
         </StyledViewToggle>
@@ -86,8 +88,9 @@ export const NailPolishGrid = ({
           onClick={() => setViewMode('list')}
           $isActive={viewMode === 'list'}
           type="button"
+          aria-label="Column view"
         >
-          <BsTable /> List
+          <MdOutlineViewAgenda /> Column
         </StyledViewToggle>
       </StyledToggleContainer>
       <StyledGrid $isSingleColumn={viewMode === 'list'}>

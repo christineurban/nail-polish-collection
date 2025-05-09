@@ -57,6 +57,10 @@ export const StyledToggleContainer = styled.div`
   display: flex;
   gap: 1rem;
   margin-bottom: 1rem;
+
+  @media (min-width: 768px) {
+    display: none;
+  }
 `;
 
 export const StyledViewToggle = styled.button<{ $isActive: boolean }>`

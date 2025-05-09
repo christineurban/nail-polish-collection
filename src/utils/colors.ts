@@ -20,6 +20,7 @@ const COLOR_MAP: Record<string, ColorMapping> = {
   bronze: { background: '#CD7F32' },
   gray: { background: '#718096' },
   nude: { background: '#E3B5A4' },
+  beige: { background: '#E8DCC4' },
   clear: { background: '#E2E8F0' },
   teal: { background: '#319795' },
   navy: { background: '#2C5282' },
