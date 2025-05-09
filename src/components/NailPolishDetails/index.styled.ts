@@ -111,7 +111,7 @@ export const StyledDetails = styled.div`
 
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
-    gap: 3rem;
+    gap: 2rem;
   }
 
   .details-content {
@@ -181,6 +181,10 @@ export const StyledDetailsContent = styled.div`
   box-shadow: ${({ theme }) => theme.shadows.sm};
   border: 1px solid ${({ theme }) => theme.colors.border.medium};
 
+  @media (max-width: 768px) {
+    padding: 1.5rem;
+  }
+
   h2 {
     font-size: ${({ theme }) => theme.typography.fontSize.xl};
     color: ${({ theme }) => theme.colors.text.primary};
@@ -188,6 +192,11 @@ export const StyledDetailsContent = styled.div`
     font-weight: ${({ theme }) => theme.typography.fontWeights.semibold};
     padding-bottom: 1rem;
     border-bottom: 2px solid ${({ theme }) => theme.colors.border.dark};
+
+    @media (max-width: 768px) {
+      font-size: ${({ theme }) => theme.typography.fontSize.lg};
+      margin: 0 0 1.5rem 0;
+    }
   }
 
   p {
@@ -200,6 +209,12 @@ export const StyledDetailsContent = styled.div`
     align-items: baseline;
     border-bottom: 1px solid ${({ theme }) => theme.colors.border.medium};
 
+    @media (max-width: 768px) {
+      flex-direction: column;
+      gap: 0.5rem;
+      padding: 0.75rem 0;
+    }
+
     &:last-of-type {
       border-bottom: none;
     }
@@ -209,6 +224,11 @@ export const StyledDetailsContent = styled.div`
       margin-right: 1rem;
       min-width: 140px;
       font-weight: ${({ theme }) => theme.typography.fontWeights.medium};
+
+      @media (max-width: 768px) {
+        min-width: auto;
+        margin-right: 0;
+      }
     }
 
     a {
@@ -219,6 +239,7 @@ export const StyledDetailsContent = styled.div`
       border-radius: ${({ theme }) => theme.borderRadius.md};
       background: ${({ theme }) => theme.colors.primary[50]};
       font-weight: ${({ theme }) => theme.typography.fontWeights.medium};
+      word-break: break-all;
 
       &:hover {
         color: ${({ theme }) => theme.colors.primary[600]};

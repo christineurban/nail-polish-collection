@@ -345,7 +345,7 @@ export default function DashboardPage() {
     <>
       <PageHeader
         title="Dashboard"
-        description="View statistics and manage your nail polish collection"
+        description="Click on a tile to view and manage details"
       />
       <StyledStatsGrid>
         <Tile

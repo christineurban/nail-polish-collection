@@ -91,7 +91,7 @@ function SelectImagePageContent({ params }: { params: { id: string } }) {
       <PageHeader
         title={`Select Image for ${polish.brand} - ${polish.name}`}
         description={polish.link
-          ? 'Click on an image to select it, then click "Save" to update the database.'
+          ? 'Click on an image to select it, then click "Save Image" to update the database.'
           : 'Paste an image from your clipboard to add it to this polish.'}
       />
       <ImageSelector

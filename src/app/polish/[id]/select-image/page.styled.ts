@@ -15,6 +15,12 @@ export const StyledLink = styled(Link)`
   font-weight: 500;
   text-decoration: none;
   transition: color 0.2s ease;
+  display: inline-block;
+  max-width: 100%;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
+  hyphens: auto;
 
   &:hover {
     color: ${({ theme }) => theme.colors.primary[700]};
@@ -25,6 +31,11 @@ export const StyledLinkContainer = styled.div`
   display: flex;
   margin-top: 1rem;
   gap: 5px;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  max-width: 100%;
+  padding: 0 1rem;
 `;
 
 export const StyledDivider = styled.div`

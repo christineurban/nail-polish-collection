@@ -12,6 +12,11 @@ export const StyledPolishCard = styled(motion.div)`
   padding: 20px;
   border-radius: 8px;
   position: relative;
+
+  @media (max-width: 768px) {
+    padding: 15px;
+    margin: 15px 0;
+  }
 `;
 
 export const StyledImagesGrid = styled.div`
@@ -19,6 +24,12 @@ export const StyledImagesGrid = styled.div`
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 10px;
   margin-top: 20px;
+
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 8px;
+    margin-top: 15px;
+  }
 `;
 
 export const StyledImageContainer = styled.div`
@@ -39,6 +50,12 @@ export const StyledImage = styled.img<{ $isSelected?: boolean }>`
   &:hover {
     transform: scale(1.02);
   }
+
+  @media (max-width: 768px) {
+    ${props => props.$isSelected && `
+      border: 3px solid #4CAF50;
+    `}
+  }
 `;
 
 export const StyledSaveButton = styled.button`
@@ -52,6 +69,13 @@ export const StyledSaveButton = styled.button`
   top: 20px;
   right: 20px;
   z-index: 5;
+
+  @media (max-width: 768px) {
+    position: static;
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 1.25rem;
+  }
 
   &:disabled {
     background: #ccc;
@@ -70,6 +94,12 @@ export const StyledRemoveButton = styled.button<{ $hasSelectedImage?: boolean }>
   top: 20px;
   right: ${props => props.$hasSelectedImage ? '150px' : '20px'};
   z-index: 5;
+
+  @media (max-width: 768px) {
+    position: static;
+    width: 100%;
+    margin-top: 10px;
+  }
 
   &:disabled {
     background: #ccc;
@@ -151,6 +181,10 @@ export const StyledPolishLink = styled(Link)`
   h3 {
     margin: 0;
     display: inline-block;
+    margin-bottom: 0.5rem;
+    @media (max-width: 768px) {
+      margin-bottom: 1rem;
+    }
   }
 `;
 
@@ -162,9 +196,19 @@ export const StyledImagePreviewContainer = styled.div`
   border-radius: 8px;
   border: 1px dashed ${({ theme }) => theme.colors.gray[300]};
 
+  @media (max-width: 768px) {
+    padding: 15px;
+    margin-top: 15px;
+  }
+
   h3 {
     margin-bottom: 16px;
     color: ${({ theme }) => theme.colors.gray[700]};
+
+    @media (max-width: 768px) {
+      margin-bottom: 12px;
+      font-size: ${({ theme }) => theme.typography.fontSize.lg};
+    }
   }
 
   ${StyledImage} {
@@ -172,6 +216,10 @@ export const StyledImagePreviewContainer = styled.div`
     margin: 0 auto;
     border-radius: 4px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+    @media (max-width: 768px) {
+      max-width: 100%;
+    }
   }
 `;
 
@@ -180,6 +228,23 @@ export const StyledMetadataContainer = styled.div`
   justify-content: space-between;
   align-items: flex-start;
   gap: 15px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 1.5rem;
+    row-gap: 0.75rem;
+  }
+
+  p {
+    word-break: break-all;
+    overflow-wrap: anywhere;
+    max-width: 100%;
+    margin-bottom: 0.5rem;
+    @media (max-width: 768px) {
+      margin-bottom: 0.75rem;
+    }
+  }
 `;
 
 export const StyledLinkContainer = styled.div`
@@ -192,27 +257,57 @@ export const StyledActionsContainer = styled.div`
   gap: 8px;
   align-items: flex-end;
   flex-shrink: 0;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    align-items: stretch;
+  }
 `;
 
 export const StyledButtonGroup = styled.div`
   display: flex;
   gap: 8px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 `;
 
 export const StyledImageCountContainer = styled.div`
   display: flex;
   align-items: center;
   gap: 16px;
+
+  @media (max-width: 768px) {
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+    margin-top: 1.25rem;
+  }
 `;
 
 export const StyledCurrentImageContainer = styled.div`
   margin-bottom: 20px;
   text-align: center;
+
+  @media (max-width: 768px) {
+    margin-bottom: 15px;
+  }
+
+  h3 {
+    @media (max-width: 768px) {
+      font-size: ${({ theme }) => theme.typography.fontSize.lg};
+    }
+  }
 `;
 
 export const StyledCurrentImage = styled(StyledImage)`
   max-width: 300px;
   margin: 0 auto;
+
+  @media (max-width: 768px) {
+    max-width: min(100%, 500px);
+  }
 `;
 
 export const StyledHiddenImage = styled(StyledImage)`
