@@ -2,7 +2,6 @@
 
 import { AttributeManager } from '@/components/AttributeManager';
 import { PageHeader } from '@/components/PageHeader';
-import styled from 'styled-components';
 import { Tabs } from '@/components/Tabs';
 import { useState } from 'react';
 
