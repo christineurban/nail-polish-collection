@@ -111,3 +111,18 @@ export const StyledErrorMessage = styled.div`
     margin-top: 4px;
   }
 `;
+
+export const StyledHiddenInput = styled.div`
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+  outline: none;
+  opacity: 0;
+  pointer-events: none;
+`;

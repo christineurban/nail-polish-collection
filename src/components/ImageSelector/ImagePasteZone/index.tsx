@@ -10,6 +10,7 @@ import {
   StyledPasteSubtext,
   StyledLoadingOverlay,
   StyledErrorMessage,
+  StyledHiddenInput,
 } from './index.styled';
 
 interface ImagePasteZoneProps {
@@ -19,10 +20,8 @@ interface ImagePasteZoneProps {
 export const ImagePasteZone = ({ onImagePasted }: ImagePasteZoneProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [isFocused, setIsFocused] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  const [isLongPress, setIsLongPress] = useState(false);
-  const longPressTimer = useRef<NodeJS.Timeout | null>(null);
+  const hiddenInputRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     // Check if the device is mobile
@@ -35,6 +34,7 @@ export const ImagePasteZone = ({ onImagePasted }: ImagePasteZoneProps) => {
   }, []);
 
   const handlePaste = useCallback(async (event: ClipboardEvent) => {
+    event.preventDefault();
     const items = event.clipboardData?.items;
     if (!items) return;
 
@@ -111,77 +111,35 @@ export const ImagePasteZone = ({ onImagePasted }: ImagePasteZoneProps) => {
     }
   }, [onImagePasted]);
 
-  const handleTouchStart = useCallback(() => {
-    setIsFocused(true);
-    if (isMobile) {
-      longPressTimer.current = setTimeout(() => {
-        setIsLongPress(true);
-      }, 500); // 500ms for long press
+  const handleClick = useCallback(() => {
+    if (hiddenInputRef.current) {
+      hiddenInputRef.current.focus();
     }
-  }, [isMobile]);
-
-  const handleTouchEnd = useCallback(() => {
-    if (longPressTimer.current) {
-      clearTimeout(longPressTimer.current);
-      longPressTimer.current = null;
-    }
-
-    if (isLongPress) {
-      setIsLongPress(false);
-      // Keep focus for a longer time after long press
-      setTimeout(() => {
-        setIsFocused(false);
-      }, 2000);
-    } else {
-      // Regular tap - keep focus for a shorter time
-      setTimeout(() => {
-        setIsFocused(false);
-      }, 1000);
-    }
-  }, [isLongPress]);
-
-  const handleTouchCancel = useCallback(() => {
-    if (longPressTimer.current) {
-      clearTimeout(longPressTimer.current);
-      longPressTimer.current = null;
-    }
-    setIsLongPress(false);
-    setIsFocused(false);
   }, []);
-
-  useEffect(() => {
-    if (isFocused) {
-      document.addEventListener('paste', handlePaste);
-      return () => {
-        document.removeEventListener('paste', handlePaste);
-      };
-    }
-  }, [handlePaste, isFocused]);
 
   return (
     <StyledPasteZone
-      onClick={() => setError(null)}
-      onFocus={() => setIsFocused(true)}
-      onBlur={() => setIsFocused(false)}
-      onMouseEnter={() => setIsFocused(true)}
-      onMouseLeave={() => setIsFocused(false)}
-      onTouchStart={handleTouchStart}
-      onTouchEnd={handleTouchEnd}
-      onTouchCancel={handleTouchCancel}
-      tabIndex={0}
+      onClick={handleClick}
       role="button"
       aria-label="Paste image zone"
     >
+      <StyledHiddenInput
+        ref={hiddenInputRef}
+        contentEditable
+        onPaste={handlePaste}
+        suppressContentEditableWarning
+        tabIndex={-1}
+      />
       <StyledPasteContent>
         <StyledPasteIcon>
           <FaPaste />
         </StyledPasteIcon>
         <StyledPasteText>
-          {isMobile ? (isLongPress ? 'Release to paste' : 'Long press to paste image') : 'Paste image here'}
+          {isMobile ? 'Tap to paste image' : 'Paste image here'}
         </StyledPasteText>
         <StyledPasteSubtext>
           {isMobile
-            ? 'Long press to paste from your clipboard'
+            ? 'Tap and paste from your clipboard'
             : 'or press Ctrl/Cmd + V while hovering'}
         </StyledPasteSubtext>
         {error && <StyledErrorMessage>{error}</StyledErrorMessage>}
