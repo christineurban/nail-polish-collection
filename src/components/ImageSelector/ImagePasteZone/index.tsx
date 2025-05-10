@@ -138,12 +138,12 @@ export const ImagePasteZone = ({ onImagePasted }: ImagePasteZoneProps) => {
           <FaPaste />
         </StyledPasteIcon>
         <StyledPasteText>
-          {isMobile ? 'Tap to paste image' : 'Paste image here'}
+          {isMobile ? 'Long press to paste image' : 'Paste image here (Ctrl/Cmd + V)'}
         </StyledPasteText>
         <StyledPasteSubtext>
           {isMobile
-            ? 'Tap and paste from your clipboard'
-            : 'or press Ctrl/Cmd + V while hovering'}
+            ? 'Long press and select paste from the menu'
+            : 'Press Ctrl/Cmd + V to paste'}
         </StyledPasteSubtext>
         {error && <StyledErrorMessage>{error}</StyledErrorMessage>}
       </StyledPasteContent>
