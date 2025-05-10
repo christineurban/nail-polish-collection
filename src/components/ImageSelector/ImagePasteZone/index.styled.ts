@@ -112,17 +112,18 @@ export const StyledErrorMessage = styled.div`
   }
 `;
 
-export const StyledHiddenInput = styled.div`
+export const StyledTextarea = styled.textarea`
   position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
-  outline: none;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
   opacity: 0;
-  pointer-events: none;
+  cursor: pointer;
+  padding: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  resize: none;
+  z-index: 1;
 `;

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback, useRef, ClipboardEvent } from 'react';
 import { FaPaste } from 'react-icons/fa';
 import {
   StyledPasteZone,
@@ -10,7 +10,7 @@ import {
   StyledPasteSubtext,
   StyledLoadingOverlay,
   StyledErrorMessage,
-  StyledHiddenInput,
+  StyledTextarea,
 } from './index.styled';
 
 interface ImagePasteZoneProps {
@@ -21,7 +21,7 @@ export const ImagePasteZone = ({ onImagePasted }: ImagePasteZoneProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isMobile, setIsMobile] = useState(false);
-  const hiddenInputRef = useRef<HTMLDivElement>(null);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
     // Check if the device is mobile
@@ -33,7 +33,7 @@ export const ImagePasteZone = ({ onImagePasted }: ImagePasteZoneProps) => {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  const handlePaste = useCallback(async (event: ClipboardEvent) => {
+  const handlePaste = useCallback(async (event: ClipboardEvent<HTMLTextAreaElement>) => {
     event.preventDefault();
     const items = event.clipboardData?.items;
     if (!items) return;
@@ -100,6 +100,10 @@ export const ImagePasteZone = ({ onImagePasted }: ImagePasteZoneProps) => {
         const base64data = reader.result as string;
         onImagePasted(base64data);
         setIsLoading(false);
+        // Clear the textarea after successful paste
+        if (textareaRef.current) {
+          textareaRef.current.value = '';
+        }
       };
       reader.onerror = () => {
         throw new Error('Failed to read image data');
@@ -112,8 +116,8 @@ export const ImagePasteZone = ({ onImagePasted }: ImagePasteZoneProps) => {
   }, [onImagePasted]);
 
   const handleClick = useCallback(() => {
-    if (hiddenInputRef.current) {
-      hiddenInputRef.current.focus();
+    if (textareaRef.current) {
+      textareaRef.current.focus();
     }
   }, []);
 
@@ -123,12 +127,11 @@ export const ImagePasteZone = ({ onImagePasted }: ImagePasteZoneProps) => {
       role="button"
       aria-label="Paste image zone"
     >
-      <StyledHiddenInput
-        ref={hiddenInputRef}
-        contentEditable
+      <StyledTextarea
+        ref={textareaRef}
         onPaste={handlePaste}
-        suppressContentEditableWarning
-        tabIndex={-1}
+        placeholder="Paste image here"
+        aria-label="Paste image input"
       />
       <StyledPasteContent>
         <StyledPasteIcon>
