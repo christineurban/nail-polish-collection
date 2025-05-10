@@ -161,6 +161,7 @@ function AddEditFormContent({
                 options={brands}
                 placeholder="Select brand"
                 onChange={(value) => setFormData((prev) => ({ ...prev, brand: value }))}
+                isBrand
               />
             </StyledFormGroup>
             <StyledFormGroup>

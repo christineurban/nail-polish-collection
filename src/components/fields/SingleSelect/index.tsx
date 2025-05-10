@@ -6,6 +6,7 @@ import {
   StyledInput,
   StyledNoMatches,
   StyledButtonContainer,
+  StyledCreateNew,
 } from './index.styled';
 import { StyledDropdown } from '../index.styled';
 
@@ -15,9 +16,10 @@ interface SingleSelectProps {
   placeholder?: string;
   onChange: (value: string) => void;
   disableSearch?: boolean;
+  isBrand?: boolean;
 }
 
-export const SingleSelect = ({ value, options, placeholder = 'Select...', onChange, disableSearch = false }: SingleSelectProps) => {
+export const SingleSelect = ({ value, options, placeholder = 'Select...', onChange, disableSearch = false, isBrand = false }: SingleSelectProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredOptions, setFilteredOptions] = useState(options);
@@ -78,6 +80,38 @@ export const SingleSelect = ({ value, options, placeholder = 'Select...', onChan
     setSearchTerm('');
   };
 
+  const handleCreateNew = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (!searchTerm.trim()) return;
+
+    try {
+      const response = await fetch('/api/attributes', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          type: isBrand ? 'brand' : 'color',
+          name: searchTerm.trim()
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error(`Failed to create brand`);
+      }
+
+      const data = await response.json();
+      onChange(searchTerm.trim());
+      setIsOpen(false);
+      setSearchTerm('');
+    } catch (error) {
+      console.error(`Error creating brand}:`, error);
+      alert(`Failed to create brand. Please try again.`);
+    }
+  };
+
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' && filteredOptions.length > 0) {
       onChange(filteredOptions[0]);
@@ -128,7 +162,12 @@ export const SingleSelect = ({ value, options, placeholder = 'Select...', onChan
             {option}
           </StyledOption>
         ))}
-        {filteredOptions.length === 0 && (
+        {filteredOptions.length === 0 && searchTerm.trim() && !!isBrand && (
+          <StyledCreateNew onClick={handleCreateNew}>
+            Create new {isBrand ? 'brand' : 'color'}: "{searchTerm.trim()}"
+          </StyledCreateNew>
+        )}
+        {filteredOptions.length === 0 && !searchTerm.trim() && (
           <StyledNoMatches>
             No matches found
           </StyledNoMatches>

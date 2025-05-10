@@ -69,3 +69,15 @@ export const StyledNoMatches = styled.div`
 export const StyledButtonContainer = styled.div<{ $isOpen: boolean }>`
   display: ${props => props.$isOpen ? 'none' : 'flex'};
 `;
+
+export const StyledCreateNew = styled.div`
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  color: ${({ theme }) => theme.colors.primary[500]};
+  font-weight: ${({ theme }) => theme.typography.fontWeights.medium};
+  transition: all ${({ theme }) => theme.transitions.base};
+
+  &:hover {
+    background: ${({ theme }) => theme.colors.primary[50]};
+  }
+`;
