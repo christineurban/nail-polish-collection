@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { FaPaste } from 'react-icons/fa';
 import {
   StyledPasteZone,
@@ -21,6 +21,8 @@ export const ImagePasteZone = ({ onImagePasted }: ImagePasteZoneProps) => {
   const [error, setError] = useState<string | null>(null);
   const [isFocused, setIsFocused] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [isLongPress, setIsLongPress] = useState(false);
+  const longPressTimer = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     // Check if the device is mobile
@@ -111,13 +113,40 @@ export const ImagePasteZone = ({ onImagePasted }: ImagePasteZoneProps) => {
 
   const handleTouchStart = useCallback(() => {
     setIsFocused(true);
-  }, []);
+    if (isMobile) {
+      longPressTimer.current = setTimeout(() => {
+        setIsLongPress(true);
+      }, 500); // 500ms for long press
+    }
+  }, [isMobile]);
 
   const handleTouchEnd = useCallback(() => {
-    // Delay the blur to allow for paste events to be processed
-    setTimeout(() => {
-      setIsFocused(false);
-    }, 1000);
+    if (longPressTimer.current) {
+      clearTimeout(longPressTimer.current);
+      longPressTimer.current = null;
+    }
+
+    if (isLongPress) {
+      setIsLongPress(false);
+      // Keep focus for a longer time after long press
+      setTimeout(() => {
+        setIsFocused(false);
+      }, 2000);
+    } else {
+      // Regular tap - keep focus for a shorter time
+      setTimeout(() => {
+        setIsFocused(false);
+      }, 1000);
+    }
+  }, [isLongPress]);
+
+  const handleTouchCancel = useCallback(() => {
+    if (longPressTimer.current) {
+      clearTimeout(longPressTimer.current);
+      longPressTimer.current = null;
+    }
+    setIsLongPress(false);
+    setIsFocused(false);
   }, []);
 
   useEffect(() => {
@@ -138,14 +167,17 @@ export const ImagePasteZone = ({ onImagePasted }: ImagePasteZoneProps) => {
       onMouseLeave={() => setIsFocused(false)}
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
+      onTouchCancel={handleTouchCancel}
       tabIndex={0}
+      role="button"
+      aria-label="Paste image zone"
     >
       <StyledPasteContent>
         <StyledPasteIcon>
           <FaPaste />
         </StyledPasteIcon>
         <StyledPasteText>
-          {isMobile ? 'Tap to paste image' : 'Paste image here'}
+          {isMobile ? (isLongPress ? 'Release to paste' : 'Long press to paste image') : 'Paste image here'}
         </StyledPasteText>
         <StyledPasteSubtext>
           {isMobile
