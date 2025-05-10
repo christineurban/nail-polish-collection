@@ -8,7 +8,6 @@ import {
   StyledButtonContainer,
 } from './index.styled';
 import { StyledDropdown } from '../index.styled';
-import type { CSSProperties } from 'react';
 
 interface SingleSelectProps {
   value: string;
@@ -88,15 +87,6 @@ export const SingleSelect = ({ value, options, placeholder = 'Select...', onChan
       setIsOpen(false);
       setSearchTerm('');
     }
-  };
-
-  const inputStyles: CSSProperties = {
-    width: '100%',
-    height: '40px',
-    padding: '0.5rem 1rem',
-    border: '1px solid #ccc',
-    borderRadius: '4px',
-    fontSize: '1rem',
   };
 
   return (
