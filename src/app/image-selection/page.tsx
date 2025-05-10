@@ -7,8 +7,8 @@ import { PageHeader } from '@/components/PageHeader';
 import { Button } from '@/components/Button';
 import {
   StyledPagination,
-  StyledPaginationButton,
-  StyledPaginationInfo
+  StyledPaginationInfo,
+  StyledPaginationButtons
 } from './page.styled';
 
 interface Polish {
@@ -177,20 +177,24 @@ export default function ImageSelectionPage() {
         <StyledPaginationInfo>
           Showing {((currentPage - 1) * 25) + 1} to {Math.min(currentPage * 25, totalItems)} of {totalItems} polishes
         </StyledPaginationInfo>
-        <div>
-          <StyledPaginationButton
+        <StyledPaginationButtons>
+          <Button
             onClick={() => handlePageChange(currentPage - 1)}
             disabled={currentPage === 1}
+            $size="small"
+            $variant="secondary"
           >
             Previous
-          </StyledPaginationButton>
-          <StyledPaginationButton
+          </Button>
+          <Button
             onClick={() => handlePageChange(currentPage + 1)}
             disabled={currentPage === totalPages}
+            $size="small"
+            $variant="secondary"
           >
             Next
-          </StyledPaginationButton>
-        </div>
+          </Button>
+        </StyledPaginationButtons>
       </StyledPagination>
     </>
   );
