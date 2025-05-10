@@ -9,6 +9,7 @@ import { MultiSelect } from '../fields/MultiSelect';
 import { Input } from '../fields/Input';
 import { Rating, RATING_OPTIONS } from '@/types/rating';
 import { SuccessMessage } from '@/components/SuccessMessage';
+import { ImagePasteZone } from '@/components/ImageSelector/ImagePasteZone';
 import {
   StyledForm,
   StyledFormGroup,
@@ -16,7 +17,9 @@ import {
   StyledButtonGroup,
   StyledFormSection,
   StyledFormRow,
-  StyledDangerZone
+  StyledDangerZone,
+  StyledImagePreviewContainer,
+  StyledImage
 } from './index.styled';
 import { SuspenseBoundary } from '@/components/SuspenseBoundary';
 
@@ -76,6 +79,10 @@ function AddEditFormContent({
   const [isDeleting, setIsDeleting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
+
+  const handlePastedImage = (imageUrl: string) => {
+    setFormData(prev => ({ ...prev, imageUrl }));
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -174,6 +181,22 @@ function AddEditFormContent({
               />
             </StyledFormGroup>
           </StyledFormRow>
+        </StyledFormSection>
+
+        <StyledFormSection>
+          <h3>Image</h3>
+          <StyledFormGroup>
+            <ImagePasteZone onImagePasted={handlePastedImage} />
+            {formData.imageUrl && (
+              <StyledImagePreviewContainer>
+                <h3>Preview Image</h3>
+                <StyledImage
+                  src={formData.imageUrl}
+                  alt={`Preview image for ${formData.brand} - ${formData.name}`}
+                />
+              </StyledImagePreviewContainer>
+            )}
+          </StyledFormGroup>
         </StyledFormSection>
 
         <StyledFormSection>

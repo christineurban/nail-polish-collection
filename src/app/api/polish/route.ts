@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import type { Polish } from '@/types/polish';
 import type { Rating } from '@prisma/client';
+import { uploadImageToSupabase } from '@/lib/utils/image';
 
 export async function POST(request: Request) {
   try {
@@ -21,6 +22,17 @@ export async function POST(request: Request) {
 
     // Start a transaction to create everything
     const newPolish = await prisma.$transaction(async (tx) => {
+      // Upload image to Supabase if provided
+      let imageUrl = data.imageUrl;
+      if (imageUrl && imageUrl !== 'n/a') {
+        const polish = {
+          id: 'temp', // This will be replaced with the actual ID after creation
+          name: data.name,
+          brands: { name: data.brand }
+        };
+        imageUrl = await uploadImageToSupabase(imageUrl, polish);
+      }
+
       // Create the polish record
       const polish = await tx.nail_polish.create({
         data: {
@@ -34,6 +46,7 @@ export async function POST(request: Request) {
           total_bottles: data.totalBottles || undefined,
           empty_bottles: data.emptyBottles || undefined,
           is_old: data.isOld === null ? undefined : data.isOld,
+          image_url: imageUrl,
           created_at: new Date(),
           updated_at: new Date()
         }

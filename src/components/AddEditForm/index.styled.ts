@@ -117,3 +117,17 @@ export const StyledDangerZone = styled.div`
     color: ${({ theme }) => theme.colors.error};
   }
 `;
+
+export const StyledImagePreviewContainer = styled.div`
+  margin-top: 1rem;
+  padding: 1rem;
+  border: 1px solid ${({ theme }) => theme.colors.border};
+  border-radius: ${({ theme }) => theme.borderRadius.md};
+  background: ${({ theme }) => theme.colors.background};
+`;
+
+export const StyledImage = styled.img`
+  max-width: 100%;
+  height: auto;
+  border-radius: ${({ theme }) => theme.borderRadius.sm};
+`;
