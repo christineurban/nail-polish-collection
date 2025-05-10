@@ -20,6 +20,17 @@ export const ImagePasteZone = ({ onImagePasted }: ImagePasteZoneProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isFocused, setIsFocused] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    // Check if the device is mobile
+    const checkMobile = () => {
+      setIsMobile(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent));
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const handlePaste = useCallback(async (event: ClipboardEvent) => {
     const items = event.clipboardData?.items;
@@ -98,6 +109,17 @@ export const ImagePasteZone = ({ onImagePasted }: ImagePasteZoneProps) => {
     }
   }, [onImagePasted]);
 
+  const handleTouchStart = useCallback(() => {
+    setIsFocused(true);
+  }, []);
+
+  const handleTouchEnd = useCallback(() => {
+    // Delay the blur to allow for paste events to be processed
+    setTimeout(() => {
+      setIsFocused(false);
+    }, 1000);
+  }, []);
+
   useEffect(() => {
     if (isFocused) {
       document.addEventListener('paste', handlePaste);
@@ -114,6 +136,8 @@ export const ImagePasteZone = ({ onImagePasted }: ImagePasteZoneProps) => {
       onBlur={() => setIsFocused(false)}
       onMouseEnter={() => setIsFocused(true)}
       onMouseLeave={() => setIsFocused(false)}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
       tabIndex={0}
     >
       <StyledPasteContent>
@@ -121,10 +145,12 @@ export const ImagePasteZone = ({ onImagePasted }: ImagePasteZoneProps) => {
           <FaPaste />
         </StyledPasteIcon>
         <StyledPasteText>
-          Paste image here
+          {isMobile ? 'Tap to paste image' : 'Paste image here'}
         </StyledPasteText>
         <StyledPasteSubtext>
-          or press Ctrl/Cmd + V while hovering
+          {isMobile
+            ? 'Long press to paste from your clipboard'
+            : 'or press Ctrl/Cmd + V while hovering'}
         </StyledPasteSubtext>
         {error && <StyledErrorMessage>{error}</StyledErrorMessage>}
       </StyledPasteContent>
