@@ -62,8 +62,8 @@ export default function ImageManager() {
       const polishesResponse = await fetch('/api/admin/polishes');
       const polishesData = await polishesResponse.json();
       setPolishes(polishesData.polishes);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'An error occurred');
+    } catch {
+      setError('An error occurred');
     } finally {
       setIsLoading(false);
     }
@@ -139,7 +139,7 @@ export default function ImageManager() {
 
       // Force a hard refresh of the page
       window.location.href = window.location.href.split('?')[0] + '?t=' + new Date().getTime();
-    } catch (error) {
+    } catch {
       alert('Error saving changes. Please try again.');
     } finally {
       setIsSaving(false);

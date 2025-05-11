@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { getColorMapping, getTextColor } from '@/utils/colors';
 import { SingleSelect } from '@/components/fields/SingleSelect';
 import { MultiSelect } from '@/components/fields/MultiSelect';
 import { Button } from '@/components/Button';
@@ -17,7 +16,6 @@ import {
   StyledFilterGroup,
   StyledFilterHeader,
   StyledLabel,
-  StyledColorPreview,
   StyledColorOption,
   StyledClearButton,
   StyledOption,
@@ -69,7 +67,7 @@ function FilterSortContent({
   displayedPolishes,
 }: FilterSortProps): JSX.Element {
   const router = useRouter();
-  const searchParams = useSearchParams();
+  const _searchParams = useSearchParams();
   const [filters, setFilters] = useState(currentFilters);
   const [isFiltersVisible, setIsFiltersVisible] = useState(true);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);

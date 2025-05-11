@@ -1,8 +1,8 @@
 'use client';
 
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
-interface SortButtonProps {
+type _SortButtonProps = {
   active?: boolean;
   direction?: 'asc' | 'desc';
 }

@@ -72,7 +72,7 @@ export const StyledLink = styled(Link)<{ $isActive: boolean }>`
   font-weight: ${({ theme }) => theme.typography.fontWeights.medium};
   padding: 0.5rem 1rem;
   border-radius: ${({ theme }) => theme.borderRadius.md};
-  background: ${({ theme, $isActive }) =>
+  background: ${({ $isActive }) =>
     $isActive ? 'rgba(255, 255, 255, 0.1)' : 'transparent'};
   transition: all ${({ theme }) => theme.transitions.base};
   backdrop-filter: ${({ $isActive }) => ($isActive ? 'blur(4px)' : 'none')};

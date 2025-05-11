@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Input } from '@/components/fields/Input';
 import { Button } from '@/components/Button';
 import {
@@ -32,7 +32,7 @@ export const AttributeManager = ({ title, type }: AttributeManagerProps) => {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(true);
 
-  const fetchAttributes = async () => {
+  const fetchAttributes = useCallback(async () => {
     try {
       const response = await fetch('/api/attributes');
       if (!response.ok) {
@@ -50,11 +50,11 @@ export const AttributeManager = ({ title, type }: AttributeManagerProps) => {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [type]);
 
   useEffect(() => {
     fetchAttributes();
-  }, [type]);
+  }, [fetchAttributes]);
 
   const handleAdd = async (e: React.FormEvent) => {
     e.preventDefault();

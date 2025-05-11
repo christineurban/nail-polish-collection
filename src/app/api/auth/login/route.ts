@@ -22,10 +22,11 @@ export async function POST(request: Request) {
       { success: false, error: 'Invalid password' },
       { status: 401 }
     );
-  } catch (error) {
+  }
+  catch {
     return NextResponse.json(
-      { success: false, error: 'Invalid request' },
-      { status: 400 }
+      { error: 'Failed to login' },
+      { status: 500 }
     );
   }
 }

@@ -102,7 +102,7 @@ export const SingleSelect = ({ value, options, placeholder = 'Select...', onChan
         throw new Error(`Failed to create brand`);
       }
 
-      const data = await response.json();
+      const _data = await response.json();
       onChange(searchTerm.trim());
       setIsOpen(false);
       setSearchTerm('');
@@ -164,7 +164,7 @@ export const SingleSelect = ({ value, options, placeholder = 'Select...', onChan
         ))}
         {filteredOptions.length === 0 && searchTerm.trim() && !!isBrand && (
           <StyledCreateNew onClick={handleCreateNew}>
-            Create new {isBrand ? 'brand' : 'color'}: "{searchTerm.trim()}"
+            Create new {isBrand ? 'brand' : 'color'}: &quot;{searchTerm.trim()}&quot;
           </StyledCreateNew>
         )}
         {filteredOptions.length === 0 && !searchTerm.trim() && (

@@ -119,7 +119,7 @@ function HomeContent() {
     };
 
     fetchPolishes();
-  }, [searchParams]);
+  }, [currentFilters.brand, currentFilters.color, currentFilters.finish, currentFilters.hasImage, currentFilters.isOld, currentFilters.page, currentFilters.rating, currentFilters.search]);
 
   const handlePageChange = (newPage: number) => {
     const params = new URLSearchParams(searchParams.toString());

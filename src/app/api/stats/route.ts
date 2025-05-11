@@ -1,6 +1,5 @@
 import { prisma } from '@/lib/prisma';
 import { NextResponse } from 'next/server';
-import { CollectionStats } from '@/types/stats';
 
 const formatRating = (rating: string): string => {
   return rating.replace('_PLUS', '+').replace('_MINUS', '-');

@@ -4,7 +4,6 @@ import { getPolishById } from '@/lib/api/polish';
 import { getBrands } from '@/lib/api/brands';
 import { getColors } from '@/lib/api/colors';
 import { getFinishes } from '@/lib/api/finishes';
-import type { NailPolishWithRelations } from '@/types/polish';
 import type { Rating } from '@prisma/client';
 
 interface PageProps {
@@ -15,9 +14,9 @@ interface PageProps {
 
 export default async function Page({ params }: PageProps) {
   const polish = await getPolishById(params.id);
-  const brands = await getBrands();
-  const colors = await getColors();
-  const finishes = await getFinishes();
+  const _brands = await getBrands();
+  const _colors = await getColors();
+  const _finishes = await getFinishes();
 
   if (!polish) {
     notFound();

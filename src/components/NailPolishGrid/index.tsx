@@ -104,14 +104,14 @@ export const NailPolishGrid = ({
               imageUrl={polish.imageUrl}
               colors={polish.colors}
               finishes={polish.finishes}
-              rating={polish.rating || undefined}
+              rating={polish.rating === null ? undefined : polish.rating}
               onChooseImage={isAuthenticated ? handleChooseImage : undefined}
             />
           ))
         ) : (
           <StyledEmptyState>
             <h2>No Polishes Found</h2>
-            <p>Try adjusting your filters to find what you're looking for.</p>
+            <p>Try adjusting your filters to find what you&apos;re looking for.</p>
           </StyledEmptyState>
         )}
       </StyledGrid>

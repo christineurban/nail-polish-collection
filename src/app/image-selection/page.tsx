@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { ImageSelector } from '@/components/ImageSelector';
 import { PageHeader } from '@/components/PageHeader';
 import { Button } from '@/components/Button';
@@ -26,13 +26,13 @@ interface PaginatedResponse {
   totalPages: number;
 }
 
-interface SelectedImage {
+interface _SelectedImage {
   polishId: string;
   imageUrl: string;
 }
 
 export default function ImageSelectionPage() {
-  const router = useRouter();
+  const _router = useRouter();
   const [polishes, setPolishes] = useState<Polish[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -42,7 +42,7 @@ export default function ImageSelectionPage() {
   const [selectedImages, setSelectedImages] = useState<Record<string, string>>({});
   const [isSavingBulk, setIsSavingBulk] = useState(false);
 
-  const fetchPolishes = async () => {
+  const fetchPolishes = useCallback(async () => {
     try {
       const response = await fetch(`/api/polishes?hasImage=false&page=${currentPage}&limit=25`);
       if (!response.ok) throw new Error('Failed to fetch polish details');
@@ -55,11 +55,11 @@ export default function ImageSelectionPage() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [currentPage]);
 
   useEffect(() => {
     fetchPolishes();
-  }, [currentPage]);
+  }, [currentPage, fetchPolishes]);
 
   const handleImageSelected = (polishId: string, imageUrl: string | null) => {
     setSelectedImages(prev => {

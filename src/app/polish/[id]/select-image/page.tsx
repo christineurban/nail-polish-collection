@@ -5,10 +5,7 @@ import { useState, useEffect } from 'react';
 import { ImageSelector } from '@/components/ImageSelector';
 import { PageHeader } from '@/components/PageHeader';
 import { SuspenseBoundary } from '@/components/SuspenseBoundary';
-import Link from 'next/link';
 import {
-  StyledErrorContainer,
-  StyledErrorMessage,
   StyledLink,
   StyledLinkContainer,
   StyledDivider

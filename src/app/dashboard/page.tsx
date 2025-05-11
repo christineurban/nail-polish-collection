@@ -21,7 +21,6 @@ import {
 } from './page.styled';
 import { BsGrid, BsTable, BsTrash, BsChevronDown } from 'react-icons/bs';
 import { Table } from '@/components/Table';
-import { Tabs } from '@/components/Tabs';
 import { Input } from '@/components/fields/Input';
 import { Button } from '@/components/Button';
 import { Tile } from '@/components/Tile';

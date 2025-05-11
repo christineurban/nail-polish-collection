@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '../Button';
 import { SingleSelect } from '../fields/SingleSelect';
 import { MultiSelect } from '../fields/MultiSelect';
@@ -86,7 +85,7 @@ function AddEditFormContent({
   const [errors, setErrors] = useState<FormErrors>({});
   const [isLoading, setIsLoading] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
+  const [_isSuccess, setIsSuccess] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
 
   const scrollToFirstError = () => {

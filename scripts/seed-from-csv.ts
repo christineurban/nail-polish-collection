@@ -4,7 +4,6 @@ import { fileURLToPath } from 'url';
 import { parse } from 'csv-parse/sync';
 import { PrismaClient } from '@prisma/client';
 import { transformSheetData, type SheetRow } from './transform-sheet-data';
-import { NextResponse } from 'next/server';
 import readline from 'readline';
 
 const __filename = fileURLToPath(import.meta.url);

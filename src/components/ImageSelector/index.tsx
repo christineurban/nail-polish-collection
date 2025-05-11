@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   StyledContainer,
   StyledPolishCard,
@@ -55,7 +55,7 @@ export const ImageSelector = ({
   const [images, setImages] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
-  const [isRemoving, setIsRemoving] = useState(false);
+  const [_isRemoving, setIsRemoving] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -68,7 +68,7 @@ export const ImageSelector = ({
     }
   };
 
-  const handleRemoveImage = async () => {
+  const _handleRemoveImage = async () => {
     try {
       setIsRemoving(true);
 
@@ -188,7 +188,7 @@ export const ImageSelector = ({
     }
   };
 
-  const fetchImages = async () => {
+  const fetchImages = useCallback(async () => {
     if (!polish.link) return;
 
     try {
@@ -204,7 +204,7 @@ export const ImageSelector = ({
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [polish.link, polish.brand, polish.name]);
 
   const handleCollapse = () => {
     setIsCollapsed(!isCollapsed);
@@ -219,7 +219,7 @@ export const ImageSelector = ({
     if (polish?.link) {
       fetchImages();
     }
-  }, [polish]);
+  }, [fetchImages, polish?.link]);
 
   if (!polish) {
     return null;

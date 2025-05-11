@@ -160,6 +160,7 @@ export async function DELETE(request: Request) {
 
     return NextResponse.json(result);
   } catch (error) {
+    console.error('Error deleting attribute:', error);
     return NextResponse.json(
       { error: 'Failed to delete attribute' },
       { status: 500 }

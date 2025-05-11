@@ -125,7 +125,7 @@ function fetchUrl(url: string, retryCount = 0): Promise<string> {
       });
 
       req.end();
-    } catch (error) {
+    } catch {
       logger.error(`Invalid URL: ${url}`);
       reject(new Error('Invalid URL'));
     }
@@ -145,7 +145,7 @@ function normalizeUrl(url: string | null | undefined, baseUrl: string): string |
       try {
         const base = new URL(baseUrl);
         url = new URL(url, `${base.protocol}//${base.host}`).toString();
-      } catch (e) {
+      } catch {
         return null;
       }
     }
@@ -154,7 +154,7 @@ function normalizeUrl(url: string | null | undefined, baseUrl: string): string |
     let cleanUrl: URL;
     try {
       cleanUrl = new URL(url);
-    } catch (e) {
+    } catch {
       return null;
     }
 
@@ -163,12 +163,12 @@ function normalizeUrl(url: string | null | undefined, baseUrl: string): string |
     cleanUrl.hash = '';
 
     return cleanUrl.toString();
-  } catch (error) {
+  } catch {
     return null;
   }
 }
 
-const isLikelyProductImage = (imgElement: Element): boolean => {
+const _isLikelyProductImage = (imgElement: Element): boolean => {
   const src = imgElement.attribs?.['src'] || '';
   const dataSrc = imgElement.attribs?.['data-src'] || '';
   const rawUrl = (src || dataSrc).toLowerCase();
@@ -198,7 +198,7 @@ function extractSrcsetUrls(srcset: string): string[] {
 }
 
 // Helper function to find images in JSON-LD data
-function findImagesInJsonLd(obj: any, uniqueImages: Set<string>, baseUrl: string): void {
+function _findImagesInJsonLd(obj: any, uniqueImages: Set<string>, baseUrl: string): void {
   if (!obj) return;
 
   if (typeof obj === 'string' && obj.match(/\.(jpg|jpeg|png|webp)/i)) {
@@ -209,11 +209,11 @@ function findImagesInJsonLd(obj: any, uniqueImages: Set<string>, baseUrl: string
   }
 
   if (Array.isArray(obj)) {
-    obj.forEach(item => findImagesInJsonLd(item, uniqueImages, baseUrl));
+    obj.forEach(item => _findImagesInJsonLd(item, uniqueImages, baseUrl));
   }
 
   if (typeof obj === 'object') {
-    Object.values(obj).forEach(value => findImagesInJsonLd(value, uniqueImages, baseUrl));
+    Object.values(obj).forEach(value => _findImagesInJsonLd(value, uniqueImages, baseUrl));
   }
 }
 
@@ -311,10 +311,10 @@ export async function GET(request: Request) {
         uniqueImagesFound: uniqueImageArray.length
       }
     });
-  } catch (error) {
+  } catch {
     return NextResponse.json({
       error: 'Failed to fetch images',
-      details: error instanceof Error ? error.message : String(error)
+      details: 'Unknown error'
     }, { status: 500 });
   }
 }

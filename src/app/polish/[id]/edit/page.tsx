@@ -2,9 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { AddEditForm } from '@/components/AddEditForm';
-import { getPolishById } from '@/lib/api/polish';
 import type { Polish } from '@/types/polish';
-import type { Rating } from '@prisma/client';
 import { PageHeader } from '@/components/PageHeader';
 
 interface Options {
@@ -17,12 +15,9 @@ interface EditPageProps {
   params: {
     id: string;
   };
-  searchParams: {
-    polish?: string;
-  };
 }
 
-export default function EditPage({ params, searchParams }: EditPageProps) {
+export default function EditPage({ params }: EditPageProps) {
   const [polish, setPolish] = useState<Polish | null>(null);
   const [options, setOptions] = useState<Options>({
     brands: [],

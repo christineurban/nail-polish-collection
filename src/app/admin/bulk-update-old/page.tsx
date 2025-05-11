@@ -8,9 +8,7 @@ import {
   StyledBrandSection,
   StyledPolishList,
   StyledControls,
-  StyledMixedStatus,
   StyledPolishGrid,
-  StyledPolishName,
   StyledPolishToggle,
   StyledButtonGroup
 } from '@/app/admin/bulk-update-old/page.styled';
