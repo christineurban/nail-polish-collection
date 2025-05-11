@@ -124,10 +124,19 @@ export const StyledImagePreviewContainer = styled.div`
   border: 1px solid ${({ theme }) => theme.colors.border};
   border-radius: ${({ theme }) => theme.borderRadius.md};
   background: ${({ theme }) => theme.colors.background};
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  h3 {
+    border: none;
+  }
 `;
 
 export const StyledImage = styled.img`
-  max-width: 100%;
+  max-width: 500px;
+  width: 100%;
   height: auto;
   border-radius: ${({ theme }) => theme.borderRadius.sm};
+  object-fit: contain;
 `;
