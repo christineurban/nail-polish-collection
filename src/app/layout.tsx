@@ -6,6 +6,7 @@ import { ThemeProvider } from '../theme';
 import { Nav } from '@/components/Nav';
 import { MainContainer } from '@/components/MainContainer';
 import { AuthProvider } from '@/lib/auth/AuthContext';
+import 'react-datepicker/dist/react-datepicker.css';
 
 const onest = Onest({
   subsets: ["latin"],

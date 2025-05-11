@@ -6,6 +6,7 @@ import { Button } from '../Button';
 import { SingleSelect } from '../fields/SingleSelect';
 import { MultiSelect } from '../fields/MultiSelect';
 import { Input } from '../fields/Input';
+import { DatePicker } from '../fields/DatePicker';
 import { Rating, RATING_OPTIONS } from '@/types/rating';
 import { SuccessMessage } from '@/components/SuccessMessage';
 import { ImagePasteZone } from '@/components/ImageSelector/ImagePasteZone';
@@ -342,11 +343,12 @@ function AddEditFormContent({
           <StyledFormRow>
             <StyledFormGroup>
               <label>Last Used</label>
-              <Input
-                type="date"
-                value={formData.lastUsed ? new Date(formData.lastUsed).toISOString().split('T')[0] : ''}
-                onChange={(value) => setFormData((prev) => ({ ...prev, lastUsed: value ? new Date(value) : undefined }))}
+              <DatePicker
+                value={formData.lastUsed ? new Date(formData.lastUsed) : undefined}
+                onChange={(date) => setFormData((prev) => ({ ...prev, lastUsed: date || undefined }))}
                 required={false}
+                placeholder="Select date"
+                name="lastUsed"
               />
             </StyledFormGroup>
             <StyledFormGroup>
