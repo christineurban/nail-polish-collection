@@ -19,7 +19,8 @@ import {
   StyledFormRow,
   StyledDangerZone,
   StyledImagePreviewContainer,
-  StyledImage
+  StyledImage,
+  StyledErrorMessage
 } from './index.styled';
 import { SuspenseBoundary } from '@/components/SuspenseBoundary';
 
@@ -46,6 +47,13 @@ interface AddEditFormProps {
   brands?: string[];
   availableColors?: string[];
   availableFinishes?: string[];
+}
+
+interface FormErrors {
+  brand?: string;
+  name?: string;
+  colors?: string;
+  finishes?: string;
 }
 
 export const AddEditForm = (props: AddEditFormProps) => {
@@ -75,10 +83,31 @@ function AddEditFormContent({
       isOld: isEditing ? null : false,
     }
   );
+  const [errors, setErrors] = useState<FormErrors>({});
   const [isLoading, setIsLoading] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
+
+  const validateForm = (): boolean => {
+    const newErrors: FormErrors = {};
+
+    if (!formData.brand) {
+      newErrors.brand = 'Brand is required';
+    }
+    if (!formData.name) {
+      newErrors.name = 'Name is required';
+    }
+    if (!formData.colors.length) {
+      newErrors.colors = 'At least one color is required';
+    }
+    if (!formData.finishes.length) {
+      newErrors.finishes = 'At least one finish is required';
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   const handlePastedImage = (imageUrl: string) => {
     setFormData(prev => ({ ...prev, imageUrl }));
@@ -86,6 +115,11 @@ function AddEditFormContent({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!validateForm()) {
+      return;
+    }
+
     setIsLoading(true);
 
     try {
@@ -167,18 +201,30 @@ function AddEditFormContent({
                 value={formData.brand}
                 options={brands}
                 placeholder="Select brand"
-                onChange={(value) => setFormData((prev) => ({ ...prev, brand: value }))}
+                onChange={(value) => {
+                  setFormData((prev) => ({ ...prev, brand: value }));
+                  if (value) {
+                    setErrors((prev) => ({ ...prev, brand: undefined }));
+                  }
+                }}
                 isBrand
               />
+              {errors.brand && <StyledErrorMessage>{errors.brand}</StyledErrorMessage>}
             </StyledFormGroup>
             <StyledFormGroup>
               <label>Name *</label>
               <Input
                 type="text"
                 value={formData.name}
-                onChange={(value) => setFormData((prev) => ({ ...prev, name: value }))}
+                onChange={(value) => {
+                  setFormData((prev) => ({ ...prev, name: value }));
+                  if (value) {
+                    setErrors((prev) => ({ ...prev, name: undefined }));
+                  }
+                }}
                 required
               />
+              {errors.name && <StyledErrorMessage>{errors.name}</StyledErrorMessage>}
             </StyledFormGroup>
           </StyledFormRow>
         </StyledFormSection>
@@ -208,8 +254,14 @@ function AddEditFormContent({
                 values={formData.colors}
                 options={availableColors}
                 placeholder="Select colors"
-                onChange={(values) => setFormData((prev) => ({ ...prev, colors: values }))}
+                onChange={(values) => {
+                  setFormData((prev) => ({ ...prev, colors: values }));
+                  if (values.length > 0) {
+                    setErrors((prev) => ({ ...prev, colors: undefined }));
+                  }
+                }}
               />
+              {errors.colors && <StyledErrorMessage>{errors.colors}</StyledErrorMessage>}
             </StyledFormGroup>
             <StyledFormGroup>
               <label>Finishes *</label>
@@ -217,8 +269,14 @@ function AddEditFormContent({
                 values={formData.finishes}
                 options={availableFinishes}
                 placeholder="Select finishes"
-                onChange={(values) => setFormData((prev) => ({ ...prev, finishes: values }))}
+                onChange={(values) => {
+                  setFormData((prev) => ({ ...prev, finishes: values }));
+                  if (values.length > 0) {
+                    setErrors((prev) => ({ ...prev, finishes: undefined }));
+                  }
+                }}
               />
+              {errors.finishes && <StyledErrorMessage>{errors.finishes}</StyledErrorMessage>}
             </StyledFormGroup>
           </StyledFormRow>
         </StyledFormSection>

@@ -140,3 +140,9 @@ export const StyledImage = styled.img`
   border-radius: ${({ theme }) => theme.borderRadius.sm};
   object-fit: contain;
 `;
+
+export const StyledErrorMessage = styled.span`
+  color: ${({ theme }) => theme.colors.error};
+  font-size: ${({ theme }) => theme.typography.fontSize.sm};
+  margin-top: 0.25rem;
+`;
