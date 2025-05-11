@@ -35,6 +35,7 @@ export const DatePicker: React.FC<DatePickerProps> = ({
       }
       dateFormat="yyyy-MM-dd"
       placeholderText={placeholder}
+      withPortal
       {...rest}
     />
   );
