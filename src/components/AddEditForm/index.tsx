@@ -89,6 +89,13 @@ function AddEditFormContent({
   const [isSuccess, setIsSuccess] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
 
+  const scrollToFirstError = () => {
+    const firstErrorElement = document.querySelector('[data-error="true"]');
+    if (firstErrorElement) {
+      firstErrorElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  };
+
   const validateForm = (): boolean => {
     const newErrors: FormErrors = {};
 
@@ -106,7 +113,14 @@ function AddEditFormContent({
     }
 
     setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+
+    if (Object.keys(newErrors).length > 0) {
+      // Wait for the error messages to be rendered
+      setTimeout(scrollToFirstError, 100);
+      return false;
+    }
+
+    return true;
   };
 
   const handlePastedImage = (imageUrl: string) => {
@@ -209,7 +223,7 @@ function AddEditFormContent({
                 }}
                 isBrand
               />
-              {errors.brand && <StyledErrorMessage>{errors.brand}</StyledErrorMessage>}
+              {errors.brand && <StyledErrorMessage data-error="true">{errors.brand}</StyledErrorMessage>}
             </StyledFormGroup>
             <StyledFormGroup>
               <label>Name *</label>
@@ -224,7 +238,7 @@ function AddEditFormContent({
                 }}
                 required
               />
-              {errors.name && <StyledErrorMessage>{errors.name}</StyledErrorMessage>}
+              {errors.name && <StyledErrorMessage data-error="true">{errors.name}</StyledErrorMessage>}
             </StyledFormGroup>
           </StyledFormRow>
         </StyledFormSection>
@@ -261,7 +275,7 @@ function AddEditFormContent({
                   }
                 }}
               />
-              {errors.colors && <StyledErrorMessage>{errors.colors}</StyledErrorMessage>}
+              {errors.colors && <StyledErrorMessage data-error="true">{errors.colors}</StyledErrorMessage>}
             </StyledFormGroup>
             <StyledFormGroup>
               <label>Finishes *</label>
@@ -276,7 +290,7 @@ function AddEditFormContent({
                   }
                 }}
               />
-              {errors.finishes && <StyledErrorMessage>{errors.finishes}</StyledErrorMessage>}
+              {errors.finishes && <StyledErrorMessage data-error="true">{errors.finishes}</StyledErrorMessage>}
             </StyledFormGroup>
           </StyledFormRow>
         </StyledFormSection>
