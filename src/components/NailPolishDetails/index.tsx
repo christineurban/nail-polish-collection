@@ -121,28 +121,30 @@ function NailPolishDetailsContent({ polish }: NailPolishDetailsProps) {
       <StyledDetails>
         <div>
           <StyledImageContainer>
-            {polish.imageUrl && polish.imageUrl !== 'n/a' ? (
-              <Image
-                src={polish.imageUrl}
-                alt={`${polish.brand} - ${polish.name}`}
-                fill
-                priority
-              />
-            ) : polish.imageUrl === 'n/a' ? (
-              <p>❌ Marked as no image</p>
-            ) : (
-              <p>No image available</p>
-            )}
+            {(() => {
+              // Case 1: No image (null or undefined)
+              if (!polish.imageUrl) {
+                return <p>No image available</p>;
+              }
+
+              // Case 2: Marked as no image available
+              if (polish.imageUrl === 'n/a') {
+                return <p>❌ Marked as no image</p>;
+              }
+
+              // Case 3: Has an actual image
+              return (
+                <Image
+                  src={polish.imageUrl}
+                  alt={`${polish.brand} - ${polish.name}`}
+                  fill
+                  priority
+                />
+              );
+            })()}
           </StyledImageContainer>
           {isAuthenticated && (
             <StyledImageActions>
-              {polish.imageUrl !== 'n/a' && (
-                <Button
-                  onClick={() => router.push(`/polish/${polish.id}/select-image`)}
-                >
-                  {polish.imageUrl ? 'Change Image' : 'Add Image'}
-                </Button>
-              )}
               {polish.imageUrl && polish.imageUrl !== 'n/a' && (
                 <Button
                   onClick={handleRemoveImage}
@@ -159,14 +161,6 @@ function NailPolishDetailsContent({ polish }: NailPolishDetailsProps) {
                   $variant="tertiary"
                 >
                   Mark as No Image Available
-                </Button>
-              )}
-              {polish.imageUrl === 'n/a' && (
-                <Button
-                  onClick={() => router.push(`/polish/${polish.id}/select-image`)}
-                  $variant="secondary"
-                >
-                  Add Image
                 </Button>
               )}
             </StyledImageActions>

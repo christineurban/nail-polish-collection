@@ -10,6 +10,7 @@ import { DatePicker } from '../fields/DatePicker';
 import { Rating, RATING_OPTIONS } from '@/types/rating';
 import { SuccessMessage } from '@/components/SuccessMessage';
 import { FaCamera } from 'react-icons/fa';
+import Image from 'next/image';
 import {
   StyledForm,
   StyledFormGroup,
@@ -21,7 +22,6 @@ import {
   StyledErrorMessage,
   StyledImageSection,
   StyledImagePreview,
-  StyledImageCaptureButton,
   StyledImageInput,
   StyledImagePlaceholder,
   StyledImageButtonGroup
@@ -318,8 +318,18 @@ function AddEditFormContent({
           <StyledImageSection>
             <ImagePasteZone onImagePasted={handleImagePasted} />
             <StyledImagePreview>
-              {previewUrl ? (
-                <img src={previewUrl} alt="Polish preview" />
+              {previewUrl && previewUrl !== 'n/a' ? (
+                <Image
+                  src={previewUrl}
+                  alt="Polish preview"
+                  fill
+                  style={{ objectFit: 'contain' }}
+                  unoptimized
+                />
+              ) : previewUrl === 'n/a' ? (
+                <StyledImagePlaceholder>
+                  <p>❌ Marked as no image</p>
+                </StyledImagePlaceholder>
               ) : (
                 <StyledImagePlaceholder>
                   <FaCamera />
@@ -328,32 +338,70 @@ function AddEditFormContent({
               )}
             </StyledImagePreview>
             <StyledImageButtonGroup>
-              <StyledImageCaptureButton
-                type="button"
-                onClick={handleImageCapture}
-                disabled={isLoading}
-              >
-                <FaCamera />
-                {previewUrl ? 'Change Image' : 'Choose from Gallery'}
-              </StyledImageCaptureButton>
-              <StyledImageCaptureButton
-                type="button"
-                onClick={handleTakePhoto}
-                disabled={isLoading}
-              >
-                <FaCamera />
-                Take Photo
-              </StyledImageCaptureButton>
-              {isEditing && previewUrl && (
-                <StyledImageCaptureButton
-                  type="button"
-                  onClick={handleRemoveImage}
-                  disabled={isLoading}
-                  $variant="danger"
-                >
-                  Remove Image
-                </StyledImageCaptureButton>
-              )}
+              <>
+                {previewUrl !== 'n/a' ? (
+                  <>
+                    <Button
+                      type="button"
+                      onClick={handleImageCapture}
+                      disabled={isLoading}
+                    >
+                      <FaCamera />
+                      {previewUrl ? 'Change Image' : 'Choose from Gallery'}
+                    </Button>
+                    <Button
+                      type="button"
+                      onClick={handleTakePhoto}
+                      disabled={isLoading}
+                    >
+                      <FaCamera />
+                      Take Photo
+                    </Button>
+                    {isEditing && previewUrl && previewUrl !== 'n/a' && (
+                      <Button
+                        type="button"
+                        onClick={handleRemoveImage}
+                        disabled={isLoading}
+                        $variant="danger"
+                      >
+                        Remove Image
+                      </Button>
+                    )}
+                  </>
+                ) : (
+                  <>
+                    <Button
+                      type="button"
+                      onClick={handleImageCapture}
+                      disabled={isLoading}
+                    >
+                      <FaCamera />
+                      Choose from Gallery
+                    </Button>
+                    <Button
+                      type="button"
+                      onClick={handleTakePhoto}
+                      disabled={isLoading}
+                    >
+                      <FaCamera />
+                      Take Photo
+                    </Button>
+                  </>
+                )}
+                {isEditing && previewUrl !== 'n/a' && (
+                  <Button
+                    type="button"
+                    onClick={() => {
+                      setPreviewUrl('n/a');
+                      setFormData(prev => ({ ...prev, imageUrl: 'n/a' }));
+                    }}
+                    disabled={isLoading}
+                    $variant="tertiary"
+                  >
+                    Mark as No Image Available
+                  </Button>
+                )}
+              </>
             </StyledImageButtonGroup>
             <StyledImageInput
               ref={fileInputRef}

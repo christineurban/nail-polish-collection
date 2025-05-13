@@ -22,6 +22,7 @@ export const StyledButton = styled.button<StyledButtonProps>`
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 0.5em;
   letter-spacing: 0.05em;
   width: ${props => props.$fullWidth ? '100%' : 'auto'};
 

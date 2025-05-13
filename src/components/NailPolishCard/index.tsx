@@ -1,9 +1,8 @@
 'use client';
 
-import React, { FC, useState } from 'react';
+import React, { FC } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/lib/auth/AuthContext';
-import { LoadingSpinner } from '@/components/LoadingSpinner';
 import {
   StyledCard,
   StyledContent,
@@ -50,11 +49,9 @@ export const NailPolishCard: FC<NailPolishCardProps> = ({
 }) => {
   const router = useRouter();
   const { isAuthenticated } = useAuth();
-  const [isLoading, setIsLoading] = useState(false);
 
   const handleContentClick = () => {
     if (isAuthenticated) {
-      setIsLoading(true);
       router.push(`/polish/${id}`);
     }
   };
@@ -64,7 +61,6 @@ export const NailPolishCard: FC<NailPolishCardProps> = ({
 
     // Go to details page if we have any image (including 'n/a')
     if (imageUrl !== null) {
-      setIsLoading(true);
       router.push(`/polish/${id}`);
     } else {
       // Only go to image selection if there's no image at all
@@ -83,7 +79,6 @@ export const NailPolishCard: FC<NailPolishCardProps> = ({
 
   return (
     <>
-      {isLoading && <LoadingSpinner text="Loading polish details..." />}
       <StyledCard
         onKeyDown={handleKeyDown}
         tabIndex={isAuthenticated ? 0 : -1}

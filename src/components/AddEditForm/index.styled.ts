@@ -178,44 +178,6 @@ export const StyledImagePreview = styled.div`
   }
 `;
 
-export const StyledImageCaptureButton = styled.button<{ $variant?: 'danger' }>`
-  background: ${({ theme, $variant }) =>
-    $variant === 'danger'
-      ? theme.colors.error[500]
-      : theme.colors.primary[500]};
-  color: white;
-  border: none;
-  padding: 1rem 2rem;
-  border-radius: ${({ theme }) => theme.borderRadius.lg};
-  font-size: ${({ theme }) => theme.typography.fontSize.base};
-  cursor: pointer;
-  transition: all ${({ theme }) => theme.transitions.base};
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  width: 100%;
-  touch-action: manipulation;
-  -webkit-tap-highlight-color: transparent;
-  user-select: none;
-  justify-content: center;
-
-  &:hover {
-    background: ${({ theme, $variant }) =>
-      $variant === 'danger'
-        ? theme.colors.error[600]
-        : theme.colors.primary[600]};
-  }
-
-  &:active {
-    transform: scale(0.98);
-  }
-
-  &:disabled {
-    background: ${({ theme }) => theme.colors.gray[300]};
-    cursor: not-allowed;
-  }
-`;
-
 export const StyledImageInput = styled.input`
   display: none;
 `;
