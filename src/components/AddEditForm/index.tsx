@@ -200,6 +200,55 @@ function AddEditFormContent({
     setFormData(prev => ({ ...prev, imageUrl: '' }));
   };
 
+  const compressImage = async (file: File): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = (event) => {
+        const img = document.createElement('img');
+        img.src = event.target?.result as string;
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          let width = img.width;
+          let height = img.height;
+
+          // Calculate new dimensions while maintaining aspect ratio
+          const MAX_WIDTH = 1200;
+          const MAX_HEIGHT = 1200;
+
+          if (width > height) {
+            if (width > MAX_WIDTH) {
+              height = Math.round((height * MAX_WIDTH) / width);
+              width = MAX_WIDTH;
+            }
+          } else {
+            if (height > MAX_HEIGHT) {
+              width = Math.round((width * MAX_HEIGHT) / height);
+              height = MAX_HEIGHT;
+            }
+          }
+
+          canvas.width = width;
+          canvas.height = height;
+
+          const ctx = canvas.getContext('2d');
+          if (!ctx) {
+            reject(new Error('Could not get canvas context'));
+            return;
+          }
+
+          ctx.drawImage(img, 0, 0, width, height);
+
+          // Convert to base64 with reduced quality
+          const compressedBase64 = canvas.toDataURL('image/jpeg', 0.7);
+          resolve(compressedBase64);
+        };
+        img.onerror = () => reject(new Error('Failed to load image'));
+      };
+      reader.onerror = () => reject(new Error('Failed to read file'));
+    });
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validateForm()) {
@@ -209,16 +258,8 @@ function AddEditFormContent({
     try {
       let imageUrl = formData.imageUrl;
       if (imageFile) {
-        // Convert image to base64
-        const reader = new FileReader();
-        const base64Promise = new Promise<string>((resolve) => {
-          reader.onloadend = () => {
-            const base64String = reader.result as string;
-            resolve(base64String);
-          };
-        });
-        reader.readAsDataURL(imageFile);
-        const base64Image = await base64Promise;
+        // Compress image before uploading
+        const compressedImage = await compressImage(imageFile);
 
         const uploadResponse = await fetch('/api/update-image', {
           method: 'POST',
@@ -227,7 +268,7 @@ function AddEditFormContent({
           },
           body: JSON.stringify({
             id: formData.id || 'temp',
-            imageUrl: base64Image
+            imageUrl: compressedImage
           }),
         });
         if (!uploadResponse.ok) {
@@ -236,6 +277,12 @@ function AddEditFormContent({
         const uploadData = await uploadResponse.json();
         imageUrl = uploadData.data.image_url;
       } else if (pastedImage) {
+        // For pasted images, create a File object and compress it
+        const response = await fetch(pastedImage);
+        const blob = await response.blob();
+        const file = new File([blob], 'pasted-image.jpg', { type: 'image/jpeg' });
+        const compressedImage = await compressImage(file);
+
         const uploadResponse = await fetch('/api/update-image', {
           method: 'POST',
           headers: {
@@ -243,7 +290,7 @@ function AddEditFormContent({
           },
           body: JSON.stringify({
             id: formData.id || 'temp',
-            imageUrl: pastedImage
+            imageUrl: compressedImage
           }),
         });
         if (!uploadResponse.ok) {
