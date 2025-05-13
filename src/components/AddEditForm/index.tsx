@@ -180,11 +180,26 @@ function AddEditFormContent({
     try {
       let imageUrl = formData.imageUrl;
       if (imageFile) {
-        const imageFormData = new FormData();
-        imageFormData.append('image', imageFile);
-        const uploadResponse = await fetch('/api/upload', {
+        // Convert image to base64
+        const reader = new FileReader();
+        const base64Promise = new Promise<string>((resolve) => {
+          reader.onloadend = () => {
+            const base64String = reader.result as string;
+            resolve(base64String);
+          };
+        });
+        reader.readAsDataURL(imageFile);
+        const base64Image = await base64Promise;
+
+        const uploadResponse = await fetch('/api/update-image', {
           method: 'POST',
-          body: imageFormData,
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            id: formData.id || 'temp',
+            imageUrl: base64Image
+          }),
         });
         if (!uploadResponse.ok) {
           throw new Error('Failed to upload image');
@@ -192,13 +207,15 @@ function AddEditFormContent({
         const uploadData = await uploadResponse.json();
         imageUrl = uploadData.data.image_url;
       } else if (pastedImage) {
-        const res = await fetch(pastedImage);
-        const blob = await res.blob();
-        const imageFormData = new FormData();
-        imageFormData.append('image', blob, 'pasted-image.png');
-        const uploadResponse = await fetch('/api/upload', {
+        const uploadResponse = await fetch('/api/update-image', {
           method: 'POST',
-          body: imageFormData,
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            id: formData.id || 'temp',
+            imageUrl: pastedImage
+          }),
         });
         if (!uploadResponse.ok) {
           throw new Error('Failed to upload pasted image');

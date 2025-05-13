@@ -60,25 +60,33 @@ export async function uploadImageToSupabase(imageUrl: string, polish: { brands: 
   console.log('Starting image upload process for:', {
     brand: polish.brands.name,
     name: polish.name,
-    sourceUrl: imageUrl
+    sourceUrl: imageUrl.substring(0, 100) + '...' // Log only the start of the base64 string
   });
 
   try {
     // Delete old image files first
     await deleteOldImage(polish);
 
-    // Fetch the image
-    const response = await fetch(imageUrl);
-    if (!response.ok) {
-      throw new Error(`Failed to fetch image: ${response.status} ${response.statusText}`);
-    }
-    console.log('Successfully fetched image from source');
+    let imageBuffer: Buffer;
 
-    const imageBuffer = await response.arrayBuffer();
-    console.log('Image buffer size:', imageBuffer.byteLength);
+    // Handle base64 image data
+    if (imageUrl.startsWith('data:image')) {
+      const base64Data = imageUrl.split(',')[1];
+      imageBuffer = Buffer.from(base64Data, 'base64');
+    } else {
+      // Handle regular URL
+      const response = await fetch(imageUrl);
+      if (!response.ok) {
+        throw new Error(`Failed to fetch image: ${response.status} ${response.statusText}`);
+      }
+      const arrayBuffer = await response.arrayBuffer();
+      imageBuffer = Buffer.from(arrayBuffer);
+    }
+
+    console.log('Image buffer size:', imageBuffer.length);
 
     // Compress the image using sharp
-    const compressedImageBuffer = await sharp(Buffer.from(imageBuffer))
+    const compressedImageBuffer = await sharp(imageBuffer)
       .resize(800, 800, { // Resize to max dimensions while maintaining aspect ratio
         fit: 'inside',
         withoutEnlargement: true
