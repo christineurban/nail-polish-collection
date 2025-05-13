@@ -151,11 +151,40 @@ function AddEditFormContent({
   };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    setImageFile(file);
-    const preview = URL.createObjectURL(file);
-    setPreviewUrl(preview);
+    try {
+      const file = e.target.files?.[0];
+      if (!file) {
+        console.log('No file selected');
+        return;
+      }
+
+      // Validate file type
+      if (!file.type.startsWith('image/')) {
+        console.error('Invalid file type:', file.type);
+        alert('Please select an image file');
+        return;
+      }
+
+      // Validate file size (max 10MB)
+      const maxSize = 10 * 1024 * 1024; // 10MB in bytes
+      if (file.size > maxSize) {
+        console.error('File too large:', file.size);
+        alert('Image must be less than 10MB');
+        return;
+      }
+
+      setImageFile(file);
+      const preview = URL.createObjectURL(file);
+      setPreviewUrl(preview);
+
+      // Reset the file input to allow selecting the same file again
+      if (fileInputRef.current) {
+        fileInputRef.current.value = '';
+      }
+    } catch (error) {
+      console.error('Error handling image change:', error);
+      alert('Error processing image. Please try again.');
+    }
   };
 
   const handleRemoveImage = () => {
