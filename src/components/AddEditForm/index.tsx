@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Button } from '../Button';
 import { SingleSelect } from '../fields/SingleSelect';
@@ -9,7 +9,7 @@ import { Input } from '../fields/Input';
 import { DatePicker } from '../fields/DatePicker';
 import { Rating, RATING_OPTIONS } from '@/types/rating';
 import { SuccessMessage } from '@/components/SuccessMessage';
-import { ImagePasteZone } from '@/components/ImageSelector/ImagePasteZone';
+import { FaCamera } from 'react-icons/fa';
 import {
   StyledForm,
   StyledFormGroup,
@@ -18,11 +18,16 @@ import {
   StyledFormSection,
   StyledFormRow,
   StyledDangerZone,
-  StyledImagePreviewContainer,
-  StyledImage,
-  StyledErrorMessage
+  StyledErrorMessage,
+  StyledImageSection,
+  StyledImagePreview,
+  StyledImageCaptureButton,
+  StyledImageInput,
+  StyledImagePlaceholder,
+  StyledImageButtonGroup
 } from './index.styled';
 import { SuspenseBoundary } from '@/components/SuspenseBoundary';
+import { ImagePasteZone } from '@/components/ImageSelector/ImagePasteZone';
 
 interface AddEditFormData {
   id?: string;
@@ -74,6 +79,7 @@ function AddEditFormContent({
   const router = useRouter();
   const searchParams = useSearchParams();
   const returnTo = searchParams.get('returnTo');
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const [formData, setFormData] = useState<AddEditFormData>(
     initialData || {
       brand: '',
@@ -88,6 +94,9 @@ function AddEditFormContent({
   const [isDeleting, setIsDeleting] = useState(false);
   const [_isSuccess, setIsSuccess] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
+  const [previewUrl, setPreviewUrl] = useState<string | null>(initialData?.imageUrl || null);
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [pastedImage, setPastedImage] = useState<string | null>(null);
 
   const scrollToFirstError = () => {
     const firstErrorElement = document.querySelector('[data-error="true"]');
@@ -123,33 +132,94 @@ function AddEditFormContent({
     return true;
   };
 
-  const handlePastedImage = (imageUrl: string) => {
-    setFormData(prev => ({ ...prev, imageUrl }));
+  const handleImageCapture = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+
+  const handleTakePhoto = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.setAttribute('capture', 'environment');
+      fileInputRef.current.click();
+      setTimeout(() => {
+        if (fileInputRef.current) {
+          fileInputRef.current.removeAttribute('capture');
+        }
+      }, 100);
+    }
+  };
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setImageFile(file);
+    const preview = URL.createObjectURL(file);
+    setPreviewUrl(preview);
+  };
+
+  const handleRemoveImage = () => {
+    setPreviewUrl(null);
+    setImageFile(null);
+    setFormData(prev => ({ ...prev, imageUrl: '' }));
+  };
+
+  const handleImagePasted = (imageUrl: string) => {
+    setPastedImage(imageUrl);
+    setPreviewUrl(imageUrl);
+    setImageFile(null); // Clear file input if pasting
+    setFormData(prev => ({ ...prev, imageUrl: '' }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     if (!validateForm()) {
       return;
     }
-
     setIsLoading(true);
-
     try {
+      let imageUrl = formData.imageUrl;
+      if (imageFile) {
+        const imageFormData = new FormData();
+        imageFormData.append('image', imageFile);
+        const uploadResponse = await fetch('/api/upload', {
+          method: 'POST',
+          body: imageFormData,
+        });
+        if (!uploadResponse.ok) {
+          throw new Error('Failed to upload image');
+        }
+        const uploadData = await uploadResponse.json();
+        imageUrl = uploadData.data.image_url;
+      } else if (pastedImage) {
+        const res = await fetch(pastedImage);
+        const blob = await res.blob();
+        const imageFormData = new FormData();
+        imageFormData.append('image', blob, 'pasted-image.png');
+        const uploadResponse = await fetch('/api/upload', {
+          method: 'POST',
+          body: imageFormData,
+        });
+        if (!uploadResponse.ok) {
+          throw new Error('Failed to upload pasted image');
+        }
+        const uploadData = await uploadResponse.json();
+        imageUrl = uploadData.data.image_url;
+      }
       const endpoint = isEditing ? `/api/polish/${formData.id}` : '/api/polish';
       const response = await fetch(endpoint, {
         method: isEditing ? 'PUT' : 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          imageUrl: imageUrl || null
+        }),
       });
-
       if (!response.ok) {
         throw new Error('Failed to save nail polish');
       }
-
       const savedPolish = await response.json();
       setSuccessMessage(isEditing ? 'Polish updated successfully!' : 'Polish added successfully!');
       setIsSuccess(true);
@@ -245,18 +315,53 @@ function AddEditFormContent({
 
         <StyledFormSection>
           <h3>Image</h3>
-          <StyledFormGroup>
-            <ImagePasteZone onImagePasted={handlePastedImage} />
-            {formData.imageUrl && (
-              <StyledImagePreviewContainer>
-                <h3>Preview Image</h3>
-                <StyledImage
-                  src={formData.imageUrl}
-                  alt={`Preview image for ${formData.brand} - ${formData.name}`}
-                />
-              </StyledImagePreviewContainer>
-            )}
-          </StyledFormGroup>
+          <StyledImageSection>
+            <ImagePasteZone onImagePasted={handleImagePasted} />
+            <StyledImagePreview>
+              {previewUrl ? (
+                <img src={previewUrl} alt="Polish preview" />
+              ) : (
+                <StyledImagePlaceholder>
+                  <FaCamera />
+                  <p>No image selected</p>
+                </StyledImagePlaceholder>
+              )}
+            </StyledImagePreview>
+            <StyledImageButtonGroup>
+              <StyledImageCaptureButton
+                type="button"
+                onClick={handleImageCapture}
+                disabled={isLoading}
+              >
+                <FaCamera />
+                {previewUrl ? 'Change Image' : 'Choose from Gallery'}
+              </StyledImageCaptureButton>
+              <StyledImageCaptureButton
+                type="button"
+                onClick={handleTakePhoto}
+                disabled={isLoading}
+              >
+                <FaCamera />
+                Take Photo
+              </StyledImageCaptureButton>
+              {isEditing && previewUrl && (
+                <StyledImageCaptureButton
+                  type="button"
+                  onClick={handleRemoveImage}
+                  disabled={isLoading}
+                  $variant="danger"
+                >
+                  Remove Image
+                </StyledImageCaptureButton>
+              )}
+            </StyledImageButtonGroup>
+            <StyledImageInput
+              ref={fileInputRef}
+              type="file"
+              accept="image/*"
+              onChange={handleImageChange}
+            />
+          </StyledImageSection>
         </StyledFormSection>
 
         <StyledFormSection>
