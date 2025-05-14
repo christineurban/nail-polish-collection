@@ -33,6 +33,8 @@ export const StyledOption = styled.button<{ $isSelected: boolean }>`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  min-height: 44px;
+  user-select: none;
 
   &:hover {
     background: ${({ theme }) => theme.colors.primary[50]};
@@ -49,6 +51,10 @@ export const StyledOption = styled.button<{ $isSelected: boolean }>`
     content: ${({ $isSelected }) => $isSelected ? "'✓'" : "none"};
     font-size: 1.1em;
     color: ${({ theme }) => theme.colors.primary[700]};
+  }
+
+  @media (min-width: 768px) {
+    min-height: 40px;
   }
 `;
 
