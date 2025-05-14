@@ -249,6 +249,10 @@ function AddEditFormContent({
     });
   };
 
+  const formatRatingForDisplay = (rating: string): string => {
+    return rating.replace('_PLUS', '+').replace('_MINUS', '-');
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validateForm()) {
@@ -548,9 +552,12 @@ function AddEditFormContent({
               <label>Rating</label>
               <SingleSelect
                 value={formData.rating || ''}
-                options={RATING_OPTIONS}
+                options={RATING_OPTIONS.map(rating => formatRatingForDisplay(rating))}
                 placeholder="Select rating"
-                onChange={(value) => setFormData((prev) => ({ ...prev, rating: value as Rating || undefined }))}
+                onChange={(value) => {
+                  const originalRating = RATING_OPTIONS.find(r => formatRatingForDisplay(r) === value);
+                  setFormData((prev) => ({ ...prev, rating: originalRating as Rating || undefined }));
+                }}
               />
             </StyledFormGroup>
             <StyledFormGroup>
