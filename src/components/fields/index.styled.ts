@@ -90,8 +90,12 @@ export const StyledDropdown = styled.div<{ $isOpen: boolean }>`
     visibility: ${({ $isOpen }) => ($isOpen ? 'visible' : 'hidden')};
     opacity: ${({ $isOpen }) => ($isOpen ? '1' : '0')};
     overflow-y: ${({ $isOpen }) => ($isOpen ? 'auto' : 'hidden')};
+    -webkit-overflow-scrolling: touch;
     transition: all 0.2s ease;
-    z-index: 10;
+    z-index: 1000;
     width: 100%;
     margin-top: 4px;
+    top: 100%;
+    left: 0;
+    right: 0;
 `;
