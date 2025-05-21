@@ -551,7 +551,7 @@ function AddEditFormContent({
             <StyledFormGroup>
               <label>Rating</label>
               <SingleSelect
-                value={formData.rating || ''}
+                value={formData.rating ? formatRatingForDisplay(formData.rating) : ''}
                 options={RATING_OPTIONS.map(rating => formatRatingForDisplay(rating))}
                 placeholder="Select rating"
                 onChange={(value) => {

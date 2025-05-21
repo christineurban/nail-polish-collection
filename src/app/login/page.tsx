@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useAuth } from '@/lib/auth/AuthContext';
 import styled from 'styled-components';
 
@@ -83,6 +83,8 @@ export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(true);
   const { login } = useAuth();
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const from = searchParams.get('from');
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -91,7 +93,7 @@ export default function LoginPage() {
         const data = await response.json();
 
         if (data.isAuthenticated) {
-          router.push('/');
+          router.push(from || '/');
         } else {
           setIsLoading(false);
         }
@@ -102,7 +104,7 @@ export default function LoginPage() {
     };
 
     checkAuth();
-  }, [router]);
+  }, [router, from]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -111,7 +113,7 @@ export default function LoginPage() {
     try {
       const success = await login(password);
       if (success) {
-        router.push('/');
+        router.push(from || '/');
       } else {
         setError('Incorrect password');
       }

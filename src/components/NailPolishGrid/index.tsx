@@ -71,50 +71,52 @@ export const NailPolishGrid = ({
         totalPolishes={totalPolishes}
         displayedPolishes={polishes.length}
       />
-      <StyledToggleContainer role="radiogroup" aria-label="View mode">
-        <StyledViewToggle
-          role="radio"
-          aria-checked={viewMode === 'grid'}
-          onClick={() => setViewMode('grid')}
-          $isActive={viewMode === 'grid'}
-          type="button"
-          aria-label="Grid view"
-        >
-          <BsGrid /> Grid
-        </StyledViewToggle>
-        <StyledViewToggle
-          role="radio"
-          aria-checked={viewMode === 'list'}
-          onClick={() => setViewMode('list')}
-          $isActive={viewMode === 'list'}
-          type="button"
-          aria-label="Column view"
-        >
-          <MdOutlineViewAgenda /> Column
-        </StyledViewToggle>
-      </StyledToggleContainer>
-      <StyledGrid $isSingleColumn={viewMode === 'list'}>
-        {polishes.length > 0 ? (
-          polishes.map((polish) => (
-            <NailPolishCard
-              key={polish.id}
-              id={polish.id}
-              brand={polish.brand}
-              name={polish.name}
-              imageUrl={polish.imageUrl}
-              colors={polish.colors}
-              finishes={polish.finishes}
-              rating={polish.rating === null ? undefined : polish.rating}
-              onChooseImage={isAuthenticated ? handleChooseImage : undefined}
-            />
-          ))
-        ) : (
-          <StyledEmptyState>
-            <h2>No Polishes Found</h2>
-            <p>Try adjusting your filters to find what you&apos;re looking for.</p>
-          </StyledEmptyState>
-        )}
-      </StyledGrid>
+      {!polishes.length ? (
+        <StyledEmptyState>
+          <h2>No Polishes Found</h2>
+          <p>Try adjusting your filters to find what you&apos;re looking for.</p>
+        </StyledEmptyState>
+      ) : (
+        <>
+          <StyledToggleContainer role="radiogroup" aria-label="View mode">
+            <StyledViewToggle
+              role="radio"
+              aria-checked={viewMode === 'grid'}
+              onClick={() => setViewMode('grid')}
+              $isActive={viewMode === 'grid'}
+              type="button"
+              aria-label="Grid view"
+            >
+              <BsGrid /> Grid
+            </StyledViewToggle>
+            <StyledViewToggle
+              role="radio"
+              aria-checked={viewMode === 'list'}
+              onClick={() => setViewMode('list')}
+              $isActive={viewMode === 'list'}
+              type="button"
+              aria-label="Column view"
+            >
+              <MdOutlineViewAgenda /> Column
+            </StyledViewToggle>
+          </StyledToggleContainer>
+          <StyledGrid $isSingleColumn={viewMode === 'list'}>
+            {polishes.map((polish) => (
+              <NailPolishCard
+                key={polish.id}
+                id={polish.id}
+                brand={polish.brand}
+                name={polish.name}
+                imageUrl={polish.imageUrl}
+                colors={polish.colors}
+                finishes={polish.finishes}
+                rating={polish.rating === null ? undefined : polish.rating}
+                onChooseImage={isAuthenticated ? handleChooseImage : undefined}
+              />
+            ))}
+          </StyledGrid>
+        </>
+      )}
     </>
   );
 };

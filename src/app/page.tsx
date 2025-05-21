@@ -122,28 +122,13 @@ function HomeContent() {
     // Debounce the API call
     const timeoutId = setTimeout(fetchPolishes, 500);
     return () => clearTimeout(timeoutId);
-  }, [searchParams]); // Only depend on searchParams instead of individual filters
+  }, [searchParams]);
 
   const handlePageChange = (newPage: number) => {
     const params = new URLSearchParams(searchParams.toString());
     params.set('page', newPage.toString());
     router.push(`/?${params.toString()}`);
   };
-
-  if (isLoading) {
-    return (
-        <PageHeader title="Loading..." />
-    );
-  }
-
-  if (error) {
-    return (
-        <PageHeader
-          title="Error"
-          description={error}
-        />
-    );
-  }
 
   return (
     <>
@@ -159,25 +144,32 @@ function HomeContent() {
         currentFilters={currentFilters}
         totalPolishes={totalPolishes}
       />
-      <StyledPagination>
-        <button
-          onClick={() => handlePageChange(currentPage - 1)}
-          disabled={currentPage === 1}
-          aria-label="Previous page"
-        >
-          Previous
-        </button>
-        <span>
-          Page {currentPage} of {totalPages}
-        </span>
-        <button
-          onClick={() => handlePageChange(currentPage + 1)}
-          disabled={currentPage === totalPages}
-          aria-label="Next page"
-        >
-          Next
-        </button>
-      </StyledPagination>
+      {!isLoading && !error && (
+        <StyledPagination>
+          <button
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+            aria-label="Previous page"
+          >
+            Previous
+          </button>
+          <span>
+            Page {currentPage} of {totalPages}
+          </span>
+          <button
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={currentPage === totalPages}
+            aria-label="Next page"
+          >
+            Next
+          </button>
+        </StyledPagination>
+      )}
+      {error && (
+        <div style={{ textAlign: 'center', padding: '2rem', color: 'red' }}>
+          {error}
+        </div>
+      )}
     </>
   );
 }
