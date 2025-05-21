@@ -77,8 +77,8 @@ function AddEditFormContent({
   availableFinishes = []
 }: AddEditFormProps) {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const returnTo = searchParams.get('returnTo');
+  const searchParams = useSearchParams()!;
+  const returnTo = searchParams.get('returnTo') ?? '/';
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [formData, setFormData] = useState<AddEditFormData>(
     initialData || {

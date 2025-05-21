@@ -51,7 +51,7 @@ function NailPolishDetailsContent({ polish }: NailPolishDetailsProps) {
   const [isRemovingImage, setIsRemovingImage] = useState(false);
   const [isMarkingNoImage, setIsMarkingNoImage] = useState(false);
   const router = useRouter();
-  const searchParams = useSearchParams();
+  const searchParams = useSearchParams()!;
   const { isAuthenticated } = useAuth();
   const returnTo = searchParams.get('returnTo');
 

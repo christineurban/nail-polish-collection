@@ -52,14 +52,8 @@ function SelectImagePageContent({ params }: { params: { id: string } }) {
   }, [params.id]);
 
   const handleImageSaved = () => {
-    const returnTo = searchParams.get('returnTo');
-    if (!returnTo) {
-      // If no returnTo parameter, return to the polish details page
-      router.push(`/polish/${params.id}`);
-    } else {
-      // If returnTo parameter exists, use that path
-      router.push(returnTo);
-    }
+    const returnTo = searchParams?.get('returnTo') ?? `/polish/${params.id}`;
+    router.push(returnTo);
     router.refresh();
   };
 

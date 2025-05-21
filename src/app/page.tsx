@@ -35,7 +35,7 @@ export default function Home() {
 
 function HomeContent() {
   const router = useRouter();
-  const searchParams = useSearchParams();
+  const searchParams = useSearchParams()!;
   const [polishes, setPolishes] = useState<Polish[]>([]);
   const [brands, setBrands] = useState<string[]>([]);
   const [colors, setColors] = useState<string[]>([]);
@@ -46,14 +46,14 @@ function HomeContent() {
   const [totalPages, setTotalPages] = useState(1);
   const [totalPolishes, setTotalPolishes] = useState(0);
 
-  // Get current filters from URL
+  // Get current filters from URL (for NailPolishGrid prop)
   const currentFilters = {
-    brand: searchParams.getAll('brand'),
-    finish: searchParams.getAll('finish'),
-    color: searchParams.getAll('color'),
+    brand: searchParams.getAll('brand') || [],
+    finish: searchParams.getAll('finish') || [],
+    color: searchParams.getAll('color') || [],
     search: searchParams.get('search') || '',
     sort: searchParams.get('sort') || '',
-    rating: searchParams.getAll('rating'),
+    rating: searchParams.getAll('rating') || [],
     hasImage: searchParams.get('hasImage') || '',
     isOld: searchParams.get('isOld') || '',
     page: searchParams.get('page') || '1',
@@ -77,27 +77,40 @@ function HomeContent() {
   }, []);
 
   useEffect(() => {
+    // Recalculate currentFilters inside the effect
+    const filters = {
+      brand: searchParams.getAll('brand') || [],
+      finish: searchParams.getAll('finish') || [],
+      color: searchParams.getAll('color') || [],
+      search: searchParams.get('search') || '',
+      sort: searchParams.get('sort') || '',
+      rating: searchParams.getAll('rating') || [],
+      hasImage: searchParams.get('hasImage') || '',
+      isOld: searchParams.get('isOld') || '',
+      page: searchParams.get('page') || '1',
+    };
+
     const fetchPolishes = async () => {
       try {
         setIsLoading(true);
-        // Build the query string from currentFilters
+        // Build the query string from filters
         const params = new URLSearchParams();
-        if (currentFilters.search) params.set('search', currentFilters.search);
-        if (currentFilters.hasImage) params.set('hasImage', currentFilters.hasImage);
-        if (currentFilters.isOld) params.set('isOld', currentFilters.isOld);
-        if (currentFilters.brand.length > 0) {
-          currentFilters.brand.forEach(brand => params.append('brand', brand));
+        if (filters.search) params.set('search', filters.search);
+        if (filters.hasImage) params.set('hasImage', filters.hasImage);
+        if (filters.isOld) params.set('isOld', filters.isOld);
+        if (filters.brand.length > 0) {
+          filters.brand.forEach(brand => params.append('brand', brand));
         }
-        if (currentFilters.finish.length > 0) {
-          currentFilters.finish.forEach(finish => params.append('finish', finish));
+        if (filters.finish.length > 0) {
+          filters.finish.forEach(finish => params.append('finish', finish));
         }
-        if (currentFilters.color.length > 0) {
-          currentFilters.color.forEach(color => params.append('color', color));
+        if (filters.color.length > 0) {
+          filters.color.forEach(color => params.append('color', color));
         }
-        if (currentFilters.rating.length > 0) {
-          currentFilters.rating.forEach(rating => params.append('rating', rating));
+        if (filters.rating.length > 0) {
+          filters.rating.forEach(rating => params.append('rating', rating));
         }
-        params.set('page', currentFilters.page);
+        params.set('page', filters.page);
         params.set('limit', '45');
 
         const response = await fetch(`/api/polishes?${params.toString()}`);
@@ -125,7 +138,7 @@ function HomeContent() {
   }, [searchParams]);
 
   const handlePageChange = (newPage: number) => {
-    const params = new URLSearchParams(searchParams.toString());
+    const params = new URLSearchParams(searchParams?.toString() || '');
     params.set('page', newPage.toString());
     router.push(`/?${params.toString()}`);
   };

@@ -1,7 +1,7 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useState, useEffect, useCallback } from 'react';
+import { useRouter } from 'next/navigation';
 import { SingleSelect } from '@/components/fields/SingleSelect';
 import { MultiSelect } from '@/components/fields/MultiSelect';
 import { Button } from '@/components/Button';
@@ -67,7 +67,6 @@ function FilterSortContent({
   displayedPolishes,
 }: FilterSortProps): JSX.Element {
   const router = useRouter();
-  const _searchParams = useSearchParams();
   const [filters, setFilters] = useState(currentFilters);
   const [localSearch, setLocalSearch] = useState(currentFilters.search);
   const [isFiltersVisible, setIsFiltersVisible] = useState(true);
@@ -88,39 +87,7 @@ function FilterSortContent({
     };
   }, []);
 
-  // Update URL when drawer closes
-  useEffect(() => {
-    if (!isDrawerOpen && localSearch !== filters.search) {
-      const newFilters = {
-        ...filters,
-        search: localSearch
-      };
-      setFilters(newFilters);
-      updateUrl(newFilters);
-    }
-  }, [isDrawerOpen]);
-
-  // Keep drawer open when searching
-  useEffect(() => {
-    if (shouldKeepDrawerOpen) {
-      setIsDrawerOpen(true);
-      setShouldKeepDrawerOpen(false);
-    }
-  }, [filters]);
-
-  const ratings = [
-    'A_PLUS', 'A', 'A_MINUS',
-    'B_PLUS', 'B', 'B_MINUS',
-    'C_PLUS', 'C', 'C_MINUS',
-    'D_PLUS', 'D', 'D_MINUS',
-    'F'
-  ];
-
-  const formatRatingForDisplay = (rating: string): string => {
-    return rating.replace('_PLUS', '+').replace('_MINUS', '-');
-  };
-
-  const updateUrl = (newFilters: typeof filters) => {
+  const updateUrl = useCallback((newFilters: typeof filters) => {
     const params = new URLSearchParams();
 
     Object.entries(newFilters).forEach(([key, value]) => {
@@ -140,6 +107,42 @@ function FilterSortContent({
 
     const queryString = params.toString();
     router.push(queryString ? `/?${queryString}` : '/');
+  }, [router]);
+
+  // Debounced search effect
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      if (localSearch !== filters.search) {
+        const newFilters = {
+          ...filters,
+          search: localSearch
+        };
+        setFilters(newFilters);
+        updateUrl(newFilters);
+      }
+    }, 500); // 500ms debounce delay
+
+    return () => clearTimeout(timeoutId);
+  }, [localSearch, filters.search, filters, updateUrl]);
+
+  // Keep drawer open when searching
+  useEffect(() => {
+    if (shouldKeepDrawerOpen) {
+      setIsDrawerOpen(true);
+      setShouldKeepDrawerOpen(false);
+    }
+  }, [filters, shouldKeepDrawerOpen]);
+
+  const ratings = [
+    'A_PLUS', 'A', 'A_MINUS',
+    'B_PLUS', 'B', 'B_MINUS',
+    'C_PLUS', 'C', 'C_MINUS',
+    'D_PLUS', 'D', 'D_MINUS',
+    'F'
+  ];
+
+  const formatRatingForDisplay = (rating: string): string => {
+    return rating.replace('_PLUS', '+').replace('_MINUS', '-');
   };
 
   const handleChange = (key: keyof typeof filters) => (
@@ -254,14 +257,12 @@ function FilterSortContent({
           {localSearch && (
             <StyledClearButton onClick={() => {
               setLocalSearch('');
-              if (!isDrawerOpen) {
-                const newFilters = {
-                  ...filters,
-                  search: ''
-                };
-                setFilters(newFilters);
-                updateUrl(newFilters);
-              }
+              const newFilters = {
+                ...filters,
+                search: ''
+              };
+              setFilters(newFilters);
+              updateUrl(newFilters);
             }}>
               Clear
             </StyledClearButton>
@@ -273,14 +274,6 @@ function FilterSortContent({
           value={localSearch}
           onChange={(value) => {
             setLocalSearch(value);
-            if (!isDrawerOpen) {
-              const newFilters = {
-                ...filters,
-                search: value
-              };
-              setFilters(newFilters);
-              updateUrl(newFilters);
-            }
           }}
         />
       </StyledFilterGroup>
