@@ -82,6 +82,9 @@ const isProtectedRoute = (pathname: string, method: string) => {
 export const config = {
   matcher: [
     '/api/:path*',
+    '/polish/:path*',
+    '/dashboard',
+    '/image-selection',
     '/((?!_next/static|_next/image|favicon.ico).*)'
   ],
 };

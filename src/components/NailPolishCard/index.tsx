@@ -53,11 +53,16 @@ export const NailPolishCard: FC<NailPolishCardProps> = ({
   const handleContentClick = () => {
     if (isAuthenticated) {
       router.push(`/polish/${id}`);
+    } else {
+      router.push(`/login?from=/polish/${id}`);
     }
   };
 
   const handleImageAreaClick = () => {
-    if (!isAuthenticated) return;
+    if (!isAuthenticated) {
+      router.push(`/login?from=/polish/${id}`);
+      return;
+    }
 
     // Go to details page if we have any image (including 'n/a')
     if (imageUrl !== null) {

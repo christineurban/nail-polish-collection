@@ -79,6 +79,7 @@ function HomeContent() {
   useEffect(() => {
     const fetchPolishes = async () => {
       try {
+        setIsLoading(true);
         // Build the query string from currentFilters
         const params = new URLSearchParams();
         if (currentFilters.search) params.set('search', currentFilters.search);
@@ -118,8 +119,10 @@ function HomeContent() {
       }
     };
 
-    fetchPolishes();
-  }, [currentFilters.brand, currentFilters.color, currentFilters.finish, currentFilters.hasImage, currentFilters.isOld, currentFilters.page, currentFilters.rating, currentFilters.search]);
+    // Debounce the API call
+    const timeoutId = setTimeout(fetchPolishes, 500);
+    return () => clearTimeout(timeoutId);
+  }, [searchParams]); // Only depend on searchParams instead of individual filters
 
   const handlePageChange = (newPage: number) => {
     const params = new URLSearchParams(searchParams.toString());

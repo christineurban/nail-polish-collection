@@ -69,9 +69,11 @@ function FilterSortContent({
   const router = useRouter();
   const _searchParams = useSearchParams();
   const [filters, setFilters] = useState(currentFilters);
+  const [localSearch, setLocalSearch] = useState(currentFilters.search);
   const [isFiltersVisible, setIsFiltersVisible] = useState(true);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [shouldKeepDrawerOpen, setShouldKeepDrawerOpen] = useState(false);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -85,6 +87,26 @@ function FilterSortContent({
       window.removeEventListener('resize', checkMobile);
     };
   }, []);
+
+  // Update URL when drawer closes
+  useEffect(() => {
+    if (!isDrawerOpen && localSearch !== filters.search) {
+      const newFilters = {
+        ...filters,
+        search: localSearch
+      };
+      setFilters(newFilters);
+      updateUrl(newFilters);
+    }
+  }, [isDrawerOpen]);
+
+  // Keep drawer open when searching
+  useEffect(() => {
+    if (shouldKeepDrawerOpen) {
+      setIsDrawerOpen(true);
+      setShouldKeepDrawerOpen(false);
+    }
+  }, [filters]);
 
   const ratings = [
     'A_PLUS', 'A', 'A_MINUS',
@@ -229,8 +251,18 @@ function FilterSortContent({
       <StyledFilterGroup>
         <StyledFilterHeader>
           <StyledLabel>Search</StyledLabel>
-          {filters.search && (
-            <StyledClearButton onClick={() => clearFilter('search')}>
+          {localSearch && (
+            <StyledClearButton onClick={() => {
+              setLocalSearch('');
+              if (!isDrawerOpen) {
+                const newFilters = {
+                  ...filters,
+                  search: ''
+                };
+                setFilters(newFilters);
+                updateUrl(newFilters);
+              }
+            }}>
               Clear
             </StyledClearButton>
           )}
@@ -238,8 +270,18 @@ function FilterSortContent({
         <Input
           type="text"
           placeholder="Search polishes..."
-          value={filters.search}
-          onChange={(value) => handleChange('search')(value)}
+          value={localSearch}
+          onChange={(value) => {
+            setLocalSearch(value);
+            if (!isDrawerOpen) {
+              const newFilters = {
+                ...filters,
+                search: value
+              };
+              setFilters(newFilters);
+              updateUrl(newFilters);
+            }
+          }}
         />
       </StyledFilterGroup>
 
