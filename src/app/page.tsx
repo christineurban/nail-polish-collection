@@ -40,6 +40,7 @@ function HomeContent() {
   const [brands, setBrands] = useState<string[]>([]);
   const [colors, setColors] = useState<string[]>([]);
   const [finishes, setFinishes] = useState<string[]>([]);
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
@@ -129,6 +130,7 @@ function HomeContent() {
         setError(error instanceof Error ? error.message : 'An error occurred');
       } finally {
         setIsLoading(false);
+        setIsInitialLoad(false);
       }
     };
 
@@ -143,6 +145,21 @@ function HomeContent() {
     router.push(`/?${params.toString()}`);
   };
 
+  if (isInitialLoad) {
+    return (
+      <PageHeader title="Loading..." />
+    );
+  }
+
+  if (error) {
+    return (
+      <PageHeader
+        title="Error"
+        description={error}
+      />
+    );
+  }
+
   return (
     <>
       <PageHeader
@@ -156,8 +173,9 @@ function HomeContent() {
         finishes={finishes}
         currentFilters={currentFilters}
         totalPolishes={totalPolishes}
+        isLoading={isLoading}
       />
-      {!isLoading && !error && (
+      {!isLoading && (
         <StyledPagination>
           <button
             onClick={() => handlePageChange(currentPage - 1)}
@@ -177,11 +195,6 @@ function HomeContent() {
             Next
           </button>
         </StyledPagination>
-      )}
-      {error && (
-        <div style={{ textAlign: 'center', padding: '2rem', color: 'red' }}>
-          {error}
-        </div>
       )}
     </>
   );

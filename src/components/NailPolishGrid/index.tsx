@@ -41,6 +41,7 @@ interface NailPolishGridProps {
     isOld: string;
   };
   totalPolishes: number;
+  isLoading?: boolean;
 }
 
 type ViewMode = 'grid' | 'list';
@@ -52,6 +53,7 @@ export const NailPolishGrid = ({
   colors,
   currentFilters,
   totalPolishes,
+  isLoading,
 }: NailPolishGridProps) => {
   const router = useRouter();
   const [viewMode, setViewMode] = useState<ViewMode>('grid');
@@ -71,7 +73,7 @@ export const NailPolishGrid = ({
         totalPolishes={totalPolishes}
         displayedPolishes={polishes.length}
       />
-      {!polishes.length ? (
+      {!polishes.length && !isLoading ? (
         <StyledEmptyState>
           <h2>No Polishes Found</h2>
           <p>Try adjusting your filters to find what you&apos;re looking for.</p>
