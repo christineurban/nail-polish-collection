@@ -21,10 +21,10 @@ export function Nav() {
 
   const publicRoutes = [
     { path: '/', label: 'View All' },
+    { path: '/dashboard', label: 'Dashboard' },
   ];
 
   const protectedRoutes = [
-    { path: '/dashboard', label: 'Dashboard' },
     { path: '/polish/add', label: 'Add New Polish' },
     { path: '/image-selection', label: 'Select Missing Images' },
   ];

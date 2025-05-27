@@ -30,7 +30,6 @@ export function middleware(request: NextRequest) {
 const isProtectedRoute = (pathname: string, method: string) => {
   // Protected frontend routes
   const protectedPages = [
-    '/dashboard',
     '/polish/add',
     '/image-selection',
     '/polish/[id]', // This will match any polish detail page

@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation';
 import { PageHeader } from '@/components/PageHeader';
 import {
   StyledStatsGrid,
-  StyledAttributeList,
   StyledSortControls,
   StyledSortButton,
   StyledAddForm,
@@ -28,6 +27,7 @@ import { Modal } from '@/components/Modal';
 import { SuccessMessage } from '@/components/SuccessMessage';
 import { StyledNameCell, StyledPercentageHeader } from '@/components/Table/index.styled';
 import { Tooltip } from 'react-tooltip';
+import { useAuth } from '@/lib/auth/AuthContext';
 
 interface Stats {
   totalPolishes: number;
@@ -64,6 +64,7 @@ type ViewMode = 'card' | 'table';
 
 export default function DashboardPage() {
   const router = useRouter();
+  const { isAuthenticated } = useAuth();
   const [stats, setStats] = useState<Stats | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -287,40 +288,35 @@ export default function DashboardPage() {
 
   const renderCards = (attributes: Attribute[], attributeType: 'color' | 'finish' | 'brand') => {
     return (
-      <StyledAttributeList>
-        {attributes.map(attr => (
-          <div key={attr.id}>
-            <Tile
-              title={attr.name}
-              value={`${attr.count} ${attr.count === 1 ? 'polish' : 'polishes'}`}
-              percentage={`${attr.percentage.toFixed(1)}%`}
-              variant="attribute"
-              showDelete={attr.count === 0}
-              onDelete={() => handleDelete(attr.id, attributeType)}
-            />
-          </div>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '1rem' }}>
+        {attributes.map((attr) => (
+          <Tile
+            key={attr.id}
+            title={attr.name}
+            value={`${attr.count} polishes`}
+            percentage={`${attr.percentage.toFixed(1)}%`}
+            variant="attribute"
+            onClick={() => isAuthenticated && handleStatClick(`${attributeType}s` as 'brands' | 'colors' | 'finishes')}
+            showDelete={isAuthenticated && attr.count === 0}
+            onDelete={() => isAuthenticated && handleDelete(attr.id, attributeType)}
+          />
         ))}
-      </StyledAttributeList>
+      </div>
     );
   };
 
   const handleStatClick = (type: 'brands' | 'colors' | 'finishes') => {
+    if (!isAuthenticated) {
+      return;
+    }
+
     setSelectedAttribute(type);
+    setSortOrder('name-asc');
+    setSearchTerm('');
+    setViewMode('card');
 
-    // Only scroll on mobile
-    if (window.innerWidth <= 768) {
-      setTimeout(() => {
-        if (attributeListRef.current) {
-          const navHeight = 64; // Height of the nav bar
-          const elementPosition = attributeListRef.current.getBoundingClientRect().top;
-          const offsetPosition = elementPosition + window.pageYOffset - navHeight;
-
-          window.scrollTo({
-            top: offsetPosition,
-            behavior: 'smooth'
-          });
-        }
-      }, 100);
+    if (attributeListRef.current) {
+      attributeListRef.current.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
@@ -344,7 +340,7 @@ export default function DashboardPage() {
     <>
       <PageHeader
         title="Dashboard"
-        description="Click on a tile to view and manage details"
+        description={isAuthenticated ? "Click on a tile to view and manage details" : "View collection statistics"}
       />
       <StyledStatsGrid>
         <Tile
