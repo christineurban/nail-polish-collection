@@ -316,7 +316,14 @@ export default function DashboardPage() {
     setViewMode('card');
 
     if (attributeListRef.current) {
-      attributeListRef.current.scrollIntoView({ behavior: 'smooth' });
+      const navHeight = 64; // Height of the navigation bar
+      const elementPosition = attributeListRef.current.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - navHeight;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
     }
   };
 
