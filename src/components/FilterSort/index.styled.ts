@@ -75,6 +75,13 @@ export const StyledClearAllContainer = styled.div`
   }
 `;
 
+export const StyledMobileClearAllContainer = styled.div`
+  display: flex;
+  width: 100%;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+`;
+
 export const StyledFilterGroup = styled.div`
   display: grid;
   grid-template-rows: auto 1fr;

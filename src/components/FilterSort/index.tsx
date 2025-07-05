@@ -13,6 +13,7 @@ import {
   StyledFiltersContainer,
   StyledContainer,
   StyledClearAllContainer,
+  StyledMobileClearAllContainer,
   StyledFilterGroup,
   StyledFilterHeader,
   StyledLabel,
@@ -553,14 +554,14 @@ function FilterSortContent({
                 <MdClose />
               </StyledDrawerCloseButton>
             </StyledDrawerHeader>
-            {renderFilterContent()}
             {hasActiveFilters() && (
-              <StyledClearAllContainer>
+              <StyledMobileClearAllContainer>
                 <Button onClick={clearAllFilters} $variant="danger" $fullWidth>
                   Clear All Filters
                 </Button>
-              </StyledClearAllContainer>
+              </StyledMobileClearAllContainer>
             )}
+            {renderFilterContent()}
           </StyledDrawer>
         </>
       ) : (
