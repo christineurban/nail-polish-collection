@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { FilterSort } from '@/components/FilterSort';
 import { NailPolishCard } from '@/components/NailPolishCard';
+import { LoadingSpinner } from '@/components/LoadingSpinner';
 import { Rating } from '@prisma/client';
 import { useRouter } from 'next/navigation';
 import {
@@ -10,6 +11,7 @@ import {
   StyledEmptyState,
   StyledViewToggle,
   StyledToggleContainer,
+  StyledLoadingContainer,
 } from './index.styled';
 import { BsGrid } from 'react-icons/bs';
 import { MdOutlineViewAgenda } from 'react-icons/md';
@@ -73,7 +75,11 @@ export const NailPolishGrid = ({
         totalPolishes={totalPolishes}
         displayedPolishes={polishes.length}
       />
-      {!polishes.length && !isLoading ? (
+      {isLoading ? (
+        <StyledLoadingContainer>
+          <LoadingSpinner size="large" message="Searching polishes..." />
+        </StyledLoadingContainer>
+      ) : !polishes.length ? (
         <StyledEmptyState>
           <h2>No Polishes Found</h2>
           <p>Try adjusting your filters to find what you&apos;re looking for.</p>

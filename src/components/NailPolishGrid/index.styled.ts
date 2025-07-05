@@ -63,6 +63,16 @@ export const StyledToggleContainer = styled.div`
   }
 `;
 
+export const StyledLoadingContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  min-height: 300px;
+  gap: 1rem;
+`;
+
 export const StyledViewToggle = styled.button<{ $isActive: boolean }>`
   display: flex;
   align-items: center;
