@@ -4,11 +4,11 @@ import styled, { css } from 'styled-components';
 import { formStyles } from '@/theme/form';
 
 // Base field container styles
-export const StyledContainer = styled.div`
+export const StyledContainer = styled.div<{ $isOpen?: boolean }>`
   position: relative;
   width: 100%;
   isolation: isolate;
-  z-index: 0;
+  z-index: ${({ $isOpen }) => $isOpen ? 1001 : 0};
 
   &:focus-within {
     z-index: 1;
@@ -92,7 +92,7 @@ export const StyledDropdown = styled.div<{ $isOpen: boolean }>`
     overflow-y: ${({ $isOpen }) => ($isOpen ? 'auto' : 'hidden')};
     -webkit-overflow-scrolling: touch;
     transition: all 0.2s ease;
-    z-index: 1000;
+    z-index: 1001;
     width: 100%;
     margin-top: 4px;
     top: 100%;

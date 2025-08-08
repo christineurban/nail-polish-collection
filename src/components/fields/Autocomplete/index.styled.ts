@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 
-export const StyledContainer = styled.div`
+export const StyledContainer = styled.div<{ $isOpen?: boolean }>`
   position: relative;
   width: 100%;
+  z-index: ${({ $isOpen }) => $isOpen ? 1001 : 0};
 `;
 
 export const StyledInput = styled.input`

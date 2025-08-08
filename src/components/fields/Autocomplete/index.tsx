@@ -104,7 +104,7 @@ export const Autocomplete = ({
   };
 
   return (
-    <StyledContainer ref={containerRef}>
+    <StyledContainer ref={containerRef} $isOpen={isOpen}>
       <StyledInput
         type="text"
         value={inputValue}

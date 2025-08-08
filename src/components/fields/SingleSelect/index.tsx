@@ -124,7 +124,7 @@ export const SingleSelect = ({ value, options, placeholder = 'Select...', onChan
   };
 
   return (
-    <StyledContainer ref={containerRef}>
+    <StyledContainer ref={containerRef} $isOpen={isOpen}>
       <StyledButtonContainer $isOpen={isOpen}>
         <StyledButton
           ref={buttonRef}

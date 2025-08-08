@@ -131,7 +131,7 @@ export const MultiSelect = ({
   );
 
   return (
-    <StyledContainer ref={containerRef}>
+    <StyledContainer ref={containerRef} $isOpen={isOpen}>
       <StyledButton
         ref={buttonRef}
         type="button"
