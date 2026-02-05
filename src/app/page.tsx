@@ -78,6 +78,10 @@ function HomeContent() {
   }, []);
 
   useEffect(() => {
+    // Clear the list and show loading immediately when URL/filters change
+    setPolishes([]);
+    setIsLoading(true);
+
     // Recalculate currentFilters inside the effect
     const filters = {
       brand: searchParams.getAll('brand') || [],
@@ -93,7 +97,6 @@ function HomeContent() {
 
     const fetchPolishes = async () => {
       try {
-        setIsLoading(true);
         // Build the query string from filters
         const params = new URLSearchParams();
         if (filters.search) params.set('search', filters.search);

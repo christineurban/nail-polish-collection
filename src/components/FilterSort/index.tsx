@@ -106,6 +106,9 @@ function FilterSortContent({
       }
     });
 
+    // Reset to page 1 when filters change (remove page from URL)
+    params.delete('page');
+
     const queryString = params.toString();
     router.push(queryString ? `/?${queryString}` : '/');
   }, [router]);
