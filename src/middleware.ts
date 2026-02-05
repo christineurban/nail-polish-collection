@@ -28,18 +28,19 @@ export function middleware(request: NextRequest) {
 
 // Add routes that need protection here
 const isProtectedRoute = (pathname: string, method: string) => {
-  // Protected frontend routes
+  // Protected frontend routes (polish detail view /polish/[id] is public; edit and select-image are protected)
   const protectedPages = [
     '/polish/add',
     '/image-selection',
-    '/polish/[id]', // This will match any polish detail page
+    '/polish/[id]/edit',
+    '/polish/[id]/select-image',
   ];
 
   // Check if the current path matches any protected page
   if (protectedPages.some(page => {
     if (page.includes('[')) {
       // Handle dynamic routes by checking the pattern
-      const pattern = new RegExp('^' + page.replace(/\[.*?\]/, '[^/]+') + '$');
+      const pattern = new RegExp('^' + page.replace(/\[.*?\]/g, '[^/]+') + '$');
       return pattern.test(pathname);
     }
     return pathname === page;

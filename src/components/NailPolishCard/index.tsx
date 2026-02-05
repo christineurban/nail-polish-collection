@@ -51,16 +51,13 @@ export const NailPolishCard: FC<NailPolishCardProps> = ({
   const { isAuthenticated } = useAuth();
 
   const handleContentClick = () => {
-    if (isAuthenticated) {
-      router.push(`/polish/${id}`);
-    } else {
-      router.push(`/login?from=/polish/${id}`);
-    }
+    router.push(`/polish/${id}`);
   };
 
   const handleImageAreaClick = () => {
+    // When logged out, always go to details (edit/choose image require login)
     if (!isAuthenticated) {
-      router.push(`/login?from=/polish/${id}`);
+      router.push(`/polish/${id}`);
       return;
     }
 
@@ -74,8 +71,6 @@ export const NailPolishCard: FC<NailPolishCardProps> = ({
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (!isAuthenticated) return;
-
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
       handleContentClick();
@@ -86,9 +81,9 @@ export const NailPolishCard: FC<NailPolishCardProps> = ({
     <>
       <StyledCard
         onKeyDown={handleKeyDown}
-        tabIndex={isAuthenticated ? 0 : -1}
-        role={isAuthenticated ? "button" : "article"}
-        aria-label={isAuthenticated ? `View details for ${brand} ${name}` : `${brand} ${name}`}
+        tabIndex={0}
+        role="button"
+        aria-label={`View details for ${brand} ${name}`}
         $isAuthenticated={isAuthenticated}
       >
         <StyledClickableArea

@@ -14,7 +14,6 @@ import {
   StyledImageContainer,
   StyledImageActions,
   StyledDetailsContent,
-  StyledDisabledMessage
 } from './index.styled';
 import { useRouter, useSearchParams } from 'next/navigation';
 
@@ -190,9 +189,12 @@ function NailPolishDetailsContent({ polish }: NailPolishDetailsProps) {
               Edit Polish
             </Button>
           ) : (
-            <StyledDisabledMessage>
-              Please log in to edit this polish
-            </StyledDisabledMessage>
+            <Button
+              onClick={() => router.push(`/login?from=${encodeURIComponent(`/polish/${polish.id}/edit`)}`)}
+              $fullWidth
+            >
+              Log in to edit
+            </Button>
           )}
         </StyledDetailsContent>
       </StyledDetails>
