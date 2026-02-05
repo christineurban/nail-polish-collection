@@ -114,6 +114,8 @@ function HomeContent() {
         if (filters.rating.length > 0) {
           filters.rating.forEach(rating => params.append('rating', rating));
         }
+        // Default to recently updated when no sort in URL; don't add param so URL stays clean
+        params.set('sort', filters.sort || 'updated-desc');
         params.set('page', filters.page);
         params.set('limit', '45');
 

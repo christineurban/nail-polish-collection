@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { SingleSelect } from '@/components/fields/SingleSelect';
 import { MultiSelect } from '@/components/fields/MultiSelect';
 import { Button } from '@/components/Button';
@@ -68,12 +68,30 @@ function FilterSortContent({
   displayedPolishes,
 }: FilterSortProps): JSX.Element {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [filters, setFilters] = useState(currentFilters);
   const [localSearch, setLocalSearch] = useState(currentFilters.search);
   const [isFiltersVisible, setIsFiltersVisible] = useState(true);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [shouldKeepDrawerOpen, setShouldKeepDrawerOpen] = useState(false);
+
+  // Sync filter state from URL when navigating (e.g. clicking "View All" in nav)
+  useEffect(() => {
+    const fromUrl = {
+      brand: searchParams.getAll('brand') || [],
+      finish: searchParams.getAll('finish') || [],
+      color: searchParams.getAll('color') || [],
+      search: searchParams.get('search') || '',
+      sort: searchParams.get('sort') || '',
+      rating: searchParams.getAll('rating') || [],
+      hasImage: searchParams.get('hasImage') || '',
+      isOld: searchParams.get('isOld') || '',
+      page: searchParams.get('page') || '1',
+    };
+    setFilters(fromUrl);
+    setLocalSearch(fromUrl.search);
+  }, [searchParams]);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -196,14 +214,13 @@ function FilterSortContent({
 
   // Add these options at the component level
   const sortOptions = [
-    { value: '', label: 'Default' },
+    { value: '', label: 'Default: Recently Updated' },
     { value: 'brand-asc', label: 'Brand (A-Z)' },
     { value: 'brand-desc', label: 'Brand (Z-A)' },
     { value: 'name-asc', label: 'Name (A-Z)' },
     { value: 'name-desc', label: 'Name (Z-A)' },
     { value: 'rating-desc', label: 'Rating (High-Low)' },
     { value: 'rating-asc', label: 'Rating (Low-High)' },
-    { value: 'updated-desc', label: 'Recently Updated' },
     { value: 'updated-asc', label: 'Oldest Updated' }
   ];
 
@@ -465,7 +482,7 @@ function FilterSortContent({
           )}
         </StyledFilterHeader>
         <SingleSelect
-          value={sortOptions.find(option => option.value === filters.sort)?.label || 'Default'}
+          value={sortOptions.find(option => option.value === filters.sort)?.label || 'Recently Updated'}
           options={sortOptions.map(option => option.label)}
           placeholder="Select sort order"
           onChange={(selectedLabel) => {

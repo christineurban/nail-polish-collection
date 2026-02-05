@@ -13,6 +13,7 @@ export async function GET(request: Request) {
     const finishes = searchParams.getAll('finish');
     const ratings = searchParams.getAll('rating');
     const isOld = searchParams.get('isOld');
+    const sort = searchParams.get('sort') || '';
     const page = parseInt(searchParams.get('page') || '1');
     const limit = parseInt(searchParams.get('limit') || '10');
 
@@ -89,6 +90,31 @@ export async function GET(request: Request) {
       };
     }
 
+    // Build orderBy from sort param (matches FilterSort options)
+    const orderBy = (() => {
+      switch (sort) {
+        case 'brand-asc':
+          return [{ brands: { name: 'asc' } as const }, { name: 'asc' as const }];
+        case 'brand-desc':
+          return [{ brands: { name: 'desc' } as const }, { name: 'asc' as const }];
+        case 'name-asc':
+          return [{ name: 'asc' as const }, { brands: { name: 'asc' } as const }];
+        case 'name-desc':
+          return [{ name: 'desc' as const }, { brands: { name: 'asc' } as const }];
+        case 'rating-desc':
+          return [{ rating: 'desc' as const }, { brands: { name: 'asc' } as const }, { name: 'asc' as const }];
+        case 'rating-asc':
+          return [{ rating: 'asc' as const }, { brands: { name: 'asc' } as const }, { name: 'asc' as const }];
+        case 'updated-desc':
+          return [{ updated_at: 'desc' as const }, { brands: { name: 'asc' } as const }, { name: 'asc' as const }];
+        case 'updated-asc':
+          return [{ updated_at: 'asc' as const }, { brands: { name: 'asc' } as const }, { name: 'asc' as const }];
+        default:
+          // Default (no sort in URL) = recently updated
+          return [{ updated_at: 'desc' as const }, { brands: { name: 'asc' } as const }, { name: 'asc' as const }];
+      }
+    })();
+
     // First, get all polishes that match the filters
     const polishes = await prisma.nail_polish.findMany({
       where,
@@ -105,10 +131,7 @@ export async function GET(request: Request) {
           }
         }
       },
-      orderBy: [
-        { brands: { name: 'asc' } },
-        { name: 'asc' }
-      ],
+      orderBy,
       skip: (page - 1) * limit,
       take: limit,
     });
