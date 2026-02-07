@@ -214,7 +214,7 @@ function FilterSortContent({
 
   // Add these options at the component level
   const sortOptions = [
-    { value: '', label: 'Default: Recently Updated' },
+    { value: '', label: 'Default: New & Recently Updated' },
     { value: 'brand-asc', label: 'Brand (A-Z)' },
     { value: 'brand-desc', label: 'Brand (Z-A)' },
     { value: 'name-asc', label: 'Name (A-Z)' },

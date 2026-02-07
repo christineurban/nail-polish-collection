@@ -110,8 +110,13 @@ export async function GET(request: Request) {
         case 'updated-asc':
           return [{ updated_at: 'asc' as const }, { brands: { name: 'asc' } as const }, { name: 'asc' as const }];
         default:
-          // Default (no sort in URL) = recently updated
-          return [{ updated_at: 'desc' as const }, { brands: { name: 'asc' } as const }, { name: 'asc' as const }];
+          // Default only: new (!is_old) first, then old (is_old), then recently updated
+          return [
+            { is_old: 'asc' as const },
+            { updated_at: 'desc' as const },
+            { brands: { name: 'asc' } as const },
+            { name: 'asc' as const },
+          ];
       }
     })();
 
