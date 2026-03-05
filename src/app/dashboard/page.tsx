@@ -324,13 +324,21 @@ export default function DashboardPage() {
     setSearchTerm('');
     setViewMode('card');
 
+    // scroll after the state updates and DOM renders
+    setTimeout(() => scrollToAttributeList(), 0);
+  };
+
+  const scrollToAttributeList = () => {
     if (attributeListRef.current) {
-      const navHeight = 64; // Height of the navigation bar
-      const elementPosition = attributeListRef.current.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - navHeight;
+      const navbar = document.querySelector('nav');
+      const navbarHeight = navbar?.offsetHeight || 0;
+      const totalOffset = navbarHeight + 30;
+
+      const elementTop = attributeListRef.current.getBoundingClientRect().top + window.scrollY;
+      const targetScroll = elementTop - totalOffset;
 
       window.scrollTo({
-        top: offsetPosition,
+        top: targetScroll,
         behavior: 'smooth'
       });
     }
@@ -339,6 +347,13 @@ export default function DashboardPage() {
   const getAttributeList = (type: 'colors' | 'finishes' | 'brands'): Attribute[] => {
     return type === 'colors' ? colors : type === 'finishes' ? finishes : brands;
   };
+
+  // scroll the page when a new attribute section is revealed
+  useEffect(() => {
+    if (selectedAttribute) {
+      scrollToAttributeList();
+    }
+  }, [selectedAttribute]);
 
   if (isLoading) {
     return <PageHeader title="Loading..." />;
