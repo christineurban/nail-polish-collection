@@ -72,11 +72,16 @@ export default function DashboardPage() {
   const [finishes, setFinishes] = useState<Attribute[]>([]);
   const [brands, setBrands] = useState<Attribute[]>([]);
   const [selectedAttribute, setSelectedAttribute] = useState<'brands' | 'colors' | 'finishes' | null>(null);
-  const [sortOrder, setSortOrder] = useState<SortOrder>('name-asc');
+  const [sortOrder, setSortOrder] = useState<SortOrder>('count-asc');
   const [searchTerm, setSearchTerm] = useState('');
   const [success, setSuccess] = useState<string | null>(null);
   const [newAttributeName, setNewAttributeName] = useState('');
-  const [viewMode, setViewMode] = useState<ViewMode>('card');
+  const [viewMode, setViewMode] = useState<ViewMode>(() => {
+    if (typeof window !== 'undefined') {
+      return window.innerWidth < 768 ? 'table' : 'card';
+    }
+    return 'card';
+  });
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const attributeListRef = useRef<HTMLDivElement>(null);
 
@@ -226,6 +231,12 @@ export default function DashboardPage() {
   const renderTable = (attributes: Attribute[], attributeType: 'color' | 'finish' | 'brand') => {
     const columns = [
       {
+        header: 'Count',
+        key: 'count' as const,
+        sortable: true,
+        render: (item: Attribute) => item.count.toString()
+      },
+      {
         header: 'Name',
         key: 'name' as const,
         sortable: true,
@@ -247,12 +258,6 @@ export default function DashboardPage() {
             )}
           </StyledNameCell>
         )
-      },
-      {
-        header: 'Count',
-        key: 'count' as const,
-        sortable: true,
-        render: (item: Attribute) => item.count.toString()
       },
       {
         header: <StyledPercentageHeader><span className="desktop-only">Percentage</span><span className="mobile-only">%</span></StyledPercentageHeader>,
@@ -320,9 +325,11 @@ export default function DashboardPage() {
   const handleStatClick = (type: 'brands' | 'colors' | 'finishes') => {
     // allow anyone to open the attribute list; only the buttons inside are gated
     setSelectedAttribute(type);
-    setSortOrder('name-asc');
+    setSortOrder('count-asc');
     setSearchTerm('');
-    setViewMode('card');
+    // detect mobile and set appropriate view mode
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+    setViewMode(isMobile ? 'table' : 'card');
 
     // scroll after the state updates and DOM renders
     setTimeout(() => scrollToAttributeList(), 0);
@@ -496,18 +503,6 @@ export default function DashboardPage() {
             <StyledSortControls>
               <StyledSortButton
                 onClick={() => {
-                  const newOrder = sortOrder.startsWith('name-')
-                    ? sortOrder === 'name-asc' ? 'name-desc' : 'name-asc'
-                    : 'name-asc';
-                  setSortOrder(newOrder);
-                }}
-                $isActive={sortOrder.startsWith('name-')}
-                $direction={sortOrder === 'name-asc' ? 'asc' : sortOrder === 'name-desc' ? 'desc' : undefined}
-              >
-                Name
-              </StyledSortButton>
-              <StyledSortButton
-                onClick={() => {
                   const newOrder = sortOrder.startsWith('count-')
                     ? sortOrder === 'count-asc' ? 'count-desc' : 'count-asc'
                     : 'count-asc';
@@ -517,6 +512,18 @@ export default function DashboardPage() {
                 $direction={sortOrder === 'count-asc' ? 'asc' : sortOrder === 'count-desc' ? 'desc' : undefined}
               >
                 Count
+              </StyledSortButton>
+              <StyledSortButton
+                onClick={() => {
+                  const newOrder = sortOrder.startsWith('name-')
+                    ? sortOrder === 'name-asc' ? 'name-desc' : 'name-asc'
+                    : 'name-asc';
+                  setSortOrder(newOrder);
+                }}
+                $isActive={sortOrder.startsWith('name-')}
+                $direction={sortOrder === 'name-asc' ? 'asc' : sortOrder === 'name-desc' ? 'desc' : undefined}
+              >
+                Name
               </StyledSortButton>
             </StyledSortControls>
 

@@ -47,7 +47,6 @@ export const StyledTableCell = styled.td`
   word-break: break-word;
   min-width: 60px;
 
-  &:nth-child(2),
   &:nth-child(3) {
     text-align: center;
   }
@@ -69,7 +68,6 @@ export const StyledTableHeader = styled.th<TableHeaderProps>`
   font-weight: 600;
   white-space: nowrap;
 
-  &:nth-child(2),
   &:nth-child(3) {
     text-align: center;
   }
