@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import { PageHeader } from '@/components/PageHeader';
 import {
   StyledStatsGrid,
@@ -86,12 +86,19 @@ export default function DashboardPage() {
     brands: 'brand'
   };
 
+  const pathname = usePathname();
+
   useEffect(() => {
     const fetchData = async () => {
       try {
+        // make sure we always hit the network; the client-side fetch caching can leave
+        // the dashboard showing a value that was valid a few seconds ago.  adding a polish
+        // or editing one doesn't trigger the component to remount, so the stale response
+        // may hang around until the user refreshes manually.  passing `cache: 'no-store'`
+        // tells the browser/React to skip any intermediate cache and re‑fetch.
         const [statsResponse, attributesResponse] = await Promise.all([
-          fetch('/api/stats'),
-          fetch('/api/attributes')
+          fetch('/api/stats', { cache: 'no-store' }),
+          fetch('/api/attributes', { cache: 'no-store' })
         ]);
 
         const statsData = await statsResponse.json();
@@ -111,7 +118,7 @@ export default function DashboardPage() {
     };
 
     fetchData();
-  }, []);
+  }, [pathname]);
 
   const handleDelete = async (id: string, type: 'color' | 'finish' | 'brand') => {
     try {
