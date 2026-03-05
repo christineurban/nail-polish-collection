@@ -121,6 +121,7 @@ export default function DashboardPage() {
   }, [pathname]);
 
   const handleDelete = async (id: string, type: 'color' | 'finish' | 'brand') => {
+    if (!isAuthenticated) return;
     try {
       const response = await fetch('/api/attributes', {
         method: 'DELETE',
@@ -149,6 +150,10 @@ export default function DashboardPage() {
   };
 
   const handleAdd = async (e: React.FormEvent, type: 'color' | 'finish' | 'brand') => {
+    if (!isAuthenticated) {
+      e.preventDefault();
+      return;
+    }
     e.preventDefault();
 
     if (!newAttributeName.trim()) {
@@ -227,7 +232,7 @@ export default function DashboardPage() {
         render: (item: Attribute) => (
           <StyledNameCell>
             {item.name}
-            {Number(item.count) <= 0 && (
+            {isAuthenticated && Number(item.count) <= 0 && (
               <>
                 <BsTrash
                   onClick={() => handleDelete(item.id, attributeType)}
@@ -303,7 +308,7 @@ export default function DashboardPage() {
             value={`${attr.count} polishes`}
             percentage={`${attr.percentage.toFixed(1)}%`}
             variant="attribute"
-            onClick={() => isAuthenticated && handleStatClick(`${attributeType}s` as 'brands' | 'colors' | 'finishes')}
+            onClick={() => handleStatClick(`${attributeType}s` as 'brands' | 'colors' | 'finishes')}
             showDelete={isAuthenticated && attr.count === 0}
             onDelete={() => isAuthenticated && handleDelete(attr.id, attributeType)}
           />
@@ -313,10 +318,7 @@ export default function DashboardPage() {
   };
 
   const handleStatClick = (type: 'brands' | 'colors' | 'finishes') => {
-    if (!isAuthenticated) {
-      return;
-    }
-
+    // allow anyone to open the attribute list; only the buttons inside are gated
     setSelectedAttribute(type);
     setSortOrder('name-asc');
     setSearchTerm('');
@@ -354,20 +356,22 @@ export default function DashboardPage() {
     <>
       <PageHeader
         title="Dashboard"
-        description={isAuthenticated ? "Click on a tile to view and manage details" : "View collection statistics"}
+        description={isAuthenticated
+          ? "Click on a tile to view and manage details"
+          : "Click on a tile to view details"}
       />
       <StyledStatsGrid>
         <Tile
           title="Total Polishes"
           value={stats.totalPolishes}
-          description="Polishes in your collection"
+          description="Polishes"
           onClick={() => router.push('/')}
         />
 
         <Tile
           title="Brands"
           value={stats.totalBrands}
-          description="Different brands collected"
+          description="Individual brands"
           onClick={() => handleStatClick('brands')}
           $isActive={selectedAttribute === 'brands'}
         />
@@ -375,7 +379,7 @@ export default function DashboardPage() {
         <Tile
           title="Colors"
           value={stats.totalColors}
-          description="Unique colors in your collection"
+          description="Unique colors"
           onClick={() => handleStatClick('colors')}
           $isActive={selectedAttribute === 'colors'}
         />
@@ -383,7 +387,7 @@ export default function DashboardPage() {
         <Tile
           title="Finishes"
           value={stats.totalFinishes}
-          description="Different finishes available"
+          description="Distinct finishes"
           onClick={() => handleStatClick('finishes')}
           $isActive={selectedAttribute === 'finishes'}
         />
@@ -446,15 +450,17 @@ export default function DashboardPage() {
           <div ref={attributeListRef}>
             <StyledSectionHeading>
               <h2>{selectedAttribute.charAt(0).toUpperCase() + selectedAttribute.slice(1)}</h2>
-              <StyledAddButtonContainer>
-                <a
-                  onClick={() => setIsAddModalOpen(true)}
-                  role="button"
-                  tabIndex={0}
-                >
-                  + Add {singularForms[selectedAttribute]}
-                </a>
-              </StyledAddButtonContainer>
+              {isAuthenticated && (
+                <StyledAddButtonContainer>
+                  <a
+                    onClick={() => setIsAddModalOpen(true)}
+                    role="button"
+                    tabIndex={0}
+                  >
+                    + Add {singularForms[selectedAttribute]}
+                  </a>
+                </StyledAddButtonContainer>
+              )}
             </StyledSectionHeading>
 
             <StyledViewControls>
@@ -509,19 +515,21 @@ export default function DashboardPage() {
                 />
               </StyledInputContainer>
 
-              <StyledAddForm onSubmit={(e) => handleAdd(e, singularForms[selectedAttribute])}>
-                <StyledInputContainer>
-                  <Input
-                    placeholder={`Add new ${singularForms[selectedAttribute]}...`}
-                    value={newAttributeName}
-                    onChange={setNewAttributeName}
-                    aria-label={`Add new ${singularForms[selectedAttribute]}`}
-                  />
-                </StyledInputContainer>
-                <Button type="submit">
-                  Add {singularForms[selectedAttribute]}
-                </Button>
-              </StyledAddForm>
+              {isAuthenticated && (
+                <StyledAddForm onSubmit={(e) => handleAdd(e, singularForms[selectedAttribute])}>
+                  <StyledInputContainer>
+                    <Input
+                      placeholder={`Add new ${singularForms[selectedAttribute]}...`}
+                      value={newAttributeName}
+                      onChange={setNewAttributeName}
+                      aria-label={`Add new ${singularForms[selectedAttribute]}`}
+                    />
+                  </StyledInputContainer>
+                  <Button type="submit">
+                    Add {singularForms[selectedAttribute]}
+                  </Button>
+                </StyledAddForm>
+              )}
             </StyledInputControls>
 
             {viewMode === 'card' ? (
@@ -530,53 +538,57 @@ export default function DashboardPage() {
               renderTable(filterAttributes(sortAttributes(getAttributeList(selectedAttribute))), singularForms[selectedAttribute])
             )}
 
-            <StyledNote>
-              Note: A {singularForms[selectedAttribute]} can only be deleted if there are no polishes associated with it
-            </StyledNote>
+            {isAuthenticated && (
+              <StyledNote>
+                Note: A {singularForms[selectedAttribute]} can only be deleted if there are no polishes associated with it
+              </StyledNote>
+            )}
 
-            <Modal
-              isOpen={isAddModalOpen}
-              onClose={() => {
-                setIsAddModalOpen(false);
-                setNewAttributeName('');
-              }}
-              title={`Add new ${singularForms[selectedAttribute]}`}
-              footer={
-                <>
-                  <Button
-                    onClick={() => {
-                      setIsAddModalOpen(false);
-                      setNewAttributeName('');
-                    }}
-                    $variant="secondary"
-                  >
-                    Cancel
-                  </Button>
-                  <Button
-                    onClick={(e) => {
-                      handleAdd(e as any, singularForms[selectedAttribute]);
-                      setIsAddModalOpen(false);
-                    }}
-                  >
-                    Add {singularForms[selectedAttribute]}
-                  </Button>
-                </>
-              }
-            >
-              <form onSubmit={(e) => {
-                e.preventDefault();
-                handleAdd(e, singularForms[selectedAttribute]);
-                setIsAddModalOpen(false);
-              }}>
-                <Input
-                  type="text"
-                  value={newAttributeName}
-                  onChange={setNewAttributeName}
-                  placeholder={`Enter ${singularForms[selectedAttribute]} name...`}
-                  autoFocus
-                />
-              </form>
-            </Modal>
+            {isAuthenticated && (
+              <Modal
+                isOpen={isAddModalOpen}
+                onClose={() => {
+                  setIsAddModalOpen(false);
+                  setNewAttributeName('');
+                }}
+                title={`Add new ${singularForms[selectedAttribute]}`}
+                footer={
+                  <>
+                    <Button
+                      onClick={() => {
+                        setIsAddModalOpen(false);
+                        setNewAttributeName('');
+                      }}
+                      $variant="secondary"
+                    >
+                      Cancel
+                    </Button>
+                    <Button
+                      onClick={(e) => {
+                        handleAdd(e as any, singularForms[selectedAttribute]);
+                        setIsAddModalOpen(false);
+                      }}
+                    >
+                      Add {singularForms[selectedAttribute]}
+                    </Button>
+                  </>
+                }
+              >
+                <form onSubmit={(e) => {
+                  e.preventDefault();
+                  handleAdd(e, singularForms[selectedAttribute]);
+                  setIsAddModalOpen(false);
+                }}>
+                  <Input
+                    type="text"
+                    value={newAttributeName}
+                    onChange={setNewAttributeName}
+                    placeholder={`Enter ${singularForms[selectedAttribute]} name...`}
+                    autoFocus
+                  />
+                </form>
+              </Modal>
+            )}
           </div>
         </>
       )}
