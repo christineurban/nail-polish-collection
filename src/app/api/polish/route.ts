@@ -46,6 +46,7 @@ export async function POST(request: Request) {
           total_bottles: data.totalBottles || undefined,
           empty_bottles: data.emptyBottles || undefined,
           is_old: data.isOld === null ? undefined : data.isOld,
+          is_indie: data.isIndie,
           image_url: imageUrl,
           created_at: new Date(),
           updated_at: new Date()

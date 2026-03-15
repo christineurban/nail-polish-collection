@@ -15,6 +15,7 @@ export interface Polish {
   totalBottles: number | null;
   emptyBottles: number | null;
   isOld: boolean | null;
+  isIndie: boolean;
 }
 
 export interface NailPolishWithRelations extends nail_polish {

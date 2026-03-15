@@ -13,6 +13,7 @@ export async function GET(request: Request) {
     const finishes = searchParams.getAll('finish');
     const ratings = searchParams.getAll('rating');
     const isOld = searchParams.get('isOld');
+    const isIndie = searchParams.get('isIndie');
     const sort = searchParams.get('sort') || '';
     const page = parseInt(searchParams.get('page') || '1');
     const limit = parseInt(searchParams.get('limit') || '10');
@@ -43,6 +44,14 @@ export async function GET(request: Request) {
       where.AND = where.AND || [];
       where.AND.push({
         is_old: false // Show only polishes that are NOT old when isOld is true
+      });
+    }
+
+    // Add isIndie filter if provided (we only ever send 'true' from the UI)
+    if (isIndie === 'true') {
+      where.AND = where.AND || [];
+      where.AND.push({
+        is_indie: isIndie === 'true'
       });
     }
 

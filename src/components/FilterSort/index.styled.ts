@@ -69,8 +69,7 @@ export const StyledClearAllContainer = styled.div`
   }
 
   @media (min-width: 1200px) {
-    grid-column: 3;
-    grid-row: 3;
+    grid-column: 1 / -1;
     align-self: flex-end;
   }
 `;

@@ -47,7 +47,8 @@ export async function GET(
       lastUsed: polish.last_used,
       totalBottles: polish.total_bottles,
       emptyBottles: polish.empty_bottles,
-      isOld: polish.is_old
+      isOld: polish.is_old,
+      isIndie: polish.is_indie
     });
   } catch (error) {
     console.error('Error fetching polish:', error);
@@ -145,6 +146,7 @@ export async function PUT(
           total_bottles: data.totalBottles || undefined,
           empty_bottles: data.emptyBottles || undefined,
           is_old: data.isOld === null ? undefined : data.isOld,
+          is_indie: data.isIndie,
           updated_at: new Date()
         }
       });

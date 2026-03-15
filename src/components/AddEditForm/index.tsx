@@ -41,6 +41,7 @@ interface AddEditFormData {
   rating?: Rating;
   notes?: string;
   isOld: boolean | null;
+  isIndie: boolean;
   lastUsed?: Date;
   totalBottles?: number;
   emptyBottles?: number;
@@ -87,6 +88,7 @@ function AddEditFormContent({
       colors: [],
       finishes: [],
       isOld: isEditing ? null : false,
+      isIndie: true,
     }
   );
   const [errors, setErrors] = useState<FormErrors>({});
@@ -616,6 +618,18 @@ function AddEditFormContent({
                   } else {
                     setFormData((prev) => ({ ...prev, isOld: value === 'Yes' }));
                   }
+                }}
+                disableSearch={true}
+              />
+            </StyledFormGroup>
+            <StyledFormGroup>
+              <label>Is indie polish?</label>
+              <SingleSelect
+                value={formData.isIndie ? 'Yes' : 'No'}
+                options={['Yes', 'No']}
+                placeholder="Select answer"
+                onChange={(value) => {
+                  setFormData((prev) => ({ ...prev, isIndie: value === 'Yes' }));
                 }}
                 disableSearch={true}
               />

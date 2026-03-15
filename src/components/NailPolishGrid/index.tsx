@@ -41,6 +41,7 @@ interface NailPolishGridProps {
     rating: string[];
     hasImage: string;
     isOld: string;
+    isIndie: string;
   };
   totalPolishes: number;
   isLoading?: boolean;

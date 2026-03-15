@@ -46,6 +46,7 @@ interface FilterSortProps {
     rating: string[];
     hasImage: string;
     isOld: string;
+     isIndie: string;
   };
   totalPolishes: number;
   displayedPolishes: number;
@@ -87,6 +88,7 @@ function FilterSortContent({
       rating: searchParams.getAll('rating') || [],
       hasImage: searchParams.get('hasImage') || '',
       isOld: searchParams.get('isOld') || '',
+      isIndie: searchParams.get('isIndie') || '',
       page: searchParams.get('page') || '1',
     };
     setFilters(fromUrl);
@@ -206,7 +208,8 @@ function FilterSortContent({
       sort: '',
       rating: [],
       hasImage: '',
-      isOld: ''
+      isOld: '',
+      isIndie: ''
     };
     setFilters(newFilters);
     updateUrl(newFilters);
@@ -214,7 +217,7 @@ function FilterSortContent({
 
   // Add these options at the component level
   const sortOptions = [
-    { value: '', label: 'Default: New & Recently Updated' },
+    { value: '', label: 'Default: New & Recently Added' },
     { value: 'brand-asc', label: 'Brand (A-Z)' },
     { value: 'brand-desc', label: 'Brand (Z-A)' },
     { value: 'name-asc', label: 'Name (A-Z)' },
@@ -237,7 +240,7 @@ function FilterSortContent({
     );
 
     // Check string filters, excluding empty strings and default values
-    const hasStringFilters = ['search', 'sort', 'hasImage', 'isOld'].some(
+    const hasStringFilters = ['search', 'sort', 'hasImage', 'isOld', 'isIndie'].some(
       key => {
         const value = filters[key as keyof typeof filters];
         return value !== '' && value !== 'false';
@@ -266,6 +269,7 @@ function FilterSortContent({
     if (filters.sort) count++;
     if (filters.hasImage) count++;
     if (filters.isOld) count++;
+    if (filters.isIndie) count++;
     return count;
   };
   const activeFilterCount = getActiveFilterCount();
@@ -527,6 +531,25 @@ function FilterSortContent({
           placeholder="Hide old polishes?"
           onChange={(selectedValue) => {
             handleChange('isOld')(selectedValue === 'Yes' ? 'true' : '');
+          }}
+        />
+      </StyledFilterGroup>
+
+      <StyledFilterGroup>
+        <StyledFilterHeader>
+          <StyledLabel>Indie Only</StyledLabel>
+          {filters.isIndie && (
+            <StyledClearButton onClick={() => clearFilter('isIndie')}>
+              Clear
+            </StyledClearButton>
+          )}
+        </StyledFilterHeader>
+        <SingleSelect
+          value={filters.isIndie === 'true' ? 'Yes' : 'No'}
+          options={['Yes', 'No']}
+          placeholder="Show indie brands only?"
+          onChange={(selectedValue) => {
+            handleChange('isIndie')(selectedValue === 'Yes' ? 'true' : '');
           }}
         />
       </StyledFilterGroup>

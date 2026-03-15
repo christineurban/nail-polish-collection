@@ -57,6 +57,7 @@ function HomeContent() {
     rating: searchParams.getAll('rating') || [],
     hasImage: searchParams.get('hasImage') || '',
     isOld: searchParams.get('isOld') || '',
+    isIndie: searchParams.get('isIndie') || '',
     page: searchParams.get('page') || '1',
   };
 
@@ -92,6 +93,7 @@ function HomeContent() {
       rating: searchParams.getAll('rating') || [],
       hasImage: searchParams.get('hasImage') || '',
       isOld: searchParams.get('isOld') || '',
+      isIndie: searchParams.get('isIndie') || '',
       page: searchParams.get('page') || '1',
     };
 
@@ -102,6 +104,7 @@ function HomeContent() {
         if (filters.search) params.set('search', filters.search);
         if (filters.hasImage) params.set('hasImage', filters.hasImage);
         if (filters.isOld) params.set('isOld', filters.isOld);
+        if (filters.isIndie) params.set('isIndie', filters.isIndie);
         if (filters.brand.length > 0) {
           filters.brand.forEach(brand => params.append('brand', brand));
         }
