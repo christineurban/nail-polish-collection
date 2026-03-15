@@ -38,6 +38,8 @@ export const StyledTableRow = styled.tr`
   &:hover {
     background-color: ${({ theme }) => theme.colors.background.secondary};
   }
+
+  cursor: pointer;
 `;
 
 export const StyledTableCell = styled.td`

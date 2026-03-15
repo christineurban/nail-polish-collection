@@ -220,6 +220,12 @@ export default function DashboardPage() {
     });
   };
 
+  const navigateToFilteredList = (attributeType: 'color' | 'finish' | 'brand', name: string) => {
+    const params = new URLSearchParams();
+    params.append(attributeType, name);
+    router.push(`/?${params.toString()}`);
+  };
+
   const filterAttributes = (attributes: Attribute[]): Attribute[] => {
     if (!searchTerm) return attributes;
     const term = searchTerm.toLowerCase();
@@ -246,7 +252,10 @@ export default function DashboardPage() {
             {isAuthenticated && Number(item.count) <= 0 && (
               <>
                 <BsTrash
-                  onClick={() => handleDelete(item.id, attributeType)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleDelete(item.id, attributeType);
+                  }}
                   role="button"
                   aria-label={`Delete ${item.name}`}
                   className="delete-icon"
@@ -299,6 +308,7 @@ export default function DashboardPage() {
         sortField={getSortField()}
         sortDirection={getSortDirection(getSortField() || '')}
         onSort={handleSort}
+        onRowClick={(item) => navigateToFilteredList(attributeType, item.name)}
       />
     );
   };
@@ -313,7 +323,7 @@ export default function DashboardPage() {
             value={`${attr.count} polishes`}
             percentage={`${attr.percentage.toFixed(1)}%`}
             variant="attribute"
-            onClick={() => handleStatClick(`${attributeType}s` as 'brands' | 'colors' | 'finishes')}
+            onClick={() => navigateToFilteredList(attributeType, attr.name)}
             showDelete={isAuthenticated && attr.count === 0}
             onDelete={() => isAuthenticated && handleDelete(attr.id, attributeType)}
           />

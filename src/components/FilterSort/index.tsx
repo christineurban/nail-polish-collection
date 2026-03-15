@@ -72,7 +72,7 @@ function FilterSortContent({
   const searchParams = useSearchParams();
   const [filters, setFilters] = useState(currentFilters);
   const [localSearch, setLocalSearch] = useState(currentFilters.search);
-  const [isFiltersVisible, setIsFiltersVisible] = useState(true);
+  const [isFiltersVisible, setIsFiltersVisible] = useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [shouldKeepDrawerOpen, setShouldKeepDrawerOpen] = useState(false);

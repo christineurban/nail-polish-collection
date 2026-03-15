@@ -21,6 +21,7 @@ interface TableProps<T> {
   sortField?: string;
   sortDirection?: 'asc' | 'desc';
   onSort?: (field: string) => void;
+  onRowClick?: (item: T) => void;
 }
 
 export const Table = <T extends object>({
@@ -28,7 +29,8 @@ export const Table = <T extends object>({
   columns,
   sortField,
   sortDirection,
-  onSort
+  onSort,
+  onRowClick
 }: TableProps<T>) => {
   return (
     <StyledTable>
@@ -49,7 +51,10 @@ export const Table = <T extends object>({
       </thead>
       <tbody>
         {data.map((item, index) => (
-          <StyledTableRow key={index}>
+          <StyledTableRow
+            key={index}
+            onClick={onRowClick ? () => onRowClick(item) : undefined}
+          >
             {columns.map((column) => (
               <StyledTableCell key={column.key as string}>
                 {column.render
