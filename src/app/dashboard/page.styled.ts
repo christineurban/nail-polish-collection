@@ -263,3 +263,63 @@ export const StyledNote = styled.p`
   margin-top: 1rem;
   font-style: italic;
 `;
+
+export const StyledToggleContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 1rem 0;
+  color: ${({ theme }) => theme.colors.text.primary};
+`;
+
+export const StyledToggleLabel = styled.label`
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 28px;
+`;
+
+export const StyledToggleInput = styled.input`
+  opacity: 0;
+  width: 0;
+  height: 0;
+
+  &:checked + span {
+    background-color: ${({ theme }) => theme.colors.primary[500]};
+    border-color: ${({ theme }) => theme.colors.primary[500]};
+  }
+
+  &:focus-visible + span {
+    outline: 2px solid ${({ theme }) => theme.colors.primary[500]};
+    outline-offset: 2px;
+  }
+
+  &:checked + span:before {
+    transform: translateX(22px);
+  }
+`;
+
+export const StyledToggleSlider = styled.span`
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: 2px solid ${({ theme }) => theme.colors.gray[200]};
+  transition: 0.3s;
+  border-radius: 28px;
+
+  &:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 2px;
+    bottom: 2px;
+    background-color: white;
+    transition: 0.3s;
+    border-radius: 50%;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+  }
+`;

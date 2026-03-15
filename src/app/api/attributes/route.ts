@@ -30,24 +30,41 @@ export async function GET() {
     ]);
 
     return NextResponse.json({
-      brands: brands.map(brand => ({
-        id: brand.id,
-        name: brand.name,
-        count: brand.nail_polish.length,
-        percentage: Number(((brand.nail_polish.length / totalPolishes) * 100).toFixed(1))
-      })),
-      colors: colors.map(color => ({
-        id: color.id,
-        name: color.name,
-        count: color.nail_polish.length,
-        percentage: Number(((color.nail_polish.length / totalPolishes) * 100).toFixed(1))
-      })),
-      finishes: finishes.map(finish => ({
-        id: finish.id,
-        name: finish.name,
-        count: finish.nail_polish.length,
-        percentage: Number(((finish.nail_polish.length / totalPolishes) * 100).toFixed(1))
-      }))
+      brands: brands.map(brand => {
+        const polishCount = brand.nail_polish.length;
+        const indieCount = brand.nail_polish.filter(polish => polish.is_indie).length;
+
+        return {
+          id: brand.id,
+          name: brand.name,
+          count: polishCount,
+          percentage: Number(((polishCount / totalPolishes) * 100).toFixed(1)),
+          polishCount,
+          hasIndie: indieCount > 0
+        };
+      }),
+      colors: colors.map(color => {
+        const polishCount = color.nail_polish.length;
+
+        return {
+          id: color.id,
+          name: color.name,
+          count: polishCount,
+          percentage: Number(((polishCount / totalPolishes) * 100).toFixed(1)),
+          polishCount
+        };
+      }),
+      finishes: finishes.map(finish => {
+        const polishCount = finish.nail_polish.length;
+
+        return {
+          id: finish.id,
+          name: finish.name,
+          count: polishCount,
+          percentage: Number(((polishCount / totalPolishes) * 100).toFixed(1)),
+          polishCount
+        };
+      })
     });
   } catch (error) {
     console.error('Error fetching attributes:', error);

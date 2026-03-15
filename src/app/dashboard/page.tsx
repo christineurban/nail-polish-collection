@@ -16,7 +16,11 @@ import {
   StyledInputControls,
   StyledNote,
   StyledAddButtonContainer,
-  StyledScrollIndicator
+  StyledScrollIndicator,
+  StyledToggleContainer,
+  StyledToggleLabel,
+  StyledToggleSlider,
+  StyledToggleInput,
 } from './page.styled';
 import { BsGrid, BsTable, BsTrash, BsChevronDown } from 'react-icons/bs';
 import { Table } from '@/components/Table';
@@ -62,6 +66,40 @@ interface Attribute {
 type SortOrder = 'name-asc' | 'name-desc' | 'count-asc' | 'count-desc';
 type ViewMode = 'card' | 'table';
 
+// Keep this list in sync with the INDIE_BRANDS list used in prisma/set-indie-polishes.ts
+const INDIE_BRANDS = [
+  'KBShimmer',
+  'Holo Taco',
+  'ILNP',
+  'Cirque Colors',
+  'Polish Me Silly',
+  'Mooncat',
+  'Penelope Luz',
+  'Phoenix',
+  'Cadillacquer',
+  'Glisten & Glow',
+  'Cupcake Polish',
+  'Painted Polish',
+  "What's Up Nails",
+  'Colores de Carol',
+  'Dance Legend',
+  'Serum No. 5',
+  'Wing Dust',
+  'A England',
+  'Arcane Lacquer',
+  'Bow Nail Polish',
+  'Colors By Llarowe',
+  'Crowstoes',
+  'Emily de Molly',
+  'Esmaltes da Kelly',
+  'Fancy Gloss',
+  'Hit the Bottle',
+  'I Scream Nails',
+  'Jade Diamond',
+  'Joss',
+  'Up Colors'
+];
+
 export default function DashboardPage() {
   const router = useRouter();
   const { isAuthenticated } = useAuth();
@@ -84,6 +122,7 @@ export default function DashboardPage() {
   });
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const attributeListRef = useRef<HTMLDivElement>(null);
+  const [showIndieOnlyBrands, setShowIndieOnlyBrands] = useState(false);
 
   const singularForms: Record<'brands' | 'colors' | 'finishes', 'brand' | 'color' | 'finish'> = {
     colors: 'color',
@@ -223,15 +262,24 @@ export default function DashboardPage() {
   const navigateToFilteredList = (attributeType: 'color' | 'finish' | 'brand', name: string) => {
     const params = new URLSearchParams();
     params.append(attributeType, name);
+    if (attributeType === 'brand' && showIndieOnlyBrands) {
+      params.append('isIndie', 'true');
+    }
     router.push(`/?${params.toString()}`);
   };
 
-  const filterAttributes = (attributes: Attribute[]): Attribute[] => {
-    if (!searchTerm) return attributes;
+  const filterAttributes = (attributes: Attribute[], attributeType: 'color' | 'finish' | 'brand'): Attribute[] => {
     const term = searchTerm.toLowerCase();
-    return attributes.filter(attr =>
-      attr.name.toLowerCase().includes(term)
-    );
+
+    return attributes.filter(attr => {
+      const matchesSearch = !term || attr.name.toLowerCase().includes(term);
+      const matchesIndie =
+        attributeType !== 'brand' || !showIndieOnlyBrands
+          ? true
+          : INDIE_BRANDS.includes(attr.name);
+
+      return matchesSearch && matchesIndie;
+    });
   };
 
   const renderTable = (attributes: Attribute[], attributeType: 'color' | 'finish' | 'brand') => {
@@ -280,8 +328,8 @@ export default function DashboardPage() {
       const newOrder = field === 'name'
         ? sortOrder === 'name-asc' ? 'name-desc' : 'name-asc'
         : field === 'count'
-        ? sortOrder === 'count-asc' ? 'count-desc' : 'count-asc'
-        : sortOrder;
+          ? sortOrder === 'count-asc' ? 'count-desc' : 'count-asc'
+          : sortOrder;
       setSortOrder(newOrder as SortOrder);
     };
 
@@ -537,6 +585,23 @@ export default function DashboardPage() {
               </StyledSortButton>
             </StyledSortControls>
 
+            {selectedAttribute === 'brands' && (
+              <StyledSortControls>
+                <StyledToggleContainer>
+                  <StyledToggleLabel>
+                    <StyledToggleInput
+                      type="checkbox"
+                      checked={showIndieOnlyBrands}
+                      onChange={() => setShowIndieOnlyBrands(prev => !prev)}
+                      aria-label="Toggle indie brands only"
+                    />
+                    <StyledToggleSlider />
+                  </StyledToggleLabel>
+                  <span>Indie brands only</span>
+                </StyledToggleContainer>
+              </StyledSortControls>
+            )}
+
             <StyledInputControls>
               <StyledInputContainer>
                 <Input
@@ -565,9 +630,21 @@ export default function DashboardPage() {
             </StyledInputControls>
 
             {viewMode === 'card' ? (
-              renderCards(filterAttributes(sortAttributes(getAttributeList(selectedAttribute))), singularForms[selectedAttribute])
+              renderCards(
+                filterAttributes(
+                  sortAttributes(getAttributeList(selectedAttribute)),
+                  singularForms[selectedAttribute]
+                ),
+                singularForms[selectedAttribute]
+              )
             ) : (
-              renderTable(filterAttributes(sortAttributes(getAttributeList(selectedAttribute))), singularForms[selectedAttribute])
+              renderTable(
+                filterAttributes(
+                  sortAttributes(getAttributeList(selectedAttribute)),
+                  singularForms[selectedAttribute]
+                ),
+                singularForms[selectedAttribute]
+              )
             )}
 
             {isAuthenticated && (
