@@ -72,7 +72,8 @@ export default function EditPage({ params }: EditPageProps) {
     lastUsed: polish.lastUsed || undefined,
     totalBottles: polish.totalBottles || 1,
     emptyBottles: polish.emptyBottles || 0,
-    isOld: polish.isOld
+    isOld: polish.isOld,
+    isIndie: polish.isIndie,
   };
 
   return (
