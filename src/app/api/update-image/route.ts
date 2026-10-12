@@ -6,6 +6,8 @@ import { uploadImageToSupabase } from '@/lib/utils/image';
 
 const prisma = new PrismaClient();
 
+const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
 function getFilenameFromUrl(imageUrl: string): string | null {
   try {
     const url = new URL(imageUrl);
@@ -55,6 +57,17 @@ export async function POST(request: Request) {
           success: false,
           error: 'Missing required field: id',
           details: 'The id field is required to identify the nail polish to update.'
+        },
+        { status: 400 }
+      );
+    }
+
+    if (typeof id !== 'string' || !UUID_REGEX.test(id)) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: 'Invalid polish id',
+          details: 'The id must be a UUID of an existing nail polish. Images for new polishes should be uploaded after the polish is created.'
         },
         { status: 400 }
       );

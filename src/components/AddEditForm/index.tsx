@@ -263,47 +263,39 @@ function AddEditFormContent({
     setIsLoading(true);
     try {
       let imageUrl = formData.imageUrl;
+      let compressedImage: string | undefined;
+
       if (imageFile) {
-        // Compress image before uploading
-        const compressedImage = await compressImage(imageFile);
-
-        const uploadResponse = await fetch('/api/update-image', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            id: formData.id || 'temp',
-            imageUrl: compressedImage
-          }),
-        });
-        if (!uploadResponse.ok) {
-          throw new Error('Failed to upload image');
-        }
-        const uploadData = await uploadResponse.json();
-        imageUrl = uploadData.data.image_url;
+        compressedImage = await compressImage(imageFile);
       } else if (pastedImage) {
-        // For pasted images, create a File object and compress it
-        const response = await fetch(pastedImage);
-        const blob = await response.blob();
+        const pastedResponse = await fetch(pastedImage);
+        const blob = await pastedResponse.blob();
         const file = new File([blob], 'pasted-image.jpg', { type: 'image/jpeg' });
-        const compressedImage = await compressImage(file);
+        compressedImage = await compressImage(file);
+      }
 
-        const uploadResponse = await fetch('/api/update-image', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            id: formData.id || 'temp',
-            imageUrl: compressedImage
-          }),
-        });
-        if (!uploadResponse.ok) {
-          throw new Error('Failed to upload pasted image');
+      if (compressedImage) {
+        // update-image looks up a polish UUID; new polishes don't have one yet.
+        // Create flow sends the compressed image to POST /api/polish instead.
+        if (formData.id) {
+          const uploadResponse = await fetch('/api/update-image', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              id: formData.id,
+              imageUrl: compressedImage
+            }),
+          });
+          if (!uploadResponse.ok) {
+            throw new Error('Failed to upload image');
+          }
+          const uploadData = await uploadResponse.json();
+          imageUrl = uploadData.data.image_url;
+        } else {
+          imageUrl = compressedImage;
         }
-        const uploadData = await uploadResponse.json();
-        imageUrl = uploadData.data.image_url;
       }
       const endpoint = isEditing ? `/api/polish/${formData.id}` : '/api/polish';
       const response = await fetch(endpoint, {
