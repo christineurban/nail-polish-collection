@@ -1,13 +1,15 @@
 import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
+import { AUTH_COOKIE, createAuthToken, safeEqual } from '@/lib/auth/token';
 
 export async function POST(request: Request) {
   try {
     const { password } = await request.json();
 
-    if (password === process.env.PASSWORD) {
-      // Set the authentication cookie with a more specific name
-      cookies().set('nail-polish-auth', 'true', {
+    const expected = process.env.PASSWORD;
+
+    if (expected && typeof password === 'string' && safeEqual(password, expected)) {
+      cookies().set(AUTH_COOKIE, await createAuthToken(expected), {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
         sameSite: 'strict',

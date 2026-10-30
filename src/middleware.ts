@@ -1,8 +1,9 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
+import { AUTH_COOKIE, isValidAuthToken } from '@/lib/auth/token';
 
-export function middleware(request: NextRequest) {
-  const isAuthenticated = request.cookies.get('nail-polish-auth')?.value === 'true';
+export async function middleware(request: NextRequest) {
+  const isAuthenticated = await isValidAuthToken(request.cookies.get(AUTH_COOKIE)?.value);
   const isLoginPage = request.nextUrl.pathname === '/login';
 
   // If trying to access login page while authenticated, redirect to home
