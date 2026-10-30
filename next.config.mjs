@@ -51,18 +51,6 @@ const nextConfig = {
   },
   // Disable static optimization for API routes
   output: 'standalone',
-  // Ensure environment variables are available during build
-  env: {
-    DATABASE_URL: process.env.DATABASE_URL,
-    SUPABASE_URL: process.env.SUPABASE_URL,
-    SUPABASE_SERVICE_ROLE_KEY: process.env.SUPABASE_SERVICE_ROLE_KEY,
-  },
-  // Add this to ensure environment variables are loaded
-  serverRuntimeConfig: {
-    DATABASE_URL: process.env.DATABASE_URL,
-    SUPABASE_URL: process.env.SUPABASE_URL,
-    SUPABASE_SERVICE_ROLE_KEY: process.env.SUPABASE_SERVICE_ROLE_KEY,
-  },
   // Add experimental features to improve build performance
   experimental: {
     serverComponentsExternalPackages: ['@prisma/client'],

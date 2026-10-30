@@ -49,32 +49,15 @@ const isProtectedRoute = (pathname: string, method: string) => {
     return true;
   }
 
-  // API routes protection
+  // Admin pages
+  if (pathname === '/admin' || pathname.startsWith('/admin/')) {
+    return true;
+  }
+
+  // API routes: reads are public, every mutation requires login (except logging in/out)
   if (pathname.startsWith('/api/')) {
-    // Allow all GET requests
-    if (method === 'GET') return false;
-
-    // Polish management routes
-    if (pathname.startsWith('/api/polish')) {
-      if (pathname === '/api/polish') return true; // POST /api/polish
-      if (pathname.match(/^\/api\/polish\/\d+$/)) return true; // PUT/DELETE /api/polish/[id]
-      return false;
-    }
-
-    // Image management routes
-    if (
-      pathname === '/api/update-image' ||
-      pathname === '/api/update-bulk-images' ||
-      pathname === '/api/delete-bulk-images' ||
-      pathname.startsWith('/api/remove-image/')
-    ) {
-      return true;
-    }
-
-    // Attributes management routes
-    if (pathname === '/api/attributes') {
-      return true;
-    }
+    if (method === 'GET' || method === 'HEAD' || method === 'OPTIONS') return false;
+    return !pathname.startsWith('/api/auth/');
   }
 
   return false;
