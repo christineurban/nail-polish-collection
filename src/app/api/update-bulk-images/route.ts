@@ -1,8 +1,6 @@
-import { PrismaClient } from '@prisma/client';
+import { prisma } from '@/lib/prisma';
 import { NextResponse } from 'next/server';
 import { uploadImageToSupabase } from '@/lib/utils/image';
-
-const prisma = new PrismaClient();
 
 export async function POST(request: Request) {
   try {
@@ -75,7 +73,5 @@ export async function POST(request: Request) {
       { error: 'Failed to process bulk update' },
       { status: 500 }
     );
-  } finally {
-    await prisma.$disconnect();
   }
 }

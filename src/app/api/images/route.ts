@@ -1,9 +1,7 @@
-import { PrismaClient } from '@prisma/client';
+import { prisma } from '@/lib/prisma';
 import { NextResponse } from 'next/server';
 import { FileObject } from '@supabase/storage-js';
 import { supabaseAdmin } from '@/lib/supabase';
-
-const prisma = new PrismaClient();
 
 export async function GET() {
   try {
@@ -92,7 +90,5 @@ export async function GET() {
     response.headers.set('Expires', '0');
 
     return response;
-  } finally {
-    await prisma.$disconnect();
   }
 }
